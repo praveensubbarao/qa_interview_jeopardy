@@ -1,0 +1,5 @@
+Saved:    5/16/2026, 11:18:31 PM
+Count:    1
+Category: auto-detect
+────────────────────────────────────────────────────────────
+QA engineer with Playwright, k6, and AI testing experience. Must know CI/CD pipelines and test architecture.

@@ -1,0 +1,53 @@
+Saved:    5/16/2026, 11:28:12 PM
+Count:    5
+Category: auto-detect
+────────────────────────────────────────────────────────────
+Full job description
+Quality Engineering Manager
+
+We are looking for a Quality Engineering Manager to directly manage a team of 5–8 quality engineers, own our test automation strategy, and embed quality into the full development lifecycle. This is a player-coach role — you will be embedded into a sprint team and expected to carry an individual contributor workload alongside your management responsibilities, including testing tickets, regression, and hands-on automation work. This requires strong technical depth, critical thinking, CI/CD integration, and application of AI-assisted testing — combined with direct people management authority including hiring, performance management, and career development.
+
+Responsibilities
+Quality Leadership
+
+Define, lead, and audit progress on quality initiatives aligned to project and product needs.
+Drive products from inception to release through technical and thought leadership on quality.
+Collaborate cross-functionally to improve frameworks, methodologies, and processes for test planning, execution, and reporting.
+Lead standards-based compliance and process improvement efforts as needed.
+Test Automation & AI
+
+Bring an AI-first mindset to all aspects of the test engineering lifecycle — from test design and generation to execution, triage, and reporting.
+Design, build, and maintain automation frameworks from scratch for large-scale, cross-platform applications for API and or UI testing — including custom C#, Playwright or UFT frameworks.
+Incorporate AI tools into test automation workflows — including AI-assisted test generation, self-healing frameworks, and intelligent test selection.
+Adopt emerging AI/ML testing tools to improve coverage and reduce manual effort.
+CI/CD Integration
+
+Integrate automated tests into CI/CD pipelines (e.g., Azure DevOps, GitHub Actions, Jenkins) to enable fast feedback loops.
+Define and enforce quality gates within deployment pipelines to prevent regressions from reaching production.
+Monitor pipeline health, test flakiness, and execution times; drive improvements continuously.
+Testing & Defect Management
+
+Embedded on a sprint team as an individual contributor — actively pick up and execute testing tickets, adding automated tests, create and review pull requests, regression testing and exploratory testing alongside the team.
+Set and enforce standards for exploratory, functional, and regression testing across the team.
+Oversee root cause analysis on defects; ensure clear, consistent bug reporting practices.
+Work with engineers and support teams to identify, triage, prioritize, and drive resolution of defects.
+People Management
+
+Directly manage 5–8 quality engineers — this includes hiring, onboarding, along with performance management, having difficult conversations and compensation input.
+Set and communicate team and individual objectives and KPIs; hold the team accountable to them.
+Conduct structured performance reviews; provide timely, constructive feedback and address underperformance directly by assessing individual skills, identifying gaps, and building targeted development plans and coaching programs.
+Set and communicate team and individual objectives and KPIs; hold the team accountable to them.
+Recognize and retain high performers; actively manage team health and morale.
+Required Qualifications
+5+ years in software quality engineering
+2+ years as a direct people manager with a team of 4 or more direct reports (preferred)
+Hands-on experience with test automation (.net/. net core/ C#/ Api Testing/ UI testing with Playwright/Selenium/Cypress preferred) and in integrating automated tests into CI/CD pipelines.
+Practical experience using AI tools in test automation workflows.
+Proven track record of conducting performance reviews, making compensation recommendations, and managing full employee lifecycle including difficult conversations.
+Strong root cause analysis skills across complex, cross-functional and cross-product defects.
+Preferred Qualifications
+Healthcare IT or regulated software experience (HIPAA, ONC, FDA).
+Experience with NUnit, xUnit, or Playwright in .NET environments.
+Familiarity with AI tools and testing platforms (e.g., Claude, Cursor, Xray).
+Performance/load testing experience (e.g., k6, JMeter, Gatling).
+Agile delivery experience.

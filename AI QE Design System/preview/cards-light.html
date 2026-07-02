@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Cards · light</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.card { background: var(--slate-100); padding: 30px 32px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.acard { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04), 0 12px 24px rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden; }
+.acard::after { content: ""; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; background: radial-gradient(circle, rgba(77,204,130,0.18) 0%, rgba(255,255,255,0) 70%); }
+.tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green-700); font-weight: 500; }
+.metric { font-family: var(--font-display); font-size: 38px; font-weight: 700; line-height: 1; color: var(--slate-950); letter-spacing: -0.02em; }
+.unit { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+.delta { font-family: var(--font-mono); font-size: 11px; color: #14803F; font-weight: 600; }
+.label { font-size: 12px; color: var(--fg-2); }
+.spark { height: 28px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="col"><div class="eyebrow">Analytics card</div></div>
+  <div class="grid">
+    <div class="acard">
+      <div class="tag">Pass rate · 7d</div>
+      <div style="display:flex; align-items:baseline; gap:8px"><div class="metric">98.2</div><div class="unit">%</div></div>
+      <div class="label">↑ <span class="delta">+1.4 pp</span> vs prior 7d</div>
+      <svg class="spark" viewBox="0 0 200 30" preserveAspectRatio="none"><polyline points="0,22 25,18 50,20 75,12 100,14 125,8 150,10 175,5 200,4" fill="none" stroke="#16945A" stroke-width="1.5"/></svg>
+    </div>
+    <div class="acard">
+      <div class="tag">Active runs</div>
+      <div style="display:flex; align-items:baseline; gap:8px"><div class="metric">14</div><div class="unit">in flight</div></div>
+      <div class="label">3 agents · <span style="font-family:var(--font-mono); color:var(--fg-2)">320ms p95</span></div>
+      <svg class="spark" viewBox="0 0 200 30" preserveAspectRatio="none"><polyline points="0,18 25,16 50,22 75,14 100,8 125,12 150,6 175,10 200,4" fill="none" stroke="#16945A" stroke-width="1.5"/></svg>
+    </div>
+  </div>
+</div>
+</body></html>

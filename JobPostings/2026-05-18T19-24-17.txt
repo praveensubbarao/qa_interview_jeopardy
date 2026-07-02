@@ -1,0 +1,18 @@
+Saved:        5/18/2026, 3:24:17 PM
+Questions:    9
+Technologies: none detected
+────────────────────────────────────────────────────────────
+QA Architect
+NC/MA (Hybrid 3 days/week)
+
+·  Designed and implemented enterprise-level QA strategies, test frameworks, and automation solutions for complex applications.
+
+·  Led end-to-end testing activities including functional, regression, integration, API, and performance testing.
+
+·  Collaborated with developers, business analysts, and product teams to ensure high-quality software delivery across Agile environments.
+
+·  Defined QA standards, best practices, test plans, and release validation processes to improve overall product quality.
+
+·  Built and maintained automated test suites using industry-standard tools and CI/CD integration practices.
+
+·  Provided technical leadership, defect analysis, risk assessment, and mentoring to QA and automation teams.

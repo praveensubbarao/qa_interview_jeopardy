@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Motion</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.row-m { display: grid; grid-template-columns: 80px 1fr 64px; gap: 14px; align-items: center; padding: 8px 0; border-top: 1px solid var(--border); }
+.row-m:first-of-type { border-top: 0; }
+.tok { font-family: var(--font-mono); font-size: 11px; color: var(--green-700); font-weight: 600; }
+.track { height: 28px; background: var(--slate-100); border-radius: 999px; position: relative; overflow: hidden; }
+.dot { position: absolute; top: 4px; width: 20px; height: 20px; border-radius: 999px; background: var(--green-500); left: 4px; }
+.v { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); text-align: right; }
+@keyframes glide-fast     { 0%,15%{left:4px} 35%,65%{left:calc(100% - 24px)} 85%,100%{left:4px} }
+@keyframes glide-standard { 0%,12%{left:4px} 38%,62%{left:calc(100% - 24px)} 88%,100%{left:4px} }
+@keyframes glide-slow     { 0%,8%{left:4px} 42%,58%{left:calc(100% - 24px)} 92%,100%{left:4px} }
+@keyframes glide-hero     { 0%,5%{left:4px} 45%,55%{left:calc(100% - 24px)} 95%,100%{left:4px} }
+.fast     .dot { animation: glide-fast 2s cubic-bezier(0.22,1,0.36,1) infinite; }
+.standard .dot { animation: glide-standard 2.4s cubic-bezier(0.22,1,0.36,1) infinite; }
+.slow     .dot { animation: glide-slow 3s cubic-bezier(0.22,1,0.36,1) infinite; }
+.hero     .dot { animation: glide-hero 4s cubic-bezier(0.22,1,0.36,1) infinite; }
+.curve { font-family: var(--font-mono); font-size: 10px; color: var(--fg-2); padding-top: 4px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="col"><div class="eyebrow">Motion · ease(0.22, 1, 0.36, 1)</div></div>
+  <div class="row-m"><div class="tok">fast</div><div class="track fast"><div class="dot"></div></div><div class="v">120ms</div></div>
+  <div class="row-m"><div class="tok">standard</div><div class="track standard"><div class="dot"></div></div><div class="v">180ms</div></div>
+  <div class="row-m"><div class="tok">slow</div><div class="track slow"><div class="dot"></div></div><div class="v">320ms</div></div>
+  <div class="row-m"><div class="tok">hero</div><div class="track hero"><div class="dot"></div></div><div class="v">600ms</div></div>
+  <div class="curve">cubic-bezier(0.22, 1, 0.36, 1) — single organic curve, used everywhere.</div>
+</div>
+</body></html>

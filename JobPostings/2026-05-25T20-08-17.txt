@@ -1,0 +1,59 @@
+Saved:        5/25/2026, 4:08:17 PM
+Questions:    1
+Technologies: rspec, pact
+────────────────────────────────────────────────────────────
+At PwC, our people in software and product innovation focus on developing cutting-edge software solutions and driving product innovation to meet the evolving needs of clients. These individuals combine technical experience with creative thinking to deliver innovative software products and solutions.
+
+In quality engineering at PwC, you will focus on implementing leading practice standards of quality in software development and testing processes. In this field, you will use your experience to identify and resolve defects, optimise performance, and enhance user experience.
+
+Growing as a strategic advisor, you leverage your influence, expertise, and network to deliver quality results. You motivate and coach others, coming together to solve complex problems. As you increase in autonomy, you apply sound judgment, recognising when to take action and when to escalate. You are expected to solve through complexity, ask thoughtful questions, and clearly communicate how things fit together. Your ability to develop and sustain high performing, diverse, and inclusive teams, and your commitment to excellence, contributes to the success of our Firm.
+
+Skills
+
+Examples of the skills, knowledge, and experiences you need to lead and deliver value at this level include but are not limited to:
+
+Craft and convey clear, impactful and engaging messages that tell a holistic story.
+
+Apply systems thinking to identify underlying problems and/or opportunities.
+
+Validate outcomes with clients, share alternative perspectives, and act on client feedback.
+
+Direct the team through complexity, demonstrating composure through ambiguous, challenging and uncertain situations.
+
+Deepen and evolve your expertise with a focus on staying relevant.
+
+Initiate open and honest coaching conversations at all levels.
+
+Make difficult decisions and take action to resolve issues hindering team effectiveness.
+
+Model and reinforce professional and technical standards (e.g. refer to specific PwC tax and audit guidance), the Firm's code of conduct, and independence requirements.
+
+As part of the Software and Product Innovation team you are expected to manage quality engineering efforts, confirming the utmost standards of software quality. As a Senior Manager you are expected to lead large projects, innovate processes, and maintain operational excellence while interacting with clients at a senior level to drive project success. You are also expected to advocate for industry-leading practices and mentor QA teams.
+
+Responsibilities
+
+ Manage quality engineering efforts to maintain premium standards
+ Lead large projects and innovate processes for operational excellence
+ Interact with clients at a senior level to drive project success
+ Advocate for industry-leading practices
+ Mentor QA teams to enhance their capabilities
+ Utilize specialized knowledge to deliver quality results
+ Motivate and coach teams to solve complex problems
+ Contribute to the overall success of the firm
+
+What You Must Have
+
+ 7 years of experience
+ Bachelor's degree or in lieu of a degree, demonstrating three years of specialized training and/or progressively responsible work experience in technology for each missing year of college
+
+What Sets You Apart
+
+ Master's Degree in Graphic Design, Computer and Information Science, Computer Graphics preferred
+ ISTQB, CSQA/CSQE or equivalent certifications preferred
+ Mastery in PwC Digital Quality Assurance Framework
+ Skilled in Agile test plans and requirements traceability
+ Proficiency in QA Testing strategies and tools
+ Experience in test automation frameworks
+ Knowledge of Performance Test Engineering
+ Ability to conduct Root Cause Analysis of production bugs
+ Skilled in maintaining QA environments and test data creation

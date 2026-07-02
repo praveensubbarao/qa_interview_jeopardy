@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI QE — Slide Templates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="deck_stage.js"></script>
+<style>
+body { margin: 0; background: var(--slate-950); }
+deck-stage { --slide-bg: var(--slate-100); }
+
+section.slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; font-family: var(--font-body); color: var(--fg); padding: 96px 120px; box-sizing: border-box; }
+section.slide.dark { background: #0B0F0D; color: #F4F7F5; }
+section.slide.brand { background: linear-gradient(135deg, #014D36 0%, #16945A 60%, #4DCC82 100%); color: #fff; }
+section.slide.light { background: var(--slate-100); }
+section.slide.cream { background: linear-gradient(180deg, #FFFFFF 0%, #F7F0D6 100%); }
+
+.slide.brand::before, .slide.dark::before { content: ""; position: absolute; inset: 0; background-image: url("../assets/pattern-organic-circuit.svg"); background-size: 600px; opacity: 0.10; pointer-events: none; }
+.slide.dark::before { opacity: 0.08; }
+
+.eb { font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+.eb.green { color: var(--green-700); }
+.eb.lite { color: var(--green-400); }
+.eb.dim { color: var(--fg-3); }
+.eb.white { color: rgba(255,255,255,0.9); }
+
+h1.title { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; margin: 0; }
+h1.title em { font-family: var(--font-serif); font-style: italic; font-weight: 500; }
+
+.brand-mark { position: absolute; top: 48px; left: 120px; display: flex; align-items: center; gap: 14px; }
+.brand-mark img { height: 44px; }
+.brand-mark .name { font-family: var(--font-display); font-weight: 700; font-size: 28px; }
+.slide.brand .brand-mark .name, .slide.dark .brand-mark .name { color: #fff; }
+
+.slide-num { position: absolute; bottom: 48px; right: 120px; font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.16em; color: var(--fg-3); }
+.slide.brand .slide-num, .slide.dark .slide-num { color: rgba(255,255,255,0.5); }
+
+/* Slide 01 — Title */
+.s-title { display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 32px; position: relative; }
+.s-title h1 { font-size: 168px; max-width: 14ch; }
+.s-title .sub { font-size: 28px; color: rgba(255,255,255,0.85); max-width: 50ch; line-height: 1.45; }
+.s-title .meta { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.18em; color: rgba(255,255,255,0.7); }
+
+/* Slide 02 — Section header */
+.s-section { display: flex; flex-direction: column; justify-content: center; gap: 28px; height: 100%; }
+.s-section .num { font-family: var(--font-mono); font-size: 48px; color: var(--green-700); font-weight: 600; }
+.s-section h1 { font-size: 144px; max-width: 16ch; color: var(--green-900); }
+
+/* Slide 03 — Big quote */
+.s-quote { display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 64px; }
+.s-quote blockquote { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 96px; line-height: 1.2; max-width: 22ch; margin: 0; letter-spacing: -0.01em; color: var(--green-900); }
+.s-quote .attr { display: flex; align-items: center; gap: 24px; font-family: var(--font-mono); font-size: 22px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); }
+.s-quote .bar { width: 60px; height: 2px; background: var(--green-600); }
+
+/* Slide 04 — Comparison */
+.s-compare { display: flex; flex-direction: column; gap: 56px; height: 100%; }
+.s-compare-head { display: flex; flex-direction: column; gap: 18px; }
+.s-compare-head h1 { font-size: 80px; max-width: 22ch; }
+.s-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; }
+.compare-col { background: #fff; border: 1px solid var(--border); border-radius: 28px; padding: 56px; display: flex; flex-direction: column; gap: 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+.compare-col.brand { background: var(--slate-950); color: #fff; border-color: rgba(77,204,130,0.3); box-shadow: 0 0 0 1px rgba(77,204,130,0.18), 0 0 80px rgba(77,204,130,0.18); position: relative; overflow: hidden; }
+.compare-col.brand::after { content: ""; position: absolute; right: -100px; top: -100px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(77,204,130,0.20) 0%, transparent 70%); }
+.compare-col h3 { font-family: var(--font-display); font-size: 36px; font-weight: 600; margin: 8px 0 12px; letter-spacing: -0.01em; }
+.compare-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.compare-col li { font-size: 24px; line-height: 1.45; display: flex; gap: 14px; align-items: flex-start; }
+.compare-col li svg { flex-shrink: 0; margin-top: 6px; }
+.compare-col.brand li { color: #C5CCC6; }
+.compare-col.brand li strong { color: #fff; font-weight: 500; }
+
+/* Slide 05 — Stats / data */
+.s-stats { display: flex; flex-direction: column; gap: 56px; height: 100%; }
+.s-stats h1 { font-size: 88px; max-width: 22ch; }
+.s-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.stat { display: flex; flex-direction: column; gap: 12px; padding: 40px 0 0; border-top: 2px solid var(--green-600); }
+.stat-v { font-family: var(--font-display); font-size: 110px; font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; color: var(--green-900); }
+.stat-l { font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.12em; color: var(--fg-3); text-transform: uppercase; }
+.stat-d { font-size: 22px; color: var(--fg-2); line-height: 1.4; max-width: 22ch; margin-top: 8px; }
+
+/* Slide 06 — Closing CTA */
+.s-cta { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 40px; height: 100%; }
+.s-cta h1 { font-size: 144px; max-width: 14ch; }
+.s-cta .urls { display: flex; gap: 56px; margin-top: 24px; }
+.s-cta .urls div { font-family: var(--font-mono); }
+.s-cta .urls .label { font-size: 16px; letter-spacing: 0.18em; opacity: 0.7; text-transform: uppercase; margin-bottom: 8px; }
+.s-cta .urls .val { font-size: 32px; font-weight: 500; }
+
+</style>
+</head>
+<body>
+<deck-stage>
+
+<!-- 01 Title -->
+<section class="slide brand" data-screen-label="01 Title">
+  <div class="brand-mark"><img src="../assets/logo-aiqe-white.svg" alt=""><span class="name"></span></div>
+  <div class="s-title">
+    <div class="eb white">QUALITY CLOUD · 2026</div>
+    <h1 class="title">Adaptive testing intelligence, <em>observed</em> continuously.</h1>
+    <div class="sub">A 12-minute walkthrough of the AI QE platform, built for teams who ship continuously.</div>
+    <div class="meta">Lina Park · Staff Eng · v2.4.1</div>
+  </div>
+  <div class="slide-num">01 / 06</div>
+</section>
+
+<!-- 02 Section header -->
+<section class="slide light" data-screen-label="02 Section header">
+  <div class="brand-mark"><img src="../assets/logo-aiqe-dark.svg" alt=""></div>
+  <div class="s-section">
+    <div class="num">02 ·</div>
+    <div class="eb green">PART ONE</div>
+    <h1 class="title">The signal is in the loop, not the dashboard.</h1>
+  </div>
+  <div class="slide-num">02 / 06</div>
+</section>
+
+<!-- 03 Big quote -->
+<section class="slide cream" data-screen-label="03 Big quote">
+  <div class="brand-mark"><img src="../assets/logo-aiqe-dark.svg" alt=""></div>
+  <div class="s-quote">
+    <blockquote>"AI QE is the first quality system that explains itself."</blockquote>
+    <div class="attr"><span class="bar"></span>Lina Park · Staff Eng · Pressmaster</div>
+  </div>
+  <div class="slide-num">03 / 06</div>
+</section>
+
+<!-- 04 Comparison -->
+<section class="slide light" data-screen-label="04 Comparison">
+  <div class="brand-mark"><img src="../assets/logo-aiqe-dark.svg" alt=""></div>
+  <div class="s-compare">
+    <div class="s-compare-head">
+      <div class="eb green">A SHIFT IN POSTURE</div>
+      <h1 class="title">From rule-tuned testing to observed quality.</h1>
+    </div>
+    <div class="s-compare-grid">
+      <div class="compare-col">
+        <div class="eb dim">YESTERDAY</div>
+        <h3>Rule-tuned</h3>
+        <ul>
+          <li><i data-lucide="x" style="color:#DC2626"></i><span>Engineers tune brittle assertions by hand.</span></li>
+          <li><i data-lucide="x" style="color:#DC2626"></i><span>Flakes are quarantined and forgotten.</span></li>
+          <li><i data-lucide="x" style="color:#DC2626"></i><span>Coverage drift is invisible until release.</span></li>
+        </ul>
+      </div>
+      <div class="compare-col brand">
+        <div class="eb lite">AI QE</div>
+        <h3>Observed</h3>
+        <ul>
+          <li><i data-lucide="check" style="color:#4DCC82"></i><span><strong>Agents observe, isolate, and heal</strong> — in shadow mode first.</span></li>
+          <li><i data-lucide="check" style="color:#4DCC82"></i><span><strong>Drift detection is continuous.</strong> Suggested suites in seconds.</span></li>
+          <li><i data-lucide="check" style="color:#4DCC82"></i><span><strong>Every action is reversible</strong> and reviewable.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">04 / 06</div>
+</section>
+
+<!-- 05 Stats -->
+<section class="slide light" data-screen-label="05 Stats">
+  <div class="brand-mark"><img src="../assets/logo-aiqe-dark.svg" alt=""></div>
+  <div class="s-stats">
+    <div>
+      <div class="eb green">QUALITY CLOUD · LAST 30 DAYS</div>
+      <h1 class="title" style="margin-top: 18px">Quietly, at scale.</h1>
+    </div>
+    <div class="s-stats-grid">
+      <div class="stat"><div class="stat-l">PASS RATE</div><div class="stat-v">98.2%</div><div class="stat-d">↑ 1.4 pp · across 4,802 runs</div></div>
+      <div class="stat"><div class="stat-l">FLAKES HEALED</div><div class="stat-v">312</div><div class="stat-d">in shadow mode · zero rollbacks</div></div>
+      <div class="stat"><div class="stat-l">P95 LATENCY</div><div class="stat-v">320ms</div><div class="stat-d">end-to-end run telemetry</div></div>
+      <div class="stat"><div class="stat-l">MEAN Δ</div><div class="stat-v">−12s</div><div class="stat-d">duration vs prior 30d</div></div>
+    </div>
+  </div>
+  <div class="slide-num">05 / 06</div>
+</section>
+
+<!-- 06 Closing CTA -->
+<section class="slide dark" data-screen-label="06 Closing CTA">
+  <div class="brand-mark"><img src="../assets/logo-aiqe-white.svg" alt=""></div>
+  <div class="s-cta">
+    <div class="eb lite">START THE LOOP</div>
+    <h1 class="title">Connect a repository.<br><em>We'll do the rest.</em></h1>
+    <div class="urls">
+      <div><div class="label">DOCS</div><div class="val">aiqe.dev/docs</div></div>
+      <div><div class="label">CONTACT</div><div class="val">hello@aiqe.dev</div></div>
+    </div>
+  </div>
+  <div class="slide-num">06 / 06</div>
+</section>
+
+</deck-stage>
+<script>lucide.createIcons();</script>
+</body>
+</html>

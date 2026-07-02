@@ -1,0 +1,26 @@
+Saved:        5/17/2026, 12:58:02 AM
+Questions:    1
+Technologies: none detected
+────────────────────────────────────────────────────────────
+About The Role
+
+The Test Automation Engineer Lead is a hands‑on technical leader responsible for guiding a small team of 2–3 automation engineers while driving the development of scalable, high‑quality test automation frameworks. This role works with minimal oversight and collaborates closely with business and technical partners to ensure reliable, high‑performing system delivery and to advance automation maturity across the organization.
+
+What You Will Do
+
+Lead a team of automation engineers in designing, developing, and maintaining automated test strategies, scripts, and frameworks across functional, regression, API, UI, and integration testing; recommend test environments, frameworks, and tool stacks. 
+Mentor and coach automation engineers, analysts, and interns; serve as the automation subject‑matter expert across teams. 
+Drive automation strategy, including solution planning, framework design, CI/CD integration, and tooling decisions for key initiatives. 
+Champion and enforce automated testing best practices across teams. 
+Troubleshoot and resolve complex automation defects and framework issues; lead root‑cause analysis to prevent recurring failures. 
+Own success metrics and end‑to‑end accountability for automation frameworks and CI/CD pipelines, including communicating automation health and risk to leadership. 
+Identify and implement process improvements to enhance automation efficiency, reliability, and maintainability. 
+Collaborate with business and technical SMEs, development teams, QA resources, and external vendors; communicate regularly with senior IT and cross‑functional stakeholders.
+
+Why Work at Symetra
+
+Here’s what some of our employees have to say about why they work at Symetra:
+
+"Symetra will spoil you. There aren't many companies that will put as much effort into you being a success as Symetra. The culture will challenge you but simultaneously put you at ease. Failure is seen as integral to the learning process so there is less reason to be fearful of it." - Kerry S., Sr. Systems Analyst
+
+“If you want to invest in yourself and build a career, this is a great place to work. If you don't want to put in the effort to learn the industry and become a student of the business (it takes real effort!), there are easier places to work.” - Cris H., VP Internal Sales

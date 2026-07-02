@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Iconography · Lucide</title>
+<link rel="stylesheet" href="_card.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+.row-icons { display: grid; grid-template-columns: repeat(8, 1fr); gap: 14px 8px; }
+.icell { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 4px; border-radius: 10px; background: var(--slate-100); }
+.icell svg { color: var(--green-800); width: 22px; height: 22px; stroke-width: 2; }
+.icell .n { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); }
+.note { font-family: var(--font-body); font-size: 12px; color: var(--fg-2); }
+</style></head>
+<body>
+<div class="card">
+  <div class="col">
+    <div class="eyebrow">Lucide · 2px stroke · rounded</div>
+    <div class="note">Substitution: Lucide chosen as closest match to spec. Confirm or replace with internal set.</div>
+  </div>
+  <div class="row-icons">
+    <div class="icell"><i data-lucide="leaf"></i><div class="n">leaf</div></div>
+    <div class="icell"><i data-lucide="brain-circuit"></i><div class="n">brain-circuit</div></div>
+    <div class="icell"><i data-lucide="shield-check"></i><div class="n">shield-check</div></div>
+    <div class="icell"><i data-lucide="bar-chart-3"></i><div class="n">bar-chart-3</div></div>
+    <div class="icell"><i data-lucide="git-branch"></i><div class="n">git-branch</div></div>
+    <div class="icell"><i data-lucide="activity"></i><div class="n">activity</div></div>
+    <div class="icell"><i data-lucide="play"></i><div class="n">play</div></div>
+    <div class="icell"><i data-lucide="pause"></i><div class="n">pause</div></div>
+    <div class="icell"><i data-lucide="zap"></i><div class="n">zap</div></div>
+    <div class="icell"><i data-lucide="terminal"></i><div class="n">terminal</div></div>
+    <div class="icell"><i data-lucide="git-commit"></i><div class="n">git-commit</div></div>
+    <div class="icell"><i data-lucide="cpu"></i><div class="n">cpu</div></div>
+    <div class="icell"><i data-lucide="flask-conical"></i><div class="n">flask</div></div>
+    <div class="icell"><i data-lucide="alert-triangle"></i><div class="n">alert</div></div>
+    <div class="icell"><i data-lucide="check-circle-2"></i><div class="n">check</div></div>
+    <div class="icell"><i data-lucide="settings-2"></i><div class="n">settings</div></div>
+  </div>
+</div>
+<script>lucide.createIcons();</script>
+</body></html>

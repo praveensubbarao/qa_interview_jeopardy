@@ -1,0 +1,43 @@
+Saved:        5/25/2026, 3:49:17 PM
+Questions:    1
+Technologies: dynatrace, aws, azure, gcp, terraform, kubernetes, javascript, java, .net, go
+────────────────────────────────────────────────────────────
+About You
+
+To ensure your success as a Solution Engineer at Dynatrace, you need to be an ambitious, confident and self-motivated individual, with previous SE experience or another technical customer facing role. You need to be passionate about innovative technology, technical sales and articulating value to customers and prospects. In addition, we are also looking for:
+
+An excellent team player, with the ability to work across all disciplines. 
+Excellent communication and presentation skills, with the ability to communicate technical value into business value. 
+Previous 3 – 5 years of experience with observability or application performance management technologies and techniques. 
+Ability to troubleshoot technical issues to produce a working outcome and be able to manage this process. 
+Ability to manage a number of projects simultaneously, work with a number of different sales people and support other SEs where needed. 
+Must have a strong desire to grow professionally, adapt to an ever-changing environment and are coachable. 
+Must be able to travel up to 30% of the time 
+
+Responsibilities
+
+Evangelize Dynatrace’s product offerings during international trade shows and at key customer account meetings to promote new and expanded business. 
+Partner with sales representatives to identify new sales opportunities as well as incremental sales opportunities within existing accounts. 
+As part of the solution engineering team participate in proof of concept (PoC) creation and cloud architecture discussions, leading the technical solution evaluation portion in support of sales opportunities either directly or through channel partners for multiple POCs. 
+Present Dynatrace’s vision to our customers C-suite executives. 
+Provide technical guidance in the Discovery, Solution Evaluation, and Solution Proposal stages of the opportunity sales cycle. 
+Present on-stage demonstrations providing insight and context to our customers during key marketing events. Either at Dynatrace sponsored industry events or partner sponsored events, ensure key demonstrations are delivered by you or a team member at demonstration booths. 
+Gather, qualify and provide feedback from customers to Product Management to improve Dynatrace’s market share and meet the market needs. 
+Not only work with internal sales team, but also with partners, supporting their team in the customers and being a technical point of contact for them (trusted advisor/technical coach). 
+Position might be filled at a higher level based on candidate experience. 
+
+What Will Help You Succeed
+
+Minimum Requirements: 
+
+Bachelor’s degree in Computer Science or equivalent education or experience required. 
+3 years of experience within the observability space. 
+
+Preferred Requirements
+
+Experience with web technologies such as HTML, CSS, and JavaScript. 
+Experience with programming / scripting side technologies such as Java, .NET, PHP, Go, Node.js and database. 
+Advance knowledge of Operating Systems (OS) including Windows and Linux. 
+Experience with DevOps or Site Reliability Engineering practices Knowledge with cloud platforms, including AWS, Azure or GCP. 
+Experience with modern technologies like containers, Kubernetes / OpenShift, Serverless functions, and CI/CD pipelines. 
+Experience with automation like Ansible, Puppet, Terraform, etc.

@@ -1,0 +1,401 @@
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-size:14px;color:var(--color-text-primary)}
+  .root{padding:1rem 0}
+  .alert{background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-lg);padding:14px 18px;margin-bottom:1.25rem;font-size:13px;color:var(--color-text-warning);line-height:1.6}
+  .alert strong{font-weight:600}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+  .tab{padding:5px 14px;font-size:12px;font-weight:500;border-radius:20px;border:0.5px solid var(--color-border-tertiary);cursor:pointer;color:var(--color-text-secondary);background:transparent;transition:all .15s;font-family:inherit}
+  .tab.active{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
+  .pane{display:none}.pane.active{display:block}
+  .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:0;margin-bottom:12px;overflow:hidden}
+  .card-hdr{padding:16px 20px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:background .15s}
+  .card-hdr:hover{background:var(--color-background-secondary)}
+  .card-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+  .card-title{font-size:14px;font-weight:500;flex:1;line-height:1.4}
+  .card-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+  .badge{font-size:10px;padding:3px 8px;border-radius:3px;flex-shrink:0;font-weight:500;white-space:nowrap}
+  .b-red{background:var(--color-background-error);color:var(--color-text-error);border:0.5px solid var(--color-border-error)}
+  .b-green{background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)}
+  .b-blue{background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)}
+  .b-warn{background:var(--color-background-warning);color:var(--color-text-warning);border:0.5px solid var(--color-border-warning)}
+  .chevron{color:var(--color-text-secondary);flex-shrink:0;margin-top:3px;transition:transform .2s;font-size:13px}
+  .card.open .chevron{transform:rotate(180deg)}
+  .card-body{display:none;padding:18px 20px;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+  .card.open .card-body{display:block}
+  .plain{font-size:13.5px;color:var(--color-text-secondary);line-height:1.75;margin-bottom:12px}
+  .say{background:var(--color-background-primary);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:14px 16px;margin:12px 0}
+  .say-lbl{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--color-text-info);margin-bottom:6px}
+  .say-txt{font-size:13px;color:var(--color-text-primary);line-height:1.75;font-style:italic}
+  .highlight{background:var(--color-background-success);border-left:3px solid var(--color-border-success);padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0;font-size:13px;color:var(--color-text-success);line-height:1.6}
+  .warn-box{background:var(--color-background-warning);border-left:3px solid var(--color-border-warning);padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0;font-size:13px;color:var(--color-text-warning);line-height:1.6}
+  .info-box{background:var(--color-background-info);border-left:3px solid var(--color-border-info);padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0;font-size:13px;color:var(--color-text-info);line-height:1.6}
+  ul.bl{padding-left:16px;margin:8px 0}
+  ul.bl li{margin-bottom:6px;font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+  ul.bl li strong{color:var(--color-text-primary)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .mini{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px}
+  .mini-t{font-size:12px;font-weight:500;margin-bottom:4px}
+  .mini-b{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+  .timer{background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:16px 20px;margin-bottom:12px}
+  .timer-title{font-size:13px;font-weight:500;margin-bottom:10px}
+  .step-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+  .step-time{font-size:11px;font-weight:500;color:var(--color-text-info);white-space:nowrap;min-width:60px;padding-top:2px}
+  .step-text{font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+  .ask-btn{display:inline-block;margin-top:10px;padding:5px 12px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;background:transparent;color:var(--color-text-primary);font-family:inherit}
+  .ask-btn:hover{background:var(--color-background-secondary)}
+</style>
+
+<div class="root">
+  <div class="alert">
+    <strong>⚡ 1-Hour Focus Mode.</strong> You already have deep Agentic AI prep. This guide covers ONLY what's new and different for Ally Financial — Claude Code specifics, financial services QA context, and the "Change Agent" framing. Don't repeat old ground.
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="show('plan')">Your 1-Hr Plan</button>
+    <button class="tab" onclick="show('ally')">Ally Context</button>
+    <button class="tab" onclick="show('claude')">Claude Code Deep</button>
+    <button class="tab" onclick="show('finqa')">Financial QA</button>
+    <button class="tab" onclick="show('questions')">Key Questions</button>
+    <button class="tab" onclick="show('openings')">Your Opening</button>
+  </div>
+
+  <!-- 1-HR PLAN -->
+  <div id="plan" class="pane active">
+    <div class="timer">
+      <div class="timer-title">⏱️ How to spend your next 60 minutes</div>
+      <div class="step-row"><div class="step-time">0–10 min</div><div class="step-text"><strong>Read Ally Context tab.</strong> Know who Ally is, their AI platform "Ally.ai", and why Claude Code is in their stack. This is the business context that makes every answer land.</div></div>
+      <div class="step-row"><div class="step-time">10–25 min</div><div class="step-text"><strong>Read Claude Code Deep tab.</strong> This is the #1 differentiator — the JD says it's a "core tool in the customer's existing environment." Most candidates will bluff. You need to be specific.</div></div>
+      <div class="step-row"><div class="step-time">25–35 min</div><div class="step-text"><strong>Read Financial QA tab.</strong> Banking adds compliance, audit trails, and data sensitivity requirements that your previous Agentic AI prep didn't cover. Learn the unique constraints.</div></div>
+      <div class="step-row"><div class="step-time">35–55 min</div><div class="step-text"><strong>Read Key Questions tab and say answers out loud.</strong> Speaking is different from reading. Practice the Claude Code question and the "Change Agent" question specifically — those will come first.</div></div>
+      <div class="step-row"><div class="step-time">55–60 min</div><div class="step-text"><strong>Read Your Opening tab.</strong> Nail your 90-second intro. First impression sets the tone for the whole interview.</div></div>
+    </div>
+    <div class="highlight">Your biggest edge in this interview: you hold the Claude AI Fluency certification AND built MCP integrations at Care.com. Claude Code is Anthropic's tool — you have more relevant context than almost any other candidate walking in.</div>
+  </div>
+
+  <!-- ALLY CONTEXT -->
+  <div id="ally" class="pane">
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🏦</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">What Ally Financial actually is</div>
+          <div class="card-sub">Know the business before you walk in</div>
+        </div>
+        <div class="badge b-red">READ FIRST</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">Ally Financial is a digital-only bank and auto finance company — no physical branches. Their products include auto loans, home loans, personal loans, credit cards, and online savings accounts. They serve millions of consumers and are NYSE-listed (ALLY).</div>
+        <div class="plain">What makes them unique for this role: they are an aggressively technology-forward bank. They have already built and deployed their own proprietary AI platform called <strong>Ally.ai</strong> enterprise-wide — this is not a company exploring AI, it's one that has already committed to it at scale.</div>
+        <div class="info-box"><strong>Key fact to use:</strong> Ally.ai currently handles approximately 5 million customer calls with AI call summarization. They have an AI Working Group and a Governance Group working in parallel. They are LLM-agnostic — built to work with OpenAI today, Claude or Llama tomorrow. That's why Claude Code is in their QE stack specifically.</div>
+        <div class="plain">Scale context: they previously had 100,000 test cases across 72 systems and 300+ interfaces. This is enterprise QA at significant scale — not a startup environment.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🎯</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">"Change Agent" — what that title actually means</div>
+          <div class="card-sub">The framing that defines everything in this role</div>
+        </div>
+        <div class="badge b-red">CRITICAL</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">The JD specifically calls you a "dedicated AI Change Agent." This is not a standard QE title — it signals that the primary challenge here is not technical, it's organizational. They already have QE teams. They need someone to transform how those teams work.</div>
+        <div class="grid2">
+          <div class="mini"><div class="mini-t">What it means technically</div><div class="mini-b">Build the AI tools, frameworks, and POCs that prove the new approach works.</div></div>
+          <div class="mini"><div class="mini-t">What it means culturally</div><div class="mini-b">Convince engineers, managers, and leaders to change how they've worked for years. This is harder than the technical part.</div></div>
+          <div class="mini"><div class="mini-t">What success looks like</div><div class="mini-b">Teams that were 100% manual testing are now running AI-assisted automation. Skeptics become advocates.</div></div>
+          <div class="mini"><div class="mini-t">What failure looks like</div><div class="mini-b">You build great tools nobody uses because you didn't bring people along with you.</div></div>
+        </div>
+        <div class="say">
+          <div class="say-lbl">Say this when they ask about the Change Agent role</div>
+          <div class="say-txt">"Change Agent to me means the technical work is only half the job. I've seen AI tools fail not because the technology wasn't ready, but because the adoption strategy wasn't. At Care.com I built reusable prompt libraries specifically so that engineers who weren't AI experts could contribute immediately — lowering the barrier to entry was as important as the technology itself. That's the mindset I'd bring here: prove it fast, make it easy to adopt, and measure the outcome so the results speak for themselves."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">📍</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">Onsite Charlotte — address it proactively</div>
+          <div class="card-sub">Don't let this be a surprise question</div>
+        </div>
+        <div class="badge b-warn">ADDRESS IT</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">This is the only onsite role of your four opportunities. If you're in the Dallas/Irving area (from the Gartner JD), Charlotte is a relocation or a commute conversation.</div>
+        <div class="warn-box">Be clear with yourself before the interview: are you open to relocating to Charlotte? If yes, say so confidently. If no, raise it early — don't let it become a late-stage surprise that wastes everyone's time.</div>
+        <div class="say">
+          <div class="say-lbl">If you're open to relocation</div>
+          <div class="say-txt">"Charlotte works for me — I'm open to relocation for the right opportunity and this role is compelling enough that it's absolutely on the table."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLAUDE CODE DEEP -->
+  <div id="claude" class="pane">
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🔑</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">What Claude Code actually is — be specific</div>
+          <div class="card-sub">The JD says "deep familiarity required" — most candidates will bluff</div>
+        </div>
+        <div class="badge b-red">YOUR #1 EDGE</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">Claude Code is Anthropic's agentic coding tool — a command-line agent that operates directly inside your codebase. It's not a chat interface. It reads files, writes code, runs tests, executes terminal commands, and iterates — all autonomously within a defined scope.</div>
+        <div class="grid2">
+          <div class="mini"><div class="mini-t">What makes it different from Cursor</div><div class="mini-b">Cursor is an IDE with AI assistance. Claude Code is a terminal agent — it operates headlessly, can be scripted into CI/CD pipelines, and runs without a human watching every step.</div></div>
+          <div class="mini"><div class="mini-t">What makes it different from GitHub Copilot</div><div class="mini-b">Copilot suggests code inline. Claude Code takes a goal, plans multi-step execution, runs commands, reads output, and adapts — it's an agent, not an autocomplete.</div></div>
+          <div class="mini"><div class="mini-t">How it applies to QE specifically</div><div class="mini-b">Direct it to: read a spec → identify coverage gaps → write Playwright tests → run them → analyze failures → propose fixes. All in one agentic loop.</div></div>
+          <div class="mini"><div class="mini-t">Why Ally uses it</div><div class="mini-b">They're LLM-agnostic (Ally.ai works with any LLM) and Claude specifically is built for financial services compliance — audit trails, data privacy, verified outputs.</div></div>
+        </div>
+        <div class="highlight">You hold the Claude AI Fluency certification. Lead with this: "I'm certified in Claude's framework and have worked with Claude-based tooling including Cursor IDE at Care.com. Claude Code specifically is the natural extension of that — moving from AI-assisted authoring to fully agentic codebase operations."</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">⚙️</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">How you'd use Claude Code in a QE workflow — be concrete</div>
+          <div class="card-sub">They will almost certainly ask "walk me through a use case"</div>
+        </div>
+        <div class="badge b-blue">TECHNICAL</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">Have three concrete Claude Code QE use cases ready to describe:</div>
+        <ul class="bl">
+          <li><strong>Autonomous gap analysis:</strong> "Point Claude Code at our Playwright test suite and our Confluence spec page — it reads both, identifies what scenarios exist in the spec but have no corresponding test, and generates a prioritized list of missing coverage. No human reads through 500 test files manually."</li>
+          <li><strong>Test generation from PR diffs:</strong> "When a developer opens a PR, Claude Code reads the code diff, understands what changed, and autonomously generates or updates the relevant Playwright tests. The PR can't merge until the tests pass — quality is embedded in the development workflow, not bolted on after."</li>
+          <li><strong>Self-healing in CI:</strong> "When a test fails in the pipeline, Claude Code reads the failure log, DOM snapshot, and the failing test — classifies the root cause — and if it's a locator change or minor code drift, generates a fix and re-runs. Human gets notified only if it's a real product bug, not test infrastructure noise."</li>
+        </ul>
+        <div class="say">
+          <div class="say-lbl">The one-sentence version</div>
+          <div class="say-txt">"Claude Code lets us take the human out of the loop for the repetitive, mechanical parts of QE — gap analysis, test generation from specs, locator healing — so engineers focus on the judgment-intensive work: what to test, what risk matters, what a failure actually means."</div>
+        </div>
+        <button class="ask-btn" onclick="sendPrompt('Give me more technical depth on how Claude Code integrates with a CI/CD pipeline for automated test generation')">Go deeper on CI/CD integration ↗</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🛡️</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">Claude in financial services — the compliance angle</div>
+          <div class="card-sub">Why Claude specifically fits a regulated bank environment</div>
+        </div>
+        <div class="badge b-green">DIFFERENTIATOR</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">Anthropic has specifically positioned Claude for financial services — this is not accidental and you should know why it matters to Ally.</div>
+        <ul class="bl">
+          <li><strong>Audit trails:</strong> Claude produces outputs that can be audited and explained — critical for a regulated financial institution. Black-box AI outputs are unacceptable in banking.</li>
+          <li><strong>Data privacy:</strong> Claude does not train on user data by default — meaning Ally's proprietary test data, customer data references, and internal specs stay private.</li>
+          <li><strong>Compliance generation:</strong> Claude can auto-generate compliance requirements from PRDs — directly relevant if Ally's QE team needs to test against regulatory requirements like CFPB, FCRA, or GDPR.</li>
+        </ul>
+        <div class="say">
+          <div class="say-lbl">Use this in the interview</div>
+          <div class="say-txt">"One reason Claude specifically makes sense for a financial services QE environment is the auditability of its outputs and the data privacy guarantees. In banking, you can't use an AI tool that learns from your test data or produces unexplainable outputs — regulators will ask questions. Claude's architecture addresses both of those concerns directly, which is why it's a natural fit for Ally's stack."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCIAL QA -->
+  <div id="finqa" class="pane">
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🏛️</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">What's unique about QE in a bank vs a product company</div>
+          <div class="card-sub">The context that makes every answer more credible</div>
+        </div>
+        <div class="badge b-red">READ THIS</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="grid2">
+          <div class="mini"><div class="mini-t">Regulatory compliance testing</div><div class="mini-b">Every feature that touches lending, payments, or customer data must be tested against CFPB regulations, FCRA (credit reporting), ECOA (lending fairness), and state-specific rules. A bug here isn't just a bad UX — it's a regulatory violation with fines.</div></div>
+          <div class="mini"><div class="mini-t">Zero tolerance for financial calculation errors</div><div class="mini-b">Interest rate calculations, payment processing, loan amortization — these must be mathematically exact. AI-generated tests must have precision assertions, not fuzzy checks.</div></div>
+          <div class="mini"><div class="mini-t">Data sensitivity in test environments</div><div class="mini-b">You cannot use real customer financial data in test environments. Synthetic data generation (which you prepped for) is not optional here — it's legally required.</div></div>
+          <div class="mini"><div class="mini-t">Audit trail for every test</div><div class="mini-b">Regulators can request evidence of testing for any production change. Every test execution must be logged, timestamped, and linked to the change that triggered it — permanently.</div></div>
+        </div>
+        <div class="warn-box"><strong>Key insight to deliver:</strong> "AI-generated tests in a financial services context need a higher quality bar than in a standard product company. An AI that generates a test saying 'payment processed successfully' without asserting the exact dollar amount, interest calculation, and account balance delta is worse than no test — it creates false confidence in a zero-tolerance environment."</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🔒</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">Guardrails you'd build for AI QE in a regulated bank</div>
+          <div class="card-sub">This shows you understand the unique risk profile</div>
+        </div>
+        <div class="badge b-blue">TECHNICAL</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="plain">If they ask "what guardrails would you put around agentic AI in our environment?" — this is your answer:</div>
+        <ul class="bl">
+          <li><strong>No real PII in agent context:</strong> Agents operate only on synthetic or masked data. Real account numbers, SSNs, or transaction histories never enter a prompt.</li>
+          <li><strong>Human review gate for financial assertions:</strong> AI-generated tests for payment flows, interest calculations, and credit decisions require human sign-off before they're added to the suite. The agent proposes, a human approves.</li>
+          <li><strong>Immutable execution logs:</strong> Every agentic test run is logged with full provenance — which model version, which prompt, which code version. Regulators can reconstruct exactly what was tested and how.</li>
+          <li><strong>Assertion quality enforcement:</strong> A validation layer checks every generated test for meaningful financial assertions — exact amounts, account states, transaction IDs. Tests that only assert on UI text are rejected automatically.</li>
+          <li><strong>Model version pinning:</strong> AI model updates can change behavior. Pin the model version used in QE pipelines and validate behavior after any model upgrade before it goes live.</li>
+        </ul>
+        <button class="ask-btn" onclick="sendPrompt('What financial regulations should I know about for QE testing at a digital bank like Ally Financial?')">What regs should I know? ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY QUESTIONS -->
+  <div id="questions" class="pane">
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">1️⃣</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">"What's your specific experience with Claude Code?"</div>
+          <div class="card-sub">Will almost certainly be question 1 or 2</div>
+        </div>
+        <div class="badge b-red">EXPECT THIS</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="say">
+          <div class="say-lbl">Your answer — be specific, don't bluff</div>
+          <div class="say-txt">"I hold the Claude AI Fluency certification from Anthropic and have worked with Claude-based tooling throughout my AI QE work at Care.com — primarily through Cursor IDE, which uses Claude as the underlying model for agentic coding assistance. I've also built MCP integrations connecting Claude to Jira, Confluence, TestRail, and our test frameworks directly.<br><br>
+          Claude Code specifically represents the next level of that — moving from IDE-assisted authoring to a fully terminal-based agentic operator that can run autonomously in a CI/CD pipeline. I've studied its architecture and have clear use cases I'd implement immediately: gap analysis against specs, PR-triggered test generation, and self-healing loops in the pipeline.<br><br>
+          I'd be transparent that my hands-on Claude Code usage has been in evaluation and POC context — but my Claude ecosystem knowledge, MCP integration experience, and agentic AI architecture background mean I'd be productive with it from week one."</div>
+        </div>
+        <div class="highlight">Honesty here builds more trust than overclaiming. The certification and MCP work are real differentiators — lead with those.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">2️⃣</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">"How would you approach being a Change Agent at Ally — where do you start?"</div>
+          <div class="card-sub">Tests your transformation strategy and people skills</div>
+        </div>
+        <div class="badge b-red">EXPECT THIS</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="say">
+          <div class="say-lbl">Your answer — the 30-60-90 framework</div>
+          <div class="say-txt">"Day one through thirty: I listen and observe. I audit the current QE landscape — tools, coverage, team maturity, where the pain is — and build relationships with the engineers and leads who'll make or break adoption. Change fails when it's imposed; it succeeds when people feel ownership over it.<br><br>
+          Days thirty to sixty: I pick the highest-pain, highest-visibility workflow and build a Claude Code POC that solves a real problem — not a demo, a working solution. I measure it against the baseline and share those results publicly. Nothing converts skeptics faster than seeing a colleague's work improved by the tool.<br><br>
+          Days sixty to ninety: I present a 12-month roadmap with clear milestones, KPIs, and ROI tied to business outcomes — release velocity, defect escape rate, manual testing hours saved. At that point the conversation shifts from 'should we do this' to 'how fast can we scale it.'"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">3️⃣</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">"How do you handle AI QE in a regulated financial environment?"</div>
+          <div class="card-sub">The uniquely Ally question — shows you understand their risk profile</div>
+        </div>
+        <div class="badge b-warn">ALLY-SPECIFIC</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="say">
+          <div class="say-lbl">Your answer</div>
+          <div class="say-txt">"Financial services QE has a higher bar than product QE in three specific ways. First, assertion quality — AI-generated tests for payment flows or interest calculations must assert exact financial values, not just 'transaction completed.' I build validation layers that reject tests with insufficient assertions before they enter the suite.<br><br>
+          Second, data governance — no real customer data ever enters an AI agent's context. Synthetic data generation is not optional here, it's the foundation. I'd build an AI-driven synthetic data pipeline that generates realistic but legally safe financial records for every test scenario.<br><br>
+          Third, audit trail — every agentic test run needs full provenance: model version, prompt version, code version, timestamp. When a regulator asks 'how was this feature tested?' I need a complete, immutable answer in seconds, not hours of archaeology."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">4️⃣</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">"Walk me through a POC you'd build in your first 30 days."</div>
+          <div class="card-sub">Tests execution credibility — can you actually build it?</div>
+        </div>
+        <div class="badge b-blue">TECHNICAL</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="say">
+          <div class="say-lbl">Your answer — make it Ally-specific</div>
+          <div class="say-txt">"I'd target the highest-friction, highest-visibility workflow — probably regression testing for a core banking flow like loan application or payment processing. Here's the POC: I connect Claude Code to the existing test suite and the relevant spec documentation. I run a gap analysis — Claude reads both and outputs every scenario in the spec that has no corresponding automated test. I then have it generate Playwright tests for the top five highest-risk gaps, with financial-precision assertions built in. I run them, measure pass rate and authoring time against the manual baseline, and present the delta to leadership. That's a complete, measurable proof point in under three weeks — with Ally's actual code, not a demo environment."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">5️⃣</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">Questions YOU ask them</div>
+          <div class="card-sub">3–4 smart questions that signal genuine depth</div>
+        </div>
+        <div class="badge b-green">ASK THESE</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <ul class="bl">
+          <li><strong>"Claude Code is listed as a core tool — is it already deployed in the QE environment or is part of my role to implement it?"</strong> — tells you if you're inheriting a setup or building from scratch.</li>
+          <li><strong>"What does the current QE team look like — size, skill level, and how much AI exposure do they already have?"</strong> — scopes your change management challenge immediately.</li>
+          <li><strong>"What's the biggest quality pain point today — where do releases slow down or where do bugs most often escape to production?"</strong> — shows you're already thinking about where to start.</li>
+          <li><strong>"How does the AI Governance Group interact with QE — are there policies I'd need to work within for AI tool usage?"</strong> — signals maturity about regulated AI deployment, not just enthusiasm.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPENING -->
+  <div id="openings" class="pane">
+    <div class="card">
+      <div class="card-hdr" onclick="tog(this.parentElement)">
+        <div class="card-icon">🎯</div>
+        <div class="card-content" style="flex:1">
+          <div class="card-title">Your 90-second opening — practice this out loud</div>
+          <div class="card-sub">Nail this and the interview is already half-won</div>
+        </div>
+        <div class="badge b-red">PRACTICE THIS</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="say">
+          <div class="say-lbl">Say this — then stop</div>
+          <div class="say-txt">"I'm an AI-driven QA leader with 20 years of experience, most recently as Quality Architect at Care.com where I led the transformation from a manual-first to an AI-first QE organization.<br><br>
+          Practically, that meant building LLM-assisted workflows that auto-generate test scripts from design specs — cutting manual authoring time by 60% across 40 engineers. I built MCP integrations connecting Claude directly to Jira, Confluence, and TestRail so agents had live context, not static prompts. And I connected all QA metrics to real-time executive dashboards so leadership saw automation ROI without anyone writing a status report.<br><br>
+          I hold Claude AI Fluency and Google Generative AI Leader certifications. What draws me specifically to this role is the 'Change Agent' framing — because I've learned that the hardest part of AI transformation isn't the technology, it's the adoption. And I've built the playbook for both."</div>
+        </div>
+        <div class="highlight">Three things that make this opening work for Ally specifically: Claude certification is directly relevant to their stack. MCP integrations show you've done real agentic work, not just chatbot prompting. "Change Agent" language mirrors their own JD — they'll notice.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function tog(el){el.classList.toggle('open')}
+</script>

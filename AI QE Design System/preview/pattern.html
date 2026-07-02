@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Pattern</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.card { padding: 0; }
+.hero { aspect-ratio: 700 / 280; background: linear-gradient(135deg, #014D36 0%, #16945A 50%, #4DCC82 100%); border-radius: 0; position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: url("../assets/pattern-organic-circuit.svg"); background-size: 360px; background-position: center; opacity: 0.18; }
+.hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.18) 0%, transparent 60%); }
+.content { position: absolute; inset: 0; padding: 30px 36px; display: flex; flex-direction: column; justify-content: space-between; color: #fff; }
+.eb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.85; }
+.h { font-family: var(--font-display); font-size: 28px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; max-width: 70%; }
+.foot { font-family: var(--font-mono); font-size: 10px; opacity: 0.7; }
+</style></head>
+<body>
+<div class="card">
+  <div class="hero">
+    <div class="content">
+      <div class="eb">Organic Circuit · signature pattern</div>
+      <div>
+        <div class="h">Leaf veins meet PCB traces.</div>
+        <div class="foot">assets/pattern-organic-circuit.svg · use at 6–18% opacity</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

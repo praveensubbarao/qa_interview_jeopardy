@@ -1,0 +1,600 @@
+[
+  {
+    "id": "te1",
+    "category": "technology",
+    "question": "What certification strategy would you oversee for various Align locations and legal manufacturers?",
+    "options": [
+      "Single-Point-of-Contact",
+      "Multi-Site Certification",
+      "Certification Body Management",
+      "Audit Cycle Streamlining"
+    ],
+    "answer": 1,
+    "explanation": "The correct answer is 'Single-Point-of-Contact'. The job description mentions that the candidate would be the single point of contact for communication with QMS certification bodies."
+  },
+  {
+    "id": "te2",
+    "category": "technology",
+    "question": "In a GitHub Action workflow file, which keyword indicates the start of an 'only' block?",
+    "options": [
+      "uses",
+      "with",
+      "only",
+      "steps"
+    ],
+    "answer": 2,
+    "explanation": "The 'only' block is used to filter steps in the workflow file."
+  },
+  {
+    "id": "te3",
+    "category": "technology",
+    "question": "What is the best way to manage release dependencies between multiple backend platforms and mobile applications when using GitHub Actions?",
+    "options": [
+      "Configure separate workflows for each platform",
+      "Use a single workflow with conditional steps based on environment",
+      "Leverage GitHub's built-in dependency management feature",
+      "Implement a custom automation framework"
+    ],
+    "answer": 2,
+    "explanation": "GitHub provides a built-in dependency management feature that allows you to specify dependencies between workflows. This approach ensures that your release process is orchestrated correctly and reduces the complexity of managing multiple workflows."
+  },
+  {
+    "id": "te4",
+    "category": "technology",
+    "question": "In a Jenkins pipeline file, which option correctly specifies the number of executors for a given job?",
+    "options": [
+      "Number Of Nodes",
+      "Node",
+      "Executor Count",
+      "Agent Instances"
+    ],
+    "answer": 2,
+    "explanation": "The Executor Count option sets the number of executors for a job in Jenkins."
+  },
+  {
+    "id": "te5",
+    "category": "technology",
+    "question": "What technology is commonly used to record and replay browser interactions, simplifying automation coding?",
+    "options": [
+      "Appium",
+      "Selenium",
+      "Cypress",
+      "Postman"
+    ],
+    "answer": 2,
+    "explanation": "Cypress simplifies the process of recording and replaying browser interactions, allowing for more efficient and effective test automation."
+  },
+  {
+    "id": "te6",
+    "category": "technology",
+    "question": "What AI-powered coding assistant feature in GitHub does the candidate have hands-on experience with?",
+    "options": [
+      "CodeLens",
+      "IntelliSense",
+      "GitHub Copilot",
+      "Readme"
+    ],
+    "answer": 2,
+    "explanation": "The candidate has mentioned exposure to GitHub Copilot, an AI-powered coding assistant that provides real-time code suggestions and insights."
+  },
+  {
+    "id": "te7",
+    "category": "technology",
+    "question": "Which cloud provider's client-side monitoring library is used to automatically capture Java-specific errors?",
+    "options": [
+      "AWS X-Ray",
+      "Azure Application Insights",
+      "Google Cloud Client Library for Java",
+      "Dynatrace OneAgent"
+    ],
+    "answer": 3,
+    "explanation": "The Google Cloud Client Library for Java includes a client-side monitoring library that can be used to automatically capture Java-specific errors."
+  },
+  {
+    "id": "te8",
+    "category": "technology",
+    "question": "What is the correct Go command to execute an existing binary and pass it a custom flag?",
+    "options": [
+      "go run main.go -flag",
+      "go build -o main /path/to/main go -flapg",
+      "go run -c 1.17 main.go -flag",
+      "go get github.com/example/main(go -flag)"
+    ],
+    "answer": 0,
+    "explanation": "In Go, the correct way to run an existing binary and pass a custom flag is by using the 'go run' command. This command compiles and runs the program in a single step, allowing you to easily pass flags to your binary."
+  },
+  {
+    "id": "te9",
+    "category": "technology",
+    "question": "What technology framework enables you to implement automated visual regression testing using Open CV, which detects changes in user interfaces?",
+    "options": [
+      "Applitools Eyes",
+      "Testim",
+      "Taiko Framework",
+      "Katalon Studio"
+    ],
+    "answer": 0,
+    "explanation": "Applitools Eyes is a popular open-source framework used for automated visual regression testing. It utilizes Open CV to detect changes in user interfaces, enabling the detection of visual differences between two UI states."
+  },
+  {
+    "id": "te10",
+    "category": "technology",
+    "question": "Which dbt (data build tool) configuration file defines transformations and models, but is not executed directly?",
+    "options": [
+      "dbt_project.yml",
+      "dbt_seeds.yml",
+      "dbt_models.yml",
+      "dbt_profiles.yml"
+    ],
+    "answer": 1,
+    "explanation": "The dbt_project.yml file configures the overall project structure and does not execute transformations or models."
+  },
+  {
+    "id": "te11",
+    "category": "technology",
+    "question": "What is straight-through processing (STP) in enterprise platforms, and why is it relevant to QA?",
+    "options": [
+      "A manual review process where every transaction is inspected by a human before approval",
+      "Automated end-to-end processing of low-risk transactions without manual intervention, requiring thorough automation testing",
+      "A database optimization technique for faster query execution in test environments",
+      "A testing methodology where regression suites run sequentially without parallel execution"
+    ],
+    "answer": 1,
+    "explanation": "Straight-through processing automates the complete handling of low-risk transactions from submission to completion without manual review. QA teams must validate the rules engine that determines which transactions qualify for STP and ensure edge cases are routed for manual review."
+  },
+  {
+    "id": "te12",
+    "category": "technology",
+    "question": "What is workflow orchestration in enterprise platforms, and what QA challenge does it introduce?",
+    "options": [
+      "A system that generates test data automatically for integration tests",
+      "Coordination of tasks, approvals, and system actions across multiple departments and services",
+      "A CI/CD pipeline configuration tool for deploying microservices",
+      "A load balancing technique that distributes test execution across multiple machines"
+    ],
+    "answer": 1,
+    "explanation": "Workflow orchestration coordinates tasks, approvals, and automated actions across departments and services. For QA, this creates complex end-to-end testing scenarios where failures at any step can cascade, requiring thorough integration and state transition testing."
+  },
+  {
+    "id": "te13",
+    "category": "technology",
+    "question": "What is OCR (Optical Character Recognition) technology, and what is its primary QA testing concern?",
+    "options": [
+      "A network protocol for secure file transfers between testing environments",
+      "Technology that converts scanned documents into searchable digital text, requiring accuracy validation across document types",
+      "An automated code review tool that scans source code for vulnerabilities",
+      "A monitoring solution that captures on-screen errors during manual testing"
+    ],
+    "answer": 1,
+    "explanation": "OCR converts scanned or photographed documents into machine-readable text. QA must validate recognition accuracy across different document qualities, fonts, languages, and formats, as well as test error handling for unreadable or ambiguous characters."
+  },
+  {
+    "id": "te14",
+    "category": "technology",
+    "question": "What is cloud-native architecture, and which testing consideration is most critical for QA teams?",
+    "options": [
+      "Applications hosted on any cloud provider, requiring only browser compatibility testing",
+      "Architecture designed for scalability and resilience using containers and orchestration, requiring resilience and chaos testing",
+      "Legacy applications migrated to virtual machines in the cloud, requiring only smoke testing",
+      "A deployment model where all services share a single database, simplifying data validation testing"
+    ],
+    "answer": 1,
+    "explanation": "Cloud-native architecture is designed for scalability, resilience, and modern deployment using containers, orchestration, and distributed systems. QA must test auto-scaling behavior, failover scenarios, and service resilience through approaches like chaos engineering."
+  },
+  {
+    "id": "te15",
+    "category": "technology",
+    "question": "What are microservices, and what unique testing challenge do they introduce compared to monolithic applications?",
+    "options": [
+      "Small teams that each own a single test suite, requiring team coordination testing",
+      "Independent services that communicate via APIs, requiring contract testing and distributed system validation",
+      "Miniature versions of production systems used exclusively for performance testing",
+      "Pre-built software modules that eliminate the need for unit testing"
+    ],
+    "answer": 1,
+    "explanation": "Microservices split large applications into smaller, independently deployable services that communicate via APIs. This introduces testing challenges around service contract validation, distributed transaction consistency, network failure handling, and end-to-end integration across service boundaries."
+  },
+  {
+    "id": "te16",
+    "category": "technology",
+    "question": "What is a rules engine in an enterprise platform, and how should QA approach testing it?",
+    "options": [
+      "A code linting tool that enforces coding standards, tested by running static analysis",
+      "A system that automatically applies configurable business logic and approval criteria, requiring combinatorial testing of rule interactions",
+      "A project management tool that assigns tasks based on team capacity",
+      "A database constraint system that prevents invalid data entry, tested through schema validation"
+    ],
+    "answer": 1,
+    "explanation": "Rules engines automatically apply business logic, approval criteria, and routing decisions based on configurable rules. QA must test individual rules, rule interactions, priority conflicts, boundary conditions, and the impact of rule changes on existing workflows."
+  },
+  {
+    "id": "te17",
+    "category": "technology",
+    "question": "How is AI used in enterprise platforms for risk assessment and decision-making?",
+    "options": [
+      "AI replaces all human decision-making with fully autonomous approval workflows",
+      "AI analyzes financial data, detects anomalies, prioritizes risks, and improves decision accuracy while humans validate outcomes",
+      "AI is limited to generating test reports and dashboards for management review",
+      "AI only handles chatbot interactions and has no role in backend processing"
+    ],
+    "answer": 1,
+    "explanation": "AI in enterprise platforms analyzes financial data, detects anomalies, prioritizes risks, and improves decision accuracy. QA teams must validate AI model outputs, test for bias, verify explainability of decisions, and ensure human-in-the-loop oversight remains functional."
+  },
+  {
+    "id": "te18",
+    "category": "technology",
+    "question": "What is e-signature technology integration, and what must QA validate?",
+    "options": [
+      "A biometric scanning system requiring only hardware compatibility testing",
+      "Technology that enables legal electronic signing of documents, requiring validation of signing workflows, audit trails, and compliance",
+      "An email notification system that alerts users when documents are ready",
+      "A version control system for tracking document changes over time"
+    ],
+    "answer": 1,
+    "explanation": "E-signature technology allows legally binding electronic signing of documents. QA must validate the signing workflow, signer authentication, document integrity after signing, audit trail completeness, multi-party signing sequences, and compliance with electronic signature regulations."
+  },
+  {
+    "id": "te19",
+    "category": "technology",
+    "question": "What is data validation in enterprise systems, and why is it a high-priority QA focus area?",
+    "options": [
+      "The process of backing up data to prevent loss, requiring backup verification tests",
+      "Ensuring submitted information is accurate, complete, and consistent across systems, preventing downstream processing errors",
+      "Converting data between different file formats for cross-system compatibility",
+      "Encrypting sensitive data fields to meet security compliance requirements"
+    ],
+    "answer": 1,
+    "explanation": "Data validation ensures that submitted information is accurate, complete, and conforms to expected formats and business rules. QA must test validation rules for boundary conditions, required fields, cross-field dependencies, and error messaging for invalid submissions."
+  },
+  {
+    "id": "te20",
+    "category": "technology",
+    "question": "When modernizing a legacy enterprise platform, which approach combines the most critical technical strategies?",
+    "options": [
+      "Rewriting the entire application from scratch in a single release cycle",
+      "Cloud migration, API-first design, workflow automation, analytics integration, and AI-assisted processing",
+      "Simply upgrading the existing database and adding a new front-end UI layer",
+      "Outsourcing all development to a third-party vendor while maintaining the existing architecture"
+    ],
+    "answer": 1,
+    "explanation": "Legacy platform modernization typically combines cloud migration for scalability, API-first design for integration, workflow automation for efficiency, analytics for data-driven decisions, and AI for intelligent processing. QA must test each layer and their interactions during phased migration."
+  },
+  {
+    "id": "te21",
+    "category": "technology",
+    "question": "What is chaos engineering in a QE context, and what is its primary goal?",
+    "options": [
+      "Randomly deleting test data to verify backup procedures work correctly",
+      "Intentionally injecting failures into a system to verify it can withstand turbulent conditions and recover gracefully",
+      "Running tests in random order to find hidden dependencies between test cases",
+      "Generating random user input to test application boundary conditions"
+    ],
+    "answer": 1,
+    "explanation": "Chaos engineering intentionally injects failures (network latency, pod crashes, disk pressure) into production-like environments to verify the system degrades gracefully. Tools like Chaos Monkey and Litmus help QE teams validate resilience before real incidents occur."
+  },
+  {
+    "id": "te22",
+    "category": "technology",
+    "question": "How do you test Kubernetes pod autoscaling behavior under load?",
+    "options": [
+      "Manually increase the replica count and observe if the application handles more traffic",
+      "Generate sustained load exceeding current capacity, then monitor HPA metrics, pod spin-up time, load balancer registration, and graceful scale-down after the load subsides",
+      "Disable autoscaling and test with the maximum number of replicas pre-provisioned",
+      "Only test autoscaling in production since lower environments lack realistic traffic patterns"
+    ],
+    "answer": 1,
+    "explanation": "Testing autoscaling requires generating load that triggers the Horizontal Pod Autoscaler, then validating the full cycle: metric threshold breach, new pod scheduling, readiness probe passing, load balancer registration, traffic distribution, and graceful scale-down with connection draining."
+  },
+  {
+    "id": "te23",
+    "category": "technology",
+    "question": "How is Dynatrace used during and after a performance test?",
+    "options": [
+      "Only for generating HTML performance reports after the test completes",
+      "To replace the load generator by simulating virtual users directly from the APM platform",
+      "During the test to trace distributed transactions in real time and pinpoint bottlenecks; after the test to compare baselines and identify regression trends",
+      "Exclusively for monitoring infrastructure CPU and memory, not application-level metrics"
+    ],
+    "answer": 2,
+    "explanation": "During a performance test, Dynatrace PurePath traces every transaction end-to-end across microservices, revealing which service and method is the bottleneck. After the test, baseline comparison highlights regressions between builds and informs tuning priorities."
+  },
+  {
+    "id": "te24",
+    "category": "technology",
+    "question": "How do you use Splunk to correlate application logs with performance test events?",
+    "options": [
+      "Export Splunk logs to a spreadsheet and manually match timestamps with load test events",
+      "Use Splunk only for security log analysis, not performance correlation",
+      "Tag load test phases with unique identifiers, then query Splunk to correlate log patterns, error spikes, and latency changes to specific test ramp stages",
+      "Replace Splunk with the load generator's built-in log viewer for simpler correlation"
+    ],
+    "answer": 2,
+    "explanation": "Injecting unique test run identifiers into log entries allows Splunk queries to isolate logs from a specific test phase. Correlating error rate spikes and slow query logs with ramp-up stages reveals bottlenecks that aggregate metrics alone would miss."
+  },
+  {
+    "id": "te25",
+    "category": "technology",
+    "question": "What are quality gates in a CI/CD pipeline, and how should they be enforced?",
+    "options": [
+      "Manual approval steps where a QA manager reviews every build before deployment",
+      "Automated checkpoints that enforce pass/fail criteria (test pass rate, code coverage, security scan results, performance thresholds) and block deployment if any criteria fail",
+      "Weekly scheduled review meetings where the team decides which builds can be promoted",
+      "Dashboard reports that show quality trends but do not block any deployments"
+    ],
+    "answer": 1,
+    "explanation": "Quality gates are automated pipeline checkpoints that enforce measurable criteria before a build progresses. Effective gates include unit test pass rate, minimum code coverage, zero critical security vulnerabilities, and performance thresholds — all enforced programmatically to prevent human bypass."
+  },
+  {
+    "id": "te26",
+    "category": "technology",
+    "question": "What is the purpose of a code review process within a QA automation team?",
+    "options": [
+      "To ensure all test scripts follow the same naming convention and nothing else",
+      "To catch logic errors, enforce framework conventions, share knowledge across the team, and prevent test debt accumulation",
+      "To slow down the development process so fewer changes are released per sprint",
+      "To replace automated linting tools with manual inspection of every line of code"
+    ],
+    "answer": 1,
+    "explanation": "Code reviews in QA teams catch flaky locator strategies, missing assertions, poor test isolation, and framework anti-patterns. They also serve as a knowledge-sharing mechanism, ensuring the team collectively understands the automation codebase rather than relying on individual ownership."
+  },
+  {
+    "id": "te27",
+    "category": "technology",
+    "question": "What is Infrastructure as Code (IaC) and how does it relate to quality engineering?",
+    "options": [
+      "Writing application code that runs on cloud infrastructure instead of local servers",
+      "Managing and provisioning test environments through machine-readable definition files, enabling reproducible, version-controlled environments",
+      "A technique for writing test scripts that interact directly with cloud provider APIs",
+      "A methodology where infrastructure teams write the test automation code instead of QA"
+    ],
+    "answer": 1,
+    "explanation": "IaC tools like Terraform and Pulumi define environments as code, enabling QA to spin up identical test environments on demand, version-control environment configurations, and eliminate environment drift as a source of test failures."
+  },
+  {
+    "id": "te28",
+    "category": "technology",
+    "question": "How do you test non-deterministic AI agent behavior where the same input may not produce the same output?",
+    "options": [
+      "Run each test once and accept whatever output the AI produces as correct",
+      "Disable the AI model's randomness parameter and test only deterministic outputs",
+      "Use semantic validation (intent matching, constraint checking, output boundary assertions) instead of exact string matching, and run statistical sampling across multiple executions",
+      "Test the AI model only in isolation using unit tests and skip integration testing entirely"
+    ],
+    "answer": 2,
+    "explanation": "Non-deterministic AI outputs require testing strategies that validate intent rather than exact matches. Semantic assertions check that outputs meet constraints (correct format, relevant content, within safety guardrails) while statistical sampling detects inconsistency patterns across multiple runs."
+  },
+  {
+    "id": "te29",
+    "category": "technology",
+    "question": "What is contract testing and when is it essential in a microservices architecture?",
+    "options": [
+      "Testing legal contracts and terms of service pages for accuracy and completeness",
+      "Verifying that API consumers and providers agree on the request/response schema, preventing breaking changes when services deploy independently",
+      "Testing network connectivity contracts between cloud regions to ensure latency SLAs are met",
+      "Validating that third-party vendor API pricing contracts match the billing dashboard"
+    ],
+    "answer": 1,
+    "explanation": "Contract testing (using tools like Pact) verifies that API consumers and providers share a mutual understanding of the API contract. It catches breaking changes before deployment, which is critical when microservices are deployed independently by different teams."
+  },
+  {
+    "id": "te30",
+    "category": "technology",
+    "question": "How do you test feature flags (e.g., LaunchDarkly) in a CI/CD pipeline?",
+    "options": [
+      "Feature flags do not need testing because they only control UI visibility",
+      "Test all code paths for both flag-on and flag-off states, validate flag-dependent behavior in automated tests, and ensure stale flags are cleaned up to prevent technical debt",
+      "Only test the flag-on state since that represents the new feature being shipped",
+      "Test feature flags manually in a staging environment after deployment"
+    ],
+    "answer": 1,
+    "explanation": "Feature flag testing must cover both states (on/off), the transition between states, and combinations with other flags. Automated tests should parameterize flag states. Stale flags that remain in code after full rollout create hidden complexity and should be tracked for cleanup."
+  },
+  {
+    "id": "te31",
+    "category": "technology",
+    "question": "What is OpenTelemetry and how does it integrate with QE practices?",
+    "options": [
+      "A test automation framework for generating end-to-end tests from API specifications",
+      "An open-source observability framework that provides standardized APIs for collecting traces, metrics, and logs, giving QE teams production-quality signals for test validation",
+      "A communication protocol for sending test results between CI/CD pipeline stages",
+      "A cloud-native database designed specifically for storing test execution history"
+    ],
+    "answer": 1,
+    "explanation": "OpenTelemetry provides vendor-neutral instrumentation for distributed tracing, metrics, and logging. QE teams use it to validate that services emit correct telemetry, correlate test failures with trace data, and ensure observability coverage matches critical user journeys."
+  },
+  {
+    "id": "te32",
+    "category": "technology",
+    "question": "What is the difference between SLOs (Service Level Objectives) and SLIs (Service Level Indicators)?",
+    "options": [
+      "SLOs and SLIs are the same thing with different names used by different teams",
+      "SLOs are the target thresholds a service aims to meet; SLIs are the actual measured metrics that track whether the SLO is being achieved",
+      "SLOs are defined by the QA team; SLIs are defined by the operations team",
+      "SLOs apply only to production environments; SLIs apply only to test environments"
+    ],
+    "answer": 1,
+    "explanation": "SLIs are the concrete measurements (e.g., request latency, error rate, availability percentage). SLOs are the target values for those measurements (e.g., p99 latency under 200ms, 99.9% availability). QE teams validate that applications meet SLOs by asserting against SLIs in pipelines."
+  },
+  {
+    "id": "te33",
+    "category": "technology",
+    "question": "What guardrails should you build around AI-assisted test generation at enterprise scale?",
+    "options": [
+      "No guardrails are needed since AI-generated tests are inherently more reliable than human-written tests",
+      "Only allow AI to generate unit tests, never integration or end-to-end tests",
+      "Human review of generated tests, validation that tests follow framework conventions, deduplication checks against existing coverage, and assertion quality verification",
+      "Restrict AI test generation to a single approved LLM vendor to simplify procurement"
+    ],
+    "answer": 2,
+    "explanation": "AI-generated tests can have shallow assertions, duplicate existing coverage with different wording, or violate framework conventions. Guardrails include mandatory human review, convention linting, semantic deduplication against the existing suite, and verification that assertions test meaningful behavior."
+  },
+  {
+    "id": "te34",
+    "category": "technology",
+    "question": "How do you optimize an existing test automation framework that has become slow or flaky?",
+    "options": [
+      "Rewrite the entire framework from scratch using the latest tool",
+      "Increase the test timeout values so flaky tests have more time to pass",
+      "Analyze failure patterns to categorize flakiness sources, parallelize independent tests, fix shared state issues, replace brittle locators, and add retry logic only where infrastructure instability is the root cause",
+      "Delete all failing tests and only keep the ones that consistently pass"
+    ],
+    "answer": 2,
+    "explanation": "Framework optimization starts with root cause analysis of failures: environment issues, shared test state, timing-dependent assertions, or brittle selectors. Parallelization, test isolation, stable locator strategies, and targeted retries address specific categories without masking real defects."
+  },
+  {
+    "id": "te35",
+    "category": "technology",
+    "question": "What is the primary architectural goal when designing test automation for a large-scale CI/CD pipeline?",
+    "options": [
+      "Maximize the total number of test cases to achieve comprehensive coverage",
+      "Fast feedback loops, parallelization, environment isolation, and determinism with no shared state between tests",
+      "Run all tests sequentially to ensure accurate reporting of failures",
+      "Focus automation exclusively on E2E tests since they provide the most business value"
+    ],
+    "answer": 1,
+    "explanation": "A well-designed test automation architecture prioritizes fast feedback (unit/lint under 5 min), parallel execution via sharding, containerized environment isolation per test run, and deterministic tests with no shared state between them."
+  },
+  {
+    "id": "te36",
+    "category": "technology",
+    "question": "What is the most effective architectural solution for eliminating flaky tests caused by timing issues?",
+    "options": [
+      "Add longer sleep() calls to give the application more time to respond",
+      "Run the test multiple times and accept it if it passes at least once",
+      "Use explicit wait conditions that poll for expected state changes instead of arbitrary sleep durations",
+      "Move all flaky tests to a nightly run where timing is less critical"
+    ],
+    "answer": 2,
+    "explanation": "Flaky tests caused by timing issues should be fixed with explicit wait conditions (e.g., Playwright auto-wait) that poll until the expected state is reached, rather than arbitrary sleep() calls which are unreliable and slow."
+  },
+  {
+    "id": "te37",
+    "category": "technology",
+    "question": "When evaluating test automation tools for an organization, what approach provides the most reliable basis for decision-making?",
+    "options": [
+      "Select the tool with the highest market share based on industry analyst reports",
+      "Choose the tool recommended by the engineering team's most senior developer",
+      "Run a time-boxed proof of concept with the same test scenarios in each candidate tool and compare results",
+      "Select the tool with the lowest licensing cost to maximize budget efficiency"
+    ],
+    "answer": 2,
+    "explanation": "A PoC (proof of concept) with identical test scenarios across candidate tools provides data-driven evidence for tool selection, evaluating real-world capabilities like cross-browser support, debugging experience, and team onboarding rather than relying on marketing claims."
+  },
+  {
+    "id": "te38",
+    "category": "technology",
+    "question": "What is the primary purpose of service virtualization in a CI pipeline?",
+    "options": [
+      "To create virtual machines for each test run to improve isolation",
+      "To simulate dependent services that are unavailable, unstable, or costly in test environments",
+      "To run tests on virtual browsers instead of real ones for faster execution",
+      "To compress test artifacts for faster storage and retrieval"
+    ],
+    "answer": 1,
+    "explanation": "Service virtualization simulates the behavior of dependent components like third-party APIs, payment processors, or databases, enabling tests to run independently of external dependencies that may be unavailable, unstable, or expensive to call in CI pipelines."
+  },
+  {
+    "id": "te39",
+    "category": "technology",
+    "question": "When does a Page Object Model (POM) become an anti-pattern, and what alternative should be considered?",
+    "options": [
+      "POM is never an anti-pattern; it is always the best practice for any UI automation project",
+      "When page objects become God classes with embedded test logic; consider the Screenplay pattern for better separation of concerns",
+      "When the application has fewer than 10 pages; use raw selectors instead for simplicity",
+      "When running tests in parallel, since POM cannot handle concurrent access to page elements"
+    ],
+    "answer": 1,
+    "explanation": "POM becomes an anti-pattern when page objects grow into God classes containing conditional test logic. The Screenplay pattern (Actors, Tasks, Questions) provides better separation of concerns for complex flows, especially in component-based applications."
+  },
+  {
+    "id": "te40",
+    "category": "technology",
+    "question": "What is the most effective approach to cross-browser test strategy when CI suite execution time is a constraint?",
+    "options": [
+      "Run all tests on all browser/OS combinations on every build to ensure maximum coverage",
+      "Test only on Chrome since it has the largest market share and skip all other browsers",
+      "Use analytics data to tier browser/OS combinations: full regression on Tier 1 in CI, smoke tests on Tier 2 nightly, and exploratory on Tier 3",
+      "Randomly select different browsers for each CI run to distribute coverage over time"
+    ],
+    "answer": 2,
+    "explanation": "A risk-based cross-browser strategy uses real user analytics to prioritize. Tier 1 browsers (80%+ users) get full regression in CI, Tier 2 (next 15%) get nightly smoke tests, and Tier 3 (remaining) get periodic exploratory testing."
+  },
+  {
+    "id": "te41",
+    "category": "technology",
+    "question": "How should test suites be parallelized to reduce CI pipeline execution time?",
+    "options": [
+      "Run all tests in a single thread but on a faster machine with more CPU cores",
+      "Shard test suites by file, by tag, or by historical timing data across multiple parallel jobs",
+      "Only parallelize E2E tests since unit tests are already fast enough",
+      "Use test prioritization to run only the most important tests and skip the rest"
+    ],
+    "answer": 1,
+    "explanation": "Test parallelization works by sharding suites across multiple jobs. Sharding can be done by file, by tag grouping, or by timing history (balancing shard duration). This approach reduced one team's suite from 90 minutes to 8 minutes."
+  },
+  {
+    "id": "te42",
+    "category": "technology",
+    "question": "What is a flaky test quarantine mechanism and why is it important for CI reliability?",
+    "options": [
+      "A system that automatically deletes tests that fail more than three times",
+      "A process where flaky tests are tagged and isolated so they do not block builds, while being tracked for resolution",
+      "A setting that reruns failed tests up to five times before marking them as failures",
+      "A dashboard that displays all test results regardless of flakiness status"
+    ],
+    "answer": 1,
+    "explanation": "A flaky test quarantine mechanism tags tests identified as non-deterministic, excludes them from build-blocking gates, and routes them for investigation. This prevents teams from ignoring CI signals due to known flaky failures while tracking them as a metric."
+  },
+  {
+    "id": "te43",
+    "category": "technology",
+    "question": "What artifact strategy is recommended for test failures in CI pipelines?",
+    "options": [
+      "Capture screenshots, videos, and traces for every test run regardless of outcome",
+      "Never capture artifacts since they consume storage and slow down pipelines",
+      "Capture screenshots, videos, and traces only on failure to balance debugging capability with pipeline performance",
+      "Only capture console logs since visual artifacts are not useful for debugging"
+    ],
+    "answer": 2,
+    "explanation": "Best practice is to capture debugging artifacts (screenshots, videos, traces) only on failure. This balances having rich diagnostic data when needed with not bloating storage or slowing pipelines on passing tests."
+  },
+  {
+    "id": "te44",
+    "category": "technology",
+    "question": "What distinguishes a Component Object Model from a Page Object Model in test automation for React or Vue applications?",
+    "options": [
+      "Component Object Model is the COM interface used in Windows programming",
+      "Component Object Model maps to individual reusable UI components rather than entire pages, enabling composition and reuse",
+      "Component Object Model is just a different name for Page Object Model used in mobile testing",
+      "Component Object Model requires a specific testing framework while POM works with any framework"
+    ],
+    "answer": 1,
+    "explanation": "In component-based applications (React, Vue, Angular), a Component Object Model maps each reusable UI component to a test object. Unlike page-level POM, these composable objects mirror the component hierarchy and enable more maintainable tests."
+  },
+  {
+    "id": "te45",
+    "category": "technology",
+    "question": "What is the recommended approach when CI tests need to interact with third-party payment processing APIs?",
+    "options": [
+      "Call the real payment API in every test run to ensure maximum fidelity",
+      "Skip payment-related tests entirely in CI and run them manually before release",
+      "Use WireMock to record real API responses and replay them in CI, avoiding costs and external dependency",
+      "Use only unit tests for payment flows and never test the integration layer"
+    ],
+    "answer": 2,
+    "explanation": "WireMock record/replay allows recording real payment API responses once and replaying them in CI. This eliminates per-call costs, removes dependency on external service availability, and makes tests deterministic and fast."
+  },
+  {
+    "id": "te46",
+    "category": "technology",
+    "question": "In a cloud-native application, what is the key concern when testing auto-scaling behavior?",
+    "options": [
+      "That the application can handle more users when manually adding servers",
+      "That auto-scaling responds fast enough to prevent degradation during traffic spikes, including measuring scale-out latency",
+      "That the application uses the minimum number of servers possible to reduce cost",
+      "That load balancers distribute traffic equally across all instances"
+    ],
+    "answer": 1,
+    "explanation": "Auto-scaling has inherent lag that can cause outages during traffic spikes. Testing must measure scale-out latency (time from trigger to new instances serving traffic) and verify that error rates remain within SLO during the scaling window."
+  }
+]

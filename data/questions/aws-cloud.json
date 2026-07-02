@@ -1,0 +1,587 @@
+[
+  {
+    "id": "ac1",
+    "category": "aws-cloud",
+    "question": "What is the primary purpose of AWS Glue crawlers in the context of ETL testing?",
+    "options": [
+      "To execute unit tests on Lambda functions",
+      "To automatically discover and catalog data schemas from source data stores",
+      "To monitor CloudWatch metrics for data pipelines",
+      "To deploy infrastructure using CloudFormation"
+    ],
+    "answer": 1,
+    "explanation": "AWS Glue crawlers scan data stores (S3, JDBC sources, etc.) and automatically populate the Glue Data Catalog with table definitions and schema metadata. Testing crawlers involves verifying that discovered schemas match expected column names, types, and partition structures."
+  },
+  {
+    "id": "ac2",
+    "category": "aws-cloud",
+    "question": "When testing an AWS Glue ETL job, which validation is MOST critical before promoting to production?",
+    "options": [
+      "Verifying the job's IAM role has admin access",
+      "Confirming row counts, data types, and null handling match expected transformation rules",
+      "Ensuring the Glue job uses the maximum number of DPUs",
+      "Checking that the job name follows a naming convention"
+    ],
+    "answer": 1,
+    "explanation": "ETL testing must validate that transformations produce correct output — row counts, data type conversions, null/default handling, and business rule application. Functional correctness of the data transformation is the highest-priority validation."
+  },
+  {
+    "id": "ac3",
+    "category": "aws-cloud",
+    "question": "In Amazon Redshift, which SQL pattern is commonly used for data quality validation after an ETL load?",
+    "options": [
+      "VACUUM SORT ONLY on all tables",
+      "SELECT COUNT(*) with GROUP BY and HAVING clauses to detect duplicates or anomalies",
+      "ALTER TABLE to add new sort keys",
+      "COPY command with MAXERROR set to zero"
+    ],
+    "answer": 1,
+    "explanation": "Data quality checks in Redshift commonly use aggregate queries with GROUP BY and HAVING to detect duplicates, orphaned records, null violations, and value range anomalies. These SQL assertions form the backbone of post-load validation."
+  },
+  {
+    "id": "ac4",
+    "category": "aws-cloud",
+    "question": "What is the recommended approach for testing AWS Lambda functions locally before deployment?",
+    "options": [
+      "Deploy directly to production and test with live traffic",
+      "Use AWS SAM CLI (sam local invoke) to emulate the Lambda runtime locally",
+      "Write tests that call the Lambda function through API Gateway only",
+      "Use AWS CloudFormation drift detection"
+    ],
+    "answer": 1,
+    "explanation": "AWS SAM CLI provides 'sam local invoke' and 'sam local start-api' commands that emulate the Lambda execution environment locally using Docker containers. This enables rapid iteration and testing without deploying to AWS."
+  },
+  {
+    "id": "ac5",
+    "category": "aws-cloud",
+    "question": "When testing an AWS Step Functions workflow, what does the TestState API allow you to do?",
+    "options": [
+      "Run the entire state machine end-to-end in production",
+      "Test a single state in isolation by providing input and inspecting output and error handling",
+      "Automatically generate unit tests from the state machine definition",
+      "Deploy the state machine to a staging account"
+    ],
+    "answer": 1,
+    "explanation": "The Step Functions TestState API lets you test individual states without executing the entire workflow. You provide input to a specific state and verify its output, error handling, and result path transformations in isolation."
+  },
+  {
+    "id": "ac6",
+    "category": "aws-cloud",
+    "question": "In Amazon SageMaker, what is the purpose of a model validation step in a ML pipeline?",
+    "options": [
+      "To retrain the model with new hyperparameters",
+      "To evaluate model accuracy, precision, recall, and bias metrics against acceptance thresholds before deployment",
+      "To convert the model artifact to a Docker image",
+      "To create an endpoint configuration for A/B testing"
+    ],
+    "answer": 1,
+    "explanation": "Model validation in SageMaker pipelines evaluates trained models against held-out test data, computing metrics like accuracy, F1 score, and fairness/bias indicators. Only models meeting predefined thresholds are approved for deployment."
+  },
+  {
+    "id": "ac7",
+    "category": "aws-cloud",
+    "question": "What is the primary challenge when testing Amazon QuickSight dashboards?",
+    "options": [
+      "QuickSight cannot connect to any AWS data sources",
+      "Visual rendering validation requires end-to-end testing since QuickSight lacks a comprehensive API for visual assertions",
+      "QuickSight dashboards cannot be shared with other users",
+      "QuickSight only supports CSV file uploads"
+    ],
+    "answer": 1,
+    "explanation": "QuickSight dashboards involve visual elements (charts, filters, drill-downs) that are difficult to validate programmatically. Testing typically requires verifying underlying dataset queries, checking calculated field logic, and performing visual regression testing on rendered dashboards."
+  },
+  {
+    "id": "ac8",
+    "category": "aws-cloud",
+    "question": "When testing Spark jobs on Amazon EMR, which practice helps ensure reproducible test results?",
+    "options": [
+      "Running all tests against the production EMR cluster",
+      "Using fixed sample datasets and comparing output against known expected results (golden files)",
+      "Skipping unit tests and relying solely on integration tests",
+      "Using random data for every test run"
+    ],
+    "answer": 1,
+    "explanation": "Reproducible Spark testing uses deterministic sample datasets with pre-computed expected outputs (golden files). This enables comparing actual job output against known-correct results, ensuring transformations work correctly regardless of cluster configuration."
+  },
+  {
+    "id": "ac9",
+    "category": "aws-cloud",
+    "question": "Which AWS service evaluates resources against best-practice rules and compliance standards like CIS Benchmarks?",
+    "options": [
+      "AWS CloudTrail",
+      "AWS Config Rules",
+      "Amazon Inspector",
+      "AWS Trusted Advisor"
+    ],
+    "answer": 1,
+    "explanation": "AWS Config Rules continuously evaluate AWS resource configurations against desired settings and compliance standards such as CIS Benchmarks. Non-compliant resources are flagged, enabling automated remediation workflows."
+  },
+  {
+    "id": "ac10",
+    "category": "aws-cloud",
+    "question": "What is the key difference between schema testing and data quality testing?",
+    "options": [
+      "Schema testing is only for relational databases; data quality testing is only for NoSQL",
+      "Schema testing validates structure (column names, types, constraints) while data quality testing validates actual data values and business rules",
+      "Schema testing is automated; data quality testing must always be manual",
+      "There is no difference; the terms are interchangeable"
+    ],
+    "answer": 1,
+    "explanation": "Schema testing checks structural correctness — column names, data types, nullability constraints, and foreign keys. Data quality testing validates the actual data content — completeness, accuracy, consistency, uniqueness, and adherence to business rules."
+  },
+  {
+    "id": "ac11",
+    "category": "aws-cloud",
+    "question": "In a data pipeline flowing from S3 to Redshift, which E2E test checkpoint validates that data landed correctly in the warehouse?",
+    "options": [
+      "Checking that the S3 PUT event was logged in CloudTrail",
+      "Running row count reconciliation and sample record comparison between the S3 source and the Redshift target table",
+      "Verifying the VPC peering connection is active",
+      "Confirming the Redshift cluster has auto-scaling enabled"
+    ],
+    "answer": 1,
+    "explanation": "End-to-end pipeline testing compares source and target data to verify completeness and accuracy. Row count reconciliation ensures no data loss, while sample record comparisons verify that transformations were applied correctly during the S3-to-Redshift load."
+  },
+  {
+    "id": "ac12",
+    "category": "aws-cloud",
+    "question": "What approach is recommended for generating test data for big data platforms?",
+    "options": [
+      "Always copy full production data to the test environment",
+      "Use synthetic data generators that mimic production data distributions while avoiding real PII",
+      "Use only empty datasets to test edge cases",
+      "Manually create test records one at a time"
+    ],
+    "answer": 1,
+    "explanation": "Synthetic data generators create realistic test datasets that match production data distributions, cardinalities, and edge cases without containing actual PII. Tools like Faker, Great Expectations, or custom generators produce scalable, safe test data."
+  },
+  {
+    "id": "ac13",
+    "category": "aws-cloud",
+    "question": "What does Infrastructure as Code (IaC) enable for QE teams?",
+    "options": [
+      "Eliminates the need for any testing of infrastructure",
+      "Allows test environments to be provisioned consistently and version-controlled alongside application code",
+      "Replaces all application-level testing with infrastructure testing",
+      "Requires manual approval for every resource change"
+    ],
+    "answer": 1,
+    "explanation": "IaC lets QE teams define test environments as code (CloudFormation, Terraform, CDK), ensuring consistent, reproducible environments. Infrastructure definitions are version-controlled, peer-reviewed, and can be spun up/torn down on demand for testing."
+  },
+  {
+    "id": "ac14",
+    "category": "aws-cloud",
+    "question": "In AWS CDK, what are 'assertions' used for in testing?",
+    "options": [
+      "To verify runtime application behavior",
+      "To validate that synthesized CloudFormation templates contain expected resources, properties, and configurations",
+      "To check that CDK code compiles without errors",
+      "To monitor deployed stack health"
+    ],
+    "answer": 1,
+    "explanation": "CDK assertions (from aws-cdk-lib/assertions) let you write unit tests against the synthesized CloudFormation template. You can verify specific resources exist, check property values, count resource types, and validate IAM policies without deploying."
+  },
+  {
+    "id": "ac15",
+    "category": "aws-cloud",
+    "question": "Which CDK test type validates that a synthesized template matches a previously approved baseline?",
+    "options": [
+      "Integration test",
+      "Snapshot test",
+      "Load test",
+      "Canary test"
+    ],
+    "answer": 1,
+    "explanation": "Snapshot tests in CDK compare the current synthesized CloudFormation template against a stored baseline. If the template changes unexpectedly, the test fails, preventing unintended infrastructure drift from being deployed."
+  },
+  {
+    "id": "ac16",
+    "category": "aws-cloud",
+    "question": "What is the role of Amazon EventBridge in event-driven architecture testing?",
+    "options": [
+      "It stores test artifacts in S3",
+      "It routes events between AWS services based on rules, and its event patterns and routing logic must be tested to ensure correct event delivery",
+      "It replaces the need for API Gateway",
+      "It provides a SQL interface for querying events"
+    ],
+    "answer": 1,
+    "explanation": "EventBridge routes events between producers and consumers based on pattern-matching rules. Testing must verify that event patterns match correctly, rules route to the right targets, input transformations work, and dead-letter queues capture failures."
+  },
+  {
+    "id": "ac17",
+    "category": "aws-cloud",
+    "question": "When testing an SNS/SQS messaging integration, what is a critical test scenario?",
+    "options": [
+      "Verifying that SNS topics have public access",
+      "Validating message delivery, ordering (for FIFO queues), retry behavior, and dead-letter queue routing on failure",
+      "Testing that SQS queues have unlimited retention",
+      "Checking that all messages are encrypted with customer-managed keys"
+    ],
+    "answer": 1,
+    "explanation": "SNS/SQS testing must cover message delivery guarantees, FIFO ordering when applicable, consumer retry/backoff behavior, dead-letter queue (DLQ) routing for poison messages, and message attribute filtering. These ensure reliable event-driven communication."
+  },
+  {
+    "id": "ac18",
+    "category": "aws-cloud",
+    "question": "What is the recommended strategy for testing DynamoDB tables in isolation?",
+    "options": [
+      "Always test against production DynamoDB tables",
+      "Use DynamoDB Local or test containers to run a local DynamoDB instance for unit and integration tests",
+      "Skip DynamoDB testing entirely since it is a managed service",
+      "Use only Redshift to test DynamoDB data"
+    ],
+    "answer": 1,
+    "explanation": "DynamoDB Local (or Docker-based alternatives like localstack) provides a local emulation of DynamoDB for testing. This enables fast, isolated unit and integration tests for CRUD operations, query patterns, and GSI behavior without incurring AWS costs."
+  },
+  {
+    "id": "ac19",
+    "category": "aws-cloud",
+    "question": "How can CloudWatch Logs Insights be used for test diagnosis?",
+    "options": [
+      "It replaces the need for test assertions",
+      "It allows querying structured log data across log groups to identify errors, latency patterns, and failure root causes in test runs",
+      "It only works with EC2 instance logs",
+      "It can only display logs from the last 5 minutes"
+    ],
+    "answer": 1,
+    "explanation": "CloudWatch Logs Insights provides a SQL-like query language for searching and analyzing log data across multiple log groups. QE teams use it to correlate errors, measure latency distributions, and diagnose test failures by filtering on request IDs, error codes, or timestamps."
+  },
+  {
+    "id": "ac20",
+    "category": "aws-cloud",
+    "question": "What does AWS X-Ray provide for distributed tracing in a QE context?",
+    "options": [
+      "X-Ray only monitors EC2 CPU utilization",
+      "X-Ray traces requests across microservices, showing latency at each hop to help identify performance bottlenecks and failure points in distributed systems",
+      "X-Ray is a code coverage tool for Lambda functions",
+      "X-Ray replaces CloudWatch Alarms entirely"
+    ],
+    "answer": 1,
+    "explanation": "AWS X-Ray collects trace data as requests flow through distributed services (API Gateway, Lambda, DynamoDB, etc.). QE teams use X-Ray to identify slow segments, visualize service dependencies, and pinpoint where failures occur in multi-service test scenarios."
+  },
+  {
+    "id": "ac21",
+    "category": "aws-cloud",
+    "question": "When testing an API deployed through AWS API Gateway, which test type validates request/response transformations and error mapping?",
+    "options": [
+      "Unit testing the API Gateway console UI",
+      "Contract testing that verifies request validation, response mapping templates, and error status codes match the API specification",
+      "Load testing the underlying VPC network",
+      "Testing only the DNS resolution of the custom domain"
+    ],
+    "answer": 1,
+    "explanation": "API Gateway contract testing validates that request validators enforce expected schemas, mapping templates transform payloads correctly, and error responses return proper status codes and bodies. This ensures the API layer behaves according to its OpenAPI/Swagger specification."
+  },
+  {
+    "id": "ac22",
+    "category": "aws-cloud",
+    "question": "How is the AWS SDK typically used in test automation frameworks?",
+    "options": [
+      "Only for deploying CloudFormation stacks",
+      "To programmatically set up test fixtures, invoke AWS services, verify state changes, and tear down resources in test code",
+      "To replace all HTTP-based API testing",
+      "Only for reading CloudWatch metrics"
+    ],
+    "answer": 1,
+    "explanation": "The AWS SDK (Boto3, JavaScript SDK, etc.) is used in test automation to create test prerequisites (seed DynamoDB tables, upload S3 objects), trigger actions (invoke Lambdas, publish to SNS), assert outcomes (query results, check states), and clean up resources after tests."
+  },
+  {
+    "id": "ac23",
+    "category": "aws-cloud",
+    "question": "What is a key benefit of using AWS SAM for local serverless testing?",
+    "options": [
+      "SAM deploys directly to production without testing",
+      "SAM emulates API Gateway, Lambda, and DynamoDB locally, enabling rapid iteration without deploying to AWS",
+      "SAM only supports Python Lambda functions",
+      "SAM eliminates the need for integration tests"
+    ],
+    "answer": 1,
+    "explanation": "AWS SAM (Serverless Application Model) CLI emulates the serverless environment locally using Docker. It supports local invocation of Lambda functions, local API Gateway endpoints, and local DynamoDB, significantly reducing the feedback loop during development and testing."
+  },
+  {
+    "id": "ac24",
+    "category": "aws-cloud",
+    "question": "How should test isolation be achieved in shared AWS accounts?",
+    "options": [
+      "All teams should share the same resources without any separation",
+      "Use resource naming conventions, separate IAM roles, dedicated resource tags, and per-environment prefixes to isolate test resources from other workloads",
+      "Disable all access controls so tests can access anything",
+      "Use only the root account credentials for all tests"
+    ],
+    "answer": 1,
+    "explanation": "Test isolation in shared accounts uses naming conventions (env-prefixed resource names), IAM permission boundaries, resource tags for cost allocation and filtering, and sometimes separate VPCs or accounts. This prevents test runs from interfering with other workloads."
+  },
+  {
+    "id": "ac25",
+    "category": "aws-cloud",
+    "question": "What is the principle of 'least privilege' in IAM permissions testing?",
+    "options": [
+      "Granting all users full administrator access",
+      "Ensuring each role or user has only the minimum permissions required to perform its intended function, and testing that excess permissions are denied",
+      "Removing all IAM policies from test accounts",
+      "Using only inline policies instead of managed policies"
+    ],
+    "answer": 1,
+    "explanation": "Least privilege means each identity gets only the permissions it needs. Testing validates this by asserting that authorized actions succeed and unauthorized actions are explicitly denied, often using IAM policy simulator or actual API calls that should return AccessDenied."
+  },
+  {
+    "id": "ac26",
+    "category": "aws-cloud",
+    "question": "When performance testing a cloud data pipeline, which metric is MOST relevant for validating SLA compliance?",
+    "options": [
+      "The color scheme of the CloudWatch dashboard",
+      "End-to-end pipeline latency — the time from data arrival in the source to availability in the target system",
+      "The number of IAM policies attached to the pipeline role",
+      "The size of the CloudFormation template"
+    ],
+    "answer": 1,
+    "explanation": "Pipeline SLAs are typically defined in terms of end-to-end latency (data freshness) and throughput. Performance testing measures the time from data landing in S3 to being queryable in Redshift/Athena, ensuring it meets defined freshness requirements."
+  },
+  {
+    "id": "ac27",
+    "category": "aws-cloud",
+    "question": "What is SAST (Static Application Security Testing) in the context of cloud platform testing?",
+    "options": [
+      "Testing network firewall rules at runtime",
+      "Analyzing source code, IaC templates, and configuration files for security vulnerabilities without executing the application",
+      "Running penetration tests against live endpoints",
+      "Monitoring CloudTrail logs for unauthorized access"
+    ],
+    "answer": 1,
+    "explanation": "SAST scans source code and IaC templates (CloudFormation, Terraform, CDK) for security issues like hardcoded secrets, overly permissive IAM policies, unencrypted resources, and public S3 buckets — all without deploying or running the application."
+  },
+  {
+    "id": "ac28",
+    "category": "aws-cloud",
+    "question": "How should PII (Personally Identifiable Information) be handled in test data for analytics pipelines?",
+    "options": [
+      "Copy production PII directly to test environments for realistic testing",
+      "Use data masking, tokenization, or synthetic data generation to remove or replace real PII while preserving data distributions for testing",
+      "Store all PII in plaintext S3 buckets for easy test access",
+      "PII handling is not relevant to QE teams"
+    ],
+    "answer": 1,
+    "explanation": "Test environments must not contain real PII. Data masking replaces sensitive fields with fake but realistic values, tokenization substitutes reversible tokens, and synthetic generators create data with similar statistical properties — all enabling realistic testing without privacy risk."
+  },
+  {
+    "id": "ac29",
+    "category": "aws-cloud",
+    "question": "What is the purpose of AWS Secrets Manager in test automation?",
+    "options": [
+      "To store test case definitions",
+      "To securely store and retrieve API keys, database credentials, and tokens used by test automation scripts without hardcoding them",
+      "To encrypt all S3 objects",
+      "To replace AWS IAM entirely"
+    ],
+    "answer": 1,
+    "explanation": "AWS Secrets Manager stores credentials, API keys, and connection strings securely. Test automation scripts retrieve secrets at runtime via the SDK, avoiding hardcoded credentials in test code, supporting secret rotation, and maintaining audit trails."
+  },
+  {
+    "id": "ac30",
+    "category": "aws-cloud",
+    "question": "What does AWS WAF (Web Application Firewall) testing involve?",
+    "options": [
+      "Testing only the WAF console UI",
+      "Validating that WAF rules correctly block malicious requests (SQL injection, XSS) while allowing legitimate traffic through",
+      "Testing DNS resolution speed",
+      "Verifying that all Lambda functions have WAF attached"
+    ],
+    "answer": 1,
+    "explanation": "WAF testing sends crafted requests containing known attack patterns (SQL injection, XSS, etc.) to verify they are blocked, while also confirming that legitimate requests pass through. This ensures security rules protect without causing false positives."
+  },
+  {
+    "id": "ac31",
+    "category": "aws-cloud",
+    "question": "What is the function of AWS CloudWatch Synthetics?",
+    "options": [
+      "It synthesizes new CloudFormation templates",
+      "It runs configurable canary scripts that continuously monitor endpoints and APIs, alerting when behavior deviates from expectations",
+      "It generates synthetic data for testing",
+      "It creates synthetic IAM users for testing"
+    ],
+    "answer": 1,
+    "explanation": "CloudWatch Synthetics runs canary scripts (Node.js or Python) on a schedule to monitor API endpoints, URLs, and workflows. Canaries take screenshots, measure latency, and alert on failures — acting as continuous synthetic monitoring for production systems."
+  },
+  {
+    "id": "ac32",
+    "category": "aws-cloud",
+    "question": "How does observability differ from traditional monitoring in automated testing?",
+    "options": [
+      "Observability only uses CloudWatch; monitoring uses third-party tools",
+      "Observability combines logs, metrics, and traces to enable querying arbitrary questions about system behavior, while monitoring checks known thresholds",
+      "There is no difference; they are the same concept",
+      "Monitoring is proactive; observability is never used proactively"
+    ],
+    "answer": 1,
+    "explanation": "Monitoring tracks known metrics against thresholds (CPU > 80%). Observability — built on logs, metrics, and distributed traces — lets you ask ad hoc questions about why a system behaved a certain way. For QE, observability enables diagnosing unforeseen test failures."
+  },
+  {
+    "id": "ac33",
+    "category": "aws-cloud",
+    "question": "Which AWS service performs automated security assessment of EC2 instances for vulnerabilities and unintended network exposure?",
+    "options": [
+      "AWS Config",
+      "AWS Security Hub",
+      "Amazon Inspector",
+      "AWS CloudTrail"
+    ],
+    "answer": 2,
+    "explanation": "Amazon Inspector automatically assesses EC2 instances and container images for software vulnerabilities (CVEs) and unintended network exposure. It integrates with Security Hub for centralized findings management."
+  },
+  {
+    "id": "ac34",
+    "category": "aws-cloud",
+    "question": "In AWS Security Hub, what is the purpose of the security score?",
+    "options": [
+      "It measures application performance",
+      "It calculates the monthly AWS bill",
+      "It represents the percentage of passed security checks against enabled compliance standards",
+      "It ranks developers by code quality"
+    ],
+    "answer": 2,
+    "explanation": "Security Hub's security score shows the percentage of controls that are passing across enabled standards (CIS, PCI DSS, AWS Foundational). QE teams use it to track compliance posture and prioritize remediation of failing checks."
+  },
+  {
+    "id": "ac35",
+    "category": "aws-cloud",
+    "question": "What is the recommended approach for testing AWS Lambda function error handling?",
+    "options": [
+      "Only test the happy path since Lambda handles errors automatically",
+      "Use mocks for downstream dependencies to simulate timeouts, throttling, and service errors, then verify retry logic and error responses",
+      "Disable all Lambda error handling to simplify testing",
+      "Test only by reading CloudWatch Logs after production failures"
+    ],
+    "answer": 1,
+    "explanation": "Lambda error handling testing should cover timeout scenarios, downstream service failures, throttling, malformed input, and partial failures in batch processing. Mocking dependencies allows controlled simulation of these failure modes in unit tests."
+  },
+  {
+    "id": "ac36",
+    "category": "aws-cloud",
+    "question": "What is the primary purpose of DAST (Dynamic Application Security Testing) for cloud applications?",
+    "options": [
+      "Scanning source code for syntax errors",
+      "Testing running applications by sending crafted requests to detect runtime vulnerabilities like injection flaws and authentication bypasses",
+      "Validating CloudFormation template syntax",
+      "Monitoring CPU utilization of EC2 instances"
+    ],
+    "answer": 1,
+    "explanation": "DAST tools test running applications from the outside by sending malicious or edge-case requests to discover runtime vulnerabilities — SQL injection, authentication flaws, SSRF, and insecure configurations that only manifest when the application is deployed and executing."
+  },
+  {
+    "id": "ac37",
+    "category": "aws-cloud",
+    "question": "When testing a Step Functions workflow, why is it important to test the error-handling paths (Catch/Retry)?",
+    "options": [
+      "Error paths are never executed in production",
+      "Because Catch and Retry blocks define how the workflow recovers from failures, and incorrect configuration can cause silent data loss or infinite retries",
+      "Step Functions do not support error handling",
+      "Error handling is automatically perfect and never needs testing"
+    ],
+    "answer": 1,
+    "explanation": "Step Functions Catch and Retry blocks control failure recovery — wrong configurations can lead to infinite retry loops, unhandled error types, or silent failures. Testing these paths ensures the workflow degrades gracefully and alerts appropriately on real failures."
+  },
+  {
+    "id": "ac38",
+    "category": "aws-cloud",
+    "question": "How can S3 event notifications be tested in an event-driven pipeline?",
+    "options": [
+      "S3 events cannot be tested; they must be verified in production only",
+      "Upload test objects to the S3 bucket and verify that downstream consumers (Lambda, SQS, EventBridge) receive and correctly process the expected events",
+      "Disable S3 versioning and check for event logs",
+      "Use CloudFormation drift detection to verify events"
+    ],
+    "answer": 1,
+    "explanation": "Testing S3 event notifications involves uploading known test objects and verifying end-to-end that the configured notification (Lambda trigger, SQS message, EventBridge event) fires and downstream processing produces the correct result."
+  },
+  {
+    "id": "ac39",
+    "category": "aws-cloud",
+    "question": "What is the benefit of using Great Expectations or Deequ for data quality testing in AWS pipelines?",
+    "options": [
+      "They replace the need for any other testing framework",
+      "They provide declarative data quality assertions (expectations) that can be integrated into ETL pipelines to automatically validate data against defined rules",
+      "They only work with on-premises databases",
+      "They are AWS-managed services included in every account"
+    ],
+    "answer": 1,
+    "explanation": "Great Expectations and AWS Deequ allow QE teams to define declarative data quality expectations (not-null, unique, within range, referential integrity) that run automatically within ETL pipelines, catching data issues before they propagate downstream."
+  },
+  {
+    "id": "ac40",
+    "category": "aws-cloud",
+    "question": "In the context of AWS CDK testing, what does a 'fine-grained assertion' verify?",
+    "options": [
+      "That the CDK app compiles without TypeScript errors",
+      "That a specific resource in the synthesized template has exact property values (e.g., a Lambda function has a specific timeout and memory setting)",
+      "That all CDK constructs use the latest version",
+      "That the AWS account has sufficient service quotas"
+    ],
+    "answer": 1,
+    "explanation": "Fine-grained CDK assertions use hasResourceProperties() to verify that specific resources in the synthesized CloudFormation template have exact property values — for example, confirming a Lambda function's timeout is 30 seconds and memory is 256 MB."
+  },
+  {
+    "id": "ac41",
+    "category": "aws-cloud",
+    "question": "What is the purpose of testing DynamoDB Global Secondary Indexes (GSIs) in a test suite?",
+    "options": [
+      "GSIs are automatically correct and never need testing",
+      "To verify that query patterns using GSIs return correct, complete results and that GSI projections include all required attributes",
+      "GSIs can only be tested in production",
+      "To check that GSIs consume zero read capacity units"
+    ],
+    "answer": 1,
+    "explanation": "GSI testing verifies that access patterns return correct results, projected attributes include all fields needed by consumers, and eventual consistency behavior is acceptable. Missing projected attributes cause incomplete query results that are hard to diagnose in production."
+  },
+  {
+    "id": "ac42",
+    "category": "aws-cloud",
+    "question": "How does the AWS IAM Policy Simulator help QE teams?",
+    "options": [
+      "It deploys IAM policies to production",
+      "It allows testing whether specific API actions would be allowed or denied for a given IAM entity without actually making the API calls",
+      "It automatically generates IAM policies from test logs",
+      "It removes unused IAM roles"
+    ],
+    "answer": 1,
+    "explanation": "The IAM Policy Simulator evaluates existing or candidate policies to determine if specific actions on specific resources would be allowed or denied. QE teams use it to validate least-privilege policies before deployment, ensuring no over-permissive or missing permissions."
+  },
+  {
+    "id": "ac43",
+    "category": "aws-cloud",
+    "question": "What testing strategy validates that an Amazon Redshift query returns correct results after a schema migration?",
+    "options": [
+      "Drop and recreate the entire database",
+      "Run the query against both the old and new schemas with known test data and compare the results for equivalence",
+      "Only check that the migration script executes without errors",
+      "Skip testing since Redshift is a managed service"
+    ],
+    "answer": 1,
+    "explanation": "Schema migration testing uses parallel execution — running queries against both pre- and post-migration schemas with identical test data, then comparing results. This catches subtle issues like changed column types, dropped defaults, or altered join behavior."
+  },
+  {
+    "id": "ac44",
+    "category": "aws-cloud",
+    "question": "What is the purpose of using AWS CloudWatch Alarms in a test automation context?",
+    "options": [
+      "To replace all test assertions with alarm checks",
+      "To detect when test environments experience anomalies (high error rates, resource exhaustion) and automatically trigger notifications or remediation",
+      "To schedule test runs at specific times",
+      "To encrypt test data at rest"
+    ],
+    "answer": 1,
+    "explanation": "CloudWatch Alarms in test environments monitor for infrastructure anomalies (memory/CPU exhaustion, elevated error rates, queue depth spikes) that could invalidate test results. Alarms can trigger SNS notifications to alert QE teams or invoke Lambda functions for auto-remediation."
+  },
+  {
+    "id": "ac45",
+    "category": "aws-cloud",
+    "question": "Why is testing idempotency important for AWS Lambda functions triggered by SQS messages?",
+    "options": [
+      "SQS guarantees exactly-once delivery, so idempotency is irrelevant",
+      "Because SQS standard queues deliver messages at-least-once, meaning a Lambda may process the same message multiple times, and non-idempotent handlers can cause duplicate side effects",
+      "Idempotency only matters for synchronous API calls",
+      "Lambda automatically ensures idempotency for all handlers"
+    ],
+    "answer": 1,
+    "explanation": "SQS standard queues have at-least-once delivery semantics, meaning the same message can be delivered multiple times. Lambda handlers must be idempotent — processing the same message twice should not create duplicate records, double-charge accounts, or cause other unintended side effects."
+  }
+]

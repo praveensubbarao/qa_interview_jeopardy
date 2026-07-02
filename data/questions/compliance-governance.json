@@ -1,0 +1,353 @@
+[
+  {
+    "id": "co1",
+    "category": "compliance-governance",
+    "question": "What are the key steps to ensure the security of protected health information (PHI) during a data breach under HIPAA?",
+    "options": [
+      "Conduct an internal investigation",
+      "Report the breach to affected individuals only",
+      "Encrypt the breached data",
+      "Notify all business associates"
+    ],
+    "answer": 2,
+    "explanation": "Encrypting the breached data ensures that PHI is secure and reduces the risk of unauthorized access. This step also helps organizations comply with HIPAA's breach notification requirements."
+  },
+  {
+    "id": "co2",
+    "category": "compliance-governance",
+    "question": "While reviewing test data for a Field Productivity platform, you notice that the data is not fully utilizing AWS Glue's capabilities. Which of the following steps would you take to optimize test data management?",
+    "options": [
+      "Configure AWS Lake Formation to create a centralized metadata repository",
+      "Use Informatica TDM to automate test data creation and dissemination",
+      "Implement Amazon SageMaker's automized feature engineering for test data enrichment",
+      "Employ AWS Secrets Manager to secure sensitive data for testing"
+    ],
+    "answer": 0,
+    "explanation": "By configuring AWS Lake Formation, you can create a centralized metadata repository that allows for better data discovery, cataloging, and utilization. This step enables optimized test data management and takes advantage of AWS Glue's capabilities."
+  },
+  {
+    "id": "co3",
+    "category": "compliance-governance",
+    "question": "To ensure compliance with regulatory requirements, which testing framework would a QA Director use when evaluating AI-powered loan workflows?",
+    "options": [
+      "Jest",
+      "Cypress",
+      "MSW",
+      "Selenium"
+    ],
+    "answer": 3,
+    "explanation": "MSW is used for mocking API responses in testing. As a compliance-focused role, the QA Director would utilize MSW to simulate realistic scenarios and ensure AI-powered loan workflows comply with regulatory requirements."
+  },
+  {
+    "id": "co4",
+    "category": "compliance-governance",
+    "question": "What should a QA Director do when implementing quality thinking early in the product lifecycle, rather than as an afterthought?",
+    "options": [
+      "Embed QA into each sprint",
+      "Spend more time on manual testing",
+      "Actively participate in cross-functional planning and architectural decisions",
+      "Focus solely on test case design"
+    ],
+    "answer": 2,
+    "explanation": "The correct answer is to Actively participate in cross-functional planning and architectural decisions. This allows the QA Director to influence architecture, execution quality, and technology capabilities from the beginning."
+  },
+  {
+    "id": "co5",
+    "category": "compliance-governance",
+    "question": "When conducting AI-enabled testing for large deals, what approach would you take to ensure test data management and test environments are properly aligned?",
+    "options": [
+      "Create a separate test environment for each stakeholder",
+      "Utilize cloud-based services like AWS or Azure to scale up test environments",
+      "Develop a centralized database to manage test data across multiple stakeholders",
+      "Conduct a thorough requirements gathering phase before setting up test environments"
+    ],
+    "answer": 2,
+    "explanation": "Creating a centralized database allows for better data management and ensures that test data is consistent across all stakeholders. This approach enables efficient collaboration and reduces the risk of misaligned test data."
+  },
+  {
+    "id": "co6",
+    "category": "compliance-governance",
+    "question": "Which compliance framework would a Solution Engineer at Dynatrace be most familiar with to ensure proper handling of customer data during sales opportunities?",
+    "options": [
+      "HIPAA",
+      "GDPR",
+      "SOX",
+      "SOC 2"
+    ],
+    "answer": 0,
+    "explanation": "As a Solution Engineer, they would need to handle PHI (Protected Health Information) in compliance with HIPAA."
+  },
+  {
+    "id": "co7",
+    "category": "compliance-governance",
+    "question": "When translating complex regulatory requirements into comprehensive test scenarios and acceptance criteria, what method would you use to capture business process mapping?",
+    "options": [
+      "Flowcharts",
+      "Use cases",
+      "swimlane diagrams",
+      "Mind maps"
+    ],
+    "answer": 0,
+    "explanation": "Business process mapping can involve various methods, but mind maps are a popular choice as they allow for visual representation of complex processes."
+  },
+  {
+    "id": "co8",
+    "category": "compliance-governance",
+    "question": "When implementing leading practice standards of quality in software development and testing processes, which certification would be most beneficial for a Senior Manager in PwC's Software and Product Innovation team?",
+    "options": [
+      "ISTQB",
+      "CSQA/CSQE",
+      "Master's Degree in Computer Science",
+      "Mastery in PwC Digital Quality Assurance Framework"
+    ],
+    "answer": 1,
+    "explanation": "The correct answer, ISTQB (International Software Testing Qualifications Board), is beneficial for a Senior Manager in software and product innovation because it allows them to demonstrate their expertise in quality engineering, test process management, and software testing."
+  },
+  {
+    "id": "cg7",
+    "category": "compliance-governance",
+    "question": "Which OWASP Top 10 category does Broken Access Control belong to, and what is the recommended testing approach?",
+    "options": [
+      "It is a low-priority category that only applies to public-facing websites; test with basic login verification",
+      "It is the top-ranked web security risk; test by systematically verifying that users cannot access resources or functions beyond their permissions using role-based test matrices",
+      "It only applies to API-based applications; test with SAST tools exclusively",
+      "It is addressed automatically by modern frameworks and does not require explicit testing"
+    ],
+    "answer": 1,
+    "explanation": "Broken Access Control is the most critical OWASP Top 10 category. Testing requires systematic verification that authorization is enforced at every endpoint, including IDOR testing (accessing other users' resources), vertical privilege escalation (user performing admin actions), and horizontal privilege testing."
+  },
+  {
+    "id": "cg8",
+    "category": "compliance-governance",
+    "question": "What is the correct placement of SAST, DAST, and IAST tools within a CI/CD pipeline?",
+    "options": [
+      "Run all three tools at the same pipeline stage to catch the maximum vulnerabilities at once",
+      "SAST at PR time for fast code-level feedback, DAST against deployed staging for runtime vulnerabilities, and IAST during E2E test execution for code-context runtime findings",
+      "DAST first since it catches the most vulnerabilities, then SAST, then IAST only before major releases",
+      "Only run SAST since it covers all vulnerability categories that DAST and IAST would find"
+    ],
+    "answer": 1,
+    "explanation": "SAST runs earliest (PR time, 2-3 min) catching code-level issues like injection patterns and hardcoded secrets. DAST runs against a deployed staging environment to find runtime vulnerabilities. IAST instruments the app during E2E tests, combining runtime detection with code-level context for lower false positives."
+  },
+  {
+    "id": "cg9",
+    "category": "compliance-governance",
+    "question": "Why must test data management be treated as a security and compliance concern, not just a testing logistics issue?",
+    "options": [
+      "Because test data takes up too much storage space in cloud environments",
+      "Because using production data in test environments without masking or anonymization violates GDPR and HIPAA regulations and risks exposing real PII",
+      "Because developers might accidentally commit test data to public repositories",
+      "Because test data formats differ between environments causing test failures"
+    ],
+    "answer": 1,
+    "explanation": "Using production data containing real PII in non-production environments violates data protection regulations like GDPR and HIPAA. A secure test data strategy requires synthetic data generation, production data masking that preserves referential integrity, and secrets management for API keys in pipelines."
+  },
+  {
+    "id": "cg10",
+    "category": "compliance-governance",
+    "question": "What is penetration testing, and why is it described as a point-in-time assessment rather than a continuous safety net?",
+    "options": [
+      "Penetration testing continuously monitors the application for vulnerabilities 24/7",
+      "Penetration testing is an authorized simulated attack that reveals exploitable vulnerabilities at a specific moment; new code changes after the test may introduce new vulnerabilities",
+      "Penetration testing only covers network-level vulnerabilities, not application-level ones",
+      "Penetration testing is performed by automated DAST tools and requires no human expertise"
+    ],
+    "answer": 1,
+    "explanation": "Penetration testing simulates real attacks to find exploitable vulnerabilities but reflects security posture at a single point in time. New code deployed after the test may introduce new vulnerabilities, which is why pen testing must be complemented by continuous SAST/DAST in CI and bug bounty programs."
+  },
+  {
+    "id": "cg11",
+    "category": "compliance-governance",
+    "question": "What is the most reliable defense against SQL injection, and how should QA verify it?",
+    "options": [
+      "Input validation using regex patterns; verify by testing that special characters are rejected in all input fields",
+      "Parameterized queries or prepared statements; verify by sending injection payloads and asserting the response returns zero results with a 400 status, not a 500 error",
+      "Web application firewalls; verify by confirming the WAF blocks all malicious requests",
+      "Encoding all user input to HTML entities; verify by checking that special characters display correctly"
+    ],
+    "answer": 1,
+    "explanation": "Parameterized queries prevent SQL injection by separating SQL logic from user data. QA verifies the fix by submitting classic injection payloads (e.g., ' OR '1'='1) and asserting a 400 Bad Request response (not 500, which indicates the query was executed)."
+  },
+  {
+    "id": "cg12",
+    "category": "compliance-governance",
+    "question": "What is the IDOR (Insecure Direct Object Reference) vulnerability, and how should API security testing detect it?",
+    "options": [
+      "IDOR is a server misconfiguration that exposes directory listings; detected by scanning for open directories",
+      "IDOR occurs when a user can access another user's resources by changing an ID in the URL or request body; detected by using User A's token to request User B's resource IDs",
+      "IDOR is a type of SQL injection specific to NoSQL databases; detected by SAST tools",
+      "IDOR is a denial-of-service vulnerability caused by too many object references; detected by load testing"
+    ],
+    "answer": 1,
+    "explanation": "IDOR allows unauthorized access to other users' data by manipulating resource identifiers. Testing involves authenticating as User A and attempting to access User B's resources by changing IDs in API requests. A properly secured API should return 403 or 404, not the data."
+  },
+  {
+    "id": "cg13",
+    "category": "compliance-governance",
+    "question": "What remediation SLA tiers are recommended for security vulnerabilities found during testing?",
+    "options": [
+      "All vulnerabilities should be fixed within 30 days regardless of severity",
+      "Critical within 24 hours, High within 7 days, Medium within 30 days, with findings tracked through remediation and used to improve SAST/DAST rules",
+      "Only Critical vulnerabilities require a fixed timeline; all others are addressed in the next sprint",
+      "Security vulnerabilities should be deferred to a dedicated security sprint once per quarter"
+    ],
+    "answer": 1,
+    "explanation": "Severity-based SLAs ensure critical vulnerabilities (e.g., remote code execution) are fixed within 24 hours, High within 7 days, and Medium within 30 days. Findings should also feed back into SAST/DAST rules and code review checklists to prevent recurrence."
+  },
+  {
+    "id": "cg14",
+    "category": "compliance-governance",
+    "question": "What are the five key dimensions of API security testing that a QA Architect should cover?",
+    "options": [
+      "Performance, scalability, availability, reliability, and maintainability",
+      "Authentication, authorization, input validation, rate limiting, and data exposure verification",
+      "Unit testing, integration testing, contract testing, load testing, and chaos testing",
+      "Encryption, logging, monitoring, alerting, and incident response"
+    ],
+    "answer": 1,
+    "explanation": "API security testing covers authentication (JWT validation, token expiry), authorization (IDOR, privilege escalation), input validation (injection via JSON body), rate limiting (brute force protection), and data exposure (ensuring responses do not leak sensitive fields)."
+  },
+  {
+    "id": "cg15",
+    "category": "compliance-governance",
+    "question": "What does DevSecOps mean in a QE context and how is it implemented?",
+    "options": [
+      "A separate security testing phase added after development and before deployment",
+      "Integrating security testing into every stage of the CI/CD pipeline — SAST in code commits, DAST in staging, dependency scanning in builds, and secrets detection in PRs",
+      "Hiring a dedicated security team that reviews all QA test scripts for vulnerabilities",
+      "Running penetration tests quarterly and sharing results with the development team"
+    ],
+    "answer": 1,
+    "explanation": "DevSecOps shifts security left by embedding automated security checks throughout the pipeline: static analysis on every commit, dynamic analysis in staging, dependency vulnerability scanning in builds, and secrets detection in pull requests. Security becomes continuous, not a phase."
+  },
+  {
+    "id": "cg16",
+    "category": "compliance-governance",
+    "question": "How do you approach software security testing in a critical infrastructure environment such as an energy utility or healthcare system?",
+    "options": [
+      "Use the same security testing approach as any other software project since threats are universal",
+      "Apply industry-specific security standards (NERC CIP for energy, HIPAA for healthcare), test for domain-specific attack vectors, and validate that safety-critical functions degrade gracefully under attack",
+      "Focus security testing only on the network perimeter since internal systems are trusted",
+      "Defer all security testing to a third-party penetration testing firm and accept their findings"
+    ],
+    "answer": 1,
+    "explanation": "Critical infrastructure has domain-specific compliance frameworks (NERC CIP, IEC 62443 for utilities; HIPAA for healthcare) and unique attack vectors. Testing must validate that safety-critical functions maintain safe states even under security incidents rather than failing in unpredictable ways."
+  },
+  {
+    "id": "cg17",
+    "category": "compliance-governance",
+    "question": "How does working in a regulated industry (banking, healthcare, energy) change your approach to QA governance?",
+    "options": [
+      "It does not change the approach since good QA practices are the same regardless of industry",
+      "It requires additional documentation of test evidence, traceability from requirements to test execution, audit-ready reporting, and validation that every change meets regulatory requirements before release",
+      "It means only manual testing is acceptable because regulators do not trust automated tests",
+      "It requires hiring compliance officers to sit on the QA team and approve every test case"
+    ],
+    "answer": 1,
+    "explanation": "Regulated industries require audit trails linking requirements to test cases to execution evidence. QA must produce traceability matrices, maintain version-controlled test artifacts, and ensure every release has documented evidence that regulatory requirements were validated."
+  },
+  {
+    "id": "cg18",
+    "category": "compliance-governance",
+    "question": "What is accessibility compliance (WCAG) and how should QA approach it for web applications?",
+    "options": [
+      "An optional best practice that only applies to government websites",
+      "A set of guidelines ensuring web content is usable by people with disabilities, requiring automated scanning (axe, Lighthouse), manual screen reader testing, and keyboard navigation validation",
+      "A visual design standard that only the UX team is responsible for implementing",
+      "A compliance requirement that is satisfied by adding alt text to all images"
+    ],
+    "answer": 1,
+    "explanation": "WCAG compliance requires a layered testing approach: automated tools (axe-core, Lighthouse) catch structural issues, manual testing with screen readers (NVDA, VoiceOver) validates real user experience, and keyboard-only navigation testing ensures all functionality is accessible without a mouse."
+  },
+  {
+    "id": "cg19",
+    "category": "compliance-governance",
+    "question": "How do you manage integration testing for a safety-critical system where failures could have real-world consequences?",
+    "options": [
+      "Run integration tests only in production with feature flags to minimize risk",
+      "Use a production-mirrored test environment with realistic data, simulate failure modes and edge cases, validate graceful degradation, and maintain rollback procedures for every deployment",
+      "Skip integration testing and rely on comprehensive unit tests since they are faster and safer",
+      "Test only the happy path scenarios since safety-critical systems are designed to always work correctly"
+    ],
+    "answer": 1,
+    "explanation": "Safety-critical systems require integration testing in environments that mirror production fidelity. Failure mode testing validates that the system degrades safely rather than failing catastrophically when sensors fail, networks partition, or dependent services become unavailable."
+  },
+  {
+    "id": "cg20",
+    "category": "compliance-governance",
+    "question": "What is compliance monitoring in enterprise platforms, and what must QA validate?",
+    "options": [
+      "A manual quarterly review of test documentation by external auditors",
+      "Automated continuous monitoring that ensures operations follow laws and regulations — QA must validate monitoring rules, alert accuracy, and reporting completeness",
+      "A process for ensuring all team members have completed mandatory training",
+      "A code review practice that checks for coding standard violations"
+    ],
+    "answer": 1,
+    "explanation": "Compliance monitoring continuously ensures that platform operations follow applicable laws, regulations, and internal policies. QA must validate that monitoring rules trigger correctly, alerts are accurate and timely, false positives are minimized, and compliance reports are complete and auditable."
+  },
+  {
+    "id": "cg21",
+    "category": "compliance-governance",
+    "question": "What is audit logging, and what are the essential QA test scenarios for it?",
+    "options": [
+      "A performance optimization technique that logs slow database queries for later analysis",
+      "A system that tracks who changed data and when, for compliance and security — QA must verify completeness, immutability, and tamper resistance of audit records",
+      "A debugging practice where developers log all function calls during code review",
+      "A project management feature that tracks who approved each user story"
+    ],
+    "answer": 1,
+    "explanation": "Audit logging records every data change with who made it, when, and what changed. QA must test that logs capture all required events, cannot be modified or deleted by users, include sufficient detail for investigation, and are retained according to regulatory requirements."
+  },
+  {
+    "id": "cg22",
+    "category": "compliance-governance",
+    "question": "Why is cybersecurity testing critical for enterprise platforms that handle sensitive data?",
+    "options": [
+      "Cybersecurity testing is optional if the platform uses HTTPS and a firewall",
+      "Enterprise platforms contain sensitive financial, legal, and identity information, making them high-value targets requiring comprehensive security validation",
+      "Cybersecurity testing is only required for platforms that process credit card transactions",
+      "Security testing is the sole responsibility of the DevOps team and is outside QA's scope"
+    ],
+    "answer": 1,
+    "explanation": "Enterprise platforms store sensitive financial, legal, and personally identifiable information, making them high-value targets for attackers. QA must validate authentication, authorization, encryption, input sanitization, session management, and vulnerability scanning as part of comprehensive security testing."
+  },
+  {
+    "id": "cg23",
+    "category": "compliance-governance",
+    "question": "What are the key ethical concerns when testing AI-powered decision-making systems?",
+    "options": [
+      "AI systems have no ethical concerns if they pass functional testing",
+      "Bias in training data, explainability of decisions, and fairness across demographic groups — QA must validate that AI decisions are auditable and equitable",
+      "The only concern is processing speed — slower AI decisions are considered unethical",
+      "Ethical concerns only apply to AI systems used in healthcare, not in other industries"
+    ],
+    "answer": 1,
+    "explanation": "AI-powered decision systems raise concerns about bias, explainability, and fairness. QA must test that AI models do not discriminate against protected groups, that decisions can be explained and audited, and that the system treats all applicants equitably regardless of demographic factors."
+  },
+  {
+    "id": "cg24",
+    "category": "compliance-governance",
+    "question": "What is risk-adjusted pricing, and what should QA validate in systems that implement it?",
+    "options": [
+      "A pricing model where all customers pay the same rate regardless of risk — QA validates the flat rate calculation",
+      "Pricing adjusted according to the assessed level of risk — QA must validate that risk scores correctly influence pricing, boundary conditions are handled, and regulatory pricing limits are enforced",
+      "A discount strategy based on customer loyalty — QA validates the discount engine",
+      "A pricing model that only applies during high-demand periods — QA validates time-based triggers"
+    ],
+    "answer": 1,
+    "explanation": "Risk-adjusted pricing sets rates based on the assessed risk level. QA must validate that risk scoring algorithms correctly influence pricing calculations, that boundary conditions between risk tiers are handled properly, and that regulatory caps or floors on pricing are enforced."
+  },
+  {
+    "id": "cg25",
+    "category": "compliance-governance",
+    "question": "What future trends in digital compliance should QA teams prepare for?",
+    "options": [
+      "Compliance requirements are decreasing as industries deregulate globally",
+      "Digital-first documentation, AI-powered compliance monitoring, predictive risk analytics, and integrated regulatory ecosystems requiring end-to-end test automation",
+      "All compliance testing will be replaced by manual audits within five years",
+      "Future compliance will only require annual penetration testing with no ongoing monitoring"
+    ],
+    "answer": 1,
+    "explanation": "Future compliance trends include digital-first documentation replacing paper processes, AI-powered compliance monitoring, predictive analytics for risk identification, and integrated ecosystems where multiple regulatory bodies share data. QA teams must prepare for automated, continuous compliance validation at scale."
+  }
+]

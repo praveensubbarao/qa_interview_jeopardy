@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praveen – Agentic AI QE Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --surface: #0e1318;
+    --surface2: #141b22;
+    --border: #1e2830;
+    --accent: #00e5a0;
+    --accent2: #6366f1;
+    --accent3: #f59e0b;
+    --accent4: #ec4899;
+    --text: #e2eaf4;
+    --muted: #637385;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; font-size: 14px; line-height: 1.7; }
+
+  /* HERO */
+  .hero {
+    padding: 56px 44px 44px;
+    background: linear-gradient(135deg, #080c10 0%, #0a1020 40%, #080e14 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(0,229,160,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(99,102,241,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .eyebrow { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .hero h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 700; line-height: 1.1; margin-bottom: 12px; }
+  .hero h1 .dim { color: var(--muted); font-weight: 300; }
+  .hero-sub { color: var(--muted); font-size: 14px; max-width: 600px; margin-bottom: 24px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-family: 'Space Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 4px; border: 1px solid; }
+  .tag-g { border-color: rgba(0,229,160,0.3); color: var(--accent); background: rgba(0,229,160,0.05); }
+  .tag-p { border-color: rgba(99,102,241,0.3); color: #818cf8; background: rgba(99,102,241,0.05); }
+  .tag-y { border-color: rgba(245,158,11,0.3); color: var(--accent3); background: rgba(245,158,11,0.05); }
+  .tag-r { border-color: rgba(236,72,153,0.3); color: var(--accent4); background: rgba(236,72,153,0.05); }
+
+  /* NAV */
+  .nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 44px; display: flex; gap: 0; overflow-x: auto; position: sticky; top: 0; z-index: 50; }
+  .nav-tab { padding: 14px 18px; font-size: 12px; font-weight: 500; font-family: 'Space Mono', monospace; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .2s; background: none; border-top: none; border-left: none; border-right: none; letter-spacing: 0.5px; }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 44px; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .sec-title { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .sec-title span { color: var(--accent); }
+  .sec-desc { color: var(--muted); font-size: 13px; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+
+  /* CONCEPT CARDS */
+  .concept { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 18px; overflow: hidden; }
+  .concept-header { padding: 18px 22px; display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: background .15s; }
+  .concept-header:hover { background: var(--surface2); }
+  .c-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .c-content { flex: 1; }
+  .c-title { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .c-sub { font-size: 12px; color: var(--muted); font-family: 'Space Mono', monospace; }
+  .c-badge { font-family: 'Space Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+  .badge-core { background: rgba(0,229,160,0.1); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+  .badge-deep { background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2); }
+  .badge-your { background: rgba(245,158,11,0.1); color: var(--accent3); border: 1px solid rgba(245,158,11,0.2); }
+  .badge-poc { background: rgba(236,72,153,0.1); color: var(--accent4); border: 1px solid rgba(236,72,153,0.2); }
+  .chevron { color: var(--muted); flex-shrink: 0; margin-top: 4px; transition: transform .2s; }
+  .concept.open .chevron { transform: rotate(180deg); }
+  .concept-body { display: none; padding: 22px 24px; border-top: 1px solid var(--border); background: #0a0f14; }
+  .concept.open .concept-body { display: block; }
+
+  /* BODY CONTENT */
+  .plain { font-size: 14px; color: #a8bccf; line-height: 1.75; margin-bottom: 14px; }
+  .callout { background: rgba(0,229,160,0.06); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 13.5px; color: var(--text); }
+  .callout-p { background: rgba(99,102,241,0.06); border-left: 3px solid var(--accent2); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 13.5px; color: var(--text); }
+  .callout-y { background: rgba(245,158,11,0.06); border-left: 3px solid var(--accent3); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 14px 0; font-size: 13.5px; color: var(--text); }
+  .tip { background: var(--surface2); border: 1px dashed var(--border); border-radius: 6px; padding: 10px 14px; margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+  .tip::before { content: "💡 "; }
+  .code { background: #0d1117; border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; font-family: 'Space Mono', monospace; font-size: 12px; color: #7dd3fc; margin: 12px 0; overflow-x: auto; line-height: 1.6; }
+  .code .comment { color: var(--muted); }
+  .code .kw { color: var(--accent); }
+  .code .str { color: var(--accent3); }
+  ul.bl { padding-left: 18px; margin: 10px 0; }
+  ul.bl li { margin-bottom: 7px; font-size: 13.5px; color: #a8bccf; }
+  ul.bl li strong { color: var(--text); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  .mini { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .mini-title { font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--text); }
+  .mini-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .answer-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .say-box { background: rgba(0,229,160,0.04); border: 1px solid rgba(0,229,160,0.15); border-radius: 8px; padding: 16px 18px; margin-top: 14px; }
+  .say-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; }
+  .say-text { font-size: 13.5px; color: var(--text); line-height: 1.75; font-style: italic; }
+
+  /* FRAMEWORK TABLE */
+  .fw-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  .fw-table th { background: var(--surface2); color: var(--muted); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 14px; text-align: left; }
+  .fw-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: #a8bccf; }
+  .fw-table tr:last-child td { border-bottom: none; }
+  .fw-name { font-weight: 600; color: var(--text); }
+  .use-case { color: var(--accent2); font-size: 12px; font-family: 'Space Mono', monospace; }
+  .your-take { color: var(--accent); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">Interview Prep · Agentic AI QE Role</div>
+  <h1>Agentic AI Testing<br><span class="dim">Every concept. Every question.</span></h1>
+  <p class="hero-sub">Deep prep for the most technically advanced QE role of your three opportunities. Your Care.com AI work is the foundation — this guide takes it to the next level.</p>
+  <div class="tag-row">
+    <span class="tag tag-g">LangChain / CrewAI / AutoGen</span>
+    <span class="tag tag-p">Self-Healing Automation</span>
+    <span class="tag tag-y">Autonomous Test Generation</span>
+    <span class="tag tag-r">Synthetic Data & Defect Prediction</span>
+    <span class="tag tag-g">Multi-Agent Systems</span>
+    <span class="tag tag-p">Claude Code</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nav-tab active" onclick="show('agentic')">Agentic AI 101</button>
+  <button class="nav-tab" onclick="show('frameworks')">Frameworks</button>
+  <button class="nav-tab" onclick="show('selfheal')">Self-Healing</button>
+  <button class="nav-tab" onclick="show('testgen')">Test Generation</button>
+  <button class="nav-tab" onclick="show('synthetic')">Synthetic Data</button>
+  <button class="nav-tab" onclick="show('defect')">Defect Prediction</button>
+  <button class="nav-tab" onclick="show('questions')">Interview Qs</button>
+</nav>
+
+<div class="container">
+
+<!-- AGENTIC AI 101 -->
+<div id="agentic" class="section active">
+  <div class="sec-title">What is <span>Agentic AI</span> in QE?</div>
+  <p class="sec-desc">Before you answer any question, you need to be able to explain this concept clearly to both technical and non-technical audiences. This is the foundation everything else builds on.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🤖</div>
+      <div class="c-content">
+        <div class="c-title">Traditional AI vs Agentic AI — the core difference</div>
+        <div class="c-sub">The single most important concept to nail</div>
+      </div>
+      <div class="c-badge badge-core">FOUNDATION</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">Traditional AI in QE is a tool — you give it an input, it gives you an output. Ask an LLM to generate a test case, it generates one. Done. You're still driving every step.</div>
+      <div class="plain"><strong>Agentic AI is different.</strong> An agent perceives its environment, makes decisions, takes actions, observes the results, and loops — all on its own, to achieve a goal. You set the objective, the agent figures out the steps.</div>
+      <div class="callout">
+        <strong>The analogy:</strong> Traditional AI is a calculator — you press buttons, it computes. Agentic AI is a junior engineer — you give them a ticket saying "write and run tests for the login flow," and they figure out how to do it, run into issues, adapt, and come back with results.
+      </div>
+      <div class="plain">In QE specifically, an agentic system might: read a user story → identify what needs testing → generate test cases → write Playwright scripts → execute them → analyze failures → suggest fixes → update the test suite. All without a human in the loop at each step.</div>
+      <div class="say-box">
+        <div class="say-label">Say this in the interview</div>
+        <div class="say-text">"The shift from AI-assisted to Agentic AI is a shift from AI as a tool to AI as a collaborator. Instead of me using an LLM to generate one test case at a time, an agentic system takes a goal — 'achieve 80% coverage on the checkout flow' — and autonomously plans, executes, and iterates until it gets there. At Care.com I built the early version of this with LLM-assisted workflows. This role is about scaling that into a fully agentic architecture."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">⚙️</div>
+      <div class="c-content">
+        <div class="c-title">The four components of any AI agent</div>
+        <div class="c-sub">Perception, Memory, Reasoning, Action</div>
+      </div>
+      <div class="c-badge badge-core">FOUNDATION</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="grid2">
+        <div class="mini">
+          <div class="mini-title">👁️ Perception</div>
+          <div class="mini-body">What the agent reads as input — user stories, Jira tickets, design specs, code diffs, DOM snapshots, test results. In QE, perception is what triggers the agent to act.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">🧠 Memory</div>
+          <div class="mini-body">Short-term: current task context. Long-term: prior test results, known failure patterns, existing test coverage. Memory lets agents avoid redundancy and learn over time.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">💭 Reasoning</div>
+          <div class="mini-body">The LLM brain — it plans what to do, decides which tools to call, evaluates whether a result is good enough to stop. Chain-of-thought prompting improves reasoning quality.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">🔧 Action</div>
+          <div class="mini-body">What the agent actually does — calls APIs, runs Playwright scripts, writes files, queries databases, posts to Jira. Actions are tool calls. The richer the toolset, the more capable the agent.</div>
+        </div>
+      </div>
+      <div class="tip">When explaining this to non-technical stakeholders, use the analogy: a new QA engineer reads tickets (perception), remembers what was tested before (memory), plans their approach (reasoning), and runs the tests (action). An agent does the same thing, faster and without breaks.</div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🕸️</div>
+      <div class="c-content">
+        <div class="c-title">Multi-agent systems — why one agent isn't enough</div>
+        <div class="c-sub">How specialist agents collaborate in QE</div>
+      </div>
+      <div class="c-badge badge-deep">DEEP</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">A single agent trying to do everything becomes unpredictable and hard to debug. Multi-agent systems assign specialist roles — just like a QA team has different people for automation, performance, and analysis.</div>
+      <div class="callout-p">
+        <strong>Example QE multi-agent architecture:</strong><br><br>
+        <strong>Analyst Agent</strong> — reads Jira tickets and design specs, extracts requirements, identifies test scenarios<br><br>
+        <strong>Generator Agent</strong> — takes scenarios from Analyst, writes Playwright test scripts<br><br>
+        <strong>Executor Agent</strong> — runs the scripts, captures results, DOM snapshots, console logs<br><br>
+        <strong>Reviewer Agent</strong> — evaluates failures, distinguishes real bugs from flakiness, suggests fixes<br><br>
+        <strong>Reporter Agent</strong> — formats results, updates Jira, posts summary to Slack/dashboard
+      </div>
+      <div class="plain">Each agent is small, focused, and testable. The orchestrator (LangChain/CrewAI/AutoGen) manages the handoffs. When something goes wrong, you know exactly which agent failed — unlike a monolithic script.</div>
+      <div class="say-box">
+        <div class="say-label">Connect to your experience</div>
+        <div class="say-text">"At Care.com I built the early version of this with specialized prompt pipelines — spec in, test script out, results back to dashboards. This role is about formalizing that into a proper multi-agent architecture where each concern is isolated and independently improvable."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAMEWORKS -->
+<div id="frameworks" class="section">
+  <div class="sec-title">AI Agent <span>Frameworks</span></div>
+  <p class="sec-desc">The JD names LangChain, CrewAI, AutoGen, and Cursor specifically. You need to know what each one is, when to use it, and have a recommendation ready.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">📊</div>
+      <div class="c-content">
+        <div class="c-title">Framework comparison — when to use which</div>
+        <div class="c-sub">LangChain vs CrewAI vs AutoGen for QE use cases</div>
+      </div>
+      <div class="c-badge badge-core">MUST KNOW</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <table class="fw-table">
+        <thead>
+          <tr><th>Framework</th><th>Core approach</th><th>Best QE use case</th><th>Your take</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="fw-name">LangChain / LangGraph</span></td>
+            <td>Graph-based stateful workflows. Nodes = agents/functions. Edges = transitions. Fine-grained control.</td>
+            <td><span class="use-case">Complex, multi-step QE pipelines where you need auditability — spec → test → execute → triage → report. Each stage is a node.</span></td>
+            <td><span class="your-take">My primary choice for production QE agents. The graph model maps naturally to test lifecycle stages and is debuggable.</span></td>
+          </tr>
+          <tr>
+            <td><span class="fw-name">CrewAI</span></td>
+            <td>Role-based multi-agent collaboration. Agents have roles, backstories, goals. Crew orchestrates them.</td>
+            <td><span class="use-case">When you want specialist agents — Analyst, Generator, Reviewer, Reporter — that mirror how a real QA team collaborates.</span></td>
+            <td><span class="your-take">Excellent for rapid POCs and for explaining agentic architecture to stakeholders — the "crew of specialists" metaphor resonates immediately.</span></td>
+          </tr>
+          <tr>
+            <td><span class="fw-name">AutoGen (Microsoft)</span></td>
+            <td>Conversational multi-agent system. Agents talk to each other to reach consensus and complete tasks.</td>
+            <td><span class="use-case">Test code generation where agent A writes the test, agent B reviews and critiques it, agent C executes and reports — iterative loop until done.</span></td>
+            <td><span class="your-take">Strong for code-generation tasks. Integrates well in Microsoft/Azure environments. More setup complexity than CrewAI.</span></td>
+          </tr>
+          <tr>
+            <td><span class="fw-name">Cursor IDE</span></td>
+            <td>AI-powered development environment. Claude/GPT integrated directly into the coding workflow. MCP support.</td>
+            <td><span class="use-case">Engineers writing automation code — Cursor accelerates Playwright/TypeScript test authoring with AI suggestions, refactoring, and inline generation. Already in your resume.</span></td>
+            <td><span class="your-take">I use this today. It's the bridge between traditional IDE development and fully agentic test generation — lower barrier to AI adoption for QA engineers.</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="say-box">
+        <div class="say-label">Recommendation to give in the interview</div>
+        <div class="say-text">"For a production QE transformation, I'd lead with LangGraph for the core pipeline — it gives us the control and auditability we need. I'd use CrewAI for specialist agent coordination and rapid POC work. AutoGen fits well for iterative code generation loops. And Cursor is already in my daily workflow — it's the fastest way to elevate the whole team's AI-assisted authoring without requiring everyone to learn agent architecture first."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🔑</div>
+      <div class="c-content">
+        <div class="c-title">Claude Code — why they listed it specifically</div>
+        <div class="c-sub">You already have Claude AI Fluency certification — lead with this</div>
+      </div>
+      <div class="c-badge badge-your">YOUR EDGE</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">Claude Code is Anthropic's agentic coding tool — a command-line agent that can read your codebase, write code, run tests, and iterate autonomously. It's specifically designed for agentic software development workflows, not just code completion.</div>
+      <div class="callout-y">
+        <strong>Why it matters for QE:</strong> Claude Code can be directed to read a test suite, identify gaps against a requirements doc, write new tests to fill those gaps, run them, and iterate on failures — all in one agentic loop. This is autonomous test generation at the framework level.
+      </div>
+      <div class="plain">The fact that they listed it specifically means they want someone who has actually thought about Claude in an agentic coding context — not just used it as a chatbot.</div>
+      <div class="say-box">
+        <div class="say-label">Your answer — use your certification</div>
+        <div class="say-text">"I hold the Claude AI Fluency certification and have worked with Claude-based tooling at Care.com — including Cursor IDE which runs Claude under the hood for test generation. Claude Code specifically is compelling for QE because it operates as an agent over your codebase — it can read your existing Playwright suite, compare it against a requirements doc, identify coverage gaps, and write new tests autonomously. I'd evaluate Claude Code as a POC for our test generation pipeline and measure it against GPT-4 and Gemini equivalents to find the best fit for our stack."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🔌</div>
+      <div class="c-content">
+        <div class="c-title">MCP integrations — what you already built at Care.com</div>
+        <div class="c-sub">Model Context Protocol — connecting AI to your tools</div>
+      </div>
+      <div class="c-badge badge-your">YOUR EDGE</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">MCP (Model Context Protocol) is a standard that lets AI agents connect to external tools and data sources — Jira, Confluence, TestRail, GitHub, databases — so they have real context, not just what's in the prompt.</div>
+      <div class="callout">
+        <strong>Your Care.com story:</strong> You built MCP integrations connecting Jira, Confluence, TestRail, Playwright, and Appium. This means your AI agents had live access to tickets, specs, and test results — not static context. This is exactly what enterprise agentic QE requires.
+      </div>
+      <div class="plain">In a QE agent, MCP enables: the agent reads the Jira ticket → fetches the related Confluence spec → checks what's already covered in TestRail → generates only the missing tests → pushes results back to Jira. All automated, all in context.</div>
+      <div class="tip">MCP is a relatively new term (2024) but the concept is what you already built. Frame it as: "I built this architecture before the term MCP was standardized — now that it's a formal protocol, I'd formalize our integrations around it."</div>
+    </div>
+  </div>
+</div>
+
+<!-- SELF-HEALING -->
+<div id="selfheal" class="section">
+  <div class="sec-title">Self-Healing <span>Automation</span></div>
+  <p class="sec-desc">One of the four core AI implementations listed in the JD. You need to explain how it works, where it falls short, and how you'd build it.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🔧</div>
+      <div class="c-content">
+        <div class="c-title">How self-healing actually works — the three phases</div>
+        <div class="c-sub">Detection → Diagnosis → Remediation</div>
+      </div>
+      <div class="c-badge badge-core">MUST KNOW</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">Most people think self-healing = fixing broken locators. That is only 28% of test failures. A real self-healing framework addresses all failure categories.</div>
+      <div class="callout-p">
+        <strong>Phase 1 — Detection:</strong> The test fails. The system captures: DOM snapshot at failure point, network trace, console logs, application state, the failing selector. This is the evidence package.<br><br>
+        <strong>Phase 2 — Diagnosis:</strong> An AI model categorizes the root cause. Is it a selector change? A timing issue (API slow)? A data state problem? A visual layout change? Each category needs a different fix.<br><br>
+        <strong>Phase 3 — Remediation:</strong> Category-specific fix applied. Selector changed → update locator using alternative attributes (ARIA role, text content, position). Timing issue → add resilient wait/retry logic. Data issue → reset test data state.
+      </div>
+      <ul class="bl">
+        <li><strong>Selector failures (28% of cases)</strong> — find alternative stable locators using ARIA roles, visible text, or positional context</li>
+        <li><strong>Timing failures</strong> — analyze network traces to distinguish "element missing" vs "element delayed" — add smart waits, not sleeps</li>
+        <li><strong>Runtime errors</strong> — log, isolate, retry after transient environment restarts</li>
+        <li><strong>Test data failures</strong> — detect stale or conflicting data state, reset or regenerate test data</li>
+        <li><strong>Visual assertion failures</strong> — compare rendered output with baseline, determine if it's a real regression or an approved design change</li>
+      </ul>
+      <div class="say-box">
+        <div class="say-label">Say this in the interview</div>
+        <div class="say-text">"Self-healing isn't just about fixing broken locators — that's only about a quarter of what fails. A real self-healing system diagnoses before it remediates. It needs to distinguish between a selector that changed, an API that was slow, and a test data state that got corrupted — because each requires a completely different fix. Applying a locator fix to a timing problem just creates a false positive."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🏗️</div>
+      <div class="c-content">
+        <div class="c-title">How you'd architect a self-healing framework from scratch</div>
+        <div class="c-sub">Your POC design — ready to present</div>
+      </div>
+      <div class="c-badge badge-poc">POC DESIGN</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">If asked to build a POC, here is the architecture you'd propose:</div>
+      <div class="code">
+<span class="comment">// Self-healing layer architecture</span>
+
+<span class="kw">Layer 1</span>: Test Execution (Playwright)
+  → Captures: DOM snapshot, network log, console errors, screenshots on failure
+
+<span class="kw">Layer 2</span>: Failure Classifier (LLM — Claude/GPT-4)
+  → Prompt: <span class="str">"Given this DOM diff and error message, classify the failure:
+    selector_change | timing | data_state | visual | runtime"</span>
+  → Returns: category + confidence score + suggested fix
+
+<span class="kw">Layer 3</span>: Remediation Engine
+  → selector_change: try ARIA role → visible text → position → sibling
+  → timing: inject smart wait with polling logic
+  → data_state: trigger test data reset via API
+  → visual: flag for human review with diff image
+
+<span class="kw">Layer 4</span>: Validation
+  → Re-run the healed test to confirm fix didn't create false positive
+  → Log healing event with before/after selector for audit trail
+
+<span class="kw">Layer 5</span>: Learning Loop
+  → Store successful fixes in vector database
+  → Future similar failures query this store first before calling LLM
+      </div>
+      <div class="tip">The learning loop is what separates a basic self-healing tool from an intelligent one. It gets smarter with every fix — the LLM call becomes a fallback, not the primary path.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TEST GENERATION -->
+<div id="testgen" class="section">
+  <div class="sec-title">Autonomous <span>Test Generation</span></div>
+  <p class="sec-desc">The first AI implementation listed in the JD. Your LLM-assisted test generation at Care.com is the strongest story you have — here's how to extend it into autonomous territory.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">⚡</div>
+      <div class="c-content">
+        <div class="c-title">LLM-assisted vs Autonomous — where you've been vs where this role goes</div>
+        <div class="c-sub">Positioning your Care.com experience correctly</div>
+      </div>
+      <div class="c-badge badge-your">YOUR EDGE</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="grid2">
+        <div class="mini">
+          <div class="mini-title">What you built at Care.com</div>
+          <div class="mini-body">LLM-assisted: human provides spec → LLM generates test script → human reviews → human adds to suite. AI accelerates the authoring step. 60% time reduction. Still human-in-the-loop.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">What this role needs</div>
+          <div class="mini-body">Autonomous: agent reads spec from Confluence → identifies test scenarios → generates scripts → runs them → triages failures → updates suite → reports coverage. Human reviews exceptions only.</div>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Frame it as a natural progression:</strong> "At Care.com I built the first stage — AI-assisted authoring. That gave us the data, the prompt library, and the team culture to now take the next step: making the pipeline fully agentic so humans are exception handlers, not pipeline operators."
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🧪</div>
+      <div class="c-content">
+        <div class="c-title">How autonomous test generation works end-to-end</div>
+        <div class="c-sub">The full pipeline from spec to executed test</div>
+      </div>
+      <div class="c-badge badge-deep">DEEP</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="code">
+<span class="comment">// Autonomous test generation pipeline</span>
+
+<span class="kw">Step 1</span>: INPUT INGESTION
+  Agent reads: Jira ticket + linked Confluence spec + existing test coverage from TestRail
+  Extracts: user stories, acceptance criteria, edge cases, business rules
+
+<span class="kw">Step 2</span>: SCENARIO IDENTIFICATION
+  LLM prompt: <span class="str">"Given these requirements, list all test scenarios including:
+    happy path, negative cases, boundary values, security cases, 
+    and anything NOT covered by existing tests: [coverage map]"</span>
+
+<span class="kw">Step 3</span>: TEST SCRIPT GENERATION
+  For each scenario → generate Playwright TypeScript test
+  Using: Page Object Model templates from your framework as context
+  Output: well-structured test that follows team conventions
+
+<span class="kw">Step 4</span>: STATIC REVIEW
+  Secondary LLM agent reviews generated test:
+  - Does it actually test what the scenario says?
+  - Are assertions meaningful (not just 'page loaded')?
+  - Are locators stable (ARIA roles preferred)?
+
+<span class="kw">Step 5</span>: EXECUTION + TRIAGE
+  Run test in headless browser
+  If pass → add to suite, update TestRail coverage
+  If fail → classify: real bug vs bad test → route accordingly
+
+<span class="kw">Step 6</span>: REPORTING
+  Coverage delta: what's new, what's improved
+  Flag any tests that need human review
+  Update Jira ticket: "Tests generated and executed ✓"
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">⚠️</div>
+      <div class="c-content">
+        <div class="c-title">Risks and guardrails — showing you're not naive about AI</div>
+        <div class="c-sub">What makes you credible vs a hype-driven candidate</div>
+      </div>
+      <div class="c-badge badge-deep">CRITICAL</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">Any interviewer worth their salt will push back on autonomous test generation. Have your risks and mitigations ready.</div>
+      <ul class="bl">
+        <li><strong>Hallucinated tests</strong> — LLMs can generate tests that look correct but test the wrong thing, or assert on non-existent elements. Mitigation: always run generated tests and require meaningful assertions, not just "no error thrown".</li>
+        <li><strong>Coverage illusion</strong> — more tests doesn't mean better coverage. A generated test for a happy path you already had adds no value. Mitigation: always diff against existing coverage before generating.</li>
+        <li><strong>Prompt brittleness</strong> — if the spec is ambiguous, the generated test will be wrong. Mitigation: have a spec quality gate — if requirements are below a clarity threshold, flag for human clarification before generating.</li>
+        <li><strong>Maintenance of AI-generated tests</strong> — who owns them? Mitigation: generated tests get tagged, reviewed by a human engineer within one sprint, and either adopted or discarded.</li>
+      </ul>
+      <div class="say-box">
+        <div class="say-label">This is the answer that separates you</div>
+        <div class="say-text">"The biggest risk with autonomous test generation isn't the technology — it's the false confidence it creates. A large test suite with low-quality assertions is worse than a small, trusted one. Every system I build has a quality gate on the generated tests themselves, not just on what they're testing."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SYNTHETIC DATA -->
+<div id="synthetic" class="section">
+  <div class="sec-title">Synthetic <span>Test Data</span></div>
+  <p class="sec-desc">The fourth AI implementation in the JD. Often overlooked by candidates — knowing this deeply signals real enterprise QE experience.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🗄️</div>
+      <div class="c-content">
+        <div class="c-title">Why synthetic data — the problem it solves</div>
+        <div class="c-sub">Privacy, scale, and test isolation</div>
+      </div>
+      <div class="c-badge badge-core">MUST KNOW</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">Enterprise QE has a persistent test data problem: you need realistic data to test with, but you can't use real production data (privacy laws — GDPR, CCPA), and manually crafting data sets at scale is impossibly slow.</div>
+      <div class="callout-y">
+        <strong>Three problems synthetic data solves:</strong><br><br>
+        <strong>Privacy compliance</strong> — no real PII ever touches a test environment. GDPR/CCPA risk eliminated.<br><br>
+        <strong>Scale</strong> — generate 10,000 realistic user profiles, transaction histories, or edge-case records in seconds. Manual test data setup for this doesn't exist.<br><br>
+        <strong>Test isolation</strong> — each test run gets fresh, deterministic data. No more "this test only fails on Tuesdays because someone modified the shared test account."
+      </div>
+      <div class="plain">AI-driven synthetic data goes further than rule-based generation: it understands the relationships between data fields, generates realistic edge cases (a user born on Feb 29 in a non-leap year, an address in a territory with unique postal format), and can generate data that specifically targets known failure modes.</div>
+      <div class="say-box">
+        <div class="say-label">Connect to your Care.com experience</div>
+        <div class="say-text">"Test data management was a real challenge at Care.com across 20+ markets — each with different data formats, privacy laws, and user profile structures. I addressed this partly through API-level data factories, but AI-driven synthetic data generation is the logical next step: parameterize the profile of data you need, and the AI generates statistically realistic, privacy-safe records that stress-test the right scenarios."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🏭</div>
+      <div class="c-content">
+        <div class="c-title">How to architect an AI-driven synthetic data system</div>
+        <div class="c-sub">Your POC design for the interview</div>
+      </div>
+      <div class="c-badge badge-poc">POC DESIGN</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="code">
+<span class="comment">// Synthetic data generation pipeline</span>
+
+<span class="kw">Input</span>: Test scenario description + data schema + constraints
+  Example: <span class="str">"Generate 500 user profiles for checkout flow testing.
+    Include: 10% with expired credit cards, 5% with invalid addresses,
+    15% international users, 2% edge-case names (special chars, very long)"</span>
+
+<span class="kw">LLM Layer</span>: Understands semantic relationships
+  → Knows a "California address" needs a valid CA zip code
+  → Knows "enterprise user" implies different usage patterns than "consumer"
+  → Generates edge cases humans wouldn't think to specify
+
+<span class="kw">Validation Layer</span>: Schema + business rule enforcement
+  → Validates generated data against DB schema constraints
+  → Checks referential integrity (user ID must exist before order record)
+  → Flags statistically implausible combinations
+
+<span class="kw">Privacy Layer</span>: Ensures no real data leaked into generation
+  → No real names, emails, or card numbers in the training context
+  → Differential privacy techniques if training on real distributions
+
+<span class="kw">Output</span>: 
+  → JSON/CSV for direct DB seeding
+  → API calls to create records in test environment
+  → Tagged for cleanup after test run completes
+      </div>
+      <div class="tip">Tools worth mentioning: Faker.js (rule-based baseline), Gretel.ai (ML-based synthetic data at scale), and custom LLM prompting with schema-aware validation for the most contextual data needs.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DEFECT PREDICTION -->
+<div id="defect" class="section">
+  <div class="sec-title">Defect Prediction <span>& Intelligent Triage</span></div>
+  <p class="sec-desc">The most analytically advanced concept in the JD. Most QE candidates won't know this — it's your opportunity to pull significantly ahead.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🎯</div>
+      <div class="c-content">
+        <div class="c-title">What defect prediction actually means</div>
+        <div class="c-sub">Using historical data to predict where bugs will appear</div>
+      </div>
+      <div class="c-badge badge-core">MUST KNOW</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">Defect prediction uses ML models trained on historical data to answer: <em>"Given this code change, where are bugs most likely to appear?"</em> Instead of testing everything equally, you direct testing effort toward highest-risk areas.</div>
+      <div class="callout">
+        <strong>Features a defect prediction model uses:</strong><br><br>
+        → Code churn (how many times was this file modified recently?)<br>
+        → Developer history (which engineers have introduced bugs here before?)<br>
+        → Complexity metrics (cyclomatic complexity, coupling)<br>
+        → Prior bug density (how many bugs have come from this module?)<br>
+        → Time since last test update (stale tests = higher escape risk)<br>
+        → Integration points (more dependencies = more failure modes)
+      </div>
+      <div class="plain">The output is a risk score per module or file. QA directs deeper testing toward high-risk areas, and can skip or do lighter testing on low-risk, stable modules. This is how you maintain quality as test suites grow faster than team capacity.</div>
+      <div class="say-box">
+        <div class="say-label">Connect to your observability work</div>
+        <div class="say-text">"I already built the data infrastructure for this at Care.com — production telemetry, defect trends, and automation ROI connected to executive dashboards via n8n. Defect prediction is the natural evolution: instead of reporting what went wrong, we use those patterns to predict where to look next. The data was always there; it just needed a model on top of it."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">🔀</div>
+      <div class="c-content">
+        <div class="c-title">Automated triage — stopping the noise in CI/CD</div>
+        <div class="c-sub">Classifying failures at scale without human review</div>
+      </div>
+      <div class="c-badge badge-deep">DEEP</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="plain">At scale — hundreds of test runs per day — human triage of every failure is impossible. Automated triage uses AI to classify failures before a human sees them.</div>
+      <div class="grid2">
+        <div class="mini">
+          <div class="mini-title">Real bug</div>
+          <div class="mini-body">Test failed consistently, the code change touched related modules, the failure is in the assertion logic not the test infrastructure. → Create Jira ticket automatically, assign to relevant developer, block the PR.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Flaky test</div>
+          <div class="mini-body">Test has a history of intermittent failures on unrelated code changes, failure is timing-related, it passed on retry. → Flag for self-healing review, don't block the PR, don't create a bug ticket.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Environment issue</div>
+          <div class="mini-body">Multiple unrelated tests failed simultaneously, infrastructure logs show resource constraints. → Alert DevOps, retry after environment stabilizes, don't create bug tickets.</div>
+        </div>
+        <div class="mini">
+          <div class="mini-title">Test code issue</div>
+          <div class="mini-body">The assertion logic is wrong, not the application. → Route to QA for test fix, don't create a product bug, don't block the release for the wrong reason.</div>
+        </div>
+      </div>
+      <div class="tip">Automated triage is the difference between a CI/CD pipeline that engineers trust and one they learn to ignore. When every failure is treated as equally important, teams stop looking at them.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INTERVIEW QUESTIONS -->
+<div id="questions" class="section">
+  <div class="sec-title">Likely <span>Interview Questions</span></div>
+  <p class="sec-desc">The questions they will almost certainly ask — with your tailored answers.</p>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">1️⃣</div>
+      <div class="c-content">
+        <div class="c-title">"Describe your experience with Agentic AI and GenAI frameworks."</div>
+        <div class="c-sub">The opener — set the tone for the whole interview</div>
+      </div>
+      <div class="c-badge badge-core">LIKELY FIRST Q</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="say-box">
+        <div class="say-label">Your answer</div>
+        <div class="say-text">"Over the past 18 months I've been leading AI integration into QE at Care.com — starting with LLM-assisted workflows and progressively moving toward agentic architecture.<br><br>
+        Practically: I built pipelines that take design specs and automatically generate Playwright test stubs using LLM prompting with context from Jira and Confluence via MCP integrations. I built reusable prompt libraries that let 40+ engineers adopt AI-assisted authoring without deep AI knowledge. And I used Cursor IDE — which runs Claude under the hood — as the day-to-day authoring environment.<br><br>
+        The result was a 60% reduction in manual test authoring time across the team.<br><br>
+        For frameworks: I've worked with LangChain-based pipelines for orchestration and have evaluated CrewAI for multi-agent QE scenarios. I hold the Claude AI Fluency certification and the Google Generative AI Leader certification. This role is the next step — formalizing what I built into a fully agentic, production-grade architecture."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">2️⃣</div>
+      <div class="c-content">
+        <div class="c-title">"How would you build a self-healing automation framework?"</div>
+        <div class="c-sub">Technical depth question — show you know beyond locator healing</div>
+      </div>
+      <div class="c-badge badge-deep">TECHNICAL</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="say-box">
+        <div class="say-label">Your answer — lead with the insight</div>
+        <div class="say-text">"Most self-healing implementations only fix broken locators — but that's only about 28% of why tests actually fail. A real self-healing framework has to diagnose first, then remediate.<br><br>
+        I'd build it in five layers: Playwright execution captures DOM snapshots, network traces, and console logs on every failure. An LLM classifier analyzes that evidence and categorizes the root cause — selector change, timing issue, data state problem, or visual regression. Each category triggers a different remediation strategy. Then the healed test re-runs to validate the fix didn't create a false positive. And finally, successful fixes are stored in a vector database so future similar failures resolve from memory first, without another LLM call.<br><br>
+        The learning loop is what makes it truly intelligent over time rather than just reactive."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">3️⃣</div>
+      <div class="c-content">
+        <div class="c-title">"How do you explain agentic AI testing ROI to non-technical leadership?"</div>
+        <div class="c-sub">Stakeholder management — critical for a player-coach role</div>
+      </div>
+      <div class="c-badge badge-core">LEADERSHIP</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="say-box">
+        <div class="say-label">Your answer</div>
+        <div class="say-text">"I never lead with the technology — I lead with the business outcome and work backwards.<br><br>
+        For non-technical leaders, I frame it like this: 'Right now, every time a developer makes a change, a QA engineer spends two days manually running regression tests. We're going to build a system that does that in two hours, automatically, while the developer is still working on the next feature. That means we release faster, catch bugs earlier — when they're cheap to fix — and your QA team shifts from running tests to designing them and analyzing results.'<br><br>
+        Then I connect to metrics they already care about: release frequency, defect escape rate, time-to-market. At Care.com I built real-time dashboards that showed leadership exactly what the automation was saving — in hours, in defects caught, in release cycle reduction. That's the language that gets sustained investment."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">4️⃣</div>
+      <div class="c-content">
+        <div class="c-title">"Build us a POC for autonomous test generation — walk us through your approach."</div>
+        <div class="c-sub">They may ask you to whiteboard or describe this in detail</div>
+      </div>
+      <div class="c-badge badge-poc">POC</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="say-box">
+        <div class="say-label">Your POC pitch</div>
+        <div class="say-text">"I'd start with a narrow, high-value target — one critical user journey with clearly defined requirements. My POC would have five stages:<br><br>
+        First, an ingestion agent that reads the Jira ticket and linked Confluence spec and outputs a structured list of test scenarios — happy path, negative cases, boundary values, and anything not already covered in TestRail.<br><br>
+        Second, a generation agent that takes each scenario and produces a Playwright TypeScript test using our existing Page Object Model as context — so output matches our conventions, not generic AI boilerplate.<br><br>
+        Third, a review agent that checks each generated test: are the assertions meaningful? Are the locators stable? Does the test actually cover the scenario it claims to?<br><br>
+        Fourth, execution — run the tests, capture results, classify failures as real bugs vs test issues.<br><br>
+        Fifth, reporting — update TestRail coverage, post a summary to Slack, create Jira tickets for real bugs.<br><br>
+        I'd measure it against three metrics: test authoring time reduction, coverage delta achieved, and false positive rate on generated tests. That gives us a clear signal on whether to scale or iterate."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="concept">
+    <div class="concept-header" onclick="toggle(this.parentElement)">
+      <div class="c-icon">5️⃣</div>
+      <div class="c-content">
+        <div class="c-title">"What are the risks of agentic AI in QE and how do you mitigate them?"</div>
+        <div class="c-sub">The push-back question — shows maturity</div>
+      </div>
+      <div class="c-badge badge-deep">MATURITY Q</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="concept-body">
+      <div class="say-box">
+        <div class="say-label">Your answer — this builds enormous credibility</div>
+        <div class="say-text">"There are three risks I take seriously and build guardrails around from day one.<br><br>
+        First — hallucinated confidence. An AI agent can generate 500 tests that all pass and give leadership the impression quality is high, when the tests are actually asserting on trivial things. My mitigation: assertion quality gates. Every generated test must have a meaningful assertion — not just 'page loaded' — and we sample-review generated tests every sprint.<br><br>
+        Second — agent loops and runaway costs. Multi-agent systems can get stuck in reasoning loops, making expensive LLM calls indefinitely. My mitigation: hard iteration caps, token budget monitoring, and cost alerts. Every agent has a maximum number of steps before it escalates to human review.<br><br>
+        Third — loss of human understanding. If AI generates and maintains all the tests, engineers stop understanding the test suite. When something breaks in a way the AI can't handle, nobody knows what's there. My mitigation: treat AI-generated tests as a first draft, not a final artifact. A human engineer reviews and adopts each test within one sprint. This keeps the team engaged and knowledgeable."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function toggle(el) { el.classList.toggle('open'); }
+</script>
+</body>
+</html>

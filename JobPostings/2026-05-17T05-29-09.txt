@@ -1,0 +1,42 @@
+Saved:        5/17/2026, 1:29:09 AM
+Questions:    9
+Technologies: selenium, cypress, junit, jenkins, gitlab ci, azure devops, azure, go
+────────────────────────────────────────────────────────────
+About the job
+Are you interested in joining a team that is continuously innovating to create the best experiences for members? Would you like to work for a company that has been rated a top employer and best place to work across the Northeast year over year? Do you want to be part of a company that is committed to giving back to the community?
+
+At AAA Northeast, as we continue to grow, our mission remains the same: helping and serving is a way of life. It’s why we’ve earned the trust of millions, and why AAA Northeast has remained a resilient and reliable brand for over a century.
+
+This position plays a pivotal leadership role within the Quality Assurance team, responsible for overseeing the strategy and implementation of automated testing within CI/CD pipelines. This role builds on the responsibilities of a QA III, with a heightened focus on people management, team development, and driving a culture of quality across the organization. This role collaborates with cross-functional teams to ensure software quality, optimizes QA processes, and leads initiatives to integrate testing into every stage of the software development lifecycle. It also involves mentoring and managing a team of QA professionals, strategizing automation frameworks, and acting as a thought leader in quality assurance.
+
+What You Will Do
+
+Lead, mentor, and manage a team of QA professionals, fostering a collaborative and innovative environment. Provide technical guidance and training to team members on CI/CD practices, automation frameworks, and testing best practices. Drive knowledge sharing and learning within the QA team, including conducting workshops and technical sessions. Conduct regular performance reviews, set career development goals, and provide feedback to team members to support their professional growth
+Develop and lead the execution of a comprehensive QA strategy that integrates automated testing within the CI/CD pipeline. Define, implement, and continuously improve QA processes, tools, and frameworks to enhance software quality and delivery speed. Collaborate with senior leadership to establish quality metrics, KPIs, and goals for the QA team and align them with business objectives.
+Architect and implement advanced test automation frameworks and strategies, ensuring they are integrated seamlessly into the CI/CD pipeline. Drive the adoption of continuous testing practices, enabling rapid feedback and ensuring high test coverage. Evaluate and implement the latest tools and technologies for test automation, ensuring the QA team stays current with industry trends.
+Lead the integration of automated testing into CI/CD workflows, ensuring consistent, reliable, and efficient deployment processes. Collaborate with Development teams to optimize the CI/CD pipeline for automated testing, including performance, security, and regression testing. Ensure that automated tests are executed as part of the build and deployment process, providing quick feedback on code quality.
+Design, develop, and oversee complex test plans and test cases, focusing on end-to-end automated testing scenarios. Lead the execution of automated tests, including functional, performance, security, and load testing, across various platforms (web, mobile, API). Analyze test results, identify trends, and provide strategic recommendations to improve product quality and test efficiency.
+Oversee the defect management process, ensuring defects are accurately recorded, prioritized, and resolved in a timely manner. Lead initiatives to implement root cause analysis and defect prevention strategies, reducing the frequency of defects over time. Establish quality gates within the CI/CD process to ensure that only high-quality code is promoted through the pipeline.
+Collaborate closely with developers, product managers, and other stakeholders to understand requirements, influence design, and ensure testability. Act as a quality advocate within cross-functional teams, driving a culture of quality and continuous improvement. Facilitate communication between teams, ensuring that quality objectives are clear and aligned with project goals.
+Monitor, analyze, and report on QA metrics, providing insights into quality trends and improvement opportunities. Lead initiatives to enhance the efficiency and effectiveness of QA processes, leveraging automation, CI/CD, and other best practices. Drive continuous feedback loops, using data to guide decision-making and process refinement.
+
+Qualifications
+
+Education
+
+Bachelor's Degree Computer Science, Information Technology, or related field required or
+6-8 years of additional relevant experience required
+Master's Degree Computer Science, Information Technology, or related field preferred
+
+Experience
+
+7+ years Experience in quality assurance, with a focus on test automation and CI/CD integration required
+Extensive experience in leading QA efforts, developing automated testing frameworks, and integrating them into CI/CD pipelines. required
+Proven track record of implementing and optimizing QA processes in an Agile environment. required
+Hands-on experience with advanced test automation tools and frameworks (e.g., Selenium, Cypress, JUnit, TestNG) and CI/CD tools (e.g., Jenkins, GitLab CI, Azure DevOps). required
+
+Licenses and Certifications
+
+ISTQB Advanced Level Certified Test Manager or equivalent certification required
+Certifications in test automation (e.g., Certified Test Automation Engineer), Agile (e.g., Certified Agile Tester), and DevOps (e.g., Certified DevOps Engineer) preferred
+Additional certifications in CI/CD, cloud testing, or security testing preferred

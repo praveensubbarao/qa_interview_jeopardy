@@ -1,0 +1,39 @@
+Saved:        5/25/2026, 4:17:08 PM
+Questions:    1
+Technologies: playwright, cypress, postman, supertest, typescript, javascript, java, react
+────────────────────────────────────────────────────────────
+What You'll Do
+
+Own and drive quality for web platform features, spanning UI, APIs, and backend services
+Design and execute manual test cases and exploratory testing for complex web and API workflows
+Conduct thorough regression testing when bugs are resolved.
+Build and maintain automated test suites for:
+Validate frontend–backend integration, data consistency, and error handling
+Perform API contract testing, schema validation, and negative/edge-case testing
+Collaborate with engineers during design, implementation, and code reviews to improve testability and catch issues early
+Integrate automated tests into CI/CD pipelines to provide fast, reliable feedback
+Analyze test failures, investigate root causes, and drive issues to resolution
+Advocate for quality best practices, including shift-left testing, risk-based testing, and automation strategy
+Identify, document, and track software defects using bug tracking tools like Jira. 
+
+
+What We're Looking For
+
+Experience in QA / Quality Engineering, with a strong focus on web platforms and APIs
+Bachelor’s degree in computer science, engineering, a related field or equivalent experience
+Proven hands-on experience with manual testing of complex, consumer-facing web applications
+Strong experience building and maintaining API tests using tools such as Postman, REST-assured, Supertest, or similar
+Hands-on experience with web automation frameworks (Playwright, Cypress)
+Solid understanding of HTTP, REST and API design principles
+Proficiency in at least one programming or scripting language (JavaScript, TypeScript)
+Experience working in Agile/Scrum environments
+Strong debugging, analytical, and communication skills
+Strategic partnership with stakeholders / Cross-functional collaboration that is high-trust and high-velocity
+Demonstrated ability to use AI to improve speed and quality in your day-to-day workflow for relevant outputs
+Strong track record of critical evaluation and verification of AI-assisted work (e.g., testing, source-checking, data validation, peer review)
+High integrity and ownership: you protect sensitive data, avoid over-reliance on AI, and remain accountable for final decisions and deliverables
+Nice-to-Haves:
+Experience testing large-scale, high-traffic web platforms
+Familiarity with React or modern frontend frameworks
+Experience with performance, load, or reliability testing for APIs and web applications
+Exposure to feature flags, experimentation platforms, or observability tools

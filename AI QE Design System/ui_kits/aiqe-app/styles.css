@@ -1,0 +1,205 @@
+/* AI QE Product UI Kit — styles */
+@import url('../../colors_and_type.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+
+/* ---------- App shell ---------------------------------------------------- */
+.aiqe-app {
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ---------- Sidebar ------------------------------------------------------ */
+.aiqe-sidebar {
+  background: var(--slate-950);
+  color: #C5CCC6;
+  padding: 22px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid #1A211D;
+}
+.aiqe-sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 14px; border-bottom: 1px solid #1A211D; margin-bottom: 12px; }
+.aiqe-sidebar-brand-text { display: flex; flex-direction: column; gap: 0; }
+.aiqe-sidebar-brand-name { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: #fff; letter-spacing: -0.01em; }
+.aiqe-sidebar-brand-org { font-family: var(--font-mono); font-size: 10px; color: #7A857C; letter-spacing: 0.04em; }
+
+.aiqe-sidebar-section { display: flex; flex-direction: column; gap: 2px; padding: 10px 0; }
+.aiqe-sidebar-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #5D665F; padding: 4px 8px 8px; }
+.aiqe-sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  background: transparent; border: 0; cursor: pointer;
+  padding: 9px 10px; border-radius: 10px;
+  color: #C5CCC6; font-family: var(--font-body); font-size: 13.5px; font-weight: 500;
+  text-align: left; width: 100%;
+  transition: background 180ms cubic-bezier(0.22,1,0.36,1), color 180ms;
+}
+.aiqe-sidebar-item:hover { background: #1A211D; color: #F4F7F5; }
+.aiqe-sidebar-item.is-active { background: rgba(38,179,106,0.12); color: var(--green-300); position: relative; }
+.aiqe-sidebar-item.is-active::before { content: ""; position: absolute; left: -16px; top: 8px; bottom: 8px; width: 3px; background: var(--green-400); border-radius: 0 3px 3px 0; }
+.aiqe-sidebar-item svg { width: 17px; height: 17px; stroke-width: 1.8; }
+
+.aiqe-sidebar-footer { margin-top: auto; padding-top: 14px; border-top: 1px solid #1A211D; display: flex; flex-direction: column; gap: 4px; padding-left: 8px; }
+.aiqe-sidebar-status { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #C5CCC6; font-family: var(--font-body); }
+.aiqe-sidebar-foot-meta { font-family: var(--font-mono); font-size: 10px; color: #5D665F; }
+
+@keyframes aiqe-pulse { 0%,100% { transform: scale(1); opacity: 1 } 50% { transform: scale(1.4); opacity: 0.5 } }
+.aiqe-pulse { width: 7px; height: 7px; border-radius: 999px; background: var(--green-400); display: inline-block; animation: aiqe-pulse 1.4s cubic-bezier(0.22,1,0.36,1) infinite; box-shadow: 0 0 8px rgba(77,204,130,0.6); }
+
+/* ---------- Main area ---------------------------------------------------- */
+.aiqe-main { display: flex; flex-direction: column; min-width: 0; }
+
+/* ---------- Topbar ------------------------------------------------------- */
+.aiqe-topbar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 14px 28px;
+  background: rgba(243,245,243,0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.aiqe-crumbs { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--fg-3); font-family: var(--font-mono); }
+.aiqe-crumb-sep { color: var(--slate-300); }
+.aiqe-page-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--fg); letter-spacing: -0.01em; margin-left: 4px; }
+
+.aiqe-topbar-actions { display: flex; align-items: center; gap: 10px; }
+.aiqe-search { position: relative; display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 0 10px 0 12px; height: 38px; min-width: 280px; }
+.aiqe-search svg { width: 14px; height: 14px; color: var(--fg-3); stroke-width: 2; }
+.aiqe-search input { border: 0; outline: 0; background: transparent; font-family: var(--font-body); font-size: 13px; color: var(--fg); flex: 1; min-width: 0; }
+.aiqe-search input::placeholder { color: var(--fg-3); }
+.aiqe-kbd { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); background: var(--slate-100); border: 1px solid var(--border); padding: 2px 5px; border-radius: 5px; }
+
+.aiqe-avatar { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg, var(--green-700), var(--green-400)); color: #fff; font-family: var(--font-display); font-weight: 600; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+/* ---------- Buttons ------------------------------------------------------ */
+.aiqe-btn { font-family: var(--font-body); font-weight: 600; cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; gap: 7px; transition: all 180ms cubic-bezier(0.22,1,0.36,1); }
+.aiqe-btn-icon { width: 15px; height: 15px; stroke-width: 2; }
+.aiqe-btn-md { padding: 12px 20px; border-radius: 14px; font-size: 14px; }
+.aiqe-btn-sm { padding: 8px 14px; border-radius: 10px; font-size: 13px; }
+.aiqe-btn-lg { padding: 15px 26px; border-radius: 16px; font-size: 15px; }
+.aiqe-btn-primary { background: var(--green-600); color: #fff; box-shadow: 0 4px 12px rgba(1,77,54,0.18); }
+.aiqe-btn-primary:hover { background: var(--green-700); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(1,77,54,0.22); }
+.aiqe-btn-secondary { background: #fff; color: var(--green-800); border-color: var(--green-300); }
+.aiqe-btn-secondary:hover { background: var(--green-100); border-color: var(--green-500); }
+.aiqe-btn-ghost { background: transparent; color: var(--fg); }
+.aiqe-btn-ghost:hover { background: var(--slate-100); }
+.aiqe-btn-gold { background: var(--gold-500); color: var(--slate-900); }
+.aiqe-btn-gold:hover { background: var(--gold-300); }
+
+/* ---------- Page content ------------------------------------------------- */
+.aiqe-page { padding: 28px 28px 64px; max-width: 1320px; }
+.aiqe-section-head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 18px; }
+.aiqe-eyebrow-mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-700); font-weight: 500; }
+.aiqe-h2 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--fg); letter-spacing: -0.02em; margin-top: 4px; }
+.aiqe-h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--fg); }
+
+/* ---------- Metric grid -------------------------------------------------- */
+.aiqe-metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+
+.aiqe-metric-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 20px;
+  padding: 20px; display: flex; flex-direction: column; gap: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03), 0 12px 24px rgba(0,0,0,0.04);
+  position: relative; overflow: hidden; color: var(--green-600);
+}
+.aiqe-metric-card::after { content: ""; position: absolute; right: -50px; top: -50px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(77,204,130,0.16) 0%, rgba(255,255,255,0) 70%); pointer-events: none; }
+.aiqe-metric-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green-700); font-weight: 500; }
+.aiqe-metric-value-row { display: flex; align-items: baseline; gap: 6px; }
+.aiqe-metric-value { font-family: var(--font-display); font-size: 36px; font-weight: 700; line-height: 1; color: var(--slate-950); letter-spacing: -0.02em; }
+.aiqe-metric-unit { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+.aiqe-metric-delta { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--success); }
+.aiqe-metric-delta.is-down { color: var(--error); }
+.aiqe-spark { height: 28px; width: 100%; }
+
+/* ---------- Run table --------------------------------------------------- */
+.aiqe-runs { background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+.aiqe-runs-head { display: grid; grid-template-columns: 110px 1.5fr 90px 90px 110px 110px; gap: 16px; padding: 12px 20px; background: var(--slate-100); border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; }
+.aiqe-run-row {
+  display: grid; grid-template-columns: 110px 1.5fr 90px 90px 110px 110px; gap: 16px;
+  padding: 14px 20px; align-items: center;
+  background: #fff; border: 0; border-bottom: 1px solid var(--slate-100);
+  text-align: left; cursor: pointer; width: 100%;
+  transition: background 180ms cubic-bezier(0.22,1,0.36,1);
+}
+.aiqe-run-row:last-child { border-bottom: 0; }
+.aiqe-run-row:hover { background: var(--slate-100); }
+.aiqe-run-row.is-selected { background: var(--green-100); }
+.aiqe-run-name-main { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--fg); }
+.aiqe-run-name-sub { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.aiqe-run-name-sub svg { width: 11px; height: 11px; }
+.aiqe-run-stat-v { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--fg); }
+.aiqe-run-stat-fail { color: var(--error); }
+.aiqe-run-stat-l { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); letter-spacing: 0.04em; margin-top: 1px; }
+.aiqe-run-time { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+.aiqe-mono-fg { font-family: var(--font-mono); }
+
+/* ---------- Badges ------------------------------------------------------ */
+.aiqe-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; }
+.aiqe-badge-dot { width: 6px; height: 6px; border-radius: 999px; }
+.aiqe-badge-success { background: rgba(22,163,74,0.10); color: #14803F; }
+.aiqe-badge-success .aiqe-badge-dot { background: #16A34A; }
+.aiqe-badge-warning { background: rgba(217,119,6,0.10); color: #9A540C; }
+.aiqe-badge-warning .aiqe-badge-dot { background: #D97706; }
+.aiqe-badge-error { background: rgba(220,38,38,0.10); color: #B11F1F; }
+.aiqe-badge-error .aiqe-badge-dot { background: #DC2626; }
+.aiqe-badge-brand { background: var(--green-100); color: var(--green-800); }
+.aiqe-badge-brand .aiqe-badge-dot { background: var(--green-500); }
+.aiqe-badge-info { background: rgba(2,132,199,0.10); color: #066AA0; }
+.aiqe-badge-info .aiqe-badge-dot { background: #0284C7; }
+.aiqe-badge-neutral { background: var(--slate-100); color: var(--slate-700); border: 1px solid var(--border); }
+.aiqe-badge-neutral .aiqe-badge-dot { background: var(--slate-500); }
+.aiqe-badge.is-live .aiqe-badge-dot { animation: aiqe-pulse 1.4s infinite; }
+
+/* ---------- Agents grid -------------------------------------------------- */
+.aiqe-agents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+.aiqe-agent-card {
+  background: var(--slate-950); color: #F4F7F5;
+  border: 1px solid #232825; border-radius: 18px; padding: 18px;
+  display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;
+}
+.aiqe-agent-card.is-live { border-color: rgba(77,204,130,0.32); box-shadow: 0 0 0 1px rgba(77,204,130,0.18), 0 0 32px rgba(77,204,130,0.12); }
+.aiqe-agent-card::before { content: ""; position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(77,204,130,0.16) 0%, transparent 70%); pointer-events: none; }
+.aiqe-agent-head { display: flex; align-items: flex-start; gap: 10px; position: relative; }
+.aiqe-agent-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(77,204,130,0.12); display: flex; align-items: center; justify-content: center; color: var(--green-300); }
+.aiqe-agent-icon svg { width: 18px; height: 18px; stroke-width: 1.8; }
+.aiqe-agent-meta { flex: 1; min-width: 0; }
+.aiqe-agent-name { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: #F4F7F5; }
+.aiqe-agent-role { font-family: var(--font-mono); font-size: 10px; color: #7A857C; letter-spacing: 0.06em; margin-top: 2px; }
+.aiqe-agent-status { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; color: var(--green-300); display: inline-flex; align-items: center; gap: 6px; }
+.aiqe-agent-signal { font-family: var(--font-display); font-size: 14px; font-weight: 500; color: #F4F7F5; line-height: 1.4; position: relative; }
+.aiqe-agent-foot { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 11px; color: #A6B0A9; position: relative; }
+.aiqe-link { background: transparent; border: 0; color: var(--green-300); font-family: var(--font-body); font-size: 12px; font-weight: 600; cursor: pointer; padding: 0; }
+.aiqe-link:hover { color: var(--green-200); }
+
+/* ---------- Hero panel --------------------------------------------------- */
+.aiqe-hero-panel {
+  background: linear-gradient(135deg, #014D36 0%, #16945A 65%, #4DCC82 100%);
+  border-radius: 24px; padding: 28px 32px;
+  color: #fff; position: relative; overflow: hidden;
+  margin-bottom: 24px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px;
+}
+.aiqe-hero-panel::before { content: ""; position: absolute; inset: 0; background-image: url("../../assets/pattern-organic-circuit.svg"); background-size: 360px; opacity: 0.18; pointer-events: none; }
+.aiqe-hero-panel::after { content: ""; position: absolute; right: -100px; top: -50px; width: 320px; height: 320px; border-radius: 999px; background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%); pointer-events: none; }
+.aiqe-hero-eb { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; opacity: 0.85; position: relative; }
+.aiqe-hero-h { font-family: var(--font-display); font-size: 30px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-top: 8px; max-width: 28ch; position: relative; }
+.aiqe-hero-sub { font-family: var(--font-body); font-size: 14px; line-height: 1.5; opacity: 0.85; margin-top: 12px; max-width: 52ch; position: relative; }
+.aiqe-hero-cta { display: flex; gap: 10px; margin-top: 18px; position: relative; }
+.aiqe-hero-cta .aiqe-btn-primary { background: #fff; color: var(--green-800); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+.aiqe-hero-cta .aiqe-btn-primary:hover { background: var(--green-100); }
+.aiqe-hero-cta .aiqe-btn-secondary { background: transparent; color: #fff; border-color: rgba(255,255,255,0.3); }
+.aiqe-hero-cta .aiqe-btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+.aiqe-hero-stat { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 16px; backdrop-filter: blur(8px); position: relative; }
+.aiqe-hero-stat-eb { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; opacity: 0.8; }
+.aiqe-hero-stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.aiqe-hero-stat-row:last-child { border-bottom: 0; }
+.aiqe-hero-stat-l { font-family: var(--font-body); font-size: 13px; opacity: 0.85; }
+.aiqe-hero-stat-v { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.aiqe-hero-stat-up { color: var(--green-300); }

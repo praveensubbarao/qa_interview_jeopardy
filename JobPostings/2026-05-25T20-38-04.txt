@@ -1,0 +1,47 @@
+Saved:        5/25/2026, 4:38:04 PM
+Questions:    1
+Technologies: go, snowflake
+────────────────────────────────────────────────────────────
+ode of Work: Onsite (No Remote)
+
+Job Description:Seeking an experienced Test Lead to lead enterprise ETL/Data Warehouse testing initiatives supporting SAS to Snowflake migration and Talend pipeline modernization within a banking environment. The ideal candidate should possess strong expertise in Snowflake, SQL, ETL/Data Warehouse testing, data validation, reconciliation, test automation, and Test Development Lifecycle (TDLC) methodologies. This role requires end-to-end ownership of testing strategies, UAT coordination, defect management, data integrity validation, and collaboration with developers, data engineers, and business stakeholders to ensure successful migration, release quality, and production stability.
+
+Key Responsibilities
+
+Lead end-to-end ETL and Data Warehouse testing strategy for SAS to Snowflake migration initiatives 
+Design and develop detailed test plans, test cases, and test scenarios based on business and technical requirements 
+Perform data validation and reconciliation between source systems (SAS/ETL) and Snowflake target systems 
+Validate complex data transformations, joins, aggregations, mappings, and business rules across ETL pipelines 
+Ensure data integrity, completeness, consistency, and accuracy across the data lifecycle 
+Develop and implement automated testing frameworks for ETL and data validation activities 
+Execute and manage User Acceptance Testing (UAT) cycles while collaborating with business stakeholders for sign-off 
+Track, manage, troubleshoot, and resolve defects, discrepancies, and data quality issues through root cause analysis 
+Ensure adherence to TDLC deliverables, testing documentation, reporting standards, and release governance 
+Collaborate with developers, data engineers, QA teams, and UAT teams to support smooth releases and production stability 
+
+Additional Responsibilities
+
+Support migration validation activities during SAS to Snowflake transformation projects 
+Ensure testing standards, documentation quality, and enterprise testing best practices are maintained 
+Coordinate with technical and business teams to resolve testing issues and release blockers 
+Participate in release planning, deployment readiness, and post-validation support activities 
+Support enterprise testing automation and quality improvement initiatives 
+
+Required Skills
+
+Strong expertise in SQL (Advanced), Snowflake, and ETL/Data Warehouse testing 
+Strong experience in data validation, reconciliation, and data integrity verification 
+Experience with test automation frameworks and automated ETL testing approaches 
+Strong knowledge of Test Development Lifecycle (TDLC) deliverables and testing methodologies 
+Experience designing test plans, test cases, test scenarios, and execution strategies 
+Experience supporting SAS to Snowflake migration testing and Talend pipelines preferred 
+Strong defect management, root cause analysis, and troubleshooting skills 
+Experience managing UAT cycles and collaborating with business stakeholders 
+Strong communication, stakeholder coordination, and collaboration skills 
+
+Qualifications
+
+Minimum 810+ years of strong hands-on testing experience required 
+Experience leading ETL/Data Warehouse testing initiatives required 
+Experience supporting enterprise migration and modernization projects preferred 
+Strong stakeholder collaboration and release management experience preferred

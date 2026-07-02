@@ -1,0 +1,5 @@
+Saved:        5/16/2026, 11:38:24 PM
+Questions:    6
+Technologies: playwright, k6, jmeter, github actions, typescript, python
+────────────────────────────────────────────────────────────
+Senior QA Engineer. Must have experience with Playwright for UI automation, k6 and JMeter for load testing, and familiarity with CI/CD via GitHub Actions. Python or TypeScript preferred.

@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Badges & chips</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.02em; }
+.dot { width: 6px; height: 6px; border-radius: 999px; }
+.b-success { background: rgba(22,163,74,0.10); color: #14803F; }
+.b-warning { background: rgba(217,119,6,0.10); color: #9A540C; }
+.b-error { background: rgba(220,38,38,0.10); color: #B11F1F; }
+.b-info { background: rgba(2,132,199,0.10); color: #066AA0; }
+.b-neutral { background: var(--slate-100); color: var(--slate-700); border: 1px solid var(--border); }
+.b-brand { background: var(--green-100); color: var(--green-800); }
+.b-dark { background: var(--slate-900); color: #fff; }
+.b-gold { background: var(--gold-100); color: var(--gold-900); }
+@keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.4 } }
+.live .dot { animation: pulse 1.4s infinite; }
+.chip { padding: 6px 12px; background: #fff; border: 1px solid var(--border); border-radius: 999px; font-size: 12px; color: var(--fg); display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-weight: 500; }
+.chip .x { color: var(--fg-3); }
+</style></head>
+<body>
+<div class="card">
+  <div class="col"><div class="eyebrow">Status badges</div></div>
+  <div class="row">
+    <span class="badge b-success"><span class="dot" style="background:#16A34A"></span>PASSED</span>
+    <span class="badge b-warning"><span class="dot" style="background:#D97706"></span>FLAKY</span>
+    <span class="badge b-error"><span class="dot" style="background:#DC2626"></span>FAILED</span>
+    <span class="badge b-info"><span class="dot" style="background:#0284C7"></span>QUEUED</span>
+    <span class="badge b-brand live"><span class="dot" style="background:#16945A"></span>RUNNING</span>
+    <span class="badge b-neutral">SKIPPED</span>
+    <span class="badge b-dark">v2.4.1</span>
+    <span class="badge b-gold">PREMIUM</span>
+  </div>
+  <div class="row">
+    <span class="chip">checkout-flow <span class="x">×</span></span>
+    <span class="chip">main <span class="x">×</span></span>
+    <span class="chip">last 7 days <span class="x">×</span></span>
+    <span class="chip">+ add filter</span>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,327 @@
+[
+  {
+    "id": "ag1",
+    "category": "agentic-ai",
+    "question": "When should you build a multi-agent QE system rather than a single agent?",
+    "options": [
+      "Always — multi-agent systems are architecturally superior to single agents for all QE tasks",
+      "When the team has more than 10 engineers; single agents are only sufficient for smaller teams",
+      "Multi-agent for cloud environments; single agent for on-premises infrastructure",
+      "When tasks benefit from specialisation, require independent validation between stages, and need failure isolation — not to signal sophistication"
+    ],
+    "answer": 3,
+    "explanation": "Complexity should match the problem. A single agent suffices for focused tasks like \"generate tests for this one ticket\" — specialist agents add value when the pipeline stages benefit from being independently owned and verified."
+  },
+  {
+    "id": "ag2",
+    "category": "agentic-ai",
+    "question": "Why would you choose LangGraph over CrewAI for a production QE pipeline?",
+    "options": [
+      "LangGraph is open source while CrewAI requires a paid license for production use",
+      "LangGraph runs faster because it uses fewer API calls per workflow step",
+      "LangGraph has better native integrations with Jira and TestRail than CrewAI",
+      "LangGraph offers explicit state management, conditional edges for branching on failure, and a graph model mapping naturally to test lifecycle stages"
+    ],
+    "answer": 3,
+    "explanation": "CrewAI is better for rapid POCs and demos — the \"crew of specialists\" metaphor is immediately understandable. LangGraph is the choice for something that needs to run reliably at 2am in a CI pipeline."
+  },
+  {
+    "id": "ag3",
+    "category": "agentic-ai",
+    "question": "What is MCP (Model Context Protocol) and why does it improve AI test generation quality?",
+    "options": [
+      "A model compression protocol that reduces LLM token usage in production deployments",
+      "A security framework for encrypting messages between AI agents and external APIs",
+      "A testing framework specifically designed for validating multi-model AI pipelines",
+      "A standardised protocol allowing AI agents to connect to external tools (Jira, Confluence, TestRail) so they have live structured context rather than stale copy-pasted information"
+    ],
+    "answer": 3,
+    "explanation": "Generation quality is substantially better than prompt-only approaches because the agent's context is always current — it reads requirements, specs, and existing coverage in real time."
+  },
+  {
+    "id": "ag4",
+    "category": "agentic-ai",
+    "question": "What three controls prevent agent loops and runaway costs in a production agentic QE system?",
+    "options": [
+      "Rate limiting, circuit breakers, and timeout configurations — the standard API resilience patterns",
+      "Human review gates, approval workflows, and cost alerts — keeping humans in control of all agent actions",
+      "Hard iteration cap, token budget monitor, and progress assertion — detecting when an agent is stuck and escalating before costs accumulate",
+      "Memory limits, CPU throttling, and parallel execution controls — infrastructure-level guardrails"
+    ],
+    "answer": 2,
+    "explanation": "An unguarded agentic system on a broken task can run indefinitely and generate meaningful cloud costs. The progress assertion — requiring measurable progress after each step — catches loops the other two may miss."
+  },
+  {
+    "id": "ag5",
+    "category": "agentic-ai",
+    "question": "At what three levels do you test an agentic QE system itself?",
+    "options": [
+      "Functional testing, regression testing, and performance testing — the standard software QA pyramid applied to agents",
+      "Unit testing of tool calls, integration testing of agent handoffs, and end-to-end golden set evaluation with adversarial inputs",
+      "Developer testing, QA testing, and user acceptance testing — the standard release validation workflow",
+      "Static analysis, dynamic analysis, and runtime monitoring — covering code, execution, and production behavior"
+    ],
+    "answer": 1,
+    "explanation": "The system should fail loudly and escalate when uncertain, not silently produce low-quality output. Adversarial inputs — ambiguous specs, malformed data — validate graceful degradation."
+  },
+  {
+    "id": "ag6",
+    "category": "agentic-ai",
+    "question": "What is the key difference between a tool-use agent and a reasoning agent in QE?",
+    "options": [
+      "Tool-use agents work offline; reasoning agents require internet connectivity for real-time data",
+      "Tool-use agents are for UI testing; reasoning agents are for API testing",
+      "Tool-use agents are cheaper; reasoning agents are more accurate but always require human review before acting",
+      "Tool-use agents call predefined tools with the LLM deciding which to use; reasoning agents plan multi-step before acting — suited for design tasks, not execution tasks"
+    ],
+    "answer": 3,
+    "explanation": "Match cognitive overhead to task complexity. Tool-use for execution (run test, file bug, update ticket); reasoning for design (analyse testability gaps, design test strategy for a feature)."
+  },
+  {
+    "id": "ag7",
+    "category": "agentic-ai",
+    "question": "How should model version changes be handled in a production agentic QE system?",
+    "options": [
+      "Always use the \"latest\" model alias to automatically benefit from provider improvements without any action required",
+      "Upgrade models immediately when the provider announces a new version to stay current",
+      "Let each team independently choose which model version to use based on their specific use case",
+      "Pin model versions explicitly; run golden set evaluation before upgrading; treat model upgrades like any dependency upgrade — tested in staging, validated against benchmarks"
+    ],
+    "answer": 3,
+    "explanation": "Pinning to a specific version (e.g. claude-sonnet-4-6) prevents a provider model update from silently changing agent behavior overnight — which would be invisible without a golden set evaluation."
+  },
+  {
+    "id": "ag8",
+    "category": "agentic-ai",
+    "question": "What is Claude Code and how would you apply it in a QE workflow?",
+    "options": [
+      "A cloud-based test execution platform that uses AI to analyse and categorise test results",
+      "A Claude-powered code review tool that checks assertion quality in pull requests",
+      "A visual test recorder that converts browser interactions into Playwright scripts automatically",
+      "Anthropic's terminal-based agentic coding tool; used for gap analysis, PR-triggered test generation, and self-healing loops — operating directly inside the codebase"
+    ],
+    "answer": 3,
+    "explanation": "Claude Code reads files, writes code, and runs commands without a human triggering each step — making it suited for autonomous PR-level workflows where a developer shouldn't have to prompt it manually."
+  },
+  {
+    "id": "ag9",
+    "category": "agentic-ai",
+    "question": "What makes a successful 2-week AI QE proof-of-concept?",
+    "options": [
+      "Covers as many use cases as possible in the two weeks to demonstrate the breadth of AI QE capability",
+      "Uses a demo environment to avoid any risk to production code, data, or team workflows",
+      "Targets one narrow high-value use case on real production code; measures time, quality, and adoption rate before and after",
+      "Focuses on generating the maximum number of test cases as the primary success metric"
+    ],
+    "answer": 2,
+    "explanation": "Neutral results across all three metrics indicate the wrong starting use case, not a failed approach. Real data from a pilot converts sceptics who would not believe a projection."
+  },
+  {
+    "id": "ag10",
+    "category": "agentic-ai",
+    "question": "How do you explain agentic AI QE ROI to a non-technical executive?",
+    "options": [
+      "Explain the technical architecture in detail so they can make a fully informed investment decision",
+      "Focus on the competitive advantage of being an AI-first QE organization ahead of industry peers",
+      "Show the total number of tests generated per sprint as the primary quantitative ROI metric",
+      "Lead with the business outcome (\"2 days → 2 hours automatically\"), then connect to metrics they own — release frequency, defect escape rate, time to market"
+    ],
+    "answer": 3,
+    "explanation": "Leadership does not need to understand how the system works — they need to see the business outcome it drives. Automated dashboards showing quality ROI in real time are more persuasive than any slide deck."
+  },
+  {
+    "id": "ag11",
+    "category": "agentic-ai",
+    "question": "What is the recommended approach for designing innovative testing strategies in a product-aligned operating model, according to this job description?",
+    "options": [
+      "Shift-left approaches",
+      "Shift-right practices",
+      "GenAI-enhanced testing",
+      "Test data management"
+    ],
+    "answer": 1,
+    "explanation": "The correct answer is 'shift-right practices', citing the mention of 'establish and monitor QE metrics' and 'introduce shift-right practices, including observability, synthetic monitoring, and production-quality validation'."
+  },
+  {
+    "id": "ag12",
+    "category": "agentic-ai",
+    "question": "In GitHub Copilot, which AI-driven feature allows you to generate natural language test scenarios from a simple API documentation?",
+    "options": [
+      "Code Completion",
+      "API Documentation Analysis",
+      "Test Data Generation",
+      "Intelligent Testing"
+    ],
+    "answer": 2,
+    "explanation": "GitHub Copilot's Test Data Generation feature leverages AI to analyze API documentation and generate high-quality, relevant test scenarios. This allows for more efficient and effective testing."
+  },
+  {
+    "id": "ag13",
+    "category": "agentic-ai",
+    "question": "What strategy should you use to prioritize feature development in an agentic AI system that handles complex, interconnected scenarios?",
+    "options": [
+      "Hierarchical prioritization",
+      "Weighted scoring",
+      "Heuristics-based selection",
+      "Causal graph analysis"
+    ],
+    "answer": 3,
+    "explanation": "Causal graph analysis takes into account the interdependencies between features and prioritizes them based on their impact on the overall system."
+  },
+  {
+    "id": "ag14",
+    "category": "agentic-ai",
+    "question": "Which of the following test frameworks is most suitable for managing User Acceptance Testing (UAT) and regression suites in the given Functional Test Lead role?",
+    "options": [
+      "Testrail",
+      "XRAY",
+      "JIRA",
+      "Behave"
+    ],
+    "answer": 2,
+    "explanation": "The explanation is based on the job description, which mentions XRAY as a testing infrastructure tool that the candidate should be an expert-level user of."
+  },
+  {
+    "id": "ag15",
+    "category": "agentic-ai",
+    "question": "When implementing Pact, what contract testing feature allows you to verify API calls based on HTTP headers?",
+    "options": [
+      "Consumer Data Tests",
+      "Provider Verifications",
+      "Request-Response Matches",
+      "Test Suites with Conditional Logic"
+    ],
+    "answer": 1,
+    "explanation": "Pact's Provider Verifications feature enables the verification of API calls based on HTTP headers."
+  },
+  {
+    "id": "ag16",
+    "category": "agentic-ai",
+    "question": "What is the core difference between traditional AI and agentic AI in quality engineering?",
+    "options": [
+      "Traditional AI uses larger language models while agentic AI uses smaller, faster models",
+      "Traditional AI runs in the cloud while agentic AI runs locally on developer machines",
+      "Traditional AI is a tool that produces output from input; agentic AI perceives, decides, acts, observes results, and loops autonomously toward a goal",
+      "Traditional AI handles test generation while agentic AI handles only test execution"
+    ],
+    "answer": 2,
+    "explanation": "Traditional AI in QE acts as a tool where you provide input and receive output. Agentic AI operates autonomously: it sets objectives, plans steps, executes actions, observes results, and iterates without requiring human intervention at each step."
+  },
+  {
+    "id": "ag17",
+    "category": "agentic-ai",
+    "question": "What are the four fundamental components of any AI agent in a QE system?",
+    "options": [
+      "Input, Processing, Output, Storage",
+      "Perception, Memory, Reasoning, Action",
+      "Planning, Execution, Validation, Reporting",
+      "Collection, Analysis, Generation, Deployment"
+    ],
+    "answer": 1,
+    "explanation": "Every AI agent has four components: Perception (reading inputs like specs and test results), Memory (short-term task context and long-term historical patterns), Reasoning (the LLM brain that plans and evaluates), and Action (tool calls that execute tasks like running tests or writing code)."
+  },
+  {
+    "id": "ag18",
+    "category": "agentic-ai",
+    "question": "What are the three phases of a self-healing test framework in an agentic system?",
+    "options": [
+      "Scan, Fix, Deploy",
+      "Identify, Quarantine, Retry",
+      "Detection (capture failure evidence), Diagnosis (classify root cause), Remediation (apply category-specific fix)",
+      "Alert, Escalate, Resolve"
+    ],
+    "answer": 2,
+    "explanation": "A robust self-healing framework works in three phases: Detection captures DOM snapshots, network traces, and error context; Diagnosis classifies the failure as a selector change, timing issue, data state problem, or visual change; Remediation applies the appropriate fix based on the diagnosis category."
+  },
+  {
+    "id": "ag19",
+    "category": "agentic-ai",
+    "question": "What distinguishes LLM-assisted test generation from fully autonomous test generation?",
+    "options": [
+      "LLM-assisted uses GPT models while autonomous uses Claude models",
+      "LLM-assisted generates more tests per hour than autonomous generation",
+      "In LLM-assisted, a human provides specs and reviews output at each step; in autonomous, the agent reads specs, generates, executes, triages, and updates the suite with humans handling only exceptions",
+      "LLM-assisted works only with unit tests while autonomous works with E2E tests"
+    ],
+    "answer": 2,
+    "explanation": "LLM-assisted generation keeps humans in the loop at every step, accelerating authoring time. Autonomous generation transforms the pipeline so agents read specifications, identify scenarios, generate scripts, execute them, triage failures, and update the suite independently, with humans reviewing only exceptions."
+  },
+  {
+    "id": "ag20",
+    "category": "agentic-ai",
+    "question": "What is the primary role of an 'AI Change Agent' in a QE organization?",
+    "options": [
+      "Writing all AI-generated test scripts for the organization",
+      "Selecting and purchasing AI tools for the QE team",
+      "Driving both the technical implementation of AI tools and the cultural transformation needed for teams to adopt them",
+      "Training machine learning models on test data for defect prediction"
+    ],
+    "answer": 2,
+    "explanation": "An AI Change Agent's primary challenge is organizational, not just technical. They must build the AI tools and frameworks that prove the new approach works, while also convincing engineers, managers, and leaders to change how they've worked for years. Technical work is only half the job."
+  },
+  {
+    "id": "ag21",
+    "category": "agentic-ai",
+    "question": "What guardrails are essential for deploying agentic AI in a regulated industry QE environment?",
+    "options": [
+      "Rate limiting and caching to reduce API costs",
+      "No real PII in agent context, human review gates for critical assertions, immutable execution logs, assertion quality enforcement, and model version pinning",
+      "Using only open-source AI models to avoid vendor lock-in",
+      "Restricting AI to test generation only, with no access to production-like environments"
+    ],
+    "answer": 1,
+    "explanation": "Regulated industries require strict guardrails: no real PII enters agent context (synthetic data only), human sign-off for critical financial assertions, immutable audit logs with full provenance, automated assertion quality checks, and pinned model versions to prevent silent behavior changes."
+  },
+  {
+    "id": "ag22",
+    "category": "agentic-ai",
+    "question": "In a multi-agent QE architecture, what is the recommended role breakdown for specialist agents?",
+    "options": [
+      "Frontend Agent, Backend Agent, Database Agent, Deployment Agent",
+      "Analyst Agent (reads specs), Generator Agent (writes tests), Executor Agent (runs tests), Reviewer Agent (triages failures), Reporter Agent (formats results)",
+      "Planning Agent, Coding Agent, Debugging Agent",
+      "Input Agent, Processing Agent, Output Agent, Storage Agent"
+    ],
+    "answer": 1,
+    "explanation": "A production multi-agent QE system benefits from specialist roles: an Analyst that extracts requirements from specs, a Generator that writes test scripts, an Executor that runs them and captures results, a Reviewer that distinguishes real bugs from flakiness, and a Reporter that updates tracking tools. Each agent is small, focused, and independently testable."
+  },
+  {
+    "id": "ag23",
+    "category": "agentic-ai",
+    "question": "What is the biggest risk with autonomous test generation that most teams overlook?",
+    "options": [
+      "AI-generated tests run too slowly in CI pipelines",
+      "The false confidence created by a large test suite with low-quality assertions that execute code without asserting meaningful business logic",
+      "AI models cannot understand business requirements well enough to generate useful tests",
+      "Autonomous generation requires too much compute power to be cost-effective"
+    ],
+    "answer": 1,
+    "explanation": "The biggest overlooked risk is false confidence: AI can generate thousands of tests that look correct and execute the right endpoints but only assert on response status codes, not business logic values. A large suite with weak assertions is worse than a small, trusted one because it masks real bugs."
+  },
+  {
+    "id": "ag24",
+    "category": "agentic-ai",
+    "question": "How does a learning loop improve a self-healing test system over time?",
+    "options": [
+      "It retrains the LLM model on new test data every week",
+      "It stores successful fix patterns in a vector database so future similar failures are resolved from the store before calling the LLM, reducing costs and improving speed",
+      "It automatically generates new test cases based on previously healed tests",
+      "It tracks which developers introduce the most bugs and routes failures to them"
+    ],
+    "answer": 1,
+    "explanation": "A learning loop stores successful healing decisions in a vector database. When a similar failure occurs, the system queries the store first instead of calling the LLM. Over time, the LLM becomes a fallback rather than the primary path, reducing API costs and accelerating fix times."
+  },
+  {
+    "id": "ag25",
+    "category": "agentic-ai",
+    "question": "Why is testing non-deterministic AI features (like AI-assisted underwriting) fundamentally different from traditional functional testing?",
+    "options": [
+      "AI features require more test data than traditional features",
+      "AI features can only be tested manually because automated tools cannot evaluate AI outputs",
+      "AI outputs vary between runs, requiring statistical validation, boundary testing, and fairness checks instead of exact-match assertions",
+      "AI features are always slower to test because they require GPU resources"
+    ],
+    "answer": 2,
+    "explanation": "Non-deterministic AI features produce outputs that may vary between runs, making exact-match assertions ineffective. QE must use statistical validation approaches, boundary testing, bias and fairness checks, and confidence-based assertions to validate that AI outputs fall within acceptable ranges."
+  }
+]

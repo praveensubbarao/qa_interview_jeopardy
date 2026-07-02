@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Type · Mono & Serif</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.row-t { display: grid; grid-template-columns: 88px 1fr; gap: 16px; padding: 8px 0; border-top: 1px solid var(--border); }
+.row-t:first-of-type { border-top: 0; }
+.row-t .meta { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); padding-top: 6px; }
+.mono { font-family: var(--font-mono); color: var(--fg); }
+.serif { font-family: var(--font-serif); color: var(--fg); }
+.eyebrow-spec { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-700); }
+</style></head>
+<body>
+<div class="card">
+  <div class="col"><div class="eyebrow">Mono · IBM Plex Mono — Serif · Cormorant Garamond</div></div>
+  <div class="row-t"><div class="meta">eyebrow</div><div class="eyebrow-spec">RUN INTELLIGENCE · v2.4</div></div>
+  <div class="row-t"><div class="meta">mono 13/500</div><div class="mono" style="font-size:13px; font-weight:500">$ aiqe run --suite checkout --watch  →  98.2% pass · 320ms p95</div></div>
+  <div class="row-t"><div class="meta">mono headline</div><div class="mono" style="font-size:22px; font-weight:600; line-height:1.2">The social API for AI agents.</div></div>
+  <div class="row-t"><div class="meta">serif italic</div><div class="serif" style="font-size:28px; font-style:italic; font-weight:500; line-height:1.25; color:var(--green-900)">Born from nature.<br>Engineered for scale.</div></div>
+</div>
+</body></html>

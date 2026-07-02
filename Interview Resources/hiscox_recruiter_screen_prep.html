@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hiscox — Recruiter Screen Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f7f5f1;--ink:#111008;--s:#fff;--rule:#e0dbd2;--navy:#1a3a5c;--rust:#b04010;--green:#1a5c38;--muted:#6b7280;--sh:0 1px 8px rgba(0,0,0,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;line-height:1.7}
+
+  /* HERO */
+  .hero{background:var(--navy);color:#f0f4f8;padding:40px 44px 32px;position:relative;overflow:hidden}
+  .hero::after{content:'HX';position:absolute;right:-10px;bottom:-24px;font-size:180px;font-weight:700;color:rgba(255,255,255,.04);pointer-events:none}
+  .eye{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#7eb3d8;margin-bottom:10px}
+  .hero h1{font-size:clamp(22px,3.5vw,36px);font-weight:600;line-height:1.15;margin-bottom:8px}
+  .hero h1 em{color:#d4a04a;font-style:italic}
+  .hero-sub{color:#94a3b8;font-size:13px;max-width:600px;margin-bottom:20px}
+  .pills{display:flex;flex-wrap:wrap;gap:7px}
+  .pill{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 10px;border-radius:3px;border:1px solid rgba(255,255,255,.14);color:#c8d8e8}
+  .pill.hot{border-color:rgba(212,160,74,.5);color:#d4a04a;background:rgba(212,160,74,.08)}
+
+  /* RULE BAR */
+  .rule-bar{background:#0f2040;color:#7eb3d8;font-family:'JetBrains Mono',monospace;font-size:11px;padding:9px 44px;letter-spacing:.4px}
+
+  /* NAV */
+  .nav{background:var(--s);border-bottom:2px solid var(--navy);padding:0 44px;display:flex;gap:0;overflow-x:auto;position:sticky;top:0;z-index:50;box-shadow:var(--sh)}
+  .tab{padding:13px 16px;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:transparent;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;margin-bottom:-2px;font-family:'Inter',sans-serif}
+  .tab:hover{color:var(--ink)}.tab.on{color:var(--navy);border-bottom-color:var(--navy)}
+
+  /* WRAP */
+  .wrap{max-width:820px;margin:0 auto;padding:32px 44px}
+  .pane{display:none}.pane.on{display:block}
+
+  /* PROGRESS */
+  .prog{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+  .pb{flex:1;height:4px;background:var(--rule);border-radius:2px;overflow:hidden}
+  .pf{height:100%;width:0%;background:var(--green);transition:width .4s}
+  .pt{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+
+  /* CONTEXT BOX */
+  .ctx-box{background:var(--navy);color:#c8d8e8;border-radius:8px;padding:16px 20px;margin-bottom:20px;font-size:13px;line-height:1.72}
+  .ctx-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#7eb3d8;margin-bottom:7px}
+
+  /* CARDS */
+  .card{background:var(--s);border:1px solid var(--rule);border-radius:7px;margin-bottom:10px;overflow:hidden;box-shadow:var(--sh)}
+  .card.open{border-color:var(--navy);border-width:1.5px}
+  .card.done{border-color:var(--green);background:#f7fdf9}
+  .qrow{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;cursor:pointer;transition:background .12s}
+  .qrow:hover{background:#f5f2ed}
+  .qnum{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);flex-shrink:0;min-width:24px;padding-top:2px}
+  .qtext{font-size:13.5px;font-weight:500;flex:1;line-height:1.4}
+  .tag{font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500;white-space:nowrap;flex-shrink:0}
+  .t1{background:#e8eef7;color:#1a3a5c}
+  .t2{background:#fdeee8;color:#b04010}
+  .t3{background:#d1f0e0;color:#1a5c38}
+  .t4{background:#fef3c7;color:#92400e}
+  .t5{background:#ede9fe;color:#5b21b6}
+  .chv{color:var(--muted);flex-shrink:0;font-size:11px;margin-top:3px;transition:transform .18s}
+  .card.open .chv{transform:rotate(180deg)}
+
+  /* ANSWER BODY */
+  .abody{display:none;padding:16px 18px;border-top:1px solid var(--rule);background:#fdfcfa}
+  .card.open .abody{display:block}
+  .albl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+  .atext{font-size:13.5px;color:#374151;line-height:1.78;font-style:italic}
+  .atext em{font-style:normal;font-weight:500;color:var(--ink)}
+
+  /* CALLOUT BOXES */
+  .tip{background:#f0f7f4;border-left:3px solid var(--green);padding:9px 13px;border-radius:0 5px 5px 0;margin-top:10px;font-size:12.5px;color:#1a5c38;line-height:1.6;font-style:normal}
+  .warn{background:#fef9ee;border-left:3px solid #d4a04a;padding:9px 13px;border-radius:0 5px 5px 0;margin-top:10px;font-size:12.5px;color:#78350f;line-height:1.6;font-style:normal}
+  .hx{background:#eaf1f8;border-left:3px solid var(--navy);padding:9px 13px;border-radius:0 5px 5px 0;margin-top:10px;font-size:12.5px;color:#0f2040;line-height:1.6;font-style:normal}
+  .hx::before{content:"Hiscox context: ";font-weight:600}
+
+  /* GOT IT */
+  .gi{display:inline-block;margin-top:10px;padding:4px 12px;font-size:11px;font-weight:500;border:1px solid var(--green);border-radius:3px;cursor:pointer;background:transparent;color:var(--green);font-family:'Inter',sans-serif;transition:all .15s}
+  .gi:hover,.gi.mk{background:var(--green);color:#fff}
+
+  /* TIPS GRID */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  @media(max-width:580px){.grid2{grid-template-columns:1fr}}
+  .mini{background:var(--s);border:1px solid var(--rule);border-radius:7px;padding:14px 16px;box-shadow:var(--sh)}
+  .mini-icon{font-size:20px;margin-bottom:8px}
+  .mini-title{font-size:13px;font-weight:600;margin-bottom:5px;color:var(--navy)}
+  .mini-body{font-size:12.5px;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eye">Recruiter Screen Prep · Praveen Subbarao · Round 1</div>
+  <h1>Hiscox USA<br><em>Principal Quality Engineer</em></h1>
+  <p class="hero-sub">First-round recruiter screen — 30–45 minutes. Focus: fit, communication, and career narrative. Keep every answer under 90 seconds. Leave technical depth for round 2.</p>
+  <div class="pills">
+    <span class="pill hot">Playwright · Cucumber · TypeScript</span>
+    <span class="pill hot">GitHub Actions · CI/CD</span>
+    <span class="pill">SAFe · Agile</span>
+    <span class="pill">Insurance / Financial Services</span>
+    <span class="pill">AI-driven QE</span>
+    <span class="pill">$120K–$140K</span>
+  </div>
+</div>
+
+<div class="rule-bar">⏱ Recruiter screen rule: 90 seconds per answer · pause · let them respond · close the call actively</div>
+
+<nav class="nav">
+  <button class="tab on" onclick="sw('context',this)">Hiscox Context (3)</button>
+  <button class="tab" onclick="sw('questions',this)">Screen Questions (9)</button>
+  <button class="tab" onclick="sw('salary',this)">Salary & Logistics (2)</button>
+  <button class="tab" onclick="sw('ask',this)">Ask Them (3)</button>
+  <button class="tab" onclick="sw('closing',this)">Closing Tips (4)</button>
+</nav>
+
+<div class="wrap">
+<div class="prog"><div class="pb"><div class="pf" id="pf"></div></div><div class="pt" id="pt">0 / 21 reviewed</div></div>
+
+<!-- ══════════════════════ HISCOX CONTEXT ════════════════════════════════ -->
+<div id="context" class="pane on">
+
+<div class="ctx-box">
+  <div class="ctx-lbl">Read this before anything else</div>
+  Hiscox is a global specialist insurer — cyber, professional liability, small business. They are mid-digital transformation with <strong>~300 concurrent technology projects</strong> and a new CTO hired December 2024. They are actively deploying generative AI into underwriting and broker submissions. Their values: <strong>courage, integrity, ownership, connected, human</strong>. The recruiter will likely probe for culture fit against these values. Mirror them naturally.
+</div>
+
+<div class="card" id="cx1"><div class="qrow" onclick="tog('cx1')"><span class="qnum">01</span><span class="qtext">What is Hiscox's technology strategy and why does it matter for this QE role?</span><span class="tag t1">Context</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Know this cold</div><div class="atext">Hiscox runs approximately 300 simultaneous technology initiatives — their model prioritises outcomes over roadmaps and flexibility over monolithic platforms. A Principal QE in that environment isn't testing one product — they're governing quality standards across multiple scrum teams and value streams simultaneously. The QE architecture must be scalable enough to serve that breadth without creating a bottleneck.
+<div class="hx">Hiscox's CIO describes the model as "outcomes over roadmaps" — your answer about quality strategy should use that framing: quality is a continuous outcome, not a phase-gate.</div></div><button class="gi" onclick="mk('cx1',this)">✓ Got it</button></div></div>
+
+<div class="card" id="cx2"><div class="qrow" onclick="tog('cx2')"><span class="qnum">02</span><span class="qtext">How is Hiscox using AI — and how does that affect what QE needs to do?</span><span class="tag t1">Context</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Know this cold</div><div class="atext">Hiscox has live generative AI in augmented underwriting (an underwriter-in-the-loop model) and a broker submission triage platform that reads and categorises submissions against risk appetite. They plan to expand this to Europe and the US in 2025. For QE this means the test strategy must cover non-deterministic AI outputs — not just traditional functional testing. A QE who only knows traditional automation will struggle with this context.
+<div class="hx">Dropping this into the conversation — "I understand Hiscox is actively deploying AI in underwriting and submission triage, which changes how QE approaches those features" — will immediately signal genuine research and differentiate you.</div></div><button class="gi" onclick="mk('cx2',this)">✓ Got it</button></div></div>
+
+<div class="card" id="cx3"><div class="qrow" onclick="tog('cx3')"><span class="qnum">03</span><span class="qtext">What is Hiscox's culture — and how do you mirror it in this screen?</span><span class="tag t1">Context</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Know this cold</div><div class="atext">Hiscox values: <em>courage</em> (challenge convention), <em>integrity</em> (do the right thing), <em>ownership</em> (run with ideas, don't wait to be told), <em>connected</em> (cross-functional collaboration), <em>human</em> (people first). 90% of employees say they believe in these values — the recruiter is screening for cultural fit. Use the word "ownership" when describing your approach to quality. Use "courage" when describing challenging engineering teams on testability.
+<div class="tip">Natural place to use these: "At Care.com I took ownership of the entire QE transformation — nobody asked me to build the AI-assisted workflows, I identified the opportunity and ran with it." That's the Hiscox "ownership" value in action.</div></div><button class="gi" onclick="mk('cx3',this)">✓ Got it</button></div></div>
+
+</div><!-- /context -->
+
+<!-- ══════════════════════ SCREEN QUESTIONS ══════════════════════════════ -->
+<div id="questions" class="pane">
+
+<div class="card" id="q1"><div class="qrow" onclick="tog('q1')"><span class="qnum">04</span><span class="qtext">"Tell me about yourself."</span><span class="tag t2">Opening</span><span class="chv">▾</span></div><div class="abody"><div class="albl">90-second answer — say this out loud before the call</div><div class="atext">"I'm a Quality Engineering leader with 20 years of experience, most recently as Quality Architect at Care.com where I led the shift from manual-first to an automation-first QE organisation. Practically — I built intelligent workflow automation that generated Playwright test scripts from design specs, cutting authoring time by 60% across 40 engineers, and migrated our entire framework from Selenium to Playwright TypeScript with a 90% improvement in CI/CD reliability. I'm looking for a principal-level role where I can do both — hands-on framework work with Playwright and Cucumber, and strategic influence across engineering scrum teams — which is exactly the scope Hiscox is describing. I hold the Claude AI Fluency and Google Generative AI Leader certifications, which matters for testing AI-driven insurance features."
+<div class="tip">Stop here. 90 seconds. Let them respond. Don't add more unprompted.</div></div><button class="gi" onclick="mk('q1',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q2"><div class="qrow" onclick="tog('q2')"><span class="qnum">05</span><span class="qtext">"Why Hiscox?"</span><span class="tag t2">Motivation</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer</div><div class="atext">"Two things specifically. First, the scale of Hiscox's technology programme — around 300 concurrent initiatives — is the kind of multi-stream environment where QE architecture really matters. Governing quality across that breadth requires exactly the cross-functional framework thinking I want to be doing at this stage of my career. Second, Hiscox is actively deploying AI in underwriting and broker submission processing — which means QE here isn't just traditional automation, it's building test approaches for non-deterministic AI features. That's genuinely the frontier of quality engineering and it's where I've been building toward."
+<div class="hx">Naming the 300 concurrent initiatives and the AI underwriting deployment signals you researched beyond the JD. Recruiters notice and flag this positively to hiring managers.</div></div><button class="gi" onclick="mk('q2',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q3"><div class="qrow" onclick="tog('q3')"><span class="qnum">06</span><span class="qtext">"What's your experience with Playwright and Cucumber?"</span><span class="tag t3">Technical</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer — keep this concise for a recruiter screen</div><div class="atext">"Playwright is my primary framework — I led the enterprise migration from Selenium to Playwright TypeScript at Care.com, building the full framework from scratch including Page Object Model, parallel execution, CI/CD integration, and reporting. Cucumber I've used for BDD — the Gherkin layer is valuable specifically in an insurance context because it lets business stakeholders like underwriters read and contribute to test scenarios, making quality a shared language, not a QE-only concern. Both are hands-on from day one."
+<div class="tip">Don't go deeper than this unless they ask. The recruiter wants to confirm you have the tools — save the depth for the technical round with the Director of QE.</div></div><button class="gi" onclick="mk('q3',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q4"><div class="qrow" onclick="tog('q4')"><span class="qnum">07</span><span class="qtext">"What does SAFe mean to you from a QE perspective?"</span><span class="tag t3">Technical</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer</div><div class="atext">"In SAFe, QE works at two levels — at the team level supporting each scrum team's sprint testing, and at the programme level ensuring quality gates are consistent across all teams at PI boundaries. The Principal QE role sits at that intersection — close enough to individual scrum teams to guide their automation work, elevated enough to set the standards all teams follow. I've operated in both Agile and SAFe-adjacent environments at Care.com across 20+ countries — the cross-team governance piece is where I've spent most of my senior career."
+<div class="warn">If you're not deep on SAFe specifically, don't pretend — the recruiter will sense it. The answer above bridges your Agile experience without overstating SAFe-specific knowledge.</div></div><button class="gi" onclick="mk('q4',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q5"><div class="qrow" onclick="tog('q5')"><span class="qnum">08</span><span class="qtext">"What's your experience with AI in testing?"</span><span class="tag t3">Technical</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer — your biggest differentiator</div><div class="atext">"Over the last two years at Care.com I built intelligent workflow automation that generated test scripts directly from design specifications — cutting authoring time by 60% across 40 engineers. I integrated tool connections to Jira, Confluence, and TestRail so the system had live context from requirements through to execution, and built automated quality reporting pipelines delivering real-time metrics to leadership. I hold the Claude AI Fluency and Google Generative AI Leader certifications. For Hiscox specifically, the AI capability matters in two directions — using AI tools to accelerate QE, and testing the AI-driven features like underwriting augmentation and broker submission triage, which require a different testing philosophy than traditional deterministic systems."
+<div class="hx">The last sentence about testing Hiscox's own AI features is the differentiator. Most candidates will only talk about AI as a QE tool — you're also talking about AI as a system under test. That's sophisticated and directly relevant.</div></div><button class="gi" onclick="mk('q5',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q6"><div class="qrow" onclick="tog('q6')"><span class="qnum">09</span><span class="qtext">"Do you have insurance or financial services experience?"</span><span class="tag t4">Domain</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Honest bridge answer</div><div class="atext">"My direct insurance experience is limited — my background is B2C SaaS. However, the QE disciplines that matter most in insurance translate directly from what I've done: data integrity testing for systems where errors have financial consequences, compliance-adjacent audit trails for change evidence, and zero-tolerance testing for payment and billing flows — all things I managed at Care.com under GDPR, CCPA, and SOC 2 governance. The insurance domain specifics I'd ramp on quickly — the engineering discipline and quality culture are the harder things to build, and those I bring immediately."
+<div class="tip">The JD says "insurance or financial services is a plus" — not required. Be confident in this answer. Your compliance and financial system testing background is a genuine parallel.</div></div><button class="gi" onclick="mk('q6',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q7"><div class="qrow" onclick="tog('q7')"><span class="qnum">10</span><span class="qtext">"How do you define shift-left quality?"</span><span class="tag t3">Technical</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer</div><div class="atext">"Shift-left means quality conversations move from 'is it done?' to 'is it testable?' — before implementation starts. In practice I join sprint planning and design reviews, asking: what's the acceptance criteria, how do we know this works, and what does failure look like? At Care.com I embedded QA at the design phase — the escape rate dropped because defects were caught in architecture, not in regression. For Hiscox's scrum teams, that means being present in the design of insurance product features from day one, not waiting to receive a ticket to test."</div><button class="gi" onclick="mk('q7',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q8"><div class="qrow" onclick="tog('q8')"><span class="qnum">11</span><span class="qtext">"Tell me about a time you built a test automation framework from scratch."</span><span class="tag t2">Behavioral</span><span class="chv">▾</span></div><div class="abody"><div class="albl">STAR answer — keep it tight</div><div class="atext"><em>Situation:</em> "At Care.com our Selenium-based framework was slow, flaky, and trusted by nobody — engineers were bypassing it to meet deadlines." <em>Task:</em> "I needed to modernise the entire QE framework for a global B2C platform serving 20+ countries." <em>Action:</em> "I led the migration to Playwright TypeScript from scratch — Page Object Model, parallel execution, GitHub Actions integration, and reporting pipelines. I built reusable automation templates and ran enablement sessions so all 40 engineers could contribute." <em>Result:</em> "90% improvement in CI/CD reliability, 60% reduction in test execution time, and — most importantly — the team started trusting green builds again."
+<div class="tip">This is your strongest story. Deliver it in under 90 seconds. The 90% and 60% numbers are memorable — make sure you land them clearly.</div></div><button class="gi" onclick="mk('q8',this)">✓ Got it</button></div></div>
+
+<div class="card" id="q9"><div class="qrow" onclick="tog('q9')"><span class="qnum">12</span><span class="qtext">"What does quality ownership mean to you?"</span><span class="tag t2">Culture Fit</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer — mirrors Hiscox's "ownership" value directly</div><div class="atext">"Quality ownership means every engineer on the scrum team feels accountable for quality — not just the QE. My job as Principal QE is to make that culture possible: by embedding quality in the design phase so developers think about testability from the start, by building frameworks that are easy for developers to contribute to, and by making quality metrics visible to everyone so there's shared accountability for the outcome. At Care.com I got to a point where developers were requesting QA involvement earlier in the sprint — that's when you know ownership has shifted from a function to a culture."
+<div class="hx">The word "ownership" is one of Hiscox's five core values. Using it here is not coincidental — it's deliberate alignment with their culture. The recruiter will notice.</div></div><button class="gi" onclick="mk('q9',this)">✓ Got it</button></div></div>
+
+</div><!-- /questions -->
+
+<!-- ══════════════════════ SALARY & LOGISTICS ════════════════════════════ -->
+<div id="salary" class="pane">
+
+<div class="card" id="s1"><div class="qrow" onclick="tog('s1')"><span class="qnum">13</span><span class="qtext">"What salary are you targeting?"</span><span class="tag t5">Salary</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer</div><div class="atext">"Based on the scope of the role and the experience I'm bringing — 20 years, Senior Director background, Playwright and AI QE expertise — I'm targeting the top of your posted range, around $140K base. I'd also want to understand the bonus structure before getting specific. What does total compensation typically look like at this level at Hiscox?"
+<div class="warn">Always flip it back to them after giving your number. This gets you information about the full package — bonus, 401K matching, sabbatical — before you anchor on base alone. The JD lists generous benefits worth understanding before negotiating.</div>
+<div class="tip">Hiscox offers 24 PTO days + 2 Hiscox days + 4-week sabbatical after 5 years + $600 fitness reimbursement + strong 401K. Factor the full package into your evaluation — not just base salary.</div></div><button class="gi" onclick="mk('s1',this)">✓ Got it</button></div></div>
+
+<div class="card" id="s2"><div class="qrow" onclick="tog('s2')"><span class="qnum">14</span><span class="qtext">"Are you comfortable with the hybrid two-days-in-office requirement?"</span><span class="tag t5">Logistics</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer — keep this short</div><div class="atext">"Yes, two days in office works well for me. I find the in-person time valuable for the collaborative work — design reviews, enablement sessions, pairing with engineers — and the remote days effective for deep framework work and code reviews. That balance matches how I prefer to operate."
+<div class="tip">Don't negotiate the hybrid requirement at the recruiter screen. Confirm it cleanly and move on. Negotiations about office days happen after an offer — not at round one.</div></div><button class="gi" onclick="mk('s2',this)">✓ Got it</button></div></div>
+
+</div><!-- /salary -->
+
+<!-- ══════════════════════ ASK THEM ══════════════════════════════════════ -->
+<div id="ask" class="pane">
+
+<div class="ctx-box">
+  <div class="ctx-lbl">Ask exactly two of these — no more</div>
+  Recruiters have limited time and limited technical depth. Ask questions that extract intelligence useful for the technical round — not questions the recruiter can't answer. Pick any two from the three below.
+</div>
+
+<div class="card" id="ask1"><div class="qrow" onclick="tog('ask1')"><span class="qnum">15</span><span class="qtext">"How many scrum teams would this Principal QE be supporting — and what's the current automation maturity?"</span><span class="tag t1">Ask Them</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Why ask this</div><div class="atext">This tells you what you're walking into — is it three mature teams or eight nascent ones? The answer shapes everything about your 90-day plan if you get the role, and it signals to the recruiter that you're already thinking about scope and execution rather than just wanting the job.</div><button class="gi" onclick="mk('ask1',this)">✓ Got it</button></div></div>
+
+<div class="card" id="ask2"><div class="qrow" onclick="tog('ask2')"><span class="qnum">16</span><span class="qtext">"What does the Director of QE say is the single most important thing this role needs to deliver in the first 90 days?"</span><span class="tag t1">Ask Them</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Why ask this</div><div class="atext">Recruiters often know what the hiring manager cares about most — this question extracts that intelligence before your technical round. Whatever the recruiter says here becomes the frame for your round-two answers. It also shows you're thinking about immediate impact, not just the interview process.</div><button class="gi" onclick="mk('ask2',this)">✓ Got it</button></div></div>
+
+<div class="card" id="ask3"><div class="qrow" onclick="tog('ask3')"><span class="qnum">17</span><span class="qtext">"What does the interview process look like from here — and what's the timeline?"</span><span class="tag t1">Ask Them</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Why ask this</div><div class="atext">Practical but essential — knowing whether round two is a technical panel, a take-home exercise, or a system design session lets you prepare specifically rather than generically. It also signals that you're organised and taking the process seriously.</div><button class="gi" onclick="mk('ask3',this)">✓ Got it</button></div></div>
+
+</div><!-- /ask -->
+
+<!-- ══════════════════════ CLOSING TIPS ══════════════════════════════════ -->
+<div id="closing" class="pane">
+
+<div class="grid2">
+  <div class="mini">
+    <div class="mini-icon">🎯</div>
+    <div class="mini-title">Close the call actively</div>
+    <div class="mini-body">At the end say: "Based on everything we've discussed, I'd love to move to the next stage — is there anything about my background you'd want me to clarify before we close today?" This signals confidence and surfaces any hidden concern before you're out of the conversation.</div>
+  </div>
+  <div class="mini">
+    <div class="mini-icon">⏱</div>
+    <div class="mini-title">90-second rule — practise it</div>
+    <div class="mini-body">Every answer should be deliverable in 90 seconds. If you can't say it in 90 seconds, you haven't refined it enough. Practise your "tell me about yourself" out loud three times before the call — it should feel natural, not rehearsed.</div>
+  </div>
+  <div class="mini">
+    <div class="mini-icon">🪞</div>
+    <div class="mini-title">Mirror their values language</div>
+    <div class="mini-body">Hiscox values: courage, integrity, ownership, connected, human. Use "ownership" when describing your approach. Use "courage to challenge" when describing shift-left advocacy. Natural alignment — not obvious flattery.</div>
+  </div>
+  <div class="mini">
+    <div class="mini-icon">📧</div>
+    <div class="mini-title">Follow up within 2 hours</div>
+    <div class="mini-body">Send a brief thank-you email within 2 hours of the call. Three sentences: thank them for their time, one specific thing you found compelling about Hiscox from the conversation, and confirm your interest in moving forward. Short is better than long.</div>
+  </div>
+</div>
+
+<div class="card" id="cl1" style="margin-top:14px"><div class="qrow" onclick="tog('cl1')"><span class="qnum">18</span><span class="qtext">The one thing that derailed your American Tower and LTVco interviews — don't repeat it here.</span><span class="tag t4">Remember</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Critical reminder</div><div class="atext">You went deep and thorough on every answer in those interviews. For a recruiter screen that is the wrong mode. The recruiter is not assessing technical depth — they are assessing communication style, culture fit, and whether they feel confident advancing you to the hiring manager. Three sentences. Pause. Offer to go deeper only if they ask. The depth comes in round two with the Director of QE.
+<div class="warn">If you catch yourself still talking after 90 seconds — stop. Say "happy to go deeper on that if useful" and let them steer. That pause is more impressive than the additional content.</div></div><button class="gi" onclick="mk('cl1',this)">✓ Got it</button></div></div>
+
+<div class="card" id="cl2"><div class="qrow" onclick="tog('cl2')"><span class="qnum">19</span><span class="qtext">Sample follow-up email to send within 2 hours of the call.</span><span class="tag t2">Follow-up</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Ready to personalise and send</div><div class="atext">Subject: Thank you — Principal QE conversation<br><br>Hi [Name],<br><br>Thank you for taking the time to speak with me today. Learning about Hiscox's approach to [something specific they mentioned — the SAFe programme, the AI underwriting initiative, the multi-team QE structure] reinforced why this role is genuinely compelling to me — the breadth of engineering impact and the AI testing frontier are exactly where I want to be operating.<br><br>I'm very interested in moving forward and look forward to the next step in the process.<br><br>Best regards,<br>Praveen Subbarao<br>(972) 302-7257
+<div class="tip">Fill in the bracketed section with something specific the recruiter mentioned — this proves you were listening and makes the email memorable rather than generic.</div></div><button class="gi" onclick="mk('cl2',this)">✓ Got it</button></div></div>
+
+<div class="card" id="cl3"><div class="qrow" onclick="tog('cl3')"><span class="qnum">20</span><span class="qtext">What to say if asked about the "Director to Principal QE" level question.</span><span class="tag t4">Level</span><span class="chv">▾</span></div><div class="abody"><div class="albl">Answer — crisp version of your prepared narrative</div><div class="atext">"I've spent years building and scaling large QA organisations — I've done that well and I'm proud of it. What excites me now is staying close to the technical craft — hands-on framework architecture, Playwright development, AI QE tooling — while having enough strategic scope to influence how quality is embedded across engineering teams. A Principal QE at Hiscox with multiple value streams, reporting to a QE Director, is exactly that balance. The title is different — the depth of impact isn't."
+<div class="tip">Keep this to 45 seconds. If it's not asked, don't volunteer it. The recruiter may not raise the level question at all — many don't at the first screen.</div></div><button class="gi" onclick="mk('cl3',this)">✓ Got it</button></div></div>
+
+<div class="card" id="cl4"><div class="qrow" onclick="tog('cl4')"><span class="qnum">21</span><span class="qtext">Your one-sentence answer for "anything else you'd like us to know?"</span><span class="tag t2">Closing</span><span class="chv">▾</span></div><div class="abody"><div class="albl">The closer</div><div class="atext">"I'd just say — I'm genuinely excited about this opportunity, not just looking for a next role. Hiscox's combination of technical breadth, AI transformation ambition, and a culture that values ownership and courage is the environment I want to contribute to. I'd love the chance to show that in a technical conversation with the Director of QE."
+<div class="tip">Saying "I'd love the chance to show that in the technical round" explicitly signals you're ready for round two and sets the expectation that you have technical depth to demonstrate. It's a forward close without being pushy.</div></div><button class="gi" onclick="mk('cl4',this)">✓ Got it</button></div></div>
+
+</div><!-- /closing -->
+</div><!-- /wrap -->
+
+<script>
+let done=new Set(),total=21;
+function sw(id,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function tog(id){document.getElementById(id).classList.toggle('open')}
+function mk(id,btn){
+  done.add(id);
+  btn.textContent='✓ Reviewed';
+  btn.classList.add('mk');
+  document.getElementById(id).classList.add('done');
+  const pct=Math.round(done.size/total*100);
+  document.getElementById('pf').style.width=pct+'%';
+  document.getElementById('pt').textContent=done.size+' / '+total+' reviewed';
+  event.stopPropagation();
+}
+</script>
+</body>
+</html>

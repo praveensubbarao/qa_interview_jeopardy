@@ -1,0 +1,249 @@
+[
+  {
+    "id": "f1",
+    "category": "ai-foundations",
+    "question": "What is the key difference between AI-assisted testing and agentic AI testing?",
+    "options": [
+      "AI-assisted tests APIs; agentic tests UIs automatically",
+      "AI-assisted uses ML; agentic uses rule-based scripting",
+      "AI-assisted is human-in-the-loop; agentic removes the human for routine decisions — humans review exceptions, not every step",
+      "There is no difference — both terms describe the same testing approach"
+    ],
+    "answer": 2,
+    "explanation": "AI-assisted saves authoring time; agentic changes the operating model. The practical difference is who makes the routine decisions — a human or the agent."
+  },
+  {
+    "id": "f2",
+    "category": "ai-foundations",
+    "question": "What are the four components of an AI agent, and how do they map to QE?",
+    "options": [
+      "Perception, memory, reasoning, and action — mapping to spec ingestion, test history, gap analysis, and script generation",
+      "Input, processing, output, and storage — mapping to requirements, test design, execution, and reporting",
+      "Planning, execution, monitoring, and reporting — mapping to the four phases of a test cycle",
+      "Model, prompt, tool, and evaluation — the core pillars of any LLM-based system"
+    ],
+    "answer": 0,
+    "explanation": "Understanding this decomposition lets you design better agents and debug them when they fail — it is architectural thinking, not just tool knowledge."
+  },
+  {
+    "id": "f3",
+    "category": "ai-foundations",
+    "question": "How do you test non-deterministic AI outputs where the same input does not always produce the same result?",
+    "options": [
+      "Run the same test 100 times and accept results if 95% pass",
+      "Use property-based testing — assert the output satisfies properties rather than matching an exact value — combined with golden set evaluation",
+      "Skip automated testing and rely entirely on manual review for AI outputs",
+      "Use exact-match assertions on every run and flag any variance as a defect"
+    ],
+    "answer": 1,
+    "explanation": "Properties might include: does the response contain required fields, is it within the expected domain, does it cite traceable sources. Golden sets detect quality drift over time."
+  },
+  {
+    "id": "f4",
+    "category": "ai-foundations",
+    "question": "What is a golden set evaluation and what specific problem does it solve?",
+    "options": [
+      "A collection of high-priority tests selected by stakeholders as the mandatory regression suite",
+      "A performance benchmark run of the fastest-executing tests used to set SLA targets",
+      "A set of the highest-value test cases automatically identified by an ML prioritisation model",
+      "A curated set of representative inputs with human-evaluated expected outputs, run regularly to detect model drift"
+    ],
+    "answer": 3,
+    "explanation": "Golden set evaluation catches the gradual degradation of AI output quality that only shows up over time — invisible without measurement, which is why a baseline must be established at deployment."
+  },
+  {
+    "id": "f5",
+    "category": "ai-foundations",
+    "question": "What is LLM-as-judge, and what critical step do most candidates miss when describing it?",
+    "options": [
+      "Using a secondary LLM to evaluate primary AI outputs at scale — the critical step is calibrating the judge model against human scores first",
+      "Using a human panel to rate LLM outputs — the critical step is blinding reviewers to the model version",
+      "Running an LLM against predefined compliance rules — the critical step is version-controlling the rule set",
+      "Using an LLM to generate test assertions — the critical step is running assertions against a mocked environment"
+    ],
+    "answer": 0,
+    "explanation": "If the judge model does not agree with human scores on the golden set, it is not a reliable judge for production evaluation — calibration is the guardrail most candidates skip."
+  },
+  {
+    "id": "f6",
+    "category": "ai-foundations",
+    "question": "What is model drift and how do you detect it in a production AI system?",
+    "options": [
+      "Model drift is version skew between environments; detected by comparing model IDs in deployment manifests",
+      "Model drift is increased API latency under load; detected by percentile response time monitoring",
+      "Model drift is the gradual degradation of AI output quality over time; detected through scheduled golden set evaluations and production proxy metrics",
+      "Model drift is when a model is retrained on stale data; detected by comparing training dataset timestamps"
+    ],
+    "answer": 2,
+    "explanation": "Drift is invisible without measurement — a baseline must be established at deployment, not after the first complaint. Proxy metrics include user rejection rates and downstream error rates."
+  },
+  {
+    "id": "f7",
+    "category": "ai-foundations",
+    "question": "How does prompt engineering relate to Quality Engineering — and what framing signals QE maturity to an interviewer?",
+    "options": [
+      "\"Prompts are configuration\" — they should be managed in environment variables like any other setting",
+      "\"Prompts are documentation\" — they describe the intended AI behavior for future maintainers",
+      "\"Prompts are code\" — version-controlled, reviewed, and tested with the same rigour as any software artifact",
+      "\"Prompts are temporary\" — they change too frequently to warrant formal engineering practices"
+    ],
+    "answer": 2,
+    "explanation": "Prompt engineering applies in two QE directions: prompting AI tools to generate better tests, and testing AI-powered products to validate their prompts produce safe, accurate, consistent outputs."
+  },
+  {
+    "id": "f8",
+    "category": "ai-foundations",
+    "question": "What are the three testing layers for a RAG (Retrieval Augmented Generation) system?",
+    "options": [
+      "Unit, integration, and end-to-end — the standard three-tier testing pyramid adapted for AI systems",
+      "Prompt testing, context testing, and output testing — matching the three stages of RAG processing",
+      "Schema validation, load testing, and hallucination detection — covering structure, scale, and accuracy",
+      "Retrieval quality (right documents fetched?), generation quality (context used correctly?), and end-to-end accuracy (final answer correct and traceable?)"
+    ],
+    "answer": 3,
+    "explanation": "Each layer requires a different testing approach — NDCG metrics for retrieval, factual consistency checks for generation, and golden set evaluation for end-to-end accuracy."
+  },
+  {
+    "id": "f9",
+    "category": "ai-foundations",
+    "question": "What are hallucinations in AI systems, and what industry-standard technique detects them?",
+    "options": [
+      "Random errors in AI outputs; detected by running the same query multiple times and checking consistency",
+      "Outdated information in responses; detected by comparing against a real-time external knowledge base",
+      "Confidently wrong outputs not grounded in source context; detected using a factual consistency check",
+      "Off-topic responses that ignore the user's query; detected by keyword filtering and intent classification"
+    ],
+    "answer": 2,
+    "explanation": "A factual consistency check passes the AI's output and source context to an evaluation model and asks whether every claim is supported — scoring consistency rather than exact match."
+  },
+  {
+    "id": "f10",
+    "category": "ai-foundations",
+    "question": "What are the three layers of AI guardrails in a QE context, and what does each layer do?",
+    "options": [
+      "Rate limiting, authentication, and encryption — the standard security layers applied to AI APIs",
+      "Syntax checking, semantic checking, and behavioral testing — validating structure, meaning, and behavior",
+      "Input validation (query in scope?), output validation (response meets policy?), and monitoring (guardrails bypassed in production?)",
+      "Unit tests, integration tests, and smoke tests — the standard test pyramid adapted for AI systems"
+    ],
+    "answer": 2,
+    "explanation": "For AI QE tooling specifically, guardrails mean assertion quality gates — AI-generated tests must have meaningful assertions before entering the suite, with human review within one sprint."
+  },
+  {
+    "id": "ai1",
+    "category": "ai-foundations",
+    "question": "What is the main responsibility of a Quality Engineering Manager in defining and integrating AI-first mindset in test engineering lifecycle?",
+    "options": [
+      "Designing automation frameworks",
+      "Incorporating AI tools into test automation workflows",
+      "Leading quality initiatives aligned to project and product needs",
+      "Driving products from inception to release through technical and thought leadership on quality"
+    ],
+    "answer": 2,
+    "explanation": "The correct answer is the option: 'Incorporating AI tools into test automation workflows'. This shows practical knowledge of applying AI-assisted testing in the test engineering lifecycle, as required by the job description."
+  },
+  {
+    "id": "ai2",
+    "category": "ai-foundations",
+    "question": "What would you do to prevent regressions from reaching production when integrating automated tests into CI/CD pipelines?",
+    "options": [
+      "Define quality gates within deployment pipelines",
+      "Run manual tests before deploying to production",
+      "Use AI tools for test generation and execution",
+      "Monitor pipeline health and test flakiness"
+    ],
+    "answer": 0,
+    "explanation": "The correct answer is option: 'Define quality gates within deployment pipelines'. This shows practical knowledge of integrating automated tests into CI/CD pipelines, enforcing quality gates to prevent regressions."
+  },
+  {
+    "id": "ai3",
+    "category": "ai-foundations",
+    "question": "In Jest, what type of module does the `expect.extend` function expect as its first argument to extend the set of matchers?",
+    "options": [
+      "module",
+      "function",
+      "string",
+      "regexp"
+    ],
+    "answer": 1,
+    "explanation": "The `expect.extend` function expects a function as its first argument, which provides the new matcher."
+  },
+  {
+    "id": "ai4",
+    "category": "ai-foundations",
+    "question": "What is the correct command in Playwright to wait for a specific element on the page, allowing it to reload the page automatically when the element becomes available?",
+    "options": [
+      "waitForSelector(), then reload();",
+      "waitForLoadState('networkidle2'), then reload();",
+      "await page.goto('https://example.com'); then page.reload();",
+      "await page.waitForLoadState('networkidle0')"
+    ],
+    "answer": 3,
+    "explanation": "The correct command in Playwright to wait for a specific element on the page and automatically reload the page when the element becomes available is `page.waitForLoadState('networkidle0')`. This method allows the page to reload when the network idle state reaches zero."
+  },
+  {
+    "id": "ai5",
+    "category": "ai-foundations",
+    "question": "How does the `kubernetes` API support rolling updates of a deployment, and what is the primary mechanism for achieving this?",
+    "options": [
+      "Rollbacks to previous versions",
+      "Using the `rollingUpdate` field in the deployment spec",
+      "Sending SIGTERM signals to pods that are not yet replaced",
+      "Updating the image field in the deployment spec"
+    ],
+    "answer": 1,
+    "explanation": "The primary mechanism for rolling updates of a deployment is the use of the `rollinUpdate` field in the deployment specification. When you update this field, Kubernetes automatically updates the pods that are not yet replaced."
+  },
+  {
+    "id": "ai6",
+    "category": "ai-foundations",
+    "question": "What type of data validation is required to ensure correct meter read synchronization in smart grids?",
+    "options": [
+      "SQL",
+      "Snowflake",
+      "ETL",
+      "Data Mining"
+    ],
+    "answer": 1,
+    "explanation": "The question tests the candidate's proficiency in using SQL or Snowflake for back-end data validation."
+  },
+  {
+    "id": "ai7",
+    "category": "ai-foundations",
+    "question": "In the context of AI-assisted testing, what is the primary challenge when developing robust unit tests for deep learning models?",
+    "options": [
+      "Data augmentation",
+      "Label smearing",
+      "Unbounded output spaces",
+      "Non-differentiable loss functions"
+    ],
+    "answer": 1,
+    "explanation": "The correct answer is 'Label smearing'. In AI-assisted testing, one of the main challenges when developing robust unit tests for deep learning models is handling label smear, which refers to the phenomenon where a model's performance degrades due to subtle changes in input data that do not affect the original labels."
+  },
+  {
+    "id": "ai8",
+    "category": "ai-foundations",
+    "question": "When verifying the correctness of AI-assisted test results, which approach would you use to critically evaluate these outputs?",
+    "options": [
+      "Source-checking the AI-assisted output against a gold standard",
+      "Peer-reviewing AI-assisted findings with a colleague",
+      "Applying manual test cases to validate AI-assisted test results",
+      "Using automated testing frameworks to re-test AI-generated data"
+    ],
+    "answer": 0,
+    "explanation": "You would use source-checking to verify the accuracy of the AI-assisted output against a gold standard, ensuring that the results are reliable and trustworthy."
+  },
+  {
+    "id": "ai9",
+    "category": "ai-foundations",
+    "question": "In Snowflake, what command would you use to create a file format statement that describes a CSV file with header rows?",
+    "options": [
+      "CREATE FILE FORMAT 'CSV WITH HEADER';",
+      "CREATE FILE FORMAT 'CSV NO_HEADER';",
+      "CREATE FILE FORMAT 'JSON WITH HEARTHER';",
+      "CREATE FILE FORMAT 'AVRO NO_HEADER';"
+    ],
+    "answer": 0,
+    "explanation": "Snowflake's file format statement needs to specify the header row behavior. This command allows for the use of CSV files with header rows."
+  }
+]

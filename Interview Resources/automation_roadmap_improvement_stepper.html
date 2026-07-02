@@ -1,0 +1,187 @@
+
+<style>
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  .root{padding:1.5rem 0;font-size:14px;color:var(--color-text-primary)}
+  .phase-nav{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+  .phase-dot{width:8px;height:8px;border-radius:50%;background:var(--color-border-secondary);cursor:pointer;transition:all .2s;flex-shrink:0;margin-top:6px}
+  .phase-dot.active{background:var(--color-text-primary);transform:scale(1.3)}
+  .phase-dot.done{background:var(--color-text-success)}
+  .phase-pill{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;border:0.5px solid var(--color-border-tertiary);cursor:pointer;transition:all .2s;color:var(--color-text-secondary);background:transparent}
+  .phase-pill.active{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
+  .phase-pill.done{border-color:var(--color-border-success);color:var(--color-text-success)}
+  .panel{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:1rem}
+  .panel-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:1rem}
+  .phase-label{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:4px}
+  .phase-title{font-size:18px;font-weight:500;line-height:1.3}
+  .time-badge{font-size:11px;padding:3px 10px;border-radius:4px;background:var(--color-background-secondary);color:var(--color-text-secondary);white-space:nowrap;flex-shrink:0;margin-top:4px}
+  .panel-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.65;margin-bottom:1rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .tasks-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+  .task-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+  .task-title{font-size:12px;font-weight:500;margin-bottom:3px}
+  .task-body{font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+  .output-row{display:flex;align-items:flex-start;gap:8px;font-size:13px;margin-bottom:6px}
+  .output-dot{width:6px;height:6px;border-radius:50%;background:var(--color-text-success);flex-shrink:0;margin-top:5px}
+  .output-label{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:8px}
+  .interview-box{background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:12px 14px;margin-top:1rem;font-size:13px;color:var(--color-text-info);line-height:1.6}
+  .interview-label{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--color-text-info);margin-bottom:5px}
+  .nav-btns{display:flex;justify-content:space-between;align-items:center;margin-top:1rem}
+  .nav-btn{padding:7px 18px;font-size:13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;color:var(--color-text-primary)}
+  .nav-btn:hover{background:var(--color-background-secondary)}
+  .nav-btn:disabled{opacity:0.3;cursor:not-allowed}
+  .nav-btn.primary{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
+  .counter{font-size:12px;color:var(--color-text-secondary)}
+  .ask-btn{display:inline-block;margin-top:10px;padding:6px 14px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;background:transparent;color:var(--color-text-primary)}
+  .ask-btn:hover{background:var(--color-background-secondary)}
+</style>
+
+<h2 class="sr-only">Five-phase framework for improving an existing automation roadmap</h2>
+
+<div class="root">
+  <div class="phase-nav" id="pillNav"></div>
+  <div id="panelContainer"></div>
+  <div class="nav-btns">
+    <button class="nav-btn" id="prevBtn" onclick="move(-1)" disabled>Back</button>
+    <span class="counter" id="counter">1 of 5</span>
+    <button class="nav-btn primary" id="nextBtn" onclick="move(1)">Next</button>
+  </div>
+</div>
+
+<script>
+const phases = [
+  {
+    label: "Phase 1",
+    title: "Audit before you act",
+    time: "Days 1–21",
+    desc: "The single biggest mistake people make with an existing framework is jumping straight to fixes. You need to understand what you actually have — not what the documentation says. Think of this like a doctor doing tests before prescribing medication.",
+    tasks: [
+      { title: "Map the current landscape", body: "Catalogue every existing test suite. How many tests exist? What do they cover? When were they last updated? Which ones consistently pass vs. consistently fail?" },
+      { title: "Measure, don't assume", body: "Pull real data: average execution time, flakiness rate (tests that sometimes pass, sometimes fail), false positive rate, and how long since each test was last meaningfully maintained." },
+      { title: "Interview the people running it", body: "Ask the engineers: What do you not trust? What takes the longest? What do you skip? What slows down your releases? Their frustrations are your improvement roadmap." },
+      { title: "Review production incidents", body: "Look at bugs that escaped to production in the last 6–12 months. Did any existing tests cover that area? If not, that's a coverage gap. If yes, why didn't they catch it?" }
+    ],
+    outputs: [
+      "A health scorecard: coverage %, flakiness rate, avg execution time, maintenance debt",
+      "A heat map of where tests exist vs. where the highest production risk is",
+      "A ranked list of the top 5 pain points — from the team, not from theory"
+    ],
+    interview: "\"Before I change anything, I audit. I want real data — not assumptions — on what's working, what's flaky, and where the gaps are. I also talk to the engineers running it daily, because they know where the bodies are buried.\""
+  },
+  {
+    label: "Phase 2",
+    title: "Classify and prioritize",
+    time: "Days 22–35",
+    desc: "Not all problems are equal. After the audit, you'll have a long list of issues. This phase is about sorting them ruthlessly — what has the highest impact if fixed, vs. what's just noise. You can't fix everything at once, so you sequence by business risk.",
+    tasks: [
+      { title: "Categorize every finding", body: "Sort findings into: coverage gaps (high-risk workflows with no tests), reliability issues (flaky tests that create false confidence), performance issues (suites too slow to be useful), and maintenance debt (tests so fragile nobody trusts them)." },
+      { title: "Score by business impact", body: "For each gap, ask: if this fails in production, what's the cost? Financial? Compliance? Customer-facing? At American Tower, a billing system gap scores higher than a UI cosmetic test." },
+      { title: "Identify quick wins", body: "Find fixes that are high-impact but low-effort — a flaky locator that affects 30 tests, a missing smoke test for the login flow. Do these first to build credibility and team confidence." },
+      { title: "Build a risk matrix", body: "Plot each finding on a 2×2 grid: business risk (high/low) vs. effort to fix (high/low). High-risk, low-effort fixes go first. High-risk, high-effort go into the formal roadmap." }
+    ],
+    outputs: [
+      "A prioritized backlog of improvements, not a wish list",
+      "A risk matrix that stakeholders can see and agree on",
+      "A defined set of 'quick wins' you can deliver in the first 30 days"
+    ],
+    interview: "\"I don't treat all test failures equally. I score each gap by business risk — what's the production impact if this area isn't covered? That's what determines sequence, not what's technically easiest to fix.\""
+  },
+  {
+    label: "Phase 3",
+    title: "Stabilize before you scale",
+    time: "Days 36–90",
+    desc: "A common trap: adding hundreds of new tests to a framework that's already unreliable. You end up with more noise, not more confidence. Stability comes first — a smaller suite that everyone trusts is worth more than a large suite nobody believes.",
+    tasks: [
+      { title: "Fix flakiness systematically", body: "Audit every test with a >5% failure rate on passing code. Common causes: hard-coded waits (replace with explicit waits), environment dependencies (isolate test data), and timing issues from async operations." },
+      { title: "Retire dead tests", body: "Tests that haven't caught a real bug in 12+ months and cover low-risk areas are maintenance debt. Remove them. A leaner, trusted suite beats a bloated, doubted one every time." },
+      { title: "Standardize the framework", body: "Enforce consistent patterns: one way to create test data, one way to write locators, one way to handle assertions. Inconsistency is the root cause of most maintenance explosions." },
+      { title: "Improve CI/CD integration", body: "Tests that run manually aren't automation — they're scripted manual testing. Every critical suite should run automatically on code changes, with results visible in the pipeline within minutes." }
+    ],
+    outputs: [
+      "Flakiness rate reduced — target under 2% for all active tests",
+      "Test suite trimmed of dead weight — fewer tests, more trusted",
+      "Standardized patterns documented so new contributors can follow them",
+      "All critical suites integrated into CI/CD, not run manually"
+    ],
+    interview: "\"I stabilize before I scale. Adding more tests to a shaky foundation just creates more noise. I'd rather have 200 tests everyone trusts than 2,000 that get ignored because of false positives.\""
+  },
+  {
+    label: "Phase 4",
+    title: "Expand coverage strategically",
+    time: "Days 90–180",
+    desc: "Now you earn the right to grow. With a stable base, you add coverage where risk is highest — not where it's easiest. You also start introducing AI-assisted tooling to accelerate authoring without sacrificing quality.",
+    tasks: [
+      { title: "Fill the highest-risk gaps first", body: "Use your risk matrix from Phase 2. Cover the business-critical workflows that escaped in production. For American Tower: financial workflows, tenant lifecycle steps, and compliance-adjacent processes." },
+      { title: "Add API-layer tests", body: "UI tests are slow and fragile. For every business process that can be validated at the API layer, write an API test instead. It's faster, more reliable, and survives UI redesigns." },
+      { title: "Introduce AI-assisted authoring", body: "LLM-assisted test generation from specs or user stories can cut authoring time significantly. Build reusable prompt templates so the whole team benefits — not just power users." },
+      { title: "Build performance baselines", body: "For critical workflows (financial batch jobs, high-traffic flows), establish response-time baselines and add performance assertions into the release gate. Catch slowdowns before they hit production." }
+    ],
+    outputs: [
+      "Coverage of top 10 highest-risk workflows confirmed",
+      "API test layer established, reducing reliance on UI-only validation",
+      "AI-assisted authoring workflows documented and adopted by the team",
+      "Performance baselines set with automated regression alerts"
+    ],
+    interview: "\"Once the foundation is solid, I expand by risk — not by volume. I also layer in AI-assisted test generation at this stage. At Care.com I cut authoring time by 60% using LLM workflows. I'd bring that same model here.\""
+  },
+  {
+    label: "Phase 5",
+    title: "Govern, measure, and continuously improve",
+    time: "Day 180+",
+    desc: "Automation is never 'done.' The final phase is building the systems that keep it healthy without you personally policing it — KPIs, dashboards, review cycles, and a culture where quality is everyone's job.",
+    tasks: [
+      { title: "Define and track KPIs", body: "Automation coverage %, defect escape rate, test execution time, flakiness rate, and manual hours saved per release. Publish these to leadership on a regular cadence — not on request." },
+      { title: "Build executive dashboards", body: "Leaders shouldn't have to dig for quality signals. Connect your KPIs to real-time dashboards (n8n, Grafana, or similar) so quality is visible without anyone writing a status report." },
+      { title: "Establish review cadence", body: "Monthly: review flakiness report and retire dead tests. Quarterly: reassess coverage priorities against product roadmap. Annually: evaluate framework and tooling choices for continued fit." },
+      { title: "Run a community of practice", body: "Hold regular sessions where engineers share automation patterns, new tools, and lessons from failures. This is how standards spread without mandates — and how you build a culture of quality ownership." }
+    ],
+    outputs: [
+      "Live KPI dashboard visible to QA, engineering, and leadership",
+      "Automated quality reports replacing manual status updates",
+      "Defined review cadence — monthly, quarterly, annually",
+      "A team that improves the framework, not just uses it"
+    ],
+    interview: "\"The roadmap doesn't end at delivery. I build the measurement systems and review cadences that keep automation healthy long-term. At Care.com I connected all KPIs to executive dashboards via automated workflows — leadership saw ROI in real time without anyone writing a report.\""
+  }
+];
+
+let current = 0;
+
+function render() {
+  const p = phases[current];
+  const nav = document.getElementById('pillNav');
+  nav.innerHTML = phases.map((ph, i) => `<button class="phase-pill ${i===current?'active':i<current?'done':''}" onclick="goTo(${i})">${ph.label}</button>`).join('');
+
+  document.getElementById('panelContainer').innerHTML = `
+    <div class="panel">
+      <div class="panel-top">
+        <div>
+          <div class="phase-label">${p.label} of 5</div>
+          <div class="phase-title">${p.title}</div>
+        </div>
+        <span class="time-badge">${p.time}</span>
+      </div>
+      <div class="panel-desc">${p.desc}</div>
+      <div class="output-label">What you actually do</div>
+      <div class="tasks-grid">
+        ${p.tasks.map(t=>`<div class="task-card"><div class="task-title">${t.title}</div><div class="task-body">${t.body}</div></div>`).join('')}
+      </div>
+      <div class="output-label" style="margin-top:1rem">Deliverables from this phase</div>
+      ${p.outputs.map(o=>`<div class="output-row"><span class="output-dot"></span><span>${o}</span></div>`).join('')}
+      <div class="interview-box">
+        <div class="interview-label">Say this in the interview</div>
+        ${p.interview}
+      </div>
+      <button class="ask-btn" onclick="sendPrompt('Give me more detail on phase ${current+1}: ${p.title} for an American Tower context')">Go deeper on this phase ↗</button>
+    </div>`;
+
+  document.getElementById('counter').textContent = `${current+1} of ${phases.length}`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').textContent = current === phases.length-1 ? 'Done' : 'Next';
+  document.getElementById('nextBtn').disabled = current === phases.length-1;
+}
+
+function move(dir) { goTo(current + dir); }
+function goTo(i) { if(i>=0 && i<phases.length){ current=i; render(); } }
+
+render();
+</script>

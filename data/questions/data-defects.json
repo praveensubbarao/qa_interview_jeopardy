@@ -1,0 +1,444 @@
+[
+  {
+    "id": "dd1",
+    "category": "data-defects",
+    "question": "What two problems does AI-driven synthetic test data generation solve that rule-based tools like Faker cannot?",
+    "options": [
+      "Execution speed and storage efficiency — AI generates data faster and in more compact formats",
+      "Version control and reproducibility — AI ensures the same data is generated across environments",
+      "Licensing cost and setup complexity — AI tools require no manual schema configuration",
+      "Privacy compliance (no real PII needed) and semantic coherence — understanding field relationships and generating meaningful edge cases humans would not specify"
+    ],
+    "answer": 3,
+    "explanation": "AI understands that a California address needs a valid CA zip code, an enterprise user implies different patterns than a consumer — producing semantically coherent data, not just statistically random values."
+  },
+  {
+    "id": "dd2",
+    "category": "data-defects",
+    "question": "On what three dimensions do you validate that synthetic data is representative of production data?",
+    "options": [
+      "Volume, velocity, and variety — the three V's of big data applied to test data quality",
+      "Accuracy, completeness, and timeliness — the data quality dimensions from data governance frameworks",
+      "Statistical distribution, referential integrity, and functional equivalence — validated through parallel test runs",
+      "Format compliance, encryption status, and access control alignment — ensuring security parity with production"
+    ],
+    "answer": 2,
+    "explanation": "A parallel test run — same suite against production-sampled data and synthetic data — validates functional equivalence. Divergence indicates gaps in the synthetic data that would hide real defects."
+  },
+  {
+    "id": "dd3",
+    "category": "data-defects",
+    "question": "What features does a defect prediction ML model use, and what does the output enable QA to do?",
+    "options": [
+      "API response time, memory usage, and CPU load — predicting which services will fail under peak load",
+      "Test execution time, pass/fail history, and code coverage — predicting which tests are at risk of becoming flaky",
+      "User complaint volume, support ticket count, and error rate — predicting which features have the most production defects",
+      "Code churn, prior bug density, complexity, developer history, and test staleness — enabling risk-based testing that directs effort toward highest-risk areas"
+    ],
+    "answer": 3,
+    "explanation": "The model output is a risk score per module. QA directs deep testing toward high-risk areas and lighter testing toward stable modules — making the same testing capacity more effective."
+  },
+  {
+    "id": "dd4",
+    "category": "data-defects",
+    "question": "What are the four intelligent triage categories for test failures, and which one should never block a PR?",
+    "options": [
+      "Pass, fail, flaky, and error — errors should never block a PR as they indicate infrastructure rather than application issues",
+      "Critical, major, minor, and informational — informational failures should never block a PR",
+      "New, known, regressed, and intermittent — intermittent failures should never block a PR as they are by definition unreliable",
+      "Real product bug (block PR), flaky test (route to self-healing), environment issue (alert DevOps), and test code issue (route to QA) — environment issues should not block PRs"
+    ],
+    "answer": 3,
+    "explanation": "Correct classification determines action. The quality signal that triage is working: engineers stop ignoring failure notifications because triage correctly separates signal from noise."
+  },
+  {
+    "id": "dd5",
+    "category": "data-defects",
+    "question": "How should AI-assisted root cause analysis be positioned — and what is its second, often overlooked use?",
+    "options": [
+      "As the final word on root cause — AI analysis is objective and faster than human review",
+      "As a replacement for human RCA on all non-critical production incidents",
+      "As the starting point — surfacing causal hypotheses faster than manual log analysis; second use is pattern recognition across six months of incidents to surface systemic architectural risks",
+      "As a documentation tool — generating incident reports automatically from monitoring system data"
+    ],
+    "answer": 2,
+    "explanation": "AI is the starting point; a human engineer validates before the RCA is official. Pattern recognition across many incidents surfaces risks that individual bug reports hide — a systemic view individual RCAs cannot provide."
+  },
+  {
+    "id": "dd6",
+    "category": "data-defects",
+    "question": "What is the critical additional test scenario for an AI data validation system beyond standard accuracy testing?",
+    "options": [
+      "Load testing — validating that the validator maintains accuracy under high-volume data ingestion",
+      "Security testing — validating that the validator cannot be manipulated by malformed input injection",
+      "Integration testing — validating that the validator connects correctly to all upstream data sources",
+      "Distributional shift testing — when production data evolves beyond the training distribution, the validator should flag uncertainty rather than confidently misclassify"
+    ],
+    "answer": 3,
+    "explanation": "Testing false positive rate (valid records flagged as invalid) and false negative rate (invalid records missed) covers accuracy. Distributional shift catches the silent degradation as data patterns evolve post-deployment."
+  },
+  {
+    "id": "dd7",
+    "category": "data-defects",
+    "question": "What are the two specific QE applications for vector databases, and which implementation approach avoids adding infrastructure?",
+    "options": [
+      "Test result storage and historical trend analysis — pgvector on PostgreSQL avoids a separate service",
+      "LLM response caching and prompt deduplication — Redis with vector extension avoids a separate service",
+      "Self-healing learning loops (store fix decisions, retrieve similar past fixes) and test deduplication (semantic similarity search before generation) — pgvector on existing PostgreSQL avoids adding a new component",
+      "Coverage gap analysis and requirement embedding — Weaviate is preferred for its native GraphQL interface"
+    ],
+    "answer": 2,
+    "explanation": "The self-healing loop reduces LLM calls over time; test deduplication prevents the coverage illusion where AI generates tests functionally identical to existing ones with different wording."
+  },
+  {
+    "id": "dd8",
+    "category": "data-defects",
+    "question": "What is the foundational rule for AI QE systems and data privacy — and why must it be enforced architecturally, not by policy?",
+    "options": [
+      "Encrypt all data before passing to AI systems using AES-256 — policies may be overlooked but encryption cannot be bypassed",
+      "Obtain explicit user consent before using any data in an AI pipeline — consent is tracked in the architecture's data lineage",
+      "Store all AI system logs for 90 days — architectural log retention cannot be disabled by individual engineers",
+      "No real PII ever enters an AI agent's context — policies can be accidentally violated; a masking layer at the architecture level cannot be bypassed by an individual engineer's mistake"
+    ],
+    "answer": 3,
+    "explanation": "A data masking pipeline replaces PII with synthetic equivalents that preserve format and distribution before data reaches any LLM. Using providers with zero data retention agreements (e.g. Anthropic API) is documented as compliance evidence."
+  },
+  {
+    "id": "dd9",
+    "category": "data-defects",
+    "question": "What is observability-driven QE, and how does AI improve it beyond threshold-based alerting?",
+    "options": [
+      "Using QA metrics to drive infrastructure provisioning decisions — AI improves this by predicting capacity needs",
+      "Monitoring test execution in real time to catch failures as they occur — AI improves this by auto-retrying flaky tests",
+      "Observing user behavior in production to identify untested scenarios — AI improves this by generating tests from session recordings",
+      "Using production telemetry (metrics, logs, traces) as a quality signal alongside test results — AI shifts from threshold alerts to pattern-recognition, catching regressions that do not breach a fixed threshold"
+    ],
+    "answer": 3,
+    "explanation": "Pattern-recognition detects that error rate is \"behaving differently than after any previous deployment\" — a subtle signal that threshold-based monitoring would miss until it breaches the fixed alert boundary."
+  },
+  {
+    "id": "dd10",
+    "category": "data-defects",
+    "question": "What are the three numbers that anchor a compelling business case for AI QE investment?",
+    "options": [
+      "ROI percentage, payback period, and net present value — the standard financial metrics for any technology investment",
+      "Team size, tooling cost, and implementation timeline — the practical parameters for executive approval",
+      "Test count, coverage percentage, and defect escape rate — the technical metrics translated into business terms",
+      "Current cost (hours fixing broken tests × hourly rate), projected saving (from pilot data), and risk cost avoidance (what production incidents actually cost the business)"
+    ],
+    "answer": 3,
+    "explanation": "Real pilot data beats projections every time. One production incident in a payment system often costs more than the entire AI QE investment — making risk avoidance the most compelling number in the case."
+  },
+  {
+    "id": "da1",
+    "category": "data-defects",
+    "question": "What type of data quality issue is typically addressed by using statistical methods like mean absolute percentage error (MAPE) and coefficient of determination (R²)?",
+    "options": [
+      "Data quality drift",
+      "Sensor noise",
+      "Concept drift",
+      "Incorrect data normalization"
+    ],
+    "answer": 1,
+    "explanation": "MAPE and R² are used to evaluate the accuracy of predictions made by machine learning models, which helps identify sensor noise or other data inaccuracies."
+  },
+  {
+    "id": "da2",
+    "category": "data-defects",
+    "question": "How do you correctly configure JUnit to run a test suite with parallel execution using Jenkins?",
+    "options": [
+      "Use the 'parallel' parameter in the Maven Surefire plugin",
+      "Add a 'parallel' variable in your pom.xml file",
+      "Configure Jenkins to use the TestNG parallel runner",
+      "Run multiple Maven commands simultaneously using the '&&' operator"
+    ],
+    "answer": 0,
+    "explanation": "Jenkins allows you to run JUnit test suites with parallel execution by configuring the Maven Surefire plugin. This option provides a concise and effective way to achieve parallel testing within Jenkins."
+  },
+  {
+    "id": "da3",
+    "category": "data-defects",
+    "question": "What is the correct way to configure Playwright's `tracing` option when using GitHub Copilot for AI-assisted test automation?",
+    "options": [
+      "Enable tracing globally with `playwright.config.ts`",
+      "Set tracing for individual tests with a single line of code",
+      "Disable tracing altogether for improved performance",
+      "Only enable tracing for failed tests"
+    ],
+    "answer": 0,
+    "explanation": "Playwright's tracing option helps debug browser issues when integrating AI tools like GitHub Copilot. The correct configuration is to enable it globally."
+  },
+  {
+    "id": "da4",
+    "category": "data-defects",
+    "question": "What Dynatrace feature allows troubleshooting of technical issues by producing a working outcome, which you would need to manage and oversee the process?",
+    "options": [
+      "Real User Monitoring",
+      "PurePath",
+      "Application Performance Management",
+      "Process Flow Analysis"
+    ],
+    "answer": 3,
+    "explanation": "This feature is crucial in ensuring success as a Solution Engineer at Dynatrace, as it allows you to troubleshoot technical issues and produce a working outcome."
+  },
+  {
+    "id": "da5",
+    "category": "data-defects",
+    "question": "While performing data-driven validation using Snowflake, which option correctly sets the filtering criteria for meters in a specific geographic region?",
+    "options": [
+      "WHERE meter_region = 'specific_region'",
+      "FROM meter_data WHERE region_name = 'specific_region'",
+      "SELECT * FROM meter_data WHERE region_code = 'specific_region'",
+      "ALL Meters IN 'specific_region'"
+    ],
+    "answer": 0,
+    "explanation": "To filter meters by a specific geographic region in Snowflake, you use the WHERE clause and specify the desired region."
+  },
+  {
+    "id": "da6",
+    "category": "data-defects",
+    "question": "When using RSpec, how do you correctly configure a shared context to share setup and teardown steps between multiple examples?",
+    "options": [
+      "Use a separate describe block for each example",
+      "Create a module and include it in each example",
+      "Use the around keyword to wrap setup and teardown code",
+      "Define a global method that encapsulates the shared behavior"
+    ],
+    "answer": 2,
+    "explanation": "RSpec's around keyword allows you to wrap setup and teardown code, making it ideal for sharing setup and teardown steps between multiple examples."
+  },
+  {
+    "id": "dd16",
+    "category": "data-defects",
+    "question": "What is a 'golden dataset' in test data management, and why is it essential for test reliability?",
+    "options": [
+      "A dataset containing the largest volume of test data possible for performance testing",
+      "A known, version-controlled clean state that the database is reset to before each test suite run, ensuring deterministic test results",
+      "A production database snapshot taken on a specific date used as the baseline for all environments",
+      "A dataset generated by AI that contains statistically perfect distributions"
+    ],
+    "answer": 1,
+    "explanation": "A golden dataset is a known-good state stored as version-controlled SQL scripts. Resetting the database to this state before each test run eliminates test pollution from previous runs, improving reliability from 65% to 98% in real-world cases."
+  },
+  {
+    "id": "dd17",
+    "category": "data-defects",
+    "question": "When generating synthetic test data at scale, why is using weighted distributions important?",
+    "options": [
+      "Weighted distributions make the data generation process faster",
+      "Weighted distributions ensure the synthetic data mirrors real-world statistical patterns, revealing issues like index degradation at high volume that uniform random data would miss",
+      "Weighted distributions are required by GDPR compliance for test data",
+      "Weighted distributions only matter for machine learning training data, not test data"
+    ],
+    "answer": 1,
+    "explanation": "Weighted distributions generate data that mirrors production patterns (e.g., addresses weighted by population density, realistic transaction amounts). Tests with uniform random data may miss performance issues that only appear with realistic data distributions."
+  },
+  {
+    "id": "dd18",
+    "category": "data-defects",
+    "question": "What is the recommended approach to ensure reproducibility when generating synthetic test data?",
+    "options": [
+      "Generate fresh random data before each test run for maximum coverage",
+      "Use a fixed seed value in data generators so the same data is produced across test runs",
+      "Store generated data in a shared database that all environments reference",
+      "Use production data instead of synthetic data to avoid reproducibility concerns"
+    ],
+    "answer": 1,
+    "explanation": "Using a fixed seed value in Faker libraries or custom generators ensures the same data is produced every time, making test results reproducible across runs and environments. This enables reliable debugging when tests fail."
+  },
+  {
+    "id": "dd19",
+    "category": "data-defects",
+    "question": "What is the key benefit of ephemeral environments in a DevOps testing context?",
+    "options": [
+      "They are cheaper than permanent environments because they use spot instances",
+      "They spin up per PR or per branch via infrastructure-as-code, providing isolated testing without team interference, then are destroyed after merge",
+      "They run all tests faster because they are optimized for test execution",
+      "They automatically replicate production data for realistic testing"
+    ],
+    "answer": 1,
+    "explanation": "Ephemeral environments (created via Terraform/Helm per PR, destroyed after merge) eliminate the shared staging instability caused by competing team deployments. Each team tests in isolation, and the stable shared environment is reserved for integration runs."
+  },
+  {
+    "id": "dd20",
+    "category": "data-defects",
+    "question": "What are the key areas of database testing that a QA Architect should ensure are covered?",
+    "options": [
+      "Only test query performance since that is the most common database issue",
+      "Schema validation, data integrity, stored procedure correctness, migration testing with rollback verification, and query performance analysis",
+      "Only test database backups and recovery procedures",
+      "Focus exclusively on connection pool testing since that affects application performance"
+    ],
+    "answer": 1,
+    "explanation": "Database testing covers schema validation (correct structure and constraints), data integrity (referential integrity enforcement), stored procedure testing, migration testing (including rollback verification), and performance (execution plans, index usage). Each area catches different classes of defects."
+  },
+  {
+    "id": "dd21",
+    "category": "data-defects",
+    "question": "What is the principle of 'promote artifacts, not code' in environment management?",
+    "options": [
+      "Only use precompiled binaries, never source code, in test environments",
+      "Build the application once and deploy the same artifact through all environments (QA, staging, prod) rather than rebuilding from source for each environment",
+      "Promote QA team members who write the best test artifacts to lead positions",
+      "Use artifact repositories like Nexus instead of source code repositories like Git"
+    ],
+    "answer": 1,
+    "explanation": "Building once and promoting the same artifact through environments ensures you test exactly what will be deployed to production. Rebuilding from source per environment risks introducing differences that cause 'works in staging, fails in production' scenarios."
+  },
+  {
+    "id": "dd22",
+    "category": "data-defects",
+    "question": "How should test data for third-party email integrations be handled in automated test environments?",
+    "options": [
+      "Send real emails through the production email service and verify delivery manually",
+      "Replace the email service with an SMTP capture tool like Mailhog, then verify email content by querying the capture API in tests",
+      "Skip email testing entirely since it is unreliable in automated environments",
+      "Use a dedicated real email account that receives all test emails"
+    ],
+    "answer": 1,
+    "explanation": "SMTP capture tools (Mailhog, Mailtrap) intercept all emails sent from the test environment. Tests verify email content, recipients, and subject lines by querying the capture tool's API, avoiding sending real emails that pollute deliverability metrics and may reach unintended recipients."
+  },
+  {
+    "id": "dd23",
+    "category": "data-defects",
+    "question": "What is defect density, and how is it used strategically by a QA Architect?",
+    "options": [
+      "The total number of defects in a release, used to determine if the release is ready to ship",
+      "The number of defects per unit of code size (KLOC or function points), used to identify high-risk modules that need refactoring and concentrated test effort",
+      "The ratio of critical to minor defects, used to prioritize which defects to fix first",
+      "The number of defects found per tester per sprint, used to measure QA team productivity"
+    ],
+    "answer": 1,
+    "explanation": "Defect density (defects/KLOC) identifies modules with disproportionately high bug rates. A module at 3.5 defects/KLOC when the median is 0.8 signals poor design or insufficient testing, providing evidence for targeted refactoring and test investment."
+  },
+  {
+    "id": "dd24",
+    "category": "data-defects",
+    "question": "What is the most dangerous misconception about code coverage metrics, and what supplements them?",
+    "options": [
+      "That code coverage is useless; the supplement is manual testing",
+      "That 100% line coverage means zero bugs; mutation testing supplements coverage by verifying that tests actually assert meaningful behavior",
+      "That code coverage should never exceed 80% because beyond that ROI decreases",
+      "That code coverage is only relevant for unit tests; integration tests do not contribute to coverage"
+    ],
+    "answer": 1,
+    "explanation": "80% line coverage means 80% of lines were executed, but tests can execute code without asserting anything meaningful. Mutation testing verifies assertion quality by introducing small code changes (mutations) and checking if tests detect them. A high mutation score confirms tests are truly validating logic."
+  },
+  {
+    "id": "dd25",
+    "category": "data-defects",
+    "question": "What are the DORA metrics, and which two does QA most directly impact?",
+    "options": [
+      "Defect count, Operational uptime, Release velocity, Automation rate; QA impacts defect count and automation rate",
+      "Deployment Frequency, Lead Time for Changes, Change Failure Rate, MTTR; QA most directly impacts Change Failure Rate and Lead Time",
+      "Developer satisfaction, Operational cost, Revenue impact, Availability; QA impacts availability and operational cost",
+      "Documentation coverage, Onboarding time, Regression suite size, Accessibility score; QA impacts regression suite size and accessibility"
+    ],
+    "answer": 1,
+    "explanation": "DORA metrics are Deployment Frequency, Lead Time for Changes, Change Failure Rate, and MTTR. QA most directly impacts Change Failure Rate (quality gates reduce failed deployments) and Lead Time (slow test suites increase commit-to-production time)."
+  },
+  {
+    "id": "dd26",
+    "category": "data-defects",
+    "question": "How do you manage the defect lifecycle from discovery to closure in an enterprise QA program?",
+    "options": [
+      "Log all defects in a spreadsheet and review them in a weekly meeting with the team",
+      "Assign all defects to the development lead and let them manage triage and resolution",
+      "Follow a structured workflow — discovery, triage (severity/priority assignment), root cause analysis, assignment, fix verification, regression validation, and closure with documented resolution — tracked in a defect management tool with SLAs per severity",
+      "Only track critical defects; minor and cosmetic issues are noted but not formally tracked"
+    ],
+    "answer": 2,
+    "explanation": "A structured defect lifecycle ensures no defect is lost or forgotten. Severity-based SLAs drive timely resolution, root cause analysis prevents recurrence, fix verification confirms the resolution, and regression validation ensures the fix did not introduce new issues. Closure documentation builds institutional knowledge."
+  },
+  {
+    "id": "dd27",
+    "category": "data-defects",
+    "question": "How do you validate PostgreSQL data states as part of an automated test suite?",
+    "options": [
+      "Manually query the database after each test run and visually inspect the results",
+      "Use database assertions in test code — connect to PostgreSQL, execute queries to verify expected state (row counts, field values, referential integrity), and clean up test data in teardown hooks",
+      "Export the entire database to CSV after each test and compare with a baseline file",
+      "Skip database validation and rely solely on API response validation"
+    ],
+    "answer": 1,
+    "explanation": "Database assertions verify that API operations correctly persist data. Test code connects to PostgreSQL, executes targeted queries (checking row existence, field values, constraint enforcement), and cleans up in teardown hooks to maintain test isolation. This catches bugs where the API returns success but data is incorrect."
+  },
+  {
+    "id": "dd28",
+    "category": "data-defects",
+    "question": "What is a Grafana dashboard in a QE context, and what metrics should be displayed on it?",
+    "options": [
+      "A code coverage visualization tool — display line, branch, and function coverage percentages",
+      "A real-time monitoring dashboard showing test execution results, pipeline health, defect trends, environment status, and performance baselines — enabling the team to spot quality issues at a glance",
+      "A project management board showing sprint progress and story points",
+      "A log aggregation viewer that replaces the need for Splunk or ELK stack"
+    ],
+    "answer": 1,
+    "explanation": "QE Grafana dashboards provide real-time visibility into test execution pass rates, pipeline duration trends, flaky test frequency, environment health, and performance test baselines. They enable teams to spot regressions, environment issues, and quality trends without manually reviewing CI logs."
+  },
+  {
+    "id": "dd29",
+    "category": "data-defects",
+    "question": "What is data validation in enterprise systems, and what are the most important boundary conditions QA must test?",
+    "options": [
+      "Checking that data is encrypted at rest — QA tests encryption algorithms and key rotation",
+      "Ensuring submitted information is accurate and complete — QA must test required field enforcement, format validation, cross-field dependencies, and boundary values at min/max thresholds",
+      "Verifying that data is replicated across all database nodes — QA tests replication lag",
+      "Confirming that data is archived after a retention period — QA tests the archival scheduler"
+    ],
+    "answer": 1,
+    "explanation": "Data validation ensures information accuracy and completeness. QA must test boundary conditions including minimum and maximum values, required vs. optional field combinations, format validation (dates, currencies, identifiers), and cross-field dependency rules where one field's valid values depend on another."
+  },
+  {
+    "id": "dd30",
+    "category": "data-defects",
+    "question": "When testing financial data analysis features, what key calculations must QA validate for accuracy?",
+    "options": [
+      "Only the total revenue figure, since all other calculations derive from it",
+      "Working capital (current assets minus current liabilities), debt-to-equity ratios, profit margins, and cash flow calculations — each with boundary and rounding validation",
+      "Only the final risk score output, since intermediate calculations are internal implementation details",
+      "Only the display formatting of currency values in the user interface"
+    ],
+    "answer": 1,
+    "explanation": "Financial analysis features compute multiple derived metrics. QA must validate each calculation independently, test rounding behavior at boundaries, verify that negative values are handled correctly, and ensure that ratio calculations handle zero denominators gracefully."
+  },
+  {
+    "id": "dd31",
+    "category": "data-defects",
+    "question": "What are KPIs (Key Performance Indicators) in analytics dashboards, and what defect types commonly affect them?",
+    "options": [
+      "KPIs are only relevant for project management tools and are not tested by QA",
+      "Measurable indicators like turnaround time, cost ratios, and processing speed — common defects include incorrect aggregation logic, timezone errors in time-based metrics, and stale cache data",
+      "KPIs are static labels displayed on dashboards that never change after initial configuration",
+      "KPIs are user preferences that customize the dashboard layout and have no calculation logic"
+    ],
+    "answer": 1,
+    "explanation": "KPIs are measurable indicators that track operational performance. Common defects in KPI dashboards include incorrect aggregation (summing instead of averaging), timezone mismatches in time-based calculations, stale cached values, and filter interactions that silently exclude data."
+  },
+  {
+    "id": "dd32",
+    "category": "data-defects",
+    "question": "What is analytics-driven risk assessment, and what data quality issues can cause incorrect risk scores?",
+    "options": [
+      "A manual review process that uses spreadsheets — data quality issues are limited to typos",
+      "Using data analytics to improve risk selection and scoring — data quality issues like missing values, stale data, inconsistent formats, and duplicate records can skew risk scores and lead to incorrect decisions",
+      "A real-time monitoring system that only uses current data — historical data quality is irrelevant",
+      "An AI system that self-corrects data quality issues automatically, requiring no QA validation"
+    ],
+    "answer": 1,
+    "explanation": "Analytics-driven risk assessment uses historical and current data to score risk. Data quality issues such as missing values being treated as zeros, stale records from failed integrations, format inconsistencies across data sources, and duplicate records inflating metrics can all produce incorrect risk scores."
+  },
+  {
+    "id": "dd33",
+    "category": "data-defects",
+    "question": "How should QA test the impact of inflation and supply chain variables on financial calculation systems?",
+    "options": [
+      "Inflation testing is outside QA's scope and belongs to the business analysis team",
+      "Only test with current inflation rates since historical scenarios are no longer relevant",
+      "Test with variable cost escalation scenarios, supply chain delay simulations, and boundary conditions where cost increases push calculations past threshold triggers",
+      "Use production data directly since synthetic inflation scenarios are unrealistic"
+    ],
+    "answer": 2,
+    "explanation": "Financial systems that account for inflation and supply chain factors must be tested with variable scenarios. QA should test cost escalation at different rates, verify threshold triggers when costs exceed limits, validate recalculation logic when input assumptions change, and test edge cases where delays compound cost impacts."
+  }
+]

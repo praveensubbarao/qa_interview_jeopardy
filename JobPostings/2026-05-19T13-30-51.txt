@@ -1,0 +1,37 @@
+Saved:        5/19/2026, 9:30:51 AM
+Questions:    1
+Technologies: playwright, cypress, jest, supertest, typescript
+────────────────────────────────────────────────────────────
+For our client, we are seeking a Director Quality Engineering to join the team of a leader in the Finance & Insurance space. This role will lead work at the intersection of data, AI-enabled capabilities, and scalable technology delivery. You will work across engineering, product, operations, and business stakeholders to translate complex requirements into practical technology solutions. The position offers the opportunity to influence architecture, execution quality, and the technology capabilities that enable long-term growth within a regulated financial services environment.
+
+Location: Remote - US based candidates only, no visa sponsorship available
+
+Compensation: $142,500 – $320,500 annually
+
+Responsibilities
+
+ Establish and lead the company Loans' quality practice, including strategy and culture
+ Embed QA thinking early in the product lifecycle rather than as an afterthought
+ Act as the voice of quality in cross-functional planning and architectural decisions
+ Manage and develop a team of quality engineers across product pillars
+ Drive manual testing for complex loan application processes
+ Architect a scalable automation suite for various testing layers
+ Design evaluation frameworks for AI features and workflows
+
+Qualifications
+
+ 7+ years in quality engineering, including 3+ years in a management role
+ Hands-on experience with test plans, automation code, and exploratory testing
+ Strong automation background using Jest, Playwright, and/or Cypress in a TypeScript/NestJS context
+ Familiarity with API testing patterns (MSW, Supertest)
+ Experience in financial and compliance-sensitive products
+
+Benefits
+
+ Comprehensive health benefits for employees and their families
+ Support for individual well-being and work-life balance
+ Focused initiatives on team member growth and satisfaction
+ Flexible perks to enhance quality of life
+ Engagement in a supportive company culture that emphasizes innovation and growth
+
+Our client is an equal opportunity employer. We encourage you to apply even if you don’t meet every qualification—your background could be exactly what this team needs.

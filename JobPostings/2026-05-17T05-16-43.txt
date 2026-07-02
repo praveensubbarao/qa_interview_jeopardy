@@ -1,0 +1,52 @@
+Saved:        5/17/2026, 1:16:43 AM
+Questions:    1
+Technologies: playwright, selenium, cypress, jmeter, gatling, locust, junit, postman, rest assured, karate, pact, jenkins, github actions, gitlab ci, azure devops, datadog, new relic, splunk, dynatrace, aws, azure, gcp, go, react, owasp
+────────────────────────────────────────────────────────────
+We are seeking a senior technology leader to serve as the Delivery Lead, Quality Engineering & Automation within Field Productivity Technology. This is a horizontal leadership role that enables and supports multiple verticals by driving the strategy and execution of quality engineering practices across advisor- and agent-facing platforms. This includes embedding automation, AI, and modern testing practices into every stage of delivery.
+
+This leader will oversee a team of quality engineers and automation experts, providing both strategic and technical direction while partnering across delivery, engineering, and platform teams to embed quality throughout the software lifecycle. The ideal candidate will bring strong hands-on SDET (Software Development Engineer in Test) experience, combined with proven leadership in scaling modern QE practices, test data management, cloud platforms, and AI-driven validation.
+
+What You'll Do
+
+Define and lead the quality engineering strategy across all Field Productivity platforms
+Build and scale automation-first practices across testing, validation, performance measurement, and test data management
+Apply GenAI, AI-driven testing, and intelligent automation to accelerate test coverage, improve defect prediction, and simulate complex user journeys
+Integrate quality controls within CI/CD pipelines to support secure, reliable releases
+Advance API and microservices testing, performance/load testing, and security testing within the QE framework
+Introduce shift-right practices, including observability, synthetic monitoring, and production-quality validation
+Establish and monitor QE metrics: test coverage, regression rates, release stability, defect trends, and performance benchmarks
+
+What You'll Bring
+
+15+ years of experience in software engineering, quality engineering, or related leadership roles
+Strong background as an SDET, with hands-on expertise in automation frameworks and engineering-led QA practices
+Deep experience with automated testing frameworks, CI/CD pipelines, and release governance
+Experience in test data management and related tools in complex ecosystems
+Experience designing innovative testing strategies in a product-aligned operating model, including shift-left/shift-right approaches
+Expertise in cloud and hyperscaler platforms (AWS, GCP, Azure) for QA pipelines, test environments, and observability
+Experience applying AI-enhanced testing (e.g., GenAI for test generation, defect prediction, or data validation)
+Proven ability to lead QA transformation in agile, fast-paced enterprise environments
+Experience managing and scaling teams across locations and time zones
+Preferred certifications: ISTQB Certified Tester, ISTQB Certified Tester – AI Testing (CT-AI)
+Executive presence with strong cross-functional leadership and stakeholder communication skills
+
+Tools & Technology Exposure
+
+Test Automation: Selenium, Cypress, Playwright, TestNG, JUnit
+API Testing & Contract Testing: Postman, REST Assured, Karate, Pact
+Performance & Load Testing: JMeter, Gatling, Locust, BlazeMeter
+CI/CD & Orchestration: Jenkins, GitLab CI, Azure DevOps, GitHub Actions
+Observability & Monitoring: New Relic, Dynatrace, Datadog, Splunk
+AI-Enhanced QA: Testim, Mabl, Functionize, or similar GenAI/ML-powered tools
+Test Data Management (TDM): Informatica TDM, Delphix, GenRocket
+Security Testing: SonarQube, OWASP ZAP, Veracode
+Cloud Platforms: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure
+
+What You’ll Enable
+
+Scalable, automated, and AI-enabled quality practices across platforms
+Faster, safer, and more predictable platform releases
+Broader adoption of modern testing practices and toolchains across the enterprise
+Cloud-native and hyperscaler-ready QA capabilities
+A shift from reactive QA to proactive, engineering-led quality
+Higher confidence and reduced risk in advisor- and agent-facing platform delivery

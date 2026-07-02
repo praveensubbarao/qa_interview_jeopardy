@@ -1,0 +1,665 @@
+[
+  {
+    "id": "ot1",
+    "category": "others",
+    "question": "What is an Order Management System (OMS) and what are its core functions?",
+    "options": [
+      "A system for managing employee schedules and payroll",
+      "A system that handles the full lifecycle of financial orders — creation, routing, execution, allocation, and settlement",
+      "A database for storing historical stock prices",
+      "A reporting tool for regulatory compliance filings"
+    ],
+    "answer": 1,
+    "explanation": "An OMS manages the complete lifecycle of financial trade orders from creation through settlement. Core functions include order entry, validation, routing to execution venues, position management, allocation across accounts, and settlement tracking."
+  },
+  {
+    "id": "ot2",
+    "category": "others",
+    "question": "What is the complete lifecycle of a financial trade order?",
+    "options": [
+      "Submit → Confirm → Archive",
+      "Create → Validate → Route → Execute → Allocate → Clear → Settle",
+      "Place → Fill → Report",
+      "Request → Approve → Process → Complete"
+    ],
+    "answer": 1,
+    "explanation": "A trade order goes through: creation (trader intent), pre-trade validation (risk/compliance checks), routing to exchange/venue, execution (fill), allocation across accounts, clearing through a clearinghouse, and finally settlement (T+1 or T+2)."
+  },
+  {
+    "id": "ot3",
+    "category": "others",
+    "question": "What is the FIX protocol and why is it important for OMS testing?",
+    "options": [
+      "A bug tracking system for financial software",
+      "A standardized electronic messaging protocol for real-time exchange of securities transactions between trading parties",
+      "A method for repairing corrupted database records",
+      "A framework for writing automated tests in the financial domain"
+    ],
+    "answer": 1,
+    "explanation": "FIX (Financial Information eXchange) is the industry-standard protocol for electronic trading. Testing FIX messages involves validating message types (NewOrderSingle, ExecutionReport), field formats, sequence numbers, and heartbeat handling."
+  },
+  {
+    "id": "ot4",
+    "category": "others",
+    "question": "What are pre-trade risk checks in a trading system?",
+    "options": [
+      "Checks that run after a trade settles to verify accuracy",
+      "Automated validations before order submission — position limits, credit checks, restricted lists, and regulatory compliance",
+      "Manual reviews by compliance officers before market open",
+      "Database integrity checks on the order table"
+    ],
+    "answer": 1,
+    "explanation": "Pre-trade checks are automated validations that run before an order is submitted to the market. They include position limit checks, credit/buying power validation, restricted security lists, and regulatory compliance rules. They have high testing complexity due to edge cases."
+  },
+  {
+    "id": "ot5",
+    "category": "others",
+    "question": "What is the difference between an OMS, EMS, and PMS in trading technology?",
+    "options": [
+      "They are different names for the same system",
+      "OMS manages order lifecycle, EMS handles execution/routing to venues, PMS manages portfolios and positions",
+      "OMS is for stocks, EMS is for bonds, PMS is for derivatives",
+      "OMS is front-office, EMS is middle-office, PMS is back-office"
+    ],
+    "answer": 1,
+    "explanation": "OMS (Order Management System) handles order lifecycle from creation to settlement. EMS (Execution Management System) focuses on smart order routing and execution algorithms. PMS (Portfolio Management System) tracks positions, P&L, and portfolio analytics. QE scope varies significantly across each."
+  },
+  {
+    "id": "ot6",
+    "category": "others",
+    "question": "What is 'paper trading' (sandbox environment) in the context of QE?",
+    "options": [
+      "Using physical paper forms to track test results",
+      "A simulated trading environment that mimics production market conditions without real money, used for testing",
+      "A regulatory requirement for documenting test plans",
+      "A method for manual testing where testers follow printed scripts"
+    ],
+    "answer": 1,
+    "explanation": "Paper trading environments simulate real market conditions without executing actual trades or moving real money. QE teams use them for integration testing, UAT, and performance testing against realistic market data and order flows."
+  },
+  {
+    "id": "ot7",
+    "category": "others",
+    "question": "How do you test order cancellation and amendment edge cases in an OMS?",
+    "options": [
+      "Only test successful cancellations; failures are handled by operations",
+      "Test cancel/amend at every order state — pending, partially filled, in-market — including race conditions and out-of-sequence messages",
+      "Test only after market hours when there is no risk",
+      "Cancellation testing is not needed if pre-trade checks work correctly"
+    ],
+    "answer": 1,
+    "explanation": "Order cancellation/amendment must be tested at every state: pending (easy), partially filled (partial cancel), and in-market (cancel-replace). Edge cases include race conditions where execution arrives during cancel, out-of-sequence FIX messages, and timeout handling."
+  },
+  {
+    "id": "ot8",
+    "category": "others",
+    "question": "What are QA KPIs (Key Performance Indicators) used to measure?",
+    "options": [
+      "Individual developer productivity",
+      "The effectiveness, efficiency, and coverage of the quality assurance process",
+      "Project budget adherence",
+      "Customer satisfaction with the final product"
+    ],
+    "answer": 1,
+    "explanation": "QA KPIs measure the health of the testing process — defect detection rate, test coverage, automation ratio, defect escape rate, mean time to detect/resolve, test execution velocity, and requirements coverage. They help teams identify improvement areas."
+  },
+  {
+    "id": "ot9",
+    "category": "others",
+    "question": "What is the defect escape rate and why is it a critical QA metric?",
+    "options": [
+      "The percentage of testers who leave the team each quarter",
+      "The percentage of defects found in production that were missed during testing phases",
+      "The speed at which defects are fixed after discovery",
+      "The number of test cases that fail during regression testing"
+    ],
+    "answer": 1,
+    "explanation": "Defect escape rate measures how many bugs slip through testing into production. A high escape rate indicates gaps in test coverage, missing test scenarios, or insufficient testing depth. It's a direct measure of testing effectiveness."
+  },
+  {
+    "id": "ot10",
+    "category": "others",
+    "question": "What is an automation roadmap and what does it typically include?",
+    "options": [
+      "A list of all manual tests to be automated",
+      "A phased plan covering tool selection, framework design, test prioritization, team training, CI/CD integration, and success metrics",
+      "A timeline for hiring automation engineers",
+      "A vendor comparison document for test automation tools"
+    ],
+    "answer": 1,
+    "explanation": "An automation roadmap is a strategic plan that covers: current state assessment, tool/framework selection, priority areas for automation (smoke, regression, API), team skill development, CI/CD pipeline integration, and metrics to track ROI and progress."
+  },
+  {
+    "id": "ot11",
+    "category": "others",
+    "question": "What is a surety bond, and why should QA professionals in regulated industries understand it?",
+    "options": [
+      "A type of software license that guarantees vendor support for a specified period",
+      "A financial guarantee that a company or individual will complete obligations, follow laws, or pay debts — relevant to QA in regulated industries that test financial guarantee workflows",
+      "An insurance policy that covers software defects found in production",
+      "A contract between a QA team and their client guaranteeing zero defects"
+    ],
+    "answer": 1,
+    "explanation": "A surety bond is a financial guarantee involving three parties. QA professionals in regulated industries such as insurance, construction, and finance must understand these domain concepts to effectively design test scenarios for bond issuance, claims, and compliance workflows."
+  },
+  {
+    "id": "ot12",
+    "category": "others",
+    "question": "Who are the three parties in a financial guarantee bond, and why does this matter for QA test design?",
+    "options": [
+      "Buyer, seller, and auditor — QA tests the transaction between buyer and seller",
+      "Principal (obligated party), obligee (protected party), and surety (guarantor) — QA must test workflows and permissions for all three distinct user roles",
+      "Applicant, reviewer, and approver — QA tests the linear approval workflow",
+      "Client, broker, and underwriter — QA tests the communication channel between parties"
+    ],
+    "answer": 1,
+    "explanation": "The three-party structure means QA must design test scenarios for each role's distinct permissions, views, and workflows. The principal applies, the obligee is protected, and the surety guarantees performance. Multi-role testing ensures no party can access or modify data outside their authority."
+  },
+  {
+    "id": "ot13",
+    "category": "others",
+    "question": "How does underwriting differ from traditional insurance risk assessment, and what does this mean for QA validation?",
+    "options": [
+      "Underwriting only applies to health insurance; other insurance types use actuarial tables exclusively",
+      "Traditional insurance expects losses and spreads risk across a pool; underwriting for financial guarantees expects zero loss and evaluates the applicant's financial strength — QA must validate different risk models",
+      "Underwriting is fully automated while traditional insurance requires manual review",
+      "There is no meaningful difference; both use the same risk assessment algorithms"
+    ],
+    "answer": 1,
+    "explanation": "In financial guarantee underwriting, the expectation is zero loss, so the evaluation focuses on the applicant's financial strength, capacity, and track record. QA must validate that risk scoring models, financial analysis rules, and approval thresholds correctly reflect this zero-loss expectation."
+  },
+  {
+    "id": "ot14",
+    "category": "others",
+    "question": "What is a performance bond, and what lifecycle events must QA test?",
+    "options": [
+      "A bond that guarantees software will meet performance benchmarks — QA tests load and stress scenarios",
+      "A financial guarantee that a contractor will complete a project according to contract terms — QA must test issuance, monitoring, claims, and release workflows",
+      "A type of employee performance incentive tracked in HR systems",
+      "A certificate issued after passing performance testing in a CI/CD pipeline"
+    ],
+    "answer": 1,
+    "explanation": "A performance bond guarantees project completion according to contract terms. QA must test the full lifecycle: application submission, underwriting evaluation, bond issuance, project monitoring, claims filing if the contractor defaults, and bond release upon successful project completion."
+  },
+  {
+    "id": "ot15",
+    "category": "others",
+    "question": "What is a payment bond, and how does it differ from a performance bond in terms of test scenarios?",
+    "options": [
+      "A payment bond guarantees online payment processing; a performance bond guarantees server uptime",
+      "A payment bond guarantees subcontractors and suppliers will be paid; a performance bond guarantees project completion — different claimant types require different test workflows",
+      "They are interchangeable terms for the same type of financial guarantee",
+      "A payment bond covers only material costs; a performance bond covers only labor costs"
+    ],
+    "answer": 1,
+    "explanation": "Payment bonds and performance bonds protect different parties. Payment bonds ensure subcontractors, laborers, and suppliers get paid, while performance bonds guarantee project completion. QA must test distinct claims workflows since the claimant types, validation rules, and resolution paths differ."
+  },
+  {
+    "id": "ot16",
+    "category": "others",
+    "question": "What is the underwriting process, and what are the key QA validation points?",
+    "options": [
+      "A post-production review of software quality metrics — QA validates reporting accuracy",
+      "The process of evaluating risk before issuing a financial guarantee — QA must validate data intake, risk scoring algorithms, approval thresholds, and decision audit trails",
+      "A method for prioritizing test cases based on code coverage — QA validates test selection logic",
+      "An automated deployment process that underwrites each release candidate — QA validates the pipeline"
+    ],
+    "answer": 1,
+    "explanation": "Underwriting evaluates risk before issuing a bond or policy. QA must validate that applications capture all required data, risk scoring algorithms produce correct results, approval authority thresholds are enforced, and every decision is logged with an audit trail for regulatory compliance."
+  },
+  {
+    "id": "ot17",
+    "category": "others",
+    "question": "Why are financial statements important in risk evaluation systems, and what should QA validate?",
+    "options": [
+      "They are only needed for tax reporting — QA validates the tax calculation logic",
+      "They help evaluate whether an entity has sufficient assets, cash flow, and profitability — QA must validate that the system correctly parses, calculates ratios, and flags anomalies",
+      "They are optional supporting documents — QA only validates that upload functionality works",
+      "They are used exclusively by external auditors — QA has no testing responsibility"
+    ],
+    "answer": 1,
+    "explanation": "Financial statements reveal an entity's financial health. QA must test that systems correctly parse financial data from various formats, calculate key ratios like working capital and debt-to-equity, flag anomalies or inconsistencies, and trigger appropriate workflow actions based on financial thresholds."
+  },
+  {
+    "id": "ot18",
+    "category": "others",
+    "question": "What is working capital, and why is it a critical data validation point in financial systems?",
+    "options": [
+      "Total revenue minus total expenses for the current fiscal year",
+      "Current assets minus current liabilities — it indicates short-term financial health and must be accurately calculated by the system",
+      "The total amount of capital invested in IT infrastructure",
+      "The budget allocated for the current development sprint"
+    ],
+    "answer": 1,
+    "explanation": "Working capital (current assets minus current liabilities) is a key indicator of short-term financial health. QA must validate that financial systems correctly calculate this metric from input data, as errors in working capital computation can lead to incorrect risk assessments and approval decisions."
+  },
+  {
+    "id": "ot19",
+    "category": "others",
+    "question": "What is a claims investigation workflow, and what are the primary QA test scenarios?",
+    "options": [
+      "A process for investigating failed test cases in a CI/CD pipeline — QA tests the retry logic",
+      "A structured process for reviewing contracts, project status, financials, and legal responsibilities after a claim is filed — QA tests status tracking, document management, and resolution paths",
+      "A method for triaging production incidents by severity — QA tests the escalation rules",
+      "A workflow for processing customer support tickets — QA tests the routing and SLA compliance"
+    ],
+    "answer": 1,
+    "explanation": "Claims investigation involves reviewing contracts, project status, financials, and legal responsibilities to determine the validity and resolution of a claim. QA must test the complete workflow: intake, document collection, status transitions, assignment rules, communication logs, and resolution outcomes."
+  },
+  {
+    "id": "ot20",
+    "category": "others",
+    "question": "What is subrogation, and what QA testing considerations does it introduce?",
+    "options": [
+      "A method for substituting one test environment for another during QA — test environment switching logic",
+      "The right to recover money from responsible parties after paying a claim — QA must test recovery tracking, party identification, and financial reconciliation workflows",
+      "A process for delegating test execution to a subordinate team — QA tests delegation rules",
+      "A regulatory requirement for submitting test reports to external auditors"
+    ],
+    "answer": 1,
+    "explanation": "Subrogation allows the guarantor to recover funds from the responsible party after paying a claim. QA must test the recovery initiation workflow, responsible party identification, payment tracking, partial recovery scenarios, and financial reconciliation between the original claim and recovered amounts."
+  },
+  {
+    "id": "ot21",
+    "category": "others",
+    "question": "What is enterprise risk management (ERM), and how does it relate to QA strategy?",
+    "options": [
+      "A tool for managing test execution risks like flaky tests and environment instability",
+      "A structured approach to identifying and controlling risk across the entire organization — QA applies similar principles to identify, assess, and mitigate quality risks across products",
+      "A compliance framework specific to the European Union's data protection regulations",
+      "An insurance product that covers enterprises against software failure losses"
+    ],
+    "answer": 1,
+    "explanation": "Enterprise risk management is a structured, organization-wide approach to identifying and controlling risk. QA leaders apply similar risk management principles when designing quality strategies: identifying risk areas, assessing likelihood and impact, implementing controls, and monitoring residual risk."
+  },
+  {
+    "id": "ot22",
+    "category": "others",
+    "question": "What is work-in-progress (WIP) reporting, and why is it important for QA in project-based industries?",
+    "options": [
+      "A Kanban board metric that limits concurrent tasks — QA uses it to prevent testing bottlenecks",
+      "A report that tracks project profitability and completion status — QA validates calculation accuracy and percentage-of-completion logic",
+      "A daily standup format for reporting testing progress to stakeholders",
+      "A Git metric that shows how many branches have uncommitted changes"
+    ],
+    "answer": 1,
+    "explanation": "Work-in-progress reporting tracks project profitability and completion status, commonly using percentage-of-completion methods. QA must validate that systems correctly calculate earned revenue, cost-to-complete estimates, and over/under billing, as errors can misrepresent financial position."
+  },
+  {
+    "id": "ot23",
+    "category": "others",
+    "question": "What is loss ratio, and how is this concept applied as a QA metric?",
+    "options": [
+      "The ratio of failed tests to total tests executed — used to measure test suite reliability",
+      "The ratio of claims paid to premiums earned — in QA terms, the cost of escaped defects compared to the investment in quality engineering",
+      "The percentage of data lost during system migration testing",
+      "The ratio of open bugs to closed bugs at the end of a release cycle"
+    ],
+    "answer": 1,
+    "explanation": "Loss ratio compares claims paid to premiums earned. QA leaders can apply this concept by comparing the cost of production defects (escaped bugs, incidents, customer impact) to quality engineering investment, creating a compelling business metric for demonstrating QA value."
+  },
+  {
+    "id": "ot24",
+    "category": "others",
+    "question": "What is concentration risk, and how does it apply to QA resource planning?",
+    "options": [
+      "The risk of too many defects concentrated in one module — addressed by increasing test coverage",
+      "The risk of too much exposure in one customer, region, or capability area — in QA, over-reliance on one tool, one team member, or one test type creates similar vulnerability",
+      "The risk of running too many tests simultaneously, causing resource contention",
+      "The risk of test data being concentrated in a single database, causing performance issues"
+    ],
+    "answer": 1,
+    "explanation": "Concentration risk occurs when too much exposure is concentrated in one area. QA teams face similar risks: over-reliance on a single automation framework, one subject matter expert, or only one type of testing. Diversifying QA investments across tools, skills, and test types reduces this vulnerability."
+  },
+  {
+    "id": "ot25",
+    "category": "others",
+    "question": "What are leading indicators of project or organizational distress that QA teams should monitor?",
+    "options": [
+      "Increasing code coverage percentages and faster build times",
+      "Declining quality margins, delayed deliverables, increasing technical debt, and rapid uncontrolled growth without process scaling",
+      "Higher test automation ratios and more frequent deployments",
+      "Stable defect counts and consistent sprint velocities"
+    ],
+    "answer": 1,
+    "explanation": "Leading indicators of distress include declining quality margins (more escaped defects), delayed payments or deliverables, increasing technical debt, and rapid growth without proportional process scaling. QA teams that monitor these signals can raise quality risks before they become critical failures."
+  },
+  {
+    "id": "ot26",
+    "category": "others",
+    "question": "How do you approach test data management for testing at scale across multiple environments?",
+    "options": [
+      "Copy production data into all test environments and use it directly",
+      "Use a combination of synthetic data generation, masked production data, and on-demand provisioning to provide realistic, compliant test data that can be refreshed independently per environment",
+      "Manually create test data spreadsheets and import them before each test run",
+      "Share a single static test data set across all environments and test types"
+    ],
+    "answer": 1,
+    "explanation": "Scalable test data management combines synthetic generation for volume, masked production data for realism, and on-demand provisioning for independence. Each environment should be able to refresh its data without affecting others, and PII must never appear in non-production environments."
+  },
+  {
+    "id": "ot27",
+    "category": "others",
+    "question": "What does 'design for testability' mean, and what signals indicate a system was not designed with testability in mind?",
+    "options": [
+      "Adding a 'test mode' flag that bypasses all validation — indicated by the need for many workarounds in test scripts",
+      "Architecting systems with clear interfaces, dependency injection, observable state, and configurable behaviors so they can be tested at every level — signaled by the absence of hard-coded dependencies and the presence of health check endpoints",
+      "Writing the test suite before writing any application code — signaled by test-first commit history",
+      "Designing a dedicated test environment that mirrors production exactly — signaled by infrastructure parity"
+    ],
+    "answer": 1,
+    "explanation": "Testable systems have clear API boundaries, injectable dependencies, observable internal state, and configurable behaviors. Red flags include hard-coded URLs, tightly coupled services, no health check endpoints, and the inability to test a component without starting the entire system."
+  },
+  {
+    "id": "ot28",
+    "category": "others",
+    "question": "How do you ensure your QA work is maintainable after you leave a project or engagement?",
+    "options": [
+      "Write comprehensive documentation at the end of the engagement summarizing everything",
+      "Build maintainability into every artifact from day one: clear naming conventions, self-documenting tests, a runbook for common tasks, and knowledge transfer sessions with the team throughout the engagement",
+      "Record video walkthroughs of the entire test suite before departure",
+      "Train one team member as a backup and rely on them to maintain everything"
+    ],
+    "answer": 1,
+    "explanation": "Sustainable QA work is built from day one, not documented at the end. Self-documenting test names, consistent framework patterns, a runbook for common operations, and ongoing knowledge transfer ensure the team can maintain and extend the work independently after the engagement ends."
+  },
+  {
+    "id": "ot29",
+    "category": "others",
+    "question": "What is TDD (Test-Driven Development) and BDD (Behavior-Driven Development), and how do they differ?",
+    "options": [
+      "TDD and BDD are the same methodology with different names used by different teams",
+      "TDD writes unit tests before code to drive implementation; BDD extends TDD by writing tests in business-readable language (Given/When/Then) to align technical and business stakeholders on expected behavior",
+      "TDD is for developers only; BDD is for QA only — they never overlap",
+      "TDD focuses on UI testing; BDD focuses on API testing"
+    ],
+    "answer": 1,
+    "explanation": "TDD drives implementation through the red-green-refactor cycle at the unit level. BDD extends this by expressing behavior in Given/When/Then format that both technical and business stakeholders can understand, bridging the communication gap and ensuring tests reflect business intent."
+  },
+  {
+    "id": "ot30",
+    "category": "others",
+    "question": "How do you prevent an automation test suite from becoming a bottleneck that slows releases?",
+    "options": [
+      "Run the full test suite only before major releases and skip it for minor changes",
+      "Implement tiered execution (fast smoke tests on every PR, full regression nightly), parallelize test execution, maintain test independence, and ruthlessly remove or fix flaky tests",
+      "Increase the CI/CD server hardware to make tests run faster",
+      "Allow developers to skip the test suite when they are confident in their changes"
+    ],
+    "answer": 1,
+    "explanation": "Tiered execution ensures fast feedback (smoke tests in minutes on every PR) without blocking releases. Parallelization reduces wall-clock time, test independence prevents cascading failures, and active flaky test management ensures the suite remains a trusted quality signal rather than noise."
+  },
+  {
+    "id": "ot31",
+    "category": "others",
+    "question": "What is the difference between load testing, stress testing, spike testing, soak testing, and endurance testing?",
+    "options": [
+      "They are all synonyms for performance testing with no meaningful distinction",
+      "Load tests validate expected traffic; stress tests push beyond capacity to find breaking points; spike tests simulate sudden bursts; soak tests run sustained load for hours to find memory leaks; endurance tests verify long-term stability",
+      "Load and stress testing are automated; spike, soak, and endurance testing are manual",
+      "Each type uses a different tool: JMeter for load, k6 for stress, Gatling for spike, Locust for soak"
+    ],
+    "answer": 1,
+    "explanation": "Each type targets a different risk: load testing validates normal capacity, stress testing finds breaking points, spike testing validates handling of sudden traffic surges, soak testing reveals memory leaks and connection pool exhaustion over time, and endurance testing confirms sustained stability."
+  },
+  {
+    "id": "ot32",
+    "category": "others",
+    "question": "What is AppDynamics and how is it used in a QE context?",
+    "options": [
+      "A test automation framework for generating mobile application tests",
+      "An Application Performance Monitoring (APM) tool that provides real-time visibility into application behavior, used by QE to correlate test execution with application performance metrics and trace transactions across services",
+      "A CI/CD pipeline orchestration tool that manages deployment workflows",
+      "A static code analysis tool that identifies potential bugs before runtime"
+    ],
+    "answer": 1,
+    "explanation": "AppDynamics is an APM tool that monitors application performance in real time. QE teams use it to correlate test failures with performance degradation, trace transactions across microservices, identify slow database queries, and establish performance baselines for regression detection."
+  },
+  {
+    "id": "ot33",
+    "category": "others",
+    "question": "What is the key distinction between a QA Architect and a QA Engineer?",
+    "options": [
+      "A QA Architect writes more test cases than a QA Engineer",
+      "A QA Architect operates at the systems-design level, defining quality strategy, tooling ecosystems, standards, and governance, while a QA Engineer executes within that framework",
+      "A QA Architect only reviews code and never writes tests",
+      "A QA Architect manages people while a QA Engineer manages tools"
+    ],
+    "answer": 1,
+    "explanation": "A QA Architect defines the blueprint that answers what to test, how, when, with which tools, in which environments, and who owns each layer. A QA Engineer executes testing within that architecture. Without the architect's blueprint, teams often duplicate effort and create inefficient test suites."
+  },
+  {
+    "id": "ot34",
+    "category": "others",
+    "question": "What is the first step when building a QA strategy from scratch for a new product?",
+    "options": [
+      "Select and purchase automation tools based on industry recommendations",
+      "Start with risk analysis: understand the business domain, criticality, user base, and failure cost, then define test levels and quality gates accordingly",
+      "Write a comprehensive test plan document covering all possible test scenarios",
+      "Hire a full QA team before defining any strategy"
+    ],
+    "answer": 1,
+    "explanation": "Building a QA strategy starts with risk analysis and stakeholder interviews, not tool selection. Understanding business domain, failure cost, and regulatory constraints drives decisions about test levels, coverage targets, and where to invest automation effort."
+  },
+  {
+    "id": "ot35",
+    "category": "others",
+    "question": "What does shift-left testing mean architecturally, and what is a concrete enforcement mechanism?",
+    "options": [
+      "Moving all testing to the left side of the Kanban board so it happens during planning sprints",
+      "Moving testing activities earlier in the SDLC by enforcing unit test coverage thresholds as PR gates, running contract tests at API design time, and including QA in requirement refinement",
+      "Having QA engineers sit physically closer to developers in the office",
+      "Running load tests earlier in the sprint instead of at the end"
+    ],
+    "answer": 1,
+    "explanation": "Shift-left embeds testing in design and development rather than treating it as a post-development phase. Concrete mechanisms include unit test coverage as PR gates, contract tests during API design, static analysis in IDEs, and QA participation in 3-amigos sessions."
+  },
+  {
+    "id": "ot36",
+    "category": "others",
+    "question": "How does the test pyramid adapt to a microservices architecture?",
+    "options": [
+      "The pyramid stays exactly the same regardless of architecture",
+      "The pyramid is inverted with more E2E tests since microservices have more integration points",
+      "Each service has its own pyramid with unit tests at the base, and contract tests replace many E2E tests for service-to-service integration",
+      "The pyramid is replaced entirely by a flat model where all test types have equal importance"
+    ],
+    "answer": 2,
+    "explanation": "In microservices, each service maintains its own test pyramid. Contract tests (using tools like Pact) verify service-to-service compatibility cheaply and fast, replacing the many E2E tests that would otherwise be needed to verify integration. E2E tests are reserved for critical user journeys."
+  },
+  {
+    "id": "ot37",
+    "category": "others",
+    "question": "What is the testing trophy model, and when would you choose it over the traditional test pyramid?",
+    "options": [
+      "The testing trophy is a trophy given to teams with the highest test coverage",
+      "The testing trophy emphasizes integration tests as the largest layer, with static analysis at the base; choose it for frontend-heavy applications where units are highly interdependent",
+      "The testing trophy eliminates unit tests entirely in favor of E2E tests",
+      "The testing trophy is only applicable to mobile applications"
+    ],
+    "answer": 1,
+    "explanation": "The testing trophy (Kent C. Dodds) has static analysis at the base, some unit tests, many integration tests, and fewer E2E tests. It works well for frontend-heavy apps (React/Vue) where integration tests provide better confidence-to-cost ratio than isolated unit tests."
+  },
+  {
+    "id": "ot38",
+    "category": "others",
+    "question": "What is exploratory testing, and what structure prevents it from being ad hoc random clicking?",
+    "options": [
+      "Exploratory testing is unstructured free-form testing that does not require documentation",
+      "Session-based test management (SBTM) with time-boxed sessions, defined charters, debriefing notes, and heuristics like HICCUPPS",
+      "Exploratory testing uses recorded scripts played back at variable speeds",
+      "Exploratory testing is only performed by senior QA engineers during production incidents"
+    ],
+    "answer": 1,
+    "explanation": "Exploratory testing is simultaneous learning, test design, and execution. SBTM (session-based test management) provides structure through time-boxed sessions with specific charters, debriefing, and coverage tracked via heuristics (HICCUPPS: History, Image, Claims, Comparable Products, User expectations, Product, Purpose, Standards)."
+  },
+  {
+    "id": "ot39",
+    "category": "others",
+    "question": "What is shadow testing, and when is it used during a monolith-to-microservices migration?",
+    "options": [
+      "Testing the new system in a dark room to eliminate screen glare distractions",
+      "Routing real traffic to both the old monolith and new microservice simultaneously, comparing responses to catch behavioral differences before cutover",
+      "Testing the monolith with reduced functionality to simulate the microservice version",
+      "Running tests only during off-peak hours when the system is in a shadow state"
+    ],
+    "answer": 1,
+    "explanation": "Shadow testing routes real production requests to both the old and new systems, comparing responses without surfacing the new system's results to users. This reveals calculation differences and behavioral mismatches before the actual cutover, reducing migration risk."
+  },
+  {
+    "id": "ot40",
+    "category": "others",
+    "question": "What is the primary risk of AI-assisted testing that QA Architects must guard against?",
+    "options": [
+      "AI-generated tests run too slowly for CI pipelines",
+      "AI-generated tests may have low assertion quality, executing code without asserting meaningful business logic, creating false confidence from high test counts",
+      "AI tools are too expensive for most organizations to adopt",
+      "AI cannot generate tests for modern frontend frameworks"
+    ],
+    "answer": 1,
+    "explanation": "AI can generate thousands of tests that look comprehensive but only assert on status codes, not business logic values. A critical calculation bug may go undetected because AI tests execute the right endpoints without verifying the correctness of returned values."
+  },
+  {
+    "id": "ot41",
+    "category": "others",
+    "question": "What are the key testing dimensions for machine learning models that differ from traditional software testing?",
+    "options": [
+      "ML models only need unit tests on the API layer since the model itself cannot be tested",
+      "Data quality, model performance metrics (accuracy, precision, recall, F1), behavioral edge cases, bias/fairness testing, and monitoring for model drift in production",
+      "ML models require the same test types as any other software component",
+      "Only A/B testing in production is needed since ML model behavior cannot be predicted in test environments"
+    ],
+    "answer": 1,
+    "explanation": "ML testing uniquely includes data quality validation, model performance thresholds on held-out test sets, metamorphic testing for behavioral consistency, fairness testing across demographic groups, and production monitoring for model drift as data patterns evolve."
+  },
+  {
+    "id": "ot42",
+    "category": "others",
+    "question": "What is visual regression testing, and when is it essential to include in the test strategy?",
+    "options": [
+      "Visual regression testing checks that images load correctly on the page",
+      "Visual regression testing compares UI screenshots between builds to catch unintended visual changes; it is essential when functional tests pass but CSS changes break rendering across pages",
+      "Visual regression testing is only needed for mobile applications",
+      "Visual regression testing replaces all functional UI tests"
+    ],
+    "answer": 1,
+    "explanation": "Visual regression tools (Percy, Applitools, Chromatic) compare screenshots between builds. They catch rendering issues that functional tests miss, such as CSS changes that subtly break layout. Essential for design systems, marketing sites, and dashboards."
+  },
+  {
+    "id": "ot43",
+    "category": "others",
+    "question": "What is observability-driven testing, and how does it extend traditional QA?",
+    "options": [
+      "Monitoring test execution in real time to catch flaky tests faster",
+      "Using production telemetry (logs, metrics, traces) to inform test case design, validate deployments via canary analysis, and detect regressions that test environments cannot replicate",
+      "Adding more logging statements to test code for better debugging",
+      "Observing users during usability testing sessions to identify UX issues"
+    ],
+    "answer": 1,
+    "explanation": "Observability-driven testing uses production signals to enhance QA: analyzing traces reveals untested edge cases, canary analysis validates deployments automatically, and anomaly detection catches regressions that fixed-threshold monitoring would miss."
+  },
+  {
+    "id": "ot44",
+    "category": "others",
+    "question": "What is the common anti-pattern when organizations adopt BDD (Behavior-Driven Development), and how should it be corrected?",
+    "options": [
+      "BDD tests run too slowly; correct by reducing the number of scenarios",
+      "QA writing Gherkin scenarios without product team collaboration, turning BDD into a test automation format rather than a collaboration tool; correct by limiting BDD to critical user journeys co-authored with product",
+      "Developers refuse to use Given/When/Then syntax; correct by mandating it through code reviews",
+      "BDD cannot be integrated with CI/CD; correct by using a different testing framework"
+    ],
+    "answer": 1,
+    "explanation": "The BDD anti-pattern occurs when QA writes Gherkin without genuine product collaboration, producing thousands of scenarios that only QA maintains. The fix is limiting BDD to 20-30 critical user journeys co-written with product, making them living documentation rather than a test automation burden."
+  },
+  {
+    "id": "ot45",
+    "category": "others",
+    "question": "How would you test a premium rating engine in an insurance system?",
+    "options": [
+      "Run a single sample quote and verify the total premium",
+      "Use boundary value analysis on rating factors, decision tables mapped to underwriting rules, and golden-master comparison against actuarially-approved manual calculations across hundreds of scenarios",
+      "Test only the happy path since actuaries already validate the rates",
+      "Run the rating engine only after all policy data is complete"
+    ],
+    "answer": 1,
+    "explanation": "Rating engines use complex rule combinations (territory, age, coverage, discounts). Testing requires boundary values on each rating factor, decision tables for rule interactions, negative testing for invalid inputs, and golden-master regression comparing output against actuarially-approved calculations."
+  },
+  {
+    "id": "ot46",
+    "category": "others",
+    "question": "What is the difference between testing a COTS (Commercial Off-the-Shelf) platform vs. custom-built software?",
+    "options": [
+      "COTS platforms require more testing than custom software",
+      "COTS testing focuses on configuration, integrations, and customizations — not core vendor functionality — since the vendor is responsible for base product quality",
+      "COTS platforms cannot be automated",
+      "There is no meaningful difference in testing approach"
+    ],
+    "answer": 1,
+    "explanation": "With COTS platforms (e.g., Guidewire, Salesforce), the vendor owns core quality. QA focuses on: configuration correctness, third-party integrations, customizations/extensions, data migration, and upgrade regression. Risk-based testing concentrates on points of configuration, not the platform itself."
+  },
+  {
+    "id": "ot47",
+    "category": "others",
+    "question": "How do you test batch processes like nightly billing runs or renewal processing?",
+    "options": [
+      "Batch processes cannot be automated; they require manual verification",
+      "Run the batch with representative data, validate completeness (all records processed), correctness (amounts match expected), error handling (bad records logged), and performance (completes within the batch window)",
+      "Only verify the final count of records processed",
+      "Test batch processes the same way as real-time transactional systems"
+    ],
+    "answer": 1,
+    "explanation": "Batch testing validates: completeness (all eligible records processed), correctness (calculations match expected), error handling (invalid records rejected/flagged without stopping the batch), idempotency (re-runs don't duplicate), and performance (batch completes within the nightly window)."
+  },
+  {
+    "id": "ot48",
+    "category": "others",
+    "question": "What is a policy endorsement and what testing risks does it introduce?",
+    "options": [
+      "An endorsement is a vendor approval for QA tools; minimal testing risk",
+      "An endorsement is a mid-term policy change that triggers premium recalculation, document regeneration, and downstream notification — creating cascading update risks",
+      "An endorsement is only relevant at policy renewal",
+      "Endorsements only affect the billing system, not other policy components"
+    ],
+    "answer": 1,
+    "explanation": "A policy endorsement (mid-term change) triggers: pro-rated premium recalculation, policy document regeneration, billing system update, agent/customer notification, and reinsurance recalculation. Testing must validate the entire cascade, including edge cases like endorsements near the renewal date."
+  },
+  {
+    "id": "ot49",
+    "category": "others",
+    "question": "How would you approach QA for a waterfall program with a fixed regulatory deadline?",
+    "options": [
+      "Reduce test coverage to fit the available time",
+      "Front-load risk-based testing: identify highest-risk regulatory requirements early, automate regression, use parallel testing tracks, and establish clear entry/exit criteria for each test phase",
+      "Skip non-functional testing to save time",
+      "Wait for full functional completion before testing"
+    ],
+    "answer": 1,
+    "explanation": "With fixed regulatory deadlines: perform risk-based analysis to identify regulatory-critical paths, start test planning during requirements, automate regression early, use parallel test execution across work streams, and define non-negotiable entry/exit criteria per phase to avoid compressing the test window."
+  },
+  {
+    "id": "ot50",
+    "category": "others",
+    "question": "What is 'shift-right' testing and how does it differ from 'shift-left'?",
+    "options": [
+      "Shift-right means testing in production; shift-left means testing before production",
+      "Shift-left moves testing earlier in development (unit tests, reviews, pre-merge); shift-right adds testing in or near production using canary releases, feature flags, chaos engineering, and synthetic monitoring",
+      "Shift-right and shift-left are different names for the same practice",
+      "Shift-left is for developers; shift-right is for QA teams"
+    ],
+    "answer": 1,
+    "explanation": "Shift-left catches defects early (cheap). Shift-right (testing in production) catches issues that only appear at production scale, with real data and real user behavior. Both are needed: shift-left reduces defects, shift-right provides confidence through canary analysis, A/B testing, and synthetic monitoring."
+  },
+  {
+    "id": "ot51",
+    "category": "others",
+    "question": "How do you decide what NOT to test (risk-based test scoping)?",
+    "options": [
+      "Skip anything that has not changed recently",
+      "Use risk = probability × impact to prioritize; exclude low-risk, rarely-used, low-business-value areas with documented justification",
+      "Test everything equally regardless of risk",
+      "Let developers decide what to skip since they know the code best"
+    ],
+    "answer": 1,
+    "explanation": "Risk-based scoping uses probability of failure × business impact to prioritize coverage. Use change analysis, production defect history, and usage analytics to identify low-risk areas. Always document what was excluded and why — excluded areas become the documented risk accepted by stakeholders."
+  }
+]

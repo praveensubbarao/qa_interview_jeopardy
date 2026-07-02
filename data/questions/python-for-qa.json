@@ -1,0 +1,1368 @@
+[
+  {
+    "id": "pyqa1",
+    "category": "python-for-qa",
+    "question": "What does this pytest fixture do, and when is teardown executed?\n\n```python\n@pytest.fixture(autouse=True)\ndef reset_db(db):\n    yield\n    db.rollback()\n```",
+    "options": [
+      "Setup runs before each test; rollback() fires before the next test begins",
+      "autouse=True injects the fixture into every test in scope without explicit declaration; code before yield is setup, code after yield is teardown — rollback() runs after each test completes",
+      "yield pauses test execution; rollback() only fires if the test raises an exception",
+      "autouse=True means the fixture runs once per module, not per test"
+    ],
+    "answer": 1,
+    "explanation": "autouse=True removes the need to declare the fixture in every test function signature. The yield splits setup (before) from teardown (after). db.rollback() always runs after the test — pass or fail — preventing database state leakage between tests."
+  },
+  {
+    "id": "pyqa2",
+    "category": "python-for-qa",
+    "question": "What is the output of this code?\n\n```python\n@pytest.mark.parametrize('a,b,expected', [\n    (1, 2, 3),\n    (0, 0, 0),\n    (-1, 1, 0),\n])\ndef test_add(a, b, expected):\n    assert a + b == expected\n```",
+    "options": [
+      "One test runs with all three tuples combined into a single assertion",
+      "Three separate test cases run: test_add[1-2-3], test_add[0-0-0], test_add[-1-1-0] — each with its own pass/fail status",
+      "The test raises a ValueError because parametrize cannot unpack tuples",
+      "Only the first tuple runs; pytest stops at the first passing case"
+    ],
+    "answer": 1,
+    "explanation": "@pytest.mark.parametrize generates N independent test nodes from N tuples. Each test gets its own node ID in the report. This is the primary data-driven testing pattern in pytest — far cleaner than a loop inside one test function."
+  },
+  {
+    "id": "pyqa3",
+    "category": "python-for-qa",
+    "question": "What does `pytest.raises` verify in this snippet?\n\n```python\ndef test_divide_by_zero():\n    with pytest.raises(ZeroDivisionError, match=r'division by zero'):\n        result = 10 / 0\n```",
+    "options": [
+      "It verifies that 10/0 returns infinity instead of raising an exception",
+      "It asserts that ZeroDivisionError is raised AND its string representation matches the regex — the test fails if the exception is not raised or the message doesn't match",
+      "match= is optional metadata and has no effect on pass/fail",
+      "pytest.raises catches the exception silently; the test always passes regardless of exception type"
+    ],
+    "answer": 1,
+    "explanation": "pytest.raises acts as a context manager that asserts the named exception must be raised. The optional match= parameter applies re.search() against str(excinfo.value), so the test also fails if the error message doesn't match the pattern. This lets you verify both exception type and message in one statement."
+  },
+  {
+    "id": "pyqa4",
+    "category": "python-for-qa",
+    "question": "What is the purpose of `conftest.py` in a pytest project?",
+    "options": [
+      "It is a configuration file only for pytest.ini settings; fixtures cannot be defined there",
+      "conftest.py is auto-discovered by pytest and makes fixtures, hooks, and plugins available to all tests in the same directory and subdirectories — without any import",
+      "It must be imported explicitly in every test file that wants to use its fixtures",
+      "conftest.py is used exclusively for session-scoped fixtures; function-scoped fixtures must live in the test file"
+    ],
+    "answer": 1,
+    "explanation": "pytest auto-collects conftest.py files walking up from the test file to the rootdir. Fixtures defined there are available to all tests in that directory tree with no import. Multiple conftest.py files can exist at different levels, each scoping their fixtures to their subtree."
+  },
+  {
+    "id": "pyqa5",
+    "category": "python-for-qa",
+    "question": "What does `unittest.mock.patch` do in this test?\n\n```python\nfrom unittest.mock import patch\n\ndef test_send_email():\n    with patch('myapp.mailer.smtplib.SMTP') as mock_smtp:\n        send_welcome_email('user@test.com')\n        mock_smtp.assert_called_once()\n```",
+    "options": [
+      "patch replaces smtplib.SMTP in the standard library globally for the entire test session",
+      "patch temporarily replaces myapp.mailer's reference to smtplib.SMTP with a MagicMock for the duration of the with block — restoring the real class afterwards",
+      "patch only works with functions, not classes — this code would raise AttributeError",
+      "assert_called_once() verifies that SMTP was imported once, not instantiated once"
+    ],
+    "answer": 1,
+    "explanation": "patch targets the name as it exists in the module under test (myapp.mailer.smtplib.SMTP), not in the source module — a critical distinction. Within the with block, any call to smtplib.SMTP inside myapp.mailer hits the mock. After the block, the real class is restored. This prevents real emails from being sent during tests."
+  },
+  {
+    "id": "pyqa6",
+    "category": "python-for-qa",
+    "question": "What is the bug in this test and how should it be fixed?\n\n```python\nresponse_list = []\n\n@pytest.fixture\ndef client():\n    app = create_app()\n    return app.test_client()\n\ndef test_get_users(client):\n    resp = client.get('/users')\n    response_list.append(resp)\n    assert resp.status_code == 200\n```",
+    "options": [
+      "No bug — appending to a module-level list is a common logging pattern",
+      "response_list is a module-level mutable shared across test runs; it accumulates state between tests and can cause memory leaks or false assertions in later tests — move it inside the test or use a fixture",
+      "The bug is that client is a fixture, not a function — it cannot be called inside test_get_users",
+      "app.test_client() must be yielded from the fixture to allow teardown"
+    ],
+    "answer": 1,
+    "explanation": "Module-level mutable state is a classic test isolation bug. response_list persists across test runs (and even across repeated pytest sessions in watch mode). If another test later checks len(response_list) it will see stale data. All test state should live in fixtures with appropriate scope, or inside the test function itself."
+  },
+  {
+    "id": "pyqa7",
+    "category": "python-for-qa",
+    "question": "What does the `@pytest.fixture(scope='session')` decorator change?\n\n```python\n@pytest.fixture(scope='session')\ndef db_connection():\n    conn = create_connection(DB_URL)\n    yield conn\n    conn.close()\n```",
+    "options": [
+      "The fixture runs once per test file (module), not once per session",
+      "The fixture is created once for the entire pytest session and shared across all tests — conn.close() runs only once when the session ends",
+      "scope='session' means the fixture is stored in a database session object",
+      "It runs before the session but teardown (conn.close) never executes in session scope"
+    ],
+    "answer": 1,
+    "explanation": "scope='session' is the broadest scope. The fixture is set up once when first requested and torn down after the last test in the session finishes. Useful for expensive resources like DB connections or browser instances. Other scopes: function (default), class, module, package."
+  },
+  {
+    "id": "pyqa8",
+    "category": "python-for-qa",
+    "question": "What will this assertion print on failure?\n\n```python\nactual = {'status': 'error', 'code': 500}\nexpected = {'status': 'ok', 'code': 200}\nassert actual == expected, f'API response mismatch: got {actual}'\n```",
+    "options": [
+      "AssertionError with no message — custom messages are ignored by pytest",
+      "AssertionError: API response mismatch: got {'status': 'error', 'code': 500} — pytest prints the custom message AND its own diff of the two dicts",
+      "The test silently passes because the custom message overrides the assertion check",
+      "SyntaxError — f-strings are not allowed in assert statements"
+    ],
+    "answer": 1,
+    "explanation": "pytest captures the custom message after the comma in an assert statement and includes it in the failure output alongside its own introspected diff. Using f-strings with the actual values in assert messages is a best practice — it surfaces the bad data immediately without needing to re-run with -s or print statements."
+  },
+  {
+    "id": "pyqa9",
+    "category": "python-for-qa",
+    "question": "What does this code test and what is the QA technique being demonstrated?\n\n```python\nimport pytest\nfrom hypothesis import given, strategies as st\n\n@given(st.text(min_size=1, max_size=200))\ndef test_username_sanitizer_never_raises(s):\n    result = sanitize_username(s)\n    assert isinstance(result, str)\n```",
+    "options": [
+      "It tests sanitize_username with three hardcoded edge-case strings",
+      "Property-based testing: Hypothesis generates hundreds of random strings matching the strategy and verifies the invariant (always returns str) — automatically finding edge cases the developer didn't think of",
+      "It uses fuzzing to crash the application and record the crash payload",
+      "st.text generates SQL injection payloads to test input sanitization security"
+    ],
+    "answer": 1,
+    "explanation": "Hypothesis is Python's property-based testing library. Instead of specific example inputs, you define a strategy (st.text) and an invariant (result is always a str). Hypothesis generates many random inputs, shrinks failures to the minimal reproducing case, and re-runs known failures from its database. Essential for testing parsers, serializers, and input sanitizers."
+  },
+  {
+    "id": "pyqa10",
+    "category": "python-for-qa",
+    "question": "What is wrong with this test for an async function?\n\n```python\n# BAD\ndef test_fetch_user():\n    result = fetch_user(42)  # async function\n    assert result['id'] == 42\n```",
+    "options": [
+      "Nothing — Python automatically awaits coroutines when called in test functions",
+      "fetch_user(42) returns a coroutine object, not the result — result['id'] will raise TypeError. The fix: use `pytest-asyncio` and mark the test `async def` with `await`",
+      "The test will work but run synchronously, making it slower",
+      "assert must be replaced with asyncio.run(assert ...) for async tests"
+    ],
+    "answer": 1,
+    "explanation": "Calling an async function without await returns a coroutine object, not the resolved value. The fix is to use pytest-asyncio: mark the test `@pytest.mark.asyncio` (or set asyncio_mode='auto') and declare it `async def test_fetch_user(): result = await fetch_user(42)`. Failing to await is a silent bug — the coroutine is truthy so assertions on it may pass incorrectly."
+  },
+  {
+    "id": "pyqa11",
+    "category": "python-for-qa",
+    "question": "What does `mocker.spy` do differently from `mocker.patch`?\n\n```python\ndef test_discount_called(mocker):\n    spy = mocker.spy(PricingService, 'apply_discount')\n    PricingService().calculate(100)\n    assert spy.call_count == 1\n```",
+    "options": [
+      "mocker.spy replaces apply_discount with a MagicMock that always returns None",
+      "mocker.spy wraps the real apply_discount method — the original implementation still executes, but call count, args, and return values are recorded for assertion",
+      "spy and patch are identical; mocker.spy is just an alias for mocker.patch",
+      "mocker.spy only works on module-level functions, not class methods"
+    ],
+    "answer": 1,
+    "explanation": "mocker.spy is a pytest-mock utility that instruments a method without replacing it. The real code runs and produces real side-effects, but the spy tracks calls exactly like a mock. Use it when you need to verify a method was called a certain number of times without breaking the actual behavior the other parts of the test depend on."
+  },
+  {
+    "id": "pyqa12",
+    "category": "python-for-qa",
+    "question": "What does this `requests` snippet assert about the API response?\n\n```python\nimport requests\n\ndef test_create_user_api():\n    payload = {'name': 'Alice', 'email': 'alice@test.com'}\n    resp = requests.post('http://api/users', json=payload)\n    assert resp.status_code == 201\n    body = resp.json()\n    assert body['email'] == payload['email']\n    assert 'id' in body\n```",
+    "options": [
+      "It only verifies the HTTP status code; the body assertions are unreachable",
+      "It verifies: the endpoint returns 201 Created, the response body echoes back the submitted email, and an id field was generated by the server",
+      "resp.json() raises an exception if the status code is not 200",
+      "assert 'id' in body checks that the string 'id' appears anywhere in the JSON text"
+    ],
+    "answer": 1,
+    "explanation": "This covers three tiers of API assertion: status code (contract), round-trip field correctness (email echoed back), and server-generated field existence (id). resp.json() works on any 2xx/4xx/5xx response that returns JSON. The pattern of asserting both the mirror field and the generated field is a fundamental API test structure."
+  },
+  {
+    "id": "pyqa13",
+    "category": "python-for-qa",
+    "question": "What is the purpose of `@pytest.mark.xfail` in this test?\n\n```python\n@pytest.mark.xfail(reason='BUG-1234: endpoint returns 500 on empty string')\ndef test_search_empty_string():\n    resp = client.get('/search?q=')\n    assert resp.status_code == 200\n```",
+    "options": [
+      "The test is skipped entirely and marked as TODO",
+      "The test runs normally but a failure is expected; if it fails it reports XFAIL (expected failure), if it passes it reports XPASS (unexpected pass) — neither blocks the CI build by default",
+      "xfail makes the test always pass regardless of the actual result",
+      "It marks the test as flaky so pytest retries it up to 3 times"
+    ],
+    "answer": 1,
+    "explanation": "xfail is the correct way to document a known bug without deleting the test or disabling CI. XFAIL means the bug is confirmed. XPASS means someone fixed it — alerting the team to update the mark. Using strict=True turns XPASS into a failure, enforcing that the mark is removed once the bug is fixed."
+  },
+  {
+    "id": "pyqa14",
+    "category": "python-for-qa",
+    "question": "What does the `Faker` library produce in this test data factory?\n\n```python\nfrom faker import Faker\nfake = Faker()\n\ndef make_user():\n    return {\n        'name': fake.name(),\n        'email': fake.email(),\n        'dob': fake.date_of_birth(minimum_age=18).isoformat()\n    }\n```",
+    "options": [
+      "make_user() always returns the same dict — Faker generates deterministic data by default",
+      "Each call generates a realistic but random name, email, and adult date of birth — useful for seeding test data without hardcoding values that might conflict with real data",
+      "fake.email() calls a real mail server to verify the address exists",
+      "Faker only generates English locale data; internationalized tests require a different library"
+    ],
+    "answer": 1,
+    "explanation": "Faker generates locale-aware realistic fake data. Using it in test data factories prevents hardcoded values that cause unique-constraint violations when tests run repeatedly. Seed with Faker(seed=42) for reproducibility. Faker supports 30+ locales and dozens of providers (address, company, credit card, etc.)."
+  },
+  {
+    "id": "pyqa15",
+    "category": "python-for-qa",
+    "question": "What does the `@pytest.mark.parametrize` indirect pattern do here?\n\n```python\n@pytest.fixture\ndef user(request):\n    return create_user(role=request.param)\n\n@pytest.mark.parametrize('user', ['admin', 'viewer'], indirect=True)\ndef test_dashboard_access(user):\n    assert user.can_view_dashboard()\n```",
+    "options": [
+      "indirect=True passes the parameter values directly to test_dashboard_access as a list",
+      "indirect=True routes the parameter values through the user fixture via request.param — the fixture receives 'admin' then 'viewer' and creates the appropriate user object for each test run",
+      "indirect=True means the fixture is only created when the parameter is truthy",
+      "It causes the parametrize decorator to be ignored and user fixture runs with default values"
+    ],
+    "answer": 1,
+    "explanation": "indirect=True tells pytest to pass parametrize values as request.param to the named fixture rather than directly to the test function. This is the pattern for parameterizing across different setups (e.g., different user roles, database backends, browser types) while keeping test logic clean."
+  },
+  {
+    "id": "pyqa16",
+    "category": "python-for-qa",
+    "question": "What does this context manager test verify?\n\n```python\ndef test_file_cleanup():\n    with tempfile.NamedTemporaryFile(delete=False) as f:\n        f.write(b'test data')\n        path = f.name\n    process_file(path)\n    assert not os.path.exists(path)\n```",
+    "options": [
+      "It verifies that NamedTemporaryFile raises an error when delete=False is set",
+      "It verifies that process_file() deletes the file as part of its processing — the temp file is created outside the context manager's auto-delete scope so its existence after the call can be meaningfully asserted",
+      "delete=False means the file is automatically deleted after the with block exits",
+      "os.path.exists() always returns False for temporary files"
+    ],
+    "answer": 1,
+    "explanation": "delete=False prevents NamedTemporaryFile from auto-deleting on close, so the file persists after the with block. The test then calls process_file() which should consume and delete the file. The final assertion verifies the side effect. This pattern tests file-processing functions without touching the real filesystem in a risky way."
+  },
+  {
+    "id": "pyqa17",
+    "category": "python-for-qa",
+    "question": "What is the output of this comparison and why does it matter for QA?\n\n```python\nassert 0.1 + 0.2 == 0.3  # raises AssertionError!\nimport math\nassert math.isclose(0.1 + 0.2, 0.3, rel_tol=1e-9)  # passes\n```",
+    "options": [
+      "Both assertions pass — Python handles floating point exactly",
+      "0.1 + 0.2 == 0.30000000000000004 in IEEE 754 floating point, so the first assertion fails; math.isclose() uses a relative tolerance to compare floats safely — essential when asserting on prices, percentages, or measurements",
+      "math.isclose is only for complex numbers; use round() for floats",
+      "The second assertion passes by accident because Python caches float literals"
+    ],
+    "answer": 1,
+    "explanation": "IEEE 754 floating point cannot represent 0.1 or 0.2 exactly, so 0.1 + 0.2 evaluates to 0.30000000000000004. Never use == for float comparisons in tests. Use math.isclose(), pytest.approx(), or round() depending on context. pytest.approx(0.3) is the idiomatic pytest way: assert 0.1 + 0.2 == pytest.approx(0.3)."
+  },
+  {
+    "id": "pyqa18",
+    "category": "python-for-qa",
+    "question": "What does `pytest.approx` do in this API test?\n\n```python\ndef test_tax_calculation():\n    result = calculate_tax(price=99.99, rate=0.08)\n    assert result == pytest.approx(7.9992, rel=1e-3)\n```",
+    "options": [
+      "pytest.approx rounds result to 4 decimal places before comparing",
+      "pytest.approx wraps the expected value with a relative tolerance (0.1% here) so the assertion passes if result is within that tolerance of 7.9992 — preventing float precision failures",
+      "rel=1e-3 means the comparison retries up to 1000 times",
+      "pytest.approx only works with integers; floats require math.isclose"
+    ],
+    "answer": 1,
+    "explanation": "pytest.approx is the idiomatic way to compare floats in pytest. rel=1e-3 sets a 0.1% relative tolerance. It also works on dicts and lists of floats, comparing each element: assert {'tax': 7.99} == pytest.approx({'tax': 7.9992}, rel=1e-2). Indispensable for financial, scientific, or any numeric assertion."
+  },
+  {
+    "id": "pyqa19",
+    "category": "python-for-qa",
+    "question": "What does this `MagicMock` configuration test?\n\n```python\nfrom unittest.mock import MagicMock\n\ndef test_retry_on_failure():\n    mock_api = MagicMock()\n    mock_api.call.side_effect = [Exception('timeout'), Exception('timeout'), {'status': 'ok'}]\n    result = retry_wrapper(mock_api.call, retries=3)\n    assert result == {'status': 'ok'}\n    assert mock_api.call.call_count == 3\n```",
+    "options": [
+      "side_effect with a list means the mock raises all exceptions simultaneously",
+      "side_effect consumes the list in order — first two calls raise Exception('timeout'), third call returns the dict; the test verifies retry_wrapper retries on failure and returns the successful result after 3 attempts",
+      "MagicMock cannot raise exceptions via side_effect; use return_value instead",
+      "call_count tracks how many times the mock was imported, not called"
+    ],
+    "answer": 1,
+    "explanation": "When side_effect is a list, each call to the mock consumes the next item: if it's an exception it's raised, if it's a value it's returned. This is the canonical pattern for testing retry logic — simulate N failures followed by success. call_count verifies the retry mechanism actually retried the right number of times."
+  },
+  {
+    "id": "pyqa20",
+    "category": "python-for-qa",
+    "question": "What is the purpose of `responses` library in this test?\n\n```python\nimport responses\n\n@responses.activate\ndef test_get_weather():\n    responses.add(\n        responses.GET,\n        'https://api.weather.com/v1/current',\n        json={'temp': 72, 'unit': 'F'},\n        status=200\n    )\n    result = get_current_weather()\n    assert result['temp'] == 72\n```",
+    "options": [
+      "responses makes a real HTTP request but caches the result for faster future calls",
+      "responses intercepts any requests.get() call to the registered URL and returns the configured JSON mock — preventing real network calls and making the test deterministic",
+      "responses.activate is required for all requests tests to enable connection pooling",
+      "@responses.activate raises an error if the URL is not registered, forcing intentional stubs"
+    ],
+    "answer": 1,
+    "explanation": "The responses library monkey-patches the requests library within the decorated test. Any unregistered URL raises ConnectionError by default (passthrough_prefixes can override this). This is the standard way to unit-test code that calls external HTTP APIs without spinning up a mock server. httpretty and pytest-httpserver are alternatives."
+  },
+  {
+    "id": "pyqa21",
+    "category": "python-for-qa",
+    "question": "What is the QA risk in this parametrized test?\n\n```python\n@pytest.mark.parametrize('email', [\n    'user@example.com',\n    'user@example.com',\n    'user@test.org',\n])\ndef test_email_validation(email):\n    assert is_valid_email(email)\n```",
+    "options": [
+      "No risk — duplicate values are valid and pytest deduplicates them automatically",
+      "The duplicate 'user@example.com' entry means test_email_validation[email1] and test_email_validation[email0] test the same input — one test case is wasted and if the first fails, the second gives false confidence",
+      "Parametrize with duplicate values raises a ValueError at collection time",
+      "is_valid_email will raise a unique constraint violation on the second identical email"
+    ],
+    "answer": 1,
+    "explanation": "Duplicate parametrize values waste a test slot and create misleading test IDs. Pytest won't error — it runs all three. To add meaningful coverage, the third slot should test a boundary case: an invalid format, a subdomain email, an internationalized domain, or an edge case length. Review parametrize sets for coverage gaps, not just correctness."
+  },
+  {
+    "id": "pyqa22",
+    "category": "python-for-qa",
+    "question": "What does `capfd` capture in this pytest test?\n\n```python\ndef test_cli_output(capfd):\n    run_cli_command('--version')\n    out, err = capfd.readouterr()\n    assert 'v2.1.0' in out\n    assert err == ''\n```",
+    "options": [
+      "capfd captures only log messages from the logging module",
+      "capfd captures stdout and stderr at the file-descriptor level — out contains whatever was printed to stdout, err contains stderr; this tests CLI output without mocking print()",
+      "capfd.readouterr() resets the process stdout/stderr permanently",
+      "capfd only works with sys.stdout.write(), not print()"
+    ],
+    "answer": 1,
+    "explanation": "capfd (file-descriptor level) and capsys (Python sys.stdout level) are pytest built-in fixtures for capturing output. capfd works with C extensions and subprocesses that write directly to fd 1/2. readouterr() returns and clears the captured buffers. Use it to test CLIs, logging output, and any code that produces console output."
+  },
+  {
+    "id": "pyqa23",
+    "category": "python-for-qa",
+    "question": "What does this dataclass-based test model provide over a plain dict?\n\n```python\nfrom dataclasses import dataclass\n\n@dataclass\nclass UserResponse:\n    id: int\n    email: str\n    role: str\n\ndef test_user_response_shape():\n    raw = api_client.get('/users/1').json()\n    user = UserResponse(**raw)\n    assert user.role == 'admin'\n```",
+    "options": [
+      "Nothing — dataclasses and dicts have identical performance characteristics",
+      "UserResponse(**raw) fails with TypeError if the API response is missing required fields — giving immediate structural validation; accessing user.role gives IDE autocomplete and raises AttributeError on typos unlike dict['role']",
+      "Dataclasses automatically validate field types, so user.id = 'string' would raise TypeError",
+      "The @dataclass decorator adds JSON serialization — UserResponse can be sent directly back to the API"
+    ],
+    "answer": 1,
+    "explanation": "Unpacking an API response into a typed dataclass gives structural contract checking for free: extra unexpected fields raise TypeError, missing required fields raise TypeError. Attribute access (user.role) is typo-safe compared to dict key access. For full type coercion and validation, use Pydantic's BaseModel instead."
+  },
+  {
+    "id": "pyqa24",
+    "category": "python-for-qa",
+    "question": "What is this pattern used for in test data setup?\n\n```python\nimport factory\nfrom factory.django import DjangoModelFactory\n\nclass UserFactory(DjangoModelFactory):\n    class Meta:\n        model = User\n    email = factory.LazyFunction(lambda: f'{uuid.uuid4()}@test.com')\n    role = 'viewer'\n    is_active = True\n```",
+    "options": [
+      "DjangoModelFactory is a read-only fixture that fetches users from the database",
+      "factory_boy's DjangoModelFactory creates and persists model instances with sensible defaults; LazyFunction generates a unique email per instance — preventing unique-constraint failures when many users are created across tests",
+      "factory.LazyFunction runs only once and caches the result for all factory calls",
+      "UserFactory.create() returns a dict, not a Django model instance"
+    ],
+    "answer": 1,
+    "explanation": "factory_boy is the standard Python test data factory library. LazyFunction/LazyAttribute are evaluated fresh on every factory call. UserFactory.create() saves to the DB; UserFactory.build() creates without saving. Override defaults: UserFactory(role='admin'). Subfactories handle relations: factory.SubFactory(TeamFactory)."
+  },
+  {
+    "id": "pyqa25",
+    "category": "python-for-qa",
+    "question": "What does the `@pytest.mark.skip` vs `@pytest.mark.skipif` difference matter for CI?\n\n```python\n@pytest.mark.skip(reason='manually disabled')\ndef test_payment_flow():\n    ...\n\n@pytest.mark.skipif(os.getenv('ENV') != 'staging', reason='only on staging')\ndef test_stripe_webhook():\n    ...\n```",
+    "options": [
+      "Both are identical — skip and skipif behave the same way",
+      "skip unconditionally skips regardless of environment — risky in CI if forgotten; skipif evaluates a condition at collection time so test_stripe_webhook automatically runs on staging and skips elsewhere — conditional skip is the safer pattern",
+      "skipif only accepts boolean literals, not environment variable checks",
+      "Tests marked with skip are excluded from coverage reports; skipif tests are still counted"
+    ],
+    "answer": 1,
+    "explanation": "Unconditional skip is a code smell — it often signals a test was disabled temporarily and never re-enabled. skipif ties the skip to a condition that resolves automatically. Common patterns: skip on Windows (sys.platform), skip without API key (not os.getenv('API_KEY')), skip on CI (os.getenv('CI')). Use skip only as a truly temporary measure with a ticket reference in reason=."
+  },
+  {
+    "id": "pyqa26",
+    "category": "python-for-qa",
+    "question": "What does this `patch.object` technique test about dependency injection?\n\n```python\nfrom unittest.mock import patch, PropertyMock\n\ndef test_feature_flag_disabled():\n    with patch.object(FeatureFlags, 'new_checkout', new_callable=PropertyMock, return_value=False):\n        response = client.post('/checkout', json=order)\n        assert response.status_code == 200\n        assert 'legacy' in response.json()['flow']\n```",
+    "options": [
+      "patch.object replaces the FeatureFlags class itself with a MagicMock",
+      "patch.object replaces the new_checkout property on FeatureFlags with a PropertyMock returning False — simulating the feature flag being off without modifying real config files or environment variables",
+      "PropertyMock is only needed for static methods, not properties",
+      "new_callable=PropertyMock raises an error because properties cannot be mocked"
+    ],
+    "answer": 1,
+    "explanation": "Mocking a @property requires PropertyMock — a regular MagicMock won't intercept property access correctly. patch.object targets the specific attribute on the class (not an instance). This technique lets you test both branches of a feature flag in the same test suite without touching configuration, making it safe for CI across environments."
+  },
+  {
+    "id": "pyqa27",
+    "category": "python-for-qa",
+    "question": "What is the QA technique demonstrated by this `allure` snippet?\n\n```python\nimport allure\n\n@allure.feature('User Registration')\n@allure.story('Email Validation')\ndef test_duplicate_email_rejected():\n    with allure.step('Create first user'):\n        user1 = create_user('alice@test.com')\n    with allure.step('Attempt duplicate registration'):\n        resp = register('alice@test.com')\n    assert resp.status_code == 409\n```",
+    "options": [
+      "allure.step() replaces pytest fixtures for setup/teardown",
+      "Allure decorators and steps add structured reporting — features and stories map tests to requirements in the Allure report; allure.step() adds named checkpoints visible in the timeline, making failures pinpoint which step failed without reading code",
+      "allure.feature creates a test suite that groups tests into a class automatically",
+      "with allure.step() catches exceptions and marks the test as a warning instead of failure"
+    ],
+    "answer": 1,
+    "explanation": "Allure is a test reporting framework that layers requirements mapping (feature/story/epic), step visualization, and attachment support onto pytest. Steps collapse verbose test logic into readable named actions in the HTML report. When a step fails, the report shows exactly which step — invaluable for investigating failures in long end-to-end tests."
+  },
+  {
+    "id": "pyqa28",
+    "category": "python-for-qa",
+    "question": "What does this list comprehension do for test data validation?\n\n```python\ndef test_all_users_have_email(api_client):\n    users = api_client.get('/users').json()\n    missing = [u['id'] for u in users if 'email' not in u or not u['email']]\n    assert missing == [], f'Users missing email: {missing}'\n```",
+    "options": [
+      "It verifies only the first user has an email field",
+      "The comprehension collects IDs of all users that are missing or have an empty email field; the assertion fails with the specific offending IDs — a bulk data quality check in one assertion",
+      "missing == [] raises TypeError because you cannot compare lists with ==",
+      "The comprehension mutates the users list by removing invalid entries"
+    ],
+    "answer": 1,
+    "explanation": "This pattern — collect violations into a list, assert list is empty — is the idiomatic Python way to do bulk assertions. It reports ALL failures at once (e.g., 'Users missing email: [3, 17, 42]') rather than stopping at the first. Contrast with a loop of individual asserts that stops at the first failure, hiding the scale of the problem."
+  },
+  {
+    "id": "pyqa29",
+    "category": "python-for-qa",
+    "question": "What does `freezegun` do in this time-sensitive test?\n\n```python\nfrom freezegun import freeze_time\nfrom datetime import datetime\n\n@freeze_time('2024-01-15 10:00:00')\ndef test_session_expiry():\n    session = create_session(ttl_minutes=30)\n    assert session.is_valid()\n    freeze_time.tick(delta=timedelta(minutes=31))\n    assert not session.is_valid()\n```",
+    "options": [
+      "freeze_time slows down the system clock by a factor of 30 to test TTL faster",
+      "freeze_time patches datetime.datetime.now() and related time functions to return the frozen timestamp — making time-dependent logic deterministic and testable without waiting real time",
+      "freeze_time is only compatible with the time module, not datetime",
+      "tick() advances the real system clock, requiring root privileges"
+    ],
+    "answer": 1,
+    "explanation": "freezegun intercepts datetime.datetime, datetime.date, time.time(), and time.gmtime() returning the frozen value. tick() advances the frozen clock by a delta without affecting real wall time. This makes any TTL, expiry, scheduled job, or time-windowed logic testable instantly. Essential for testing token expiry, cache invalidation, and subscription billing logic."
+  },
+  {
+    "id": "pyqa30",
+    "category": "python-for-qa",
+    "question": "What is the purpose of this `conftest.py` pattern using `request.addfinalizer`?\n\n```python\n@pytest.fixture\ndef browser(request):\n    driver = webdriver.Chrome()\n    def teardown():\n        driver.quit()\n    request.addfinalizer(teardown)\n    return driver\n```",
+    "options": [
+      "addfinalizer is deprecated — yield-based fixtures are preferred, but both achieve the same result",
+      "addfinalizer registers teardown() to run after the test even if the fixture setup fails partway through — useful when multiple cleanup steps must all run regardless of failures; yield only executes teardown if yield is reached",
+      "addfinalizer makes driver.quit() run before the test starts",
+      "addfinalizer is required for Selenium fixtures; yield-based fixtures crash WebDriver"
+    ],
+    "answer": 1,
+    "explanation": "Both addfinalizer and yield-based fixtures are valid. The key difference: multiple addfinalizer calls can be registered and all will run (in LIFO order) even if earlier ones raise. With yield, you can only have one teardown block, and if it raises partway through, remaining cleanup is skipped. addfinalizer is useful when tearing down multiple resources independently."
+  },
+  {
+    "id": "pyqa31",
+    "category": "python-for-qa",
+    "question": "What does this `patch` decorator ordering mean for the test arguments?\n\n```python\n@patch('myapp.services.EmailService.send')\n@patch('myapp.services.SMSService.send')\ndef test_notification(mock_sms, mock_email):\n    notify_user(user_id=1)\n    mock_email.assert_called_once()\n    mock_sms.assert_called_once()\n```",
+    "options": [
+      "Decorators apply top-to-bottom so mock_email corresponds to EmailService.send",
+      "patch decorators apply bottom-to-top, so the innermost (closest to def) patch is the first argument — mock_sms is SMSService.send, mock_email is EmailService.send",
+      "The argument order matches the decorator order — mock_sms is EmailService, mock_email is SMSService",
+      "The argument names must exactly match the class names for patch to work correctly"
+    ],
+    "answer": 1,
+    "explanation": "Python decorators wrap bottom-to-top. The decorator closest to the function is applied first and its mock becomes the first parameter. So @patch('SMSService.send') → mock_sms (first arg), @patch('EmailService.send') → mock_email (second arg). Getting this backwards is one of the most common mock-related bugs in Python tests."
+  },
+  {
+    "id": "pyqa32",
+    "category": "python-for-qa",
+    "question": "What does this `pytest-bdd` scenario test?\n\n```python\n# test_login.feature\n# Scenario: Successful login\n#   Given the user 'alice' exists with password 'secret'\n#   When she logs in with correct credentials\n#   Then she is redirected to the dashboard\n\nfrom pytest_bdd import scenario, given, when, then\n\n@scenario('login.feature', 'Successful login')\ndef test_successful_login(): pass\n\n@given(\"the user 'alice' exists with password 'secret'\")\ndef alice_user(db): db.create_user('alice', 'secret')\n```",
+    "options": [
+      "pytest-bdd compiles the feature file into a Python class with test methods",
+      "pytest-bdd maps Gherkin scenarios to Python step functions — the feature file serves as living documentation readable by non-technical stakeholders while the step functions contain the actual test logic",
+      "The .feature file is a comment-only file; scenario logic lives entirely in the Python file",
+      "pytest-bdd requires Selenium; it cannot test APIs or unit logic"
+    ],
+    "answer": 1,
+    "explanation": "Behavior-Driven Development (BDD) with pytest-bdd bridges business requirements and test code. The .feature files use Gherkin (Given/When/Then) that product managers and QA leads can write and read. Step decorators bind each line to a Python function. Scenarios are parameterizable, reusable across features, and show up in test reports with business-friendly names."
+  },
+  {
+    "id": "pyqa33",
+    "category": "python-for-qa",
+    "question": "What does this `logging` assertion technique verify?\n\n```python\nimport logging\n\ndef test_error_logged_on_failure(caplog):\n    with caplog.at_level(logging.ERROR, logger='myapp.processor'):\n        process_invalid_record(record={})\n    assert 'invalid record' in caplog.text\n    assert any(r.levelno == logging.ERROR for r in caplog.records)\n```",
+    "options": [
+      "caplog.text contains the raw bytes of the log file on disk",
+      "caplog captures log records emitted during the test; at_level sets the capture threshold; the assertions verify that an ERROR-level log containing 'invalid record' was emitted — testing observability behavior, not just return values",
+      "caplog only captures logs from the root logger; logger='myapp.processor' is ignored",
+      "caplog.records is a list of strings, not LogRecord objects"
+    ],
+    "answer": 1,
+    "explanation": "pytest's caplog fixture captures Python logging output in-memory. Testing that your code logs correctly is testing observability — critical for production incident response. caplog.records gives full LogRecord objects with levelno, message, exc_info etc. at_level scopes capture to avoid noise from other loggers. Essential for testing error handlers, background workers, and audit trails."
+  },
+  {
+    "id": "pyqa34",
+    "category": "python-for-qa",
+    "question": "What is the QA technique in this Pydantic-based contract test?\n\n```python\nfrom pydantic import BaseModel, EmailStr\nfrom typing import Optional\n\nclass UserSchema(BaseModel):\n    id: int\n    email: EmailStr\n    name: str\n    role: Optional[str] = None\n\ndef test_user_api_contract():\n    raw = api_client.get('/users/1').json()\n    user = UserSchema(**raw)  # raises ValidationError if contract broken\n    assert user.id > 0\n```",
+    "options": [
+      "Pydantic only validates types in Python 3.10+; older versions silently coerce",
+      "Pydantic's BaseModel performs runtime type coercion and validation — if the API response is missing id, has a malformed email, or returns the wrong types, UserSchema(**raw) raises ValidationError immediately, acting as an API contract test",
+      "UserSchema(**raw) creates the model only if all fields match exactly — extra fields cause failure",
+      "EmailStr validation requires a DNS lookup to verify the email domain exists"
+    ],
+    "answer": 1,
+    "explanation": "Pydantic is Python's de facto data validation library. Using it in tests as a schema validator turns API responses into strongly-typed objects with automatic contract checking. ValidationError messages are detailed: which field failed, why, and what was received. By default, extra fields are ignored (extra='ignore'); set extra='forbid' to detect undocumented API fields."
+  },
+  {
+    "id": "pyqa35",
+    "category": "python-for-qa",
+    "question": "What does this `subprocess` test technique validate?\n\n```python\nimport subprocess\n\ndef test_cli_exit_code():\n    result = subprocess.run(\n        ['python', 'cli.py', '--validate', 'bad_input.json'],\n        capture_output=True, text=True\n    )\n    assert result.returncode == 1\n    assert 'validation failed' in result.stderr\n```",
+    "options": [
+      "subprocess.run blocks indefinitely — a timeout is required to prevent test hangs",
+      "It tests the CLI as a black box: verifying the exit code (1 for failure) and that the error message appears on stderr — testing the contract that other scripts or CI pipelines depend on",
+      "capture_output=True is only available in Python 3.9+",
+      "result.returncode will always be 0 if the process does not raise an exception"
+    ],
+    "answer": 1,
+    "explanation": "subprocess.run() is the right tool for integration-testing CLI tools. Exit codes are process contracts — POSIX tools return 0 for success, non-zero for failure. Verifying stderr messages ensures error output is machine-parseable. Add timeout= to prevent test suite hangs from a hung subprocess. capture_output=True is equivalent to stdout=PIPE, stderr=PIPE."
+  },
+  {
+    "id": "pyqa36",
+    "category": "python-for-qa",
+    "question": "What does this JSON Schema validation technique provide over simple assertions?\n\n```python\nimport jsonschema\n\nUSER_SCHEMA = {\n    'type': 'object',\n    'required': ['id', 'email'],\n    'properties': {\n        'id': {'type': 'integer', 'minimum': 1},\n        'email': {'type': 'string', 'format': 'email'}\n    },\n    'additionalProperties': False\n}\n\ndef test_user_response_schema():\n    body = api_client.get('/users/1').json()\n    jsonschema.validate(body, USER_SCHEMA)  # raises ValidationError on contract violation\n```",
+    "options": [
+      "jsonschema.validate only works with OpenAPI 3.0 schemas, not JSON Schema draft 7",
+      "JSON Schema validation tests the full structural contract: required fields, types, value constraints, and that no undocumented fields are returned (additionalProperties: false) — far more comprehensive than individual assert statements",
+      "additionalProperties: False raises an error during schema definition, not during validation",
+      "jsonschema.validate returns True/False — you need to assert on the return value"
+    ],
+    "answer": 1,
+    "explanation": "jsonschema.validate() raises a detailed ValidationError on first failure. additionalProperties: False is a contract enforcement technique — if the API adds an unexpected field, the test catches it, forcing intentional schema updates. Schemas can be loaded from OpenAPI spec files (schemathesis does this automatically). Use ajv-formats for format validators like 'email' and 'date-time'."
+  },
+  {
+    "id": "pyqa37",
+    "category": "python-for-qa",
+    "question": "What is the issue with this test using a mutable default argument?\n\n```python\ndef make_test_payload(overrides={}):\n    base = {'status': 'active', 'role': 'user'}\n    base.update(overrides)\n    return base\n\n# Test 1\npayload1 = make_test_payload({'role': 'admin'})\n# Test 2\npayload2 = make_test_payload()\n```",
+    "options": [
+      "No issue — overrides={} creates a fresh dict for each call",
+      "The default {} is created once at function definition time and shared across all calls — but since base is a new dict created inside the function and overrides is only read (not mutated), this specific code is actually safe; the real danger is mutating the default directly",
+      "base.update(overrides) mutates overrides, corrupting the default dict for subsequent calls — use overrides=None and set overrides = {} inside the function body",
+      "dict.update() raises TypeError when overrides is an empty dict"
+    ],
+    "answer": 2,
+    "explanation": "The mutable default argument {} is Python's most notorious gotcha. In this code, base.update(overrides) reads from overrides but doesn't mutate it — so this specific function is actually safe. However, the canonical safe pattern is: def make_test_payload(overrides=None): overrides = overrides or {}. This prevents bugs if someone later adds code that mutates overrides directly."
+  },
+  {
+    "id": "pyqa38",
+    "category": "python-for-qa",
+    "question": "What does this `@pytest.fixture(params=[...])` pattern do?\n\n```python\n@pytest.fixture(params=['chrome', 'firefox', 'safari'])\ndef browser(request):\n    driver = get_driver(request.param)\n    yield driver\n    driver.quit()\n\ndef test_login_form(browser):\n    browser.get(LOGIN_URL)\n    assert browser.find_element(By.ID, 'submit').is_displayed()\n```",
+    "options": [
+      "browser fixture creates all three drivers simultaneously and the test runs once",
+      "pytest automatically runs test_login_form three times — once with each browser driver — multiplying test coverage across browsers without duplicating test logic",
+      "params= only works with string values; objects require indirect parametrize",
+      "request.param inside a fixture only returns the first parameter value"
+    ],
+    "answer": 1,
+    "explanation": "Fixture parametrization multiplies every test that uses the fixture. With 3 browser params and 10 tests, you get 30 test nodes. Combined with pytest-xdist, these run in parallel across workers. This is the standard pattern for cross-browser test matrices. The test IDs become test_login_form[chrome], test_login_form[firefox], test_login_form[safari]."
+  },
+  {
+    "id": "pyqa39",
+    "category": "python-for-qa",
+    "question": "What does this `assert_called_with` vs `assert_called_once_with` difference catch?\n\n```python\nmock_db.save.assert_called_with(user)       # passes if LAST call had user\nmock_db.save.assert_called_once_with(user)  # passes only if called exactly once with user\n```",
+    "options": [
+      "Both methods are identical aliases",
+      "assert_called_with only checks the arguments of the most recent call — it passes even if save() was called 10 times with different args; assert_called_once_with additionally asserts the mock was called exactly once, catching unexpected duplicate saves",
+      "assert_called_once_with raises if the mock was called with keyword arguments",
+      "assert_called_with fails if the mock was never called; assert_called_once_with passes if the mock was never called"
+    ],
+    "answer": 1,
+    "explanation": "assert_called_with() only validates the LAST call's arguments — if save() was called 5 times, it passes as long as the last call matched. assert_called_once_with() combines call count and argument validation. For most business logic tests, you want assert_called_once_with to catch extra unintended saves. Use assert_has_calls() to verify a specific sequence of calls."
+  },
+  {
+    "id": "pyqa40",
+    "category": "python-for-qa",
+    "question": "What does this `tmpdir` vs `tmp_path` fixture choice mean?\n\n```python\n# Old style\ndef test_write_report_old(tmpdir):\n    report_file = tmpdir.join('report.csv')\n    write_report(str(report_file))\n    assert report_file.read() != ''\n\n# New style\ndef test_write_report_new(tmp_path):\n    report_file = tmp_path / 'report.csv'\n    write_report(str(report_file))\n    assert report_file.stat().st_size > 0\n```",
+    "options": [
+      "tmpdir is faster; tmp_path uses more memory for large files",
+      "tmpdir returns a py.path.local object (from the older py library); tmp_path returns a pathlib.Path object — the modern Python standard; prefer tmp_path for new tests as it integrates naturally with pathlib operations like / for joining paths",
+      "tmp_path persists after the test; tmpdir is automatically cleaned up",
+      "Both fixtures share the same temporary directory between tests"
+    ],
+    "answer": 1,
+    "explanation": "tmp_path is the pytest 3.9+ recommended fixture. It returns a pathlib.Path, enabling the / operator for path construction and all pathlib methods (.read_text(), .write_bytes(), .glob(), etc.). Both are scoped per-test and cleaned up automatically (keeping the last 3 runs for debugging). Use tmp_path for all new tests."
+  },
+  {
+    "id": "pyqa41",
+    "category": "python-for-qa",
+    "question": "What does this `deepdiff` technique provide for API response comparison?\n\n```python\nfrom deepdiff import DeepDiff\n\ndef test_user_update_only_changes_name():\n    before = api.get('/users/1').json()\n    api.patch('/users/1', json={'name': 'New Name'})\n    after = api.get('/users/1').json()\n    diff = DeepDiff(before, after)\n    assert diff == {'values_changed': {\"root['name']\": {\n        'new_value': 'New Name', 'old_value': 'Alice'\n    }}}\n```",
+    "options": [
+      "DeepDiff only works on flat dicts; nested objects require a custom comparator",
+      "DeepDiff produces a structured diff of two objects — the assertion verifies that ONLY the name field changed, catching unintended mutations to other fields like updated_at, role, or email",
+      "DeepDiff == {} always passes when both dicts have the same keys",
+      "The assertion will fail because DeepDiff returns a string, not a dict"
+    ],
+    "answer": 1,
+    "explanation": "DeepDiff is essential for testing partial updates (PATCH endpoints). Rather than asserting individual fields, you assert the exact diff — proving that only intended fields changed. This catches side-effect bugs where a PATCH to name accidentally resets role to a default. DeepDiff handles nested objects, lists, type changes, and can ignore specific paths with exclude_paths."
+  },
+  {
+    "id": "pyqa42",
+    "category": "python-for-qa",
+    "question": "What does this `pytest-timeout` decorator do for flaky network tests?\n\n```python\n@pytest.mark.timeout(5)\ndef test_external_api_response_time():\n    resp = requests.get('https://internal-api/health')\n    assert resp.status_code == 200\n```",
+    "options": [
+      "The test logs a warning if it takes more than 5 seconds but still passes",
+      "The test is killed and marked as FAILED with a timeout error if it runs longer than 5 seconds — preventing one hung test from blocking the entire test suite",
+      "timeout=5 sets a 5-second retry window before the request is abandoned",
+      "pytest-timeout only works in combination with pytest-xdist parallel execution"
+    ],
+    "answer": 1,
+    "explanation": "Without timeouts, a test waiting on a hung socket can block the CI pipeline indefinitely. @pytest.mark.timeout(N) kills the test after N seconds via thread or signal (configurable). Set a global timeout in pytest.ini: timeout = 30. Also set timeout on the requests call itself: requests.get(url, timeout=5) for defense in depth — both the HTTP call and the test should have limits."
+  },
+  {
+    "id": "pyqa43",
+    "category": "python-for-qa",
+    "question": "What does this generator-based test data technique accomplish?\n\n```python\ndef generate_boundary_ids():\n    yield 0          # zero/null boundary\n    yield 1          # minimum valid\n    yield 2**31 - 1  # max int32\n    yield 2**31      # overflow int32\n    yield -1         # negative\n\n@pytest.mark.parametrize('user_id', generate_boundary_ids())\ndef test_user_lookup_handles_boundaries(user_id):\n    resp = api.get(f'/users/{user_id}')\n    assert resp.status_code in (200, 404)  # not 500\n```",
+    "options": [
+      "The generator runs only until the first yield; subsequent values are lost",
+      "Boundary value analysis in code: the generator yields edge cases systematically; the test verifies no 500 errors at any boundary — a clean way to encode equivalence partitioning without a long hardcoded list",
+      "parametrize requires lists; generators raise TypeError at collection time",
+      "yield inside parametrize causes the test to run asynchronously"
+    ],
+    "answer": 1,
+    "explanation": "pytest.mark.parametrize accepts any iterable — including generators. This pattern encodes boundary value analysis: zero, min valid, max int32, overflow, negative. The generator can be reused across multiple test functions. The assertion is defensive: we accept 200 or 404 but not 500, testing robustness rather than correctness at each boundary."
+  },
+  {
+    "id": "pyqa44",
+    "category": "python-for-qa",
+    "question": "What does `coverage.py` measure and how is branch coverage different from line coverage?\n\n```bash\npytest --cov=myapp --cov-report=html --cov-branch\n```",
+    "options": [
+      "coverage.py only measures which files were imported during tests",
+      "Line coverage tracks which lines executed; branch coverage additionally tracks which conditional branches were taken — e.g., whether both if and else paths were exercised — giving a more accurate picture of untested logic",
+      "--cov-branch measures the number of function calls per line",
+      "Branch coverage is always 100% if line coverage is 100%"
+    ],
+    "answer": 1,
+    "explanation": "Line coverage can reach 100% while leaving branches untested. Example: if x > 0: return 1 — if tests only ever pass positive x, the line is covered but the implicit else (returning None) is never exercised. Branch coverage finds this gap. The HTML report highlights uncovered branches in yellow. Use # pragma: no cover for intentionally excluded lines."
+  },
+  {
+    "id": "pyqa45",
+    "category": "python-for-qa",
+    "question": "What does this `@dataclass` with `__post_init__` provide for test data?\n\n```python\nfrom dataclasses import dataclass, field\nfrom datetime import datetime\n\n@dataclass\nclass TestOrder:\n    product_id: int\n    quantity: int\n    created_at: datetime = field(default_factory=datetime.utcnow)\n    \n    def __post_init__(self):\n        if self.quantity <= 0:\n            raise ValueError(f'quantity must be positive, got {self.quantity}')\n```",
+    "options": [
+      "__post_init__ runs after pickling, not after instance creation",
+      "__post_init__ runs after __init__ enabling validation — creating TestOrder(product_id=1, quantity=-1) raises ValueError immediately, catching invalid test data before the test even runs; default_factory ensures created_at is unique per instance",
+      "field(default_factory=...) is only needed for mutable defaults like lists — datetime is immutable so it could be written as created_at: datetime = datetime.utcnow()",
+      "__post_init__ cannot raise exceptions — it must set attributes or return None"
+    ],
+    "answer": 1,
+    "explanation": "Default mutable arguments in dataclasses must use field(default_factory=...) — but datetime.utcnow is also a function call, so default_factory is needed to ensure each instance gets its own timestamp (not a shared one from class definition time). __post_init__ is the correct hook for validation. Without it, invalid test data silently propagates to the test, making failures harder to diagnose."
+  },
+  {
+    "id": "pyqa46",
+    "category": "python-for-qa",
+    "question": "What does this `monkeypatch` fixture do differently from `patch`?\n\n```python\ndef test_env_based_config(monkeypatch):\n    monkeypatch.setenv('PAYMENT_API_KEY', 'test_key_abc')\n    monkeypatch.setattr('myapp.config.TIMEOUT', 1)\n    result = charge_customer(amount=50)\n    assert result['status'] == 'success'\n```",
+    "options": [
+      "monkeypatch.setenv persists the environment variable permanently after the test",
+      "monkeypatch is a pytest fixture that patches environment variables and object attributes for the duration of the test, then automatically reverts all changes — no context manager or decorator needed; cleaner syntax than unittest.mock.patch for simple attribute overrides",
+      "monkeypatch.setattr works identically to os.environ['KEY'] = value",
+      "monkeypatch cannot patch module-level constants — only class attributes"
+    ],
+    "answer": 1,
+    "explanation": "monkeypatch is pytest's built-in patching fixture. All changes are automatically undone after the test (no teardown code needed). Key methods: setenv/delenv for OS env vars, setattr/delattr for object attributes, setitem/delitem for dicts, chdir for current directory. It's scoped to the test function by default. More concise than unittest.mock.patch for simple substitutions."
+  },
+  {
+    "id": "pyqa47",
+    "category": "python-for-qa",
+    "question": "What is the purpose of `pytest-recording` / VCR cassettes in API testing?\n\n```python\nimport pytest\n\n@pytest.mark.vcr()\ndef test_github_api_rate_limit():\n    resp = requests.get('https://api.github.com/rate_limit',\n                        headers={'Authorization': 'token TEST'})\n    assert resp.json()['rate']['limit'] == 60\n```",
+    "options": [
+      "VCR makes a live API call on every test run and asserts on real data",
+      "VCR records real HTTP interactions to a YAML cassette file on first run; subsequent runs replay from the cassette — tests run offline, fast, and deterministically without real API credentials",
+      "@pytest.mark.vcr() automatically generates mock data using Faker",
+      "VCR cassettes store only request headers, not response bodies"
+    ],
+    "answer": 1,
+    "explanation": "VCR (Video Cassette Recorder) is the HTTP record-and-replay testing pattern. Libraries: vcrpy, pytest-recording (wraps vcrpy). The cassette YAML file is committed to the repo. When the real API changes, you re-record by deleting the cassette and running with network access. Cassettes should be scrubbed of real credentials using filter_headers/filter_query_parameters."
+  },
+  {
+    "id": "pyqa48",
+    "category": "python-for-qa",
+    "question": "What does this `csv.DictReader` pattern enable for data-driven QA?\n\n```python\nimport csv\nimport pytest\n\ndef load_test_cases(filepath):\n    with open(filepath) as f:\n        return list(csv.DictReader(f))\n\n@pytest.mark.parametrize('case', load_test_cases('tests/data/login_cases.csv'))\ndef test_login_scenarios(case, client):\n    resp = client.post('/login', json={'user': case['username'], 'pass': case['password']})\n    assert str(resp.status_code) == case['expected_status']\n```",
+    "options": [
+      "load_test_cases() must be called inside the test function to avoid file-not-found errors at collection time",
+      "CSV rows become test cases — non-technical QA engineers can add test scenarios by editing the spreadsheet without touching Python code; each row gets its own test node ID in the report",
+      "csv.DictReader requires column names to exactly match function parameter names",
+      "parametrize cannot accept a list of dicts — it requires lists of tuples"
+    ],
+    "answer": 1,
+    "explanation": "Externalizing test data to CSV enables collaboration: product managers and manual QA testers can maintain test cases in Excel/Google Sheets and export as CSV. The Python test framework picks them up automatically. Variants: Excel (openpyxl), YAML, JSON. Note that load_test_cases() runs at collection time — file path must be relative to the pytest rootdir, not the test file."
+  },
+  {
+    "id": "pyqa49",
+    "category": "python-for-qa",
+    "question": "What does the `--lf` (last failed) flag do for debugging test suites?\n\n```bash\npytest --lf --tb=short\n```",
+    "options": [
+      "--lf loads test fixtures from a local file cache for faster startup",
+      "--lf (last failed) re-runs only the tests that failed in the previous run, skipping passing tests — dramatically speeds up the red-green-refactor cycle when fixing failures",
+      "--lf fails with an error if no previous test run data exists",
+      "--lf deselects all passing tests permanently from the suite"
+    ],
+    "answer": 1,
+    "explanation": "pytest stores last-run results in .pytest_cache/. --lf re-runs only failures; --ff (failed first) runs failures first then the rest. Combined with --tb=short for concise tracebacks, this is the standard debug workflow: fix a failure, run pytest --lf to verify the fix, then run the full suite. -x (exit on first failure) is another common pairing."
+  },
+  {
+    "id": "pyqa50",
+    "category": "python-for-qa",
+    "question": "What does this `socket` monkeypatch do for offline tests?\n\n```python\nimport pytest\nimport socket\n\n@pytest.fixture(autouse=True)\ndef no_network(monkeypatch):\n    def guard(*args, **kwargs):\n        raise RuntimeError('Real network access forbidden in unit tests')\n    monkeypatch.setattr(socket, 'socket', guard)\n```",
+    "options": [
+      "Blocks only TCP connections; UDP sockets are still allowed",
+      "Any test that tries to open a real network socket will raise RuntimeError immediately — enforcing that unit tests are truly isolated and cannot accidentally make real HTTP/DB calls that slow the suite or depend on external services",
+      "monkeypatch.setattr on socket.socket only affects the test that declares the fixture",
+      "autouse=True on this fixture means it runs once per session, not per test"
+    ],
+    "answer": 1,
+    "explanation": "Patching socket.socket at the lowest level blocks all network I/O regardless of what HTTP library is used (requests, httpx, aiohttp all eventually call socket). This is stricter than mocking individual libraries and catches accidental network calls in third-party code. Put this fixture in conftest.py with autouse=True for true unit test isolation. pytest-socket provides this as a plugin with --disable-socket."
+  }
+,
+  {
+    "id": "pyqa51",
+    "category": "python-for-qa",
+    "question": "What does this `re` pattern verify in an API test?\n\n```python\nimport re\n\ndef test_user_id_format():\n    body = api.post('/users', json={'name': 'Bob'}).json()\n    assert re.fullmatch(r'usr_[a-z0-9]{12}', body['id']), \\\n        f\"id format wrong: {body['id']}\"\n```",
+    "options": [
+      "re.fullmatch checks if 'usr_' appears anywhere in the string",
+      "re.fullmatch asserts the entire id string matches the pattern exactly: prefix 'usr_' followed by exactly 12 lowercase alphanumeric characters — catching format regressions if the ID generator changes",
+      "re.fullmatch returns True/False, but assert requires it to return a non-empty string",
+      "The pattern [a-z0-9]{12} also matches uppercase letters"
+    ],
+    "answer": 1,
+    "explanation": "re.fullmatch() requires the entire string to match (unlike re.search which finds a substring). Asserting ID format is contract testing — if the backend changes the ID scheme (e.g., switching from usr_abc123 to numeric IDs), this test catches the breaking change before dependent systems fail. The custom message shows the actual bad value on failure."
+  },
+  {
+    "id": "pyqa52",
+    "category": "python-for-qa",
+    "question": "What is the risk in this test that reuses a fixture object across assertions?\n\n```python\n@pytest.fixture\ndef session_token():\n    return auth.login('test_user', 'password')\n\ndef test_profile_access(session_token):\n    profile = api.get('/profile', headers={'X-Token': session_token})\n    assert profile.status_code == 200\n    \n    # Revoke the token\n    api.post('/logout', headers={'X-Token': session_token})\n    \n    profile2 = api.get('/profile', headers={'X-Token': session_token})\n    assert profile2.status_code == 401\n```",
+    "options": [
+      "No risk — testing multiple states in one test is always more efficient",
+      "If the first assertion fails, the revoke and 401 check never run — the test conflates two independent scenarios (authenticated access and post-revocation rejection) that should be separate tests for clear failure attribution",
+      "session_token fixture must use yield to work with multiple API calls",
+      "api.post('/logout') changes the session_token variable to None"
+    ],
+    "answer": 1,
+    "explanation": "Multi-assertion tests with state changes violate single responsibility. If the first assert fails, you don't know if logout revocation works. If the second assert fails, you don't know if basic auth works. Split into test_authenticated_access and test_token_revoked_returns_401. Each test should test one behavior so failures have unambiguous meaning."
+  },
+  {
+    "id": "pyqa53",
+    "category": "python-for-qa",
+    "question": "What does `pytest-xdist` enable and what fixture scope constraint does it add?\n\n```bash\npytest -n 4  # run with 4 parallel workers\n```",
+    "options": [
+      "pytest-xdist runs tests on 4 remote machines via SSH",
+      "pytest-xdist distributes tests across 4 worker processes for parallel execution; session-scoped fixtures are re-created per worker (not shared across workers) — so expensive session fixtures like DB setup must be worker-aware or use scope='session' with --dist=loadscope",
+      "-n 4 always uses exactly 4 CPU cores regardless of the machine's CPU count",
+      "session-scoped fixtures are fully shared across all xdist workers automatically"
+    ],
+    "answer": 1,
+    "explanation": "xdist spawns N separate processes — session scope means once per worker, not once for all workers. Use -n auto to use all CPU cores. For DB tests, either: isolate each worker with a separate schema, use transactions that rollback, or use --dist=loadscope to keep all tests of a module on one worker. Tests must be independently runnable (no cross-test dependencies)."
+  },
+  {
+    "id": "pyqa54",
+    "category": "python-for-qa",
+    "question": "What does this `responses.CallbackResponse` pattern simulate?\n\n```python\nimport responses\n\ndef flaky_callback(request):\n    flaky_callback.count = getattr(flaky_callback, 'count', 0) + 1\n    if flaky_callback.count < 3:\n        return (503, {}, 'Service Unavailable')\n    return (200, {}, json.dumps({'data': 'ok'}))\n\n@responses.activate\ndef test_retry_on_503(flaky_callback):\n    responses.add_callback(responses.GET, 'http://api/data', callback=flaky_callback)\n    result = fetch_with_retry('http://api/data', max_retries=3)\n    assert result == {'data': 'ok'}\n```",
+    "options": [
+      "CallbackResponse replaces the real HTTP server with a Python WSGI app",
+      "The callback function returns different responses on successive calls — simulating a flaky service that fails twice before succeeding; the test verifies fetch_with_retry handles transient 503s and eventually returns the successful response",
+      "responses.add_callback requires a real function — lambdas are not supported",
+      "The callback only fires on the first request; subsequent requests get the default 200"
+    ],
+    "answer": 1,
+    "explanation": "add_callback gives full dynamic control over mock responses. The stateful counter simulates a flaky upstream that recovers after N failures. This tests retry logic more realistically than side_effect lists on mocks. Function-level state (flaky_callback.count) is a simple way to add statefulness to a callback without external state."
+  },
+  {
+    "id": "pyqa55",
+    "category": "python-for-qa",
+    "question": "What does this `@property` mock pattern test about read-only attributes?\n\n```python\nclass Config:\n    @property\n    def max_retries(self):\n        return int(os.environ.get('MAX_RETRIES', 3))\n\ndef test_high_retry_count(mocker):\n    mocker.patch.object(Config, 'max_retries',\n                        new_callable=mocker.PropertyMock,\n                        return_value=10)\n    result = run_with_config(Config())\n    assert result.attempt_count <= 10\n```",
+    "options": [
+      "mocker.patch.object on a property raises AttributeError — properties cannot be mocked",
+      "PropertyMock is required to mock @property attributes; without it, patch.object would replace the property descriptor with a MagicMock object rather than intercepting attribute access, returning the mock itself instead of 10",
+      "return_value=10 sets the default retry count permanently in all subsequent tests",
+      "This test modifies os.environ to set MAX_RETRIES=10"
+    ],
+    "answer": 1,
+    "explanation": "Regular MagicMock replaces the property descriptor object on the class — accessing instance.max_retries then returns a MagicMock, not 10. PropertyMock wraps the descriptor correctly so property access returns return_value. This is a very common pytest-mock gotcha. new_callable=PropertyMock means 'use PropertyMock as the mock class instead of MagicMock'."
+  },
+  {
+    "id": "pyqa56",
+    "category": "python-for-qa",
+    "question": "What does this `io.StringIO` trick enable for testing file-writing code?\n\n```python\nimport io\nfrom unittest.mock import patch, mock_open\n\ndef test_export_csv_content():\n    with patch('builtins.open', mock_open()) as m:\n        export_users_to_csv([{'name': 'Alice', 'age': 30}])\n    handle = m()\n    written = ''.join(call.args[0] for call in handle.write.call_args_list)\n    assert 'Alice' in written\n    assert 'age' in written\n```",
+    "options": [
+      "mock_open creates a real temp file and captures its contents",
+      "mock_open patches builtins.open with a MagicMock that supports file-like operations; write() calls are recorded and can be reconstructed from call_args_list to verify CSV content without touching the real filesystem",
+      "mock_open() only works with binary mode opens (mode='rb')",
+      "handle.write.call_args_list contains the file path, not the written content"
+    ],
+    "answer": 1,
+    "explanation": "mock_open is the standard way to test file I/O without temp files. It supports read_data= for simulating file reads. For writes, you reconstruct content by joining the args of each write() call. Alternatively, using io.StringIO directly (and injecting it instead of patching open) is a cleaner design that avoids this reconstruction step."
+  },
+  {
+    "id": "pyqa57",
+    "category": "python-for-qa",
+    "question": "What does `pytest-randomly` do to improve test suite quality?\n\n```bash\npytest --randomly-seed=12345\n```",
+    "options": [
+      "It randomly selects a subset of tests to run for faster CI",
+      "It randomizes test execution order, detecting hidden order dependencies (test A only passes if test B ran first) — a fixed seed allows reproducing a specific order when debugging a discovered dependency",
+      "--randomly-seed sets the Python random number generator seed for Faker and Hypothesis",
+      "Random ordering requires each test to have a unique priority mark"
+    ],
+    "answer": 1,
+    "explanation": "Tests should be order-independent. pytest-randomly shuffles test order each run, surfacing hidden dependencies where test setup bleeds state into later tests. When an order-dependent failure is found, --randomly-seed=N reproduces the exact order. Once fixed, the test suite is more robust. pytest-randomly also randomizes the order within parametrize sets."
+  },
+  {
+    "id": "pyqa58",
+    "category": "python-for-qa",
+    "question": "What does this `assert_any_call` method verify?\n\n```python\ndef test_notification_sent_to_all_admins(mock_notifier):\n    send_critical_alert('Server down')\n    mock_notifier.send.assert_any_call(recipient='admin1@co.com', message='Server down')\n    mock_notifier.send.assert_any_call(recipient='admin2@co.com', message='Server down')\n```",
+    "options": [
+      "assert_any_call verifies the mock was called exactly once with those arguments",
+      "assert_any_call checks that at least one call among ALL calls to the mock used those arguments — it passes even if send() was called 10 times, as long as the specified call appears at least once",
+      "assert_any_call and assert_called_with are identical",
+      "Each assert_any_call call resets the mock's call list"
+    ],
+    "answer": 1,
+    "explanation": "assert_any_call is for multi-call scenarios where you verify specific calls occurred among many. Here, send() is called once per admin — we verify each admin was notified without caring about order. Contrast: assert_called_with checks the last call, assert_called_once_with enforces exactly one call, assert_has_calls checks a sequence (optionally ordered)."
+  },
+  {
+    "id": "pyqa59",
+    "category": "python-for-qa",
+    "question": "What does the `--durations` flag reveal about test performance?\n\n```bash\npytest --durations=10\n```",
+    "options": [
+      "It shows the 10 fastest tests to identify well-optimized code",
+      "It prints the 10 slowest test setup/call/teardown phases at the end of the run — identifying bottlenecks like slow fixtures, unnecessary sleep() calls, or tests that make real network calls",
+      "--durations counts assertion operations per test",
+      "It enables profiling mode that instruments every function call"
+    ],
+    "answer": 1,
+    "explanation": "Slow tests kill developer productivity. --durations=0 shows ALL tests sorted by duration. The output separates setup, call, and teardown phases — so you can see whether the slow part is fixture initialization or the test itself. Common culprits: real network calls, real DB queries without proper mocking, time.sleep() calls, and session-scoped fixtures running per-test due to scope misconfiguration."
+  },
+  {
+    "id": "pyqa60",
+    "category": "python-for-qa",
+    "question": "What does this `Locust` task class test?\n\n```python\nfrom locust import HttpUser, task, between\n\nclass APILoadTest(HttpUser):\n    wait_time = between(1, 3)\n\n    @task(3)\n    def get_products(self):\n        self.client.get('/api/products')\n\n    @task(1)\n    def create_order(self):\n        self.client.post('/api/orders', json={'product_id': 1, 'qty': 2})\n```",
+    "options": [
+      "Both tasks run an equal number of times; the task weight is ignored",
+      "@task(3) means get_products is 3× more likely to be chosen than create_order (weight 1) in each iteration — simulating realistic traffic where reads outnumber writes, which is typical production behavior",
+      "wait_time = between(1, 3) means each user runs for exactly 2 seconds",
+      "Locust tasks must be async functions to run concurrently"
+    ],
+    "answer": 1,
+    "explanation": "Locust task weights define the relative probability of selection. A 3:1 ratio for reads vs writes reflects real-world API traffic patterns. wait_time between(min, max) adds a random delay between tasks per user, simulating human think time. Locust uses gevent greenlets (not threads) for concurrency — thousands of virtual users on a single machine."
+  },
+  {
+    "id": "pyqa61",
+    "category": "python-for-qa",
+    "question": "What is the difference between `assert x in response` and `assert response == x` in API tests?",
+    "options": [
+      "They are equivalent — Python's == operator calls __contains__ for membership testing",
+      "'in' tests containment (substring, list membership, dict key existence) and is order-insensitive for collections; == tests exact equality including order and all fields — use 'in' to verify a partial match, '==' to assert the complete response matches exactly",
+      "'in' only works with strings; for dicts use == or .get()",
+      "response == x raises TypeError for HTTP response objects"
+    ],
+    "answer": 1,
+    "explanation": "Choose assertion strictness intentionally. assert {'id': 1} in users_list checks list membership. assert 'error' in resp.text checks substring. assert resp.json() == expected_dict checks exact equality — fails if the API adds a new field. For API contract testing, asserting specific keys rather than full equality is more resilient to non-breaking API changes."
+  },
+  {
+    "id": "pyqa62",
+    "category": "python-for-qa",
+    "question": "What does this `__enter__` / `__exit__` pattern enable for test cleanup?\n\n```python\nclass ManagedBrowser:\n    def __enter__(self):\n        self.driver = webdriver.Chrome()\n        return self.driver\n    def __exit__(self, exc_type, exc_val, exc_tb):\n        self.driver.quit()\n        return False  # re-raise exceptions\n\ndef test_home_page():\n    with ManagedBrowser() as driver:\n        driver.get('http://localhost:3000')\n        assert 'Home' in driver.title\n```",
+    "options": [
+      "return False in __exit__ suppresses the exception so the test always passes",
+      "__exit__ is called even if the test fails or raises — driver.quit() always runs; return False means exceptions propagate normally (not suppressed), so test failures still surface",
+      "__enter__ must return self, not self.driver",
+      "The with block requires the fixture to be declared in the test function signature"
+    ],
+    "answer": 1,
+    "explanation": "Context managers guarantee cleanup via __exit__ regardless of exceptions. return False (or None) lets exceptions propagate; return True suppresses them. For test infrastructure, never suppress exceptions — the test should still fail. This pattern is equivalent to a try/finally block. pytest fixtures with yield are the preferred abstraction over manual context managers in test code."
+  },
+  {
+    "id": "pyqa63",
+    "category": "python-for-qa",
+    "question": "What does `pytest.ini` `markers` configuration prevent?\n\n```ini\n[pytest]\nmarkers =\n    smoke: fast critical path tests\n    regression: full regression suite\n    integration: requires external services\n```",
+    "options": [
+      "Nothing — markers work without being registered in pytest.ini",
+      "Registering markers prevents PytestUnknownMarkWarning and documents the marker's meaning; unregistered markers still work but produce warnings that can be treated as errors with --strict-markers in CI",
+      "pytest.ini markers automatically apply the marks to all tests in the file",
+      "Only registered markers can be used with -m flag for test selection"
+    ],
+    "answer": 1,
+    "explanation": "Unregistered markers produce PytestUnknownMarkWarning (just a warning, not an error) — typos like @pytest.mark.smok instead of smoke silently create a new mark that selects no tests. Add --strict-markers to CI flags to turn warnings into errors. This catches marker typos in PRs before they result in empty test runs with no failures."
+  },
+  {
+    "id": "pyqa64",
+    "category": "python-for-qa",
+    "question": "What does this `responses.assert_all_requests_are_fired` option enforce?\n\n```python\n@responses.activate\ndef test_checkout_calls_payment_and_inventory():\n    responses.add(responses.POST, 'http://payment-svc/charge', json={'charged': True})\n    responses.add(responses.PUT, 'http://inventory-svc/reserve', json={'reserved': True})\n    checkout(order_id=1)\n```",
+    "options": [
+      "Without assert_all_requests_are_fired=True, if checkout() only calls payment but never calls inventory, the test still passes — a silent coverage gap in integration logic",
+      "responses automatically fails if any registered mock is not called",
+      "assert_all_requests_are_fired causes a ConnectionError for uncalled mocks",
+      "The option only applies to DELETE requests, not POST or PUT"
+    ],
+    "answer": 0,
+    "explanation": "By default, responses registered but never called are silently ignored — the test passes even if checkout() forgot to call the inventory service. Set responses.assert_all_requests_are_fired = True (or pass it as a parameter) to enforce that every registered mock was called. This turns your stub registrations into both stubs AND expectations — a powerful integration contract check."
+  },
+  {
+    "id": "pyqa65",
+    "category": "python-for-qa",
+    "question": "What does this type-annotated test helper provide over a plain function?\n\n```python\nfrom typing import TypedDict\n\nclass LoginResponse(TypedDict):\n    token: str\n    expires_in: int\n    user_id: int\n\ndef login_as_admin() -> LoginResponse:\n    resp = api.post('/auth', json={'user': 'admin', 'pass': 'secret'})\n    return resp.json()\n```",
+    "options": [
+      "TypedDict enforces types at runtime — accessing token when it's missing raises KeyError",
+      "TypedDict is a static type hint only — mypy/pyright can verify that callers use the returned dict correctly (e.g., body['tokn'] raises a static type error for the typo), improving test helper maintainability without runtime overhead",
+      "Return type annotations in test helpers are illegal — pytest strips them at collection",
+      "TypedDict requires all keys to be present at construction time"
+    ],
+    "answer": 1,
+    "explanation": "TypedDict documents the expected shape of the returned dict and enables static analysis. mypy will flag body['tokn'] as a TypedDict access error. This makes test helper functions self-documenting and catches typos before runtime. For stronger runtime validation, use Pydantic. For test helpers called frequently across a large suite, type hints significantly reduce debugging time."
+  },
+  {
+    "id": "pyqa66",
+    "category": "python-for-qa",
+    "question": "What does this `tox.ini` configuration accomplish for a QA project?\n\n```ini\n[tox]\nenvlist = py310, py311, py312, lint\n\n[testenv]\ndeps = pytest pytest-cov\ncommands = pytest --cov=myapp tests/\n\n[testenv:lint]\ndeps = flake8 mypy\ncommands =\n    flake8 myapp/\n    mypy myapp/\n```",
+    "options": [
+      "tox runs all environments sequentially in a single Python interpreter",
+      "tox creates isolated virtual environments for each Python version and for linting — tests run against py310, py311, and py312 in isolation, catching version-specific breakage; lint environment runs type checking and style checks separately",
+      "tox only installs dependencies listed in requirements.txt, not the deps= key",
+      "envlist = py310,py311,py312 requires those Python versions to be installed globally as python3.10 etc."
+    ],
+    "answer": 1,
+    "explanation": "tox is the standard Python multi-environment test runner. Each envlist entry gets its own isolated virtualenv. This catches Python version compatibility bugs (e.g., walrus operator not available in 3.7) and ensures your test suite doesn't depend on globally installed packages. CI typically runs tox to validate all environments in parallel."
+  },
+  {
+    "id": "pyqa67",
+    "category": "python-for-qa",
+    "question": "What does this `@pytest.mark.usefixtures` decorator achieve?\n\n```python\n@pytest.mark.usefixtures('reset_cache', 'seed_db')\nclass TestCheckoutFlow:\n    def test_add_to_cart(self, client):\n        ...\n    def test_apply_coupon(self, client):\n        ...\n    def test_complete_purchase(self, client):\n        ...\n```",
+    "options": [
+      "usefixtures makes the fixtures available as test attributes (self.reset_cache)",
+      "usefixtures applies reset_cache and seed_db to every method in the class without declaring them as parameters — cleaner than adding them to every method signature when the fixture side effect (not return value) is what's needed",
+      "usefixtures on a class runs the fixtures once for the entire class, not per method",
+      "usefixtures requires the fixtures to be defined in the same file as the class"
+    ],
+    "answer": 1,
+    "explanation": "usefixtures is for fixtures used for their side effects (setup/teardown) rather than their return value. If you need the fixture's return value, declare it in the method signature instead. Applying it to the class avoids repetition across all methods. Useful for: DB cleanup, cache reset, log capture setup — anything that every test in the class needs but doesn't inspect directly."
+  },
+  {
+    "id": "pyqa68",
+    "category": "python-for-qa",
+    "question": "What does this `Pydantic` model validation test cover?\n\n```python\nimport pytest\nfrom pydantic import BaseModel, validator\n\nclass OrderRequest(BaseModel):\n    quantity: int\n    price: float\n\n    @validator('quantity')\n    def quantity_must_be_positive(cls, v):\n        if v <= 0:\n            raise ValueError('quantity must be > 0')\n        return v\n\ndef test_negative_quantity_rejected():\n    with pytest.raises(ValidationError) as exc:\n        OrderRequest(quantity=-5, price=9.99)\n    assert 'quantity must be > 0' in str(exc.value)\n```",
+    "options": [
+      "Pydantic validators run asynchronously and cannot be tested with pytest.raises",
+      "The test verifies that the business rule (positive quantity) is enforced at the model level — ValidationError is raised immediately on instantiation with a helpful message, not deep inside business logic where it's harder to attribute",
+      "@validator is deprecated in Pydantic v2; use @field_validator",
+      "pytest.raises(ValidationError) requires importing ValidationError from pytest, not pydantic"
+    ],
+    "answer": 1,
+    "explanation": "Testing validators directly on Pydantic models is unit testing your data contracts. The model is the boundary — invalid data should never reach business logic. Note: in Pydantic v2, @validator is replaced by @field_validator with slightly different syntax. Testing the error message string ensures validator messages are human-readable and stable across refactors."
+  },
+  {
+    "id": "pyqa69",
+    "category": "python-for-qa",
+    "question": "What does this `pytest-mock`'s `mocker.patch.dict` technique test?\n\n```python\ndef test_feature_flag_enabled(mocker):\n    mocker.patch.dict('os.environ', {'ENABLE_NEW_CHECKOUT': '1', 'LOG_LEVEL': 'DEBUG'})\n    result = process_order(order_id=42)\n    assert result['checkout_version'] == 'v2'\n```",
+    "options": [
+      "patch.dict modifies os.environ permanently for all subsequent tests",
+      "patch.dict temporarily adds/overwrites the specified keys in os.environ for the test duration, then restores the original state — other environment variables are unaffected; this is safer than setenv because it batches multiple env var changes",
+      "mocker.patch.dict requires the dictionary to be empty before the test runs",
+      "patch.dict on os.environ requires the test to be marked @pytest.mark.env"
+    ],
+    "answer": 1,
+    "explanation": "patch.dict takes a dict or string import path and a dict of overrides. It merges the overrides, runs the test, and restores the original state. Non-overridden keys in os.environ are untouched. Use clear=True to completely replace the dict (useful for testing code that breaks with certain system env vars). Equivalent to monkeypatch.setenv for each key but more concise for multiple variables."
+  },
+  {
+    "id": "pyqa70",
+    "category": "python-for-qa",
+    "question": "What is the risk in this parallel test setup?\n\n```python\n# conftest.py\n@pytest.fixture(scope='session')\ndef db():\n    return connect('postgresql://localhost/testdb')\n\ndef test_create_user(db):\n    db.execute('INSERT INTO users VALUES (1, \"alice\")')\n    assert db.execute('SELECT count(*) FROM users').scalar() == 1\n\ndef test_create_product(db):\n    assert db.execute('SELECT count(*) FROM users').scalar() == 0  # FAILS!\n```",
+    "options": [
+      "No risk — session-scoped fixtures are thread-safe in pytest-xdist",
+      "Both tests share the same DB session; test_create_user inserts a row without rollback, so test_create_product sees the leaked row and its count assertion fails — session scope without cleanup causes test ordering dependencies",
+      "db.execute is not a valid method on psycopg2 connections",
+      "The INSERT will fail because user ID 1 already exists from a previous run"
+    ],
+    "answer": 1,
+    "explanation": "Session-scoped fixtures persist their state across all tests. Without transaction rollback or table truncation between tests, data accumulates. Fix options: (1) use function-scoped fixture that wraps each test in a transaction and rolls back, (2) use a function-scoped fixture that truncates tables, (3) use pytest-postgresql or a per-test database. This is the most common cause of order-dependent test failures."
+  },
+  {
+    "id": "pyqa71",
+    "category": "python-for-qa",
+    "question": "What does the `@functools.lru_cache` issue mean for test isolation?\n\n```python\n# application code\n@functools.lru_cache(maxsize=None)\ndef get_config(key: str) -> str:\n    return os.environ.get(key, '')\n\n# test code\ndef test_config_with_overridden_env(monkeypatch):\n    monkeypatch.setenv('DB_HOST', 'test-db')\n    assert get_config('DB_HOST') == 'test-db'  # May FAIL if cached\n```",
+    "options": [
+      "lru_cache has no effect on test isolation — cached values are per-process",
+      "If get_config('DB_HOST') was called before this test (e.g., during import or in a previous test), the cached value is returned regardless of monkeypatch — the test gets stale data; fix by calling get_config.cache_clear() in teardown",
+      "monkeypatch.setenv automatically invalidates all lru_cache entries",
+      "lru_cache is safe with monkeypatch because monkeypatch patches at the OS level, below the cache"
+    ],
+    "answer": 1,
+    "explanation": "lru_cache caches function results based on arguments. If get_config('DB_HOST') was called before the monkeypatch sets the env var, the cached (real) value is returned. The fix: add a fixture that calls get_config.cache_clear() in setup/teardown, or use autouse=True. This is a classic test isolation bug in config-reading code. Consider injecting config rather than reading env vars directly."
+  },
+  {
+    "id": "pyqa72",
+    "category": "python-for-qa",
+    "question": "What does this `httpx` async test pattern require compared to `requests`?\n\n```python\nimport pytest\nimport httpx\n\n@pytest.mark.asyncio\nasync def test_async_api_call():\n    async with httpx.AsyncClient() as client:\n        resp = await client.get('http://api/health')\n    assert resp.status_code == 200\n```",
+    "options": [
+      "httpx.AsyncClient works identically to requests.Session — no async/await needed",
+      "Async HTTP calls require an async test function (async def) with await; pytest-asyncio is required to run async tests; httpx.AsyncClient must be used as an async context manager to ensure the connection is properly closed",
+      "@pytest.mark.asyncio is optional — pytest auto-detects async test functions",
+      "httpx cannot be mocked with the responses library"
+    ],
+    "answer": 1,
+    "explanation": "httpx supports both sync and async. For async, you need pytest-asyncio (or anyio) and must declare the test async def. The async context manager (async with) ensures proper cleanup of connections. To mock httpx in tests, use pytest-httpx or respx libraries (the responses library only patches requests). Set asyncio_mode='auto' in pytest.ini to avoid marking every test."
+  },
+  {
+    "id": "pyqa73",
+    "category": "python-for-qa",
+    "question": "What does this `pandas` technique validate for data pipeline QA?\n\n```python\nimport pandas as pd\n\ndef test_etl_output_schema():\n    df = run_etl_pipeline()\n    assert list(df.columns) == ['user_id', 'event', 'timestamp', 'value']\n    assert df['user_id'].dtype == 'int64'\n    assert df['timestamp'].dtype == 'datetime64[ns]'\n    assert not df['user_id'].isnull().any()\n```",
+    "options": [
+      "pandas dtype comparison with == raises TypeError for non-numeric dtypes",
+      "These assertions form a data contract test for the ETL output: correct column order and names, correct data types, and no nulls in required fields — catching schema drift when upstream data sources change",
+      "df.columns returns a list; == comparison checks reference equality not value equality",
+      "datetime64[ns] is not a valid pandas dtype string"
+    ],
+    "answer": 1,
+    "explanation": "Data pipeline tests should validate schema (columns, order, types) and data quality (nullability, ranges, uniqueness). pandas dtype assertions catch silent type coercion bugs — e.g., timestamps arriving as strings. Use pd.testing.assert_frame_equal() for comparing full DataFrames with tolerance control. Libraries like great_expectations and pandera provide declarative data quality frameworks built on this idea."
+  },
+  {
+    "id": "pyqa74",
+    "category": "python-for-qa",
+    "question": "What does `pandera` provide over raw pandas assertions?\n\n```python\nimport pandera as pa\nfrom pandera import Column, DataFrameSchema, Check\n\nschema = DataFrameSchema({\n    'user_id': Column(int, Check.greater_than(0)),\n    'email': Column(str, Check(lambda s: s.str.contains('@'))),\n    'score': Column(float, Check.in_range(0, 100), nullable=True)\n})\n\ndef test_pipeline_output():\n    df = run_pipeline()\n    schema.validate(df)  # raises SchemaError with detailed report\n```",
+    "options": [
+      "pandera only works with DataFrames from CSV files, not programmatically created ones",
+      "pandera provides declarative schema validation — the schema is reusable documentation, validate() gives a structured SchemaError identifying which rows and columns failed, and schemas can be generated from sample DataFrames automatically",
+      "Check.in_range(0, 100) is equivalent to assert all(0 <= x <= 100) and has no performance advantage",
+      "nullable=True means the column accepts None but still raises on NaN"
+    ],
+    "answer": 1,
+    "explanation": "pandera is a statistical typing framework for pandas DataFrames. Schemas are reusable, composable, and generate detailed error reports with the failing rows and values. Unlike raw assert statements, pandera schemas can decorate functions (@pa.check_input, @pa.check_output) to validate at function boundaries automatically. Great for testing data engineering pipelines and ML feature pipelines."
+  },
+  {
+    "id": "pyqa75",
+    "category": "python-for-qa",
+    "question": "What does this `@pytest.fixture(name=...)` option solve?\n\n```python\n@pytest.fixture(name='user')\ndef user_fixture():\n    return create_test_user()\n\ndef test_profile(user):\n    assert user.email is not None\n```",
+    "options": [
+      "name= renames the fixture in test reports only; the function must still be called user_fixture",
+      "name='user' makes the fixture available as 'user' in test parameters — the function can have a descriptive Python name (user_fixture) to avoid conflicts with local variables or imported names while keeping the test signature clean",
+      "name= is required when two fixtures have the same return type",
+      "pytest ignores the name= parameter; fixtures are always resolved by function name"
+    ],
+    "answer": 1,
+    "explanation": "Without name=, a fixture is requested by its function name. If the function is named user, it shadows any local user variable in the test — confusing readers. Naming the function user_fixture (descriptive, avoids shadowing) while exposing it as user (clean test signature) is the best of both worlds. This is especially useful in conftest.py where fixture functions can have verbose descriptive names."
+  },
+  {
+    "id": "pyqa76",
+    "category": "python-for-qa",
+    "question": "What does this `BeautifulSoup` snippet test about HTML rendering?\n\n```python\nfrom bs4 import BeautifulSoup\n\ndef test_error_message_displayed():\n    html = client.post('/login', data={'password': 'wrong'}).text\n    soup = BeautifulSoup(html, 'html.parser')\n    error_div = soup.find('div', class_='error-message')\n    assert error_div is not None\n    assert 'Invalid credentials' in error_div.text\n```",
+    "options": [
+      "BeautifulSoup only parses well-formed XML, not HTML",
+      "This is a server-side rendering test: it verifies that the HTML response contains a div with class 'error-message' containing the correct text — testing that error states are rendered and accessible, not just that the status code is correct",
+      "soup.find() raises NavigableStringError if the class is not found",
+      "error_div.text returns the raw HTML including child tags"
+    ],
+    "answer": 1,
+    "explanation": "BeautifulSoup tests are valuable for server-rendered HTML applications where the test client receives full HTML pages. Testing DOM structure verifies that error messages, form labels, and accessibility attributes are present. For SPAs, use Playwright/Selenium instead. error_div.text returns the rendered text content (no tags); .decode_contents() returns inner HTML."
+  },
+  {
+    "id": "pyqa77",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` output capture trick reveal about test quality?\n\n```python\ndef test_calculation(capsys):\n    result = compute(42)\n    print(f'DEBUG: intermediate={result.intermediate}')  # production code!\n    assert result.final == 84\n    out, _ = capsys.readouterr()\n    assert out == ''  # Fails! Production code is printing debug output\n```",
+    "options": [
+      "capsys.readouterr() clears stdout so the assertion on out always passes",
+      "This tests that compute() does not produce any stdout output — finding that production code has leftover debug print() calls that should be replaced with proper logging",
+      "print() in production code is fine and does not affect test outcomes",
+      "assert out == '' will always pass because pytest captures stdout by default"
+    ],
+    "answer": 1,
+    "explanation": "Asserting that code produces no stdout output catches debug print() statements left in production code — a code quality issue that clutters logs. Proper observability uses the logging module (not print), which can be controlled by log level. This technique is also used to verify that verbose libraries aren't producing unexpected output. capsys.readouterr() returns and clears captured output."
+  },
+  {
+    "id": "pyqa78",
+    "category": "python-for-qa",
+    "question": "What does this `@contextmanager` utility enable for test cleanup?\n\n```python\nfrom contextlib import contextmanager\n\n@contextmanager\ndef temp_feature_flag(flag_name, value):\n    original = get_flag(flag_name)\n    set_flag(flag_name, value)\n    try:\n        yield\n    finally:\n        set_flag(flag_name, original)\n\ndef test_premium_checkout():\n    with temp_feature_flag('premium_checkout', True):\n        result = checkout(cart, user='premium')\n    assert result['discount_applied'] is True\n```",
+    "options": [
+      "@contextmanager converts a generator function into a decorator",
+      "@contextmanager creates a reusable context manager from a generator; the try/finally guarantees the original flag value is restored even if the test raises — safer than patch() for domain-specific state that isn't a simple attribute",
+      "The finally block only runs if an exception is raised within the with block",
+      "yield can only appear once in a @contextmanager function"
+    ],
+    "answer": 1,
+    "explanation": "contextmanager is the lightweight way to create context managers without a full class. try/finally ensures cleanup even on failure. This pattern is ideal for domain-specific state management (feature flags, config overrides, rate limits) that doesn't map cleanly to unittest.mock.patch. The context manager can be combined with pytest fixtures or used inline in tests."
+  },
+  {
+    "id": "pyqa79",
+    "category": "python-for-qa",
+    "question": "What does `schemathesis` do differently from hand-written API contract tests?\n\n```bash\nschemathesis run http://api/openapi.json --checks all\n```",
+    "options": [
+      "schemathesis only validates that the OpenAPI spec file is valid JSON",
+      "schemathesis reads the OpenAPI spec and auto-generates test cases for every endpoint — fuzzing parameters, testing edge cases, and verifying responses conform to the declared schemas — without writing a single test function",
+      "schemathesis requires a running server; it cannot test offline",
+      "--checks all enables only status code validation, not schema conformance"
+    ],
+    "answer": 1,
+    "explanation": "schemathesis is a property-based API testing tool powered by Hypothesis. It generates test cases from your OpenAPI/Swagger spec and checks: 5xx responses (should not happen on valid inputs), response schema conformance, auth handling, and custom checks. It finds bugs that hand-written tests miss because it explores the input space systematically. Add to CI for continuous API contract validation."
+  },
+  {
+    "id": "pyqa80",
+    "category": "python-for-qa",
+    "question": "What does this `patch` on `datetime.datetime.now` accomplish?\n\n```python\nfrom unittest.mock import patch\nimport datetime\n\ndef test_audit_log_timestamp():\n    fixed_time = datetime.datetime(2024, 1, 15, 12, 0, 0)\n    with patch('myapp.audit.datetime') as mock_dt:\n        mock_dt.datetime.now.return_value = fixed_time\n        log_entry = create_audit_entry(user_id=1, action='login')\n    assert log_entry['timestamp'] == '2024-01-15T12:00:00'\n```",
+    "options": [
+      "Patching datetime.datetime.now raises AttributeError — datetime is a C extension and cannot be mocked",
+      "Patching the datetime module reference inside myapp.audit (not the stdlib) overrides now() for the duration of the test — the audit entry gets a predictable timestamp that can be asserted exactly, rather than a real timestamp that changes every run",
+      "fixed_time must be a string in ISO format for mock_dt to accept it",
+      "datetime.datetime.now is a classmethod and cannot be mocked with return_value"
+    ],
+    "answer": 1,
+    "explanation": "datetime.datetime is a C extension — you cannot patch datetime.datetime.now directly. Instead, patch the module reference in the target code: patch('myapp.audit.datetime'). Then set mock_dt.datetime.now.return_value = fixed_time. Alternatively, use the freezegun library which handles all the datetime patching complexity. Always patch where it's used, not where it's defined."
+  },
+  {
+    "id": "pyqa81",
+    "category": "python-for-qa",
+    "question": "What is the 'Arrange-Act-Assert' pattern and why is it enforced in QA teams?\n\n```python\ndef test_apply_discount():\n    # Arrange\n    cart = Cart(items=[Item('book', price=20.00)])\n    coupon = Coupon(code='SAVE10', discount_pct=10)\n    \n    # Act\n    cart.apply_coupon(coupon)\n    \n    # Assert\n    assert cart.total == 18.00\n```",
+    "options": [
+      "AAA is just a comment style preference with no structural impact on test quality",
+      "AAA separates test setup (Arrange), the operation under test (Act), and verification (Assert) into distinct phases — one Act per test ensures a single behavior is tested; it makes tests readable and failures easy to attribute to setup, logic, or assertion issues",
+      "The pattern requires three separate test functions: one to arrange, one to act, one to assert",
+      "Arrange-Act-Assert is only applicable to unit tests; integration tests use Given-When-Then"
+    ],
+    "answer": 1,
+    "explanation": "AAA (or Given-When-Then in BDD) is the universal test structure pattern. One Act per test is the key rule — if you find yourself writing Act-Assert-Act-Assert, you have two tests. This structure enables: fast failure attribution (which phase broke?), clear refactoring targets, and consistent readability across a large test suite. pytest doesn't enforce it — it's a team convention."
+  },
+  {
+    "id": "pyqa82",
+    "category": "python-for-qa",
+    "question": "What does this `mock.create_autospec` provide over plain `MagicMock`?\n\n```python\nfrom unittest.mock import create_autospec\n\nclass PaymentGateway:\n    def charge(self, amount: float, currency: str) -> dict:\n        ...\n\ndef test_payment_called_correctly():\n    mock_gateway = create_autospec(PaymentGateway)\n    process_payment(mock_gateway, amount=50.0)\n    mock_gateway.charge.assert_called_once_with(50.0, 'USD')\n```",
+    "options": [
+      "create_autospec creates a mock with the same attribute names but no spec enforcement",
+      "create_autospec creates a mock that mirrors the real class's method signatures — calling mock_gateway.charge(wrong_args) raises TypeError just like the real class would; it catches API misuse bugs that plain MagicMock would silently accept",
+      "create_autospec requires the spec class to have type annotations",
+      "create_autospec cannot be used with instance methods — only module-level functions"
+    ],
+    "answer": 1,
+    "explanation": "MagicMock accepts any arguments on any method — mock.charge(1, 2, 3, wrong=True) silently passes. create_autospec mirrors the real signature: wrong number of arguments raises TypeError. This catches refactoring bugs where a real method's signature changes but the test mock isn't updated. Use spec_set=True to also prevent setting attributes not on the original."
+  },
+  {
+    "id": "pyqa83",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` `warnings` filter do in the test configuration?\n\n```ini\n[pytest]\nfilterwarnings =\n    error\n    ignore::DeprecationWarning:third_party_lib\n```",
+    "options": [
+      "filterwarnings = error only affects Python 3.11+ where warnings are errors by default",
+      "error promotes ALL warnings to exceptions (causing test failures) except DeprecationWarnings from third_party_lib — forcing the team to address deprecations proactively while ignoring noise from dependencies they don't control",
+      "filterwarnings only applies to ResourceWarning, not DeprecationWarning",
+      "ignore::DeprecationWarning:third_party_lib silences warnings from all libraries"
+    ],
+    "answer": 1,
+    "explanation": "filterwarnings = error is one of the most valuable pytest configurations for code quality. It turns your own DeprecationWarnings, PendingDeprecationWarnings, and ResourceWarnings into test failures, forcing the team to fix them before they become bugs. The ignore filter for third-party libs prevents upstream library noise from breaking your CI. Use -W error on the command line for a one-time check."
+  },
+  {
+    "id": "pyqa84",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` `--tb=short` flag change about failure output?\n\n```bash\npytest --tb=short    # condensed traceback\npytest --tb=long     # full traceback with locals\npytest --tb=no       # only test names, no tracebacks\npytest --tb=line     # one line per failure\n```",
+    "options": [
+      "All --tb options show identical information; the flag only controls color",
+      "--tb controls traceback verbosity: short shows the failing line and immediate context; long adds local variable values; no is useful in CI where tracebacks are stored separately; line is useful for a quick count of failures across a huge suite",
+      "--tb=long causes pytest to re-run each failing test to collect variable state",
+      "--tb=no skips teardown fixtures to show failures faster"
+    ],
+    "answer": 1,
+    "explanation": "Choosing the right --tb level for the context speeds up debugging. In local development: --tb=short or --tb=long. In CI reports: --tb=short (stored in artifacts). In a quick sanity check: --tb=line or --tb=no. The default is --tb=short since pytest 7. --tb=long with -l (show locals) gives maximum debug information when tracking down subtle failures."
+  },
+  {
+    "id": "pyqa85",
+    "category": "python-for-qa",
+    "question": "What does this `typing.Protocol` approach enable for test doubles?\n\n```python\nfrom typing import Protocol\n\nclass EmailSender(Protocol):\n    def send(self, to: str, subject: str, body: str) -> bool: ...\n\nclass FakeEmailSender:\n    def __init__(self):\n        self.sent = []\n    def send(self, to: str, subject: str, body: str) -> bool:\n        self.sent.append({'to': to, 'subject': subject})\n        return True\n\ndef test_welcome_email_sent():\n    fake = FakeEmailSender()\n    register_user('alice@test.com', sender=fake)\n    assert len(fake.sent) == 1\n    assert fake.sent[0]['to'] == 'alice@test.com'\n```",
+    "options": [
+      "Protocol requires FakeEmailSender to inherit from EmailSender",
+      "Protocol-based design enables dependency injection with static type checking — FakeEmailSender implicitly satisfies EmailSender without inheritance; the test double records sent emails for inspection; mypy validates the fake implements the protocol correctly",
+      "FakeEmailSender.sent must be declared as a class variable for Protocol compliance",
+      "Protocol is only available in Python 3.10+ via typing_extensions"
+    ],
+    "answer": 1,
+    "explanation": "Protocol (PEP 544) enables structural subtyping — if FakeEmailSender has the right methods with the right signatures, it IS an EmailSender, no inheritance needed. This is the Pythonic dependency injection pattern for testability. The Fake (records interactions for inspection) is a test double preferable to MagicMock for complex interactions because it's readable, type-checked, and reusable."
+  },
+  {
+    "id": "pyqa86",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` marker combination do for test suite organization?\n\n```bash\npytest -m 'smoke and not slow'  # fast smoke tests\npytest -m 'regression or integration'  # thorough tests\npytest -m 'not external'  # offline tests only\n```",
+    "options": [
+      "Marker expressions only support a single marker — combining with 'and'/'or' raises SyntaxError",
+      "-m accepts boolean marker expressions (and, or, not) — enabling fine-grained test selection for different CI stages: fast smoke tests on every commit, full regression nightly, offline tests when network is unavailable",
+      "The 'not' operator in -m expressions deselects tests but still runs their fixtures",
+      "Marker expressions are case-sensitive — 'Smoke' and 'smoke' are different markers"
+    ],
+    "answer": 1,
+    "explanation": "Marker expressions are evaluated as Python boolean logic. Common CI pipeline patterns: on every push: pytest -m smoke (seconds), on PR merge: pytest -m 'smoke or regression' (minutes), nightly: pytest (all tests, minutes-hours). This is how you achieve 'shift-left' — fast feedback early, comprehensive validation later. Register all markers in pytest.ini to prevent typos."
+  },
+  {
+    "id": "pyqa87",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` `record_mode` parameter in `pytest-recording` (VCR) control?\n\n```python\n# pytest.ini\n[pytest]\nvcrrecord = none  # fail on missing cassettes (CI mode)\n# vcrrecord = new_episodes  # record new requests only\n# vcrrecord = all  # re-record everything\n```",
+    "options": [
+      "record_mode controls VCR tape quality — higher modes capture more HTTP headers",
+      "record=none (used in CI) means tests fail if a cassette doesn't exist — preventing accidental real network calls; new_episodes records only uncasseted requests; all re-records everything to refresh stale cassettes with current real responses",
+      "vcrrecord = none disables VCR entirely, allowing real network calls",
+      "record_mode only affects the first recorded request; subsequent requests always use cassettes"
+    ],
+    "answer": 1,
+    "explanation": "VCR record modes are a critical CI safety net. In CI: record=none ensures no accidental real API calls (which would require credentials, network access, and produce non-deterministic results). Locally: record=new_episodes adds cassettes for new tests without re-recording existing ones. record=all refreshes stale cassettes when the real API changes. Commit cassette files to version control."
+  },
+  {
+    "id": "pyqa88",
+    "category": "python-for-qa",
+    "question": "What is the output of this code and why does it matter for test reliability?\n\n```python\nimport copy\n\nbase = {'config': {'timeout': 30, 'retries': 3}}\ntest1 = base  \ntest2 = copy.copy(base)   # shallow copy\ntest3 = copy.deepcopy(base)  # deep copy\n\ntest1['config']['timeout'] = 999\nprint(base['config']['timeout'])   # ?\nprint(test2['config']['timeout'])  # ?\nprint(test3['config']['timeout'])  # ?\n```",
+    "options": [
+      "999, 30, 30 — both test1 and test2 are independent copies",
+      "999, 999, 30 — test1 is an alias (mutation visible in base), test2 is a shallow copy (the inner dict is still shared, so mutation propagates), test3 is a deep copy (fully independent)",
+      "999, 999, 999 — Python always copies by reference for nested structures",
+      "30, 30, 30 — dict assignment creates an implicit deep copy"
+    ],
+    "answer": 1,
+    "explanation": "This is one of the most common sources of test pollution in Python. test1 = base is an alias — same object. copy.copy(base) copies the outer dict but not nested dicts — both test2 and base point to the same inner {'timeout': 30}. copy.deepcopy() creates a fully independent tree. In test helpers, always deepcopy shared fixture data before mutating it to prevent state leakage between tests."
+  },
+  {
+    "id": "pyqa89",
+    "category": "python-for-qa",
+    "question": "What does `pytest-cov`'s `--cov-fail-under` option enforce in CI?\n\n```bash\npytest --cov=myapp --cov-fail-under=80\n```",
+    "options": [
+      "It runs tests until 80% of the test file is covered, then stops",
+      "The pytest process exits with a non-zero code if overall coverage drops below 80% — failing the CI build automatically when coverage regresses, acting as a ratchet that prevents the team from merging code that reduces test coverage",
+      "--cov-fail-under only counts line coverage; branch coverage is not included",
+      "80% is the pytest default; custom thresholds require a coverage.ini file"
+    ],
+    "answer": 1,
+    "explanation": "Coverage gates in CI prevent coverage regression. Once you establish a baseline (e.g., 80%), --cov-fail-under locks it in. Teams typically start low and gradually increase the threshold as they add tests. Put this in your CI config, not just pytest.ini, so developers can't accidentally bypass it. Combine with --cov-branch for more meaningful coverage numbers."
+  },
+  {
+    "id": "pyqa90",
+    "category": "python-for-qa",
+    "question": "What is the difference between `unittest.TestCase.setUp` and a `pytest` function-scoped fixture?\n\n```python\n# unittest style\nclass TestAPI(unittest.TestCase):\n    def setUp(self):\n        self.client = create_test_client()\n\n# pytest style  \n@pytest.fixture\ndef client():\n    return create_test_client()\n\ndef test_get_users(client):\n    ...\n```",
+    "options": [
+      "They are completely equivalent — pytest fixtures are just syntactic sugar for setUp",
+      "pytest fixtures are composable (fixtures can depend on other fixtures), have configurable scope (function/class/module/session), support parametrization, and can be shared across files via conftest.py; setUp runs only within its TestCase class and cannot be composed or scoped",
+      "setUp runs before each test; pytest fixtures run once per file by default",
+      "unittest.TestCase tests cannot use pytest fixtures without special configuration"
+    ],
+    "answer": 1,
+    "explanation": "pytest fixtures are significantly more powerful: dependency injection via function parameters, composability (fixture A can use fixture B), scope control (expensive resources shared at session level), parametrization, and file-level sharing via conftest.py. unittest.TestCase.setUp is limited to the class. Note: pytest can run TestCase tests, and TestCase tests can use some pytest fixtures — the two systems are partially compatible."
+  },
+  {
+    "id": "pyqa91",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` plugin `pytest-rerunfailures` handle for flaky tests?\n\n```python\n@pytest.mark.flaky(reruns=3, reruns_delay=1)\ndef test_external_service_ping():\n    response = requests.get('http://external-svc/ping', timeout=5)\n    assert response.status_code == 200\n```",
+    "options": [
+      "flaky marks the test as permanently ignored in CI",
+      "The test is retried up to 3 times with a 1-second delay between attempts; it passes if any retry succeeds — useful for genuinely flaky external integrations while the root cause is investigated, but overuse masks real reliability problems",
+      "reruns=3 runs the test 3 additional times after it passes to verify stability",
+      "reruns_delay is measured in milliseconds, not seconds"
+    ],
+    "answer": 1,
+    "explanation": "Flaky test retries are a pragmatic short-term tool, not a long-term solution. Use @flaky sparingly and always pair it with a tracking ticket. Overuse creates false CI confidence — a test that 'passes on retry' is hiding a real intermittency issue. Better solutions: fix the underlying flakiness, use VCR cassettes, or quarantine truly-flaky tests to a separate suite that doesn't block merges."
+  },
+  {
+    "id": "pyqa92",
+    "category": "python-for-qa",
+    "question": "What does the `__all__` variable in a test utilities module control?\n\n```python\n# tests/utils/__init__.py\n__all__ = ['create_user', 'create_order', 'api_client']\n\ndef create_user(role='viewer'): ...\ndef create_order(user, items): ...\ndef api_client(): ...\ndef _internal_helper(): ...\n```",
+    "options": [
+      "__all__ prevents the listed functions from being imported",
+      "__all__ defines the public API of the module — from tests.utils import * only imports the listed names; _internal_helper is excluded; it documents intent (public vs private) and prevents accidental use of internal helpers across test files",
+      "__all__ causes ImportError if unlisted functions are imported explicitly",
+      "__all__ has no effect on from module import specific_name imports"
+    ],
+    "answer": 1,
+    "explanation": "__all__ controls wildcard imports and signals intent. _internal_helper (underscore prefix) is already a convention for private, but __all__ makes it explicit for wildcard imports. In large test suites, well-structured test utility modules with clear public APIs reduce coupling. Explicit imports (from utils import create_user) are always preferred over wildcard imports in test code."
+  },
+  {
+    "id": "pyqa93",
+    "category": "python-for-qa",
+    "question": "What does this `itertools.product` pattern generate for combinatorial testing?\n\n```python\nimport itertools\nimport pytest\n\nroles = ['admin', 'editor', 'viewer']\nresources = ['reports', 'users', 'settings']\n\n@pytest.mark.parametrize('role,resource', itertools.product(roles, resources))\ndef test_access_matrix(role, resource, auth_client):\n    resp = auth_client(role).get(f'/{resource}')\n    assert resp.status_code in (200, 403)\n```",
+    "options": [
+      "itertools.product generates all permutations with repetition — duplicates are expected",
+      "itertools.product generates the Cartesian product: all 9 combinations of 3 roles × 3 resources — a complete access control matrix test in one parametrize without manually listing all combinations",
+      "itertools.product requires both lists to be the same length",
+      "The test will run 6 times (3 + 3) not 9 times (3 × 3)"
+    ],
+    "answer": 1,
+    "explanation": "Cartesian product parametrization is the systematic way to test access control matrices, configuration combinations, or input space coverage. With 3 roles and 3 resources you get 9 tests. Adding a new role or resource automatically adds tests for all combinations. This approach ensures no combination is accidentally omitted. For large matrices, consider using hypothesis.strategies.sampled_from with given() instead."
+  },
+  {
+    "id": "pyqa94",
+    "category": "python-for-qa",
+    "question": "What does the `--co` (collect-only) flag help diagnose?\n\n```bash\npytest --co -q\n```",
+    "options": [
+      "--co runs tests but skips assertion evaluation for speed",
+      "--co (collect-only) shows all test node IDs that would be collected without running any tests — used to verify that marker expressions select the right tests, parametrize generates expected cases, and conftest.py fixtures are properly discovered",
+      "--co outputs test coverage without running the tests",
+      "--co requires the -q flag to function correctly"
+    ],
+    "answer": 1,
+    "explanation": "pytest --co is your first debugging tool for collection problems: 'why is my test not being found?', 'how many tests does -m smoke select?', 'are my parametrize values being collected correctly?'. The output shows the full test hierarchy (file > class > function > parametrize ID). --co -q (quiet) shows just IDs; without -q shows the full tree. No test code is imported or executed."
+  },
+  {
+    "id": "pyqa95",
+    "category": "python-for-qa",
+    "question": "What does this `contextlib.suppress` pattern do in test cleanup code?\n\n```python\nfrom contextlib import suppress\n\n@pytest.fixture\ndef temp_user(db):\n    user = db.create_user(email='tmp@test.com')\n    yield user\n    with suppress(UserNotFoundError):\n        db.delete_user(user.id)\n```",
+    "options": [
+      "suppress catches the exception and re-raises it as a warning",
+      "suppress silently ignores UserNotFoundError during teardown — if the test itself deleted the user (as part of testing deletion), teardown won't fail trying to delete a non-existent user; the suppress context is narrowly scoped to expected cleanup-time exceptions only",
+      "contextlib.suppress causes the fixture to skip teardown entirely on exception",
+      "suppress is equivalent to a bare except: pass but raises a SyntaxWarning"
+    ],
+    "answer": 1,
+    "explanation": "Teardown that raises exceptions can mask the original test failure — pytest shows the teardown error instead of the real failure. Use suppress() to handle expected cleanup-time errors (deleting something that was already deleted by the test). Never use suppress() broadly — only for the specific exception you expect. This prevents flaky teardown errors in deletion-focused tests."
+  },
+  {
+    "id": "pyqa96",
+    "category": "python-for-qa",
+    "question": "What does `tabulate` or `rich` provide for QA reporting in Python scripts?\n\n```python\nfrom rich.table import Table\nfrom rich.console import Console\n\ndef print_test_summary(results):\n    console = Console()\n    table = Table(title='API Test Results')\n    table.add_column('Endpoint', style='cyan')\n    table.add_column('Status', style='green')\n    table.add_column('Latency ms', justify='right')\n    for r in results:\n        table.add_row(r['url'], str(r['status']), str(r['latency_ms']))\n    console.print(table)\n```",
+    "options": [
+      "rich.Table is only for terminal display — it cannot be exported to HTML or CSV",
+      "rich provides terminal-formatted tables, progress bars, and syntax highlighting for QA scripts that generate human-readable test reports from raw result data — useful for smoke test scripts, health-check tools, and custom test runners",
+      "Console.print() writes to a log file, not terminal stdout",
+      "rich requires Python 3.10+ and cannot be used in older CI environments"
+    ],
+    "answer": 1,
+    "explanation": "rich is the modern Python terminal formatting library. For QA scripts (health checks, API smoke tests, deployment verification), rich tables are far more readable than print() output in CI logs. Rich supports: tables with column styles, progress bars for long-running checks, color-coded status (PASS=green, FAIL=red), and can export to HTML with Console(record=True). tabulate is a lighter alternative."
+  },
+  {
+    "id": "pyqa97",
+    "category": "python-for-qa",
+    "question": "What does this `abc.ABC` pattern enforce for test infrastructure interfaces?\n\n```python\nfrom abc import ABC, abstractmethod\n\nclass BaseTestEnvironment(ABC):\n    @abstractmethod\n    def setup(self) -> None: ...\n    \n    @abstractmethod\n    def teardown(self) -> None: ...\n    \n    @abstractmethod\n    def get_base_url(self) -> str: ...\n\nclass DockerEnvironment(BaseTestEnvironment):\n    def setup(self): self._container = start_docker()\n    def teardown(self): self._container.stop()\n    def get_base_url(self): return 'http://localhost:8080'\n```",
+    "options": [
+      "ABC prevents DockerEnvironment from being instantiated unless all abstract methods are implemented",
+      "ABC enforces that any concrete TestEnvironment subclass implements setup, teardown, and get_base_url — attempting to instantiate a subclass missing any method raises TypeError; this makes the contract explicit and catches incomplete implementations at startup rather than mid-test",
+      "@abstractmethod is only enforced at type-checking time (mypy), not at runtime",
+      "ABC classes cannot be used as pytest fixtures"
+    ],
+    "answer": 1,
+    "explanation": "ABC (Abstract Base Class) is Python's mechanism for defining mandatory interfaces. TypeError at instantiation time (not mid-test failure) is the key benefit. For test infrastructure (environment providers, data factories, test reporters), ABC-enforced interfaces ensure all implementations are complete. This is especially valuable when multiple team members implement different test environments (local Docker, staging, production-mirror)."
+  },
+  {
+    "id": "pyqa98",
+    "category": "python-for-qa",
+    "question": "What does this `logging.handlers.MemoryHandler` technique accomplish?\n\n```python\nimport logging\n\ndef test_no_sensitive_data_logged():\n    handler = logging.handlers.MemoryHandler(capacity=1000, flushLevel=logging.CRITICAL)\n    logger = logging.getLogger('myapp')\n    logger.addHandler(handler)\n    \n    process_payment(card_number='4111111111111111')\n    \n    log_messages = [r.getMessage() for r in handler.buffer]\n    assert not any('4111' in msg for msg in log_messages)\n    assert not any('1111111111111111' in msg for msg in log_messages)\n```",
+    "options": [
+      "MemoryHandler buffers log records in memory; this test verifies that the payment processing code never logs the full or partial card number — testing PCI compliance behavior",
+      "MemoryHandler raises a CapacityError if more than 1000 log records are produced",
+      "This test can only detect logging to the 'myapp' logger, not root logger leakage",
+      "flushLevel=CRITICAL means all records below CRITICAL are discarded"
+    ],
+    "answer": 0,
+    "explanation": "Testing that sensitive data is NOT logged is a critical PCI-DSS/GDPR compliance test. MemoryHandler buffers records in-memory (handler.buffer) without writing to disk or a real log sink. The test asserts that no partial or full card number appears in any log message. This type of negative assertion is often overlooked — add it to your security test suite for any code handling PII, payment data, or credentials."
+  },
+  {
+    "id": "pyqa99",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` test ID customization technique help with in reports?\n\n```python\ndef pytest_make_parametrize_id(config, val, argname):\n    if isinstance(val, dict) and 'name' in val:\n        return val['name']\n    return None  # use default\n\n@pytest.mark.parametrize('user', [\n    {'name': 'admin_user', 'role': 'admin'},\n    {'name': 'viewer_user', 'role': 'viewer'},\n])\ndef test_dashboard_access(user):\n    ...\n```",
+    "options": [
+      "pytest_make_parametrize_id is called to generate test file names, not test IDs",
+      "The hook customizes parametrize test IDs — instead of test_dashboard_access[user0], reports show test_dashboard_access[admin_user], making failures immediately meaningful without needing to decode numeric indices",
+      "This hook only works when val is a primitive type (str, int); dicts require a different hook",
+      "Returning None from the hook raises a ValueError; return the default ID string instead"
+    ],
+    "answer": 1,
+    "explanation": "pytest_make_parametrize_id is a hook in conftest.py that customizes how parametrize IDs are generated. Without it, dicts get ugly IDs like user0, user1. Custom IDs make CI reports and failure messages immediately readable. Alternatively, use pytest.param(val, id='admin_user') directly in the parametrize list for per-case control. Both approaches transform opaque indices into meaningful test names."
+  },
+  {
+    "id": "pyqa100",
+    "category": "python-for-qa",
+    "question": "What does this `@pytest.fixture` stacking pattern enable for test scenarios?\n\n```python\n@pytest.fixture\ndef authenticated_client(client, create_user):\n    user = create_user(role='admin')\n    client.login(user)\n    return client\n\n@pytest.fixture\ndef client_with_data(authenticated_client, seed_products):\n    seed_products(count=10)\n    return authenticated_client\n\ndef test_search_products(client_with_data):\n    resp = client_with_data.get('/search?q=test')\n    assert resp.status_code == 200\n    assert len(resp.json()['results']) > 0\n```",
+    "options": [
+      "Fixture stacking causes circular dependency errors when more than 2 fixtures are chained",
+      "Fixtures compose like functions — client_with_data depends on authenticated_client which depends on client and create_user; pytest resolves the dependency graph automatically, building from leaf fixtures inward; this enables layered scenarios without code duplication",
+      "Each fixture in the chain must use the same scope or pytest raises a ScopeError",
+      "Fixtures can only be one level deep — client_with_data cannot use another fixture as a parameter"
+    ],
+    "answer": 1,
+    "explanation": "pytest's fixture dependency injection builds a directed acyclic graph of fixtures. Each fixture can depend on others, and pytest resolves the order automatically. This composability is pytest's most powerful feature — you build complex scenarios from simple reusable pieces. Scope constraints exist (broader scope cannot depend on narrower scope) but within the same scope, arbitrary depth is supported."
+  },
+  {
+    "id": "pyqa101",
+    "category": "python-for-qa",
+    "question": "What does `pytest-benchmark` measure and how should QA engineers use it?\n\n```python\ndef test_json_parser_performance(benchmark):\n    large_payload = generate_payload(size=10_000)\n    result = benchmark(parse_json_response, large_payload)\n    assert result is not None\n    # benchmark.stats shows: mean, stddev, min, max, rounds\n```",
+    "options": [
+      "benchmark() runs the function once and measures wall-clock time",
+      "pytest-benchmark runs the function multiple times (configurable rounds/iterations), reports statistical metrics (mean, stddev, min, max, OPS/sec), and can compare against a saved baseline — alerting when a code change introduces performance regression",
+      "benchmark fixtures require the tested function to return a numeric value",
+      "Performance benchmarks in pytest run only on the CI server, not locally"
+    ],
+    "answer": 1,
+    "explanation": "pytest-benchmark warms up the function, runs it N times, and provides statistical analysis. Use --benchmark-compare to compare against a saved baseline: benchmark saves results as JSON (--benchmark-save=baseline), and --benchmark-compare=baseline fails if any metric regresses beyond a threshold. Essential for testing serialization, algorithm performance, and critical path code in test infrastructure itself."
+  },
+  {
+    "id": "pyqa102",
+    "category": "python-for-qa",
+    "question": "What is the 'test pyramid' principle and how should it shape Python test investment?\n\n```\n        /\\\n       /E2E\\       (few, slow, Playwright/Selenium)\n      /------\\\n     /Integr. \\    (some, medium speed, requests + real DB)\n    /----------\\\n   /  Unit      \\  (many, fast, pytest + mocks)\n  /______________\\\n```",
+    "options": [
+      "The pyramid suggests investing equally in all three layers",
+      "The pyramid recommends most tests be fast unit tests (milliseconds, mocked dependencies), fewer integration tests (seconds, real DB/services), and fewest E2E tests (minutes, full stack) — inverting the pyramid (many E2E, few unit tests) creates a slow, brittle, expensive test suite",
+      "Python unit tests should use Selenium to test individual functions",
+      "Integration tests in the pyramid are defined as tests that use multiple Python modules"
+    ],
+    "answer": 1,
+    "explanation": "The test pyramid (Mike Cohn) guides test investment. Unit tests: pytest with mocks, run in milliseconds, test one unit of logic. Integration tests: real DB/HTTP calls, test component interactions. E2E tests: Playwright/Selenium, full user journeys, run in minutes. An inverted pyramid (mostly E2E) is a common anti-pattern: slow CI, brittle tests that break on UI changes, poor failure attribution."
+  },
+  {
+    "id": "pyqa103",
+    "category": "python-for-qa",
+    "question": "What does this `mock.patch.stopall()` pattern solve in test teardown?\n\n```python\nclass TestPaymentService(unittest.TestCase):\n    def setUp(self):\n        self.patcher1 = patch('myapp.payment.requests.post')\n        self.patcher2 = patch('myapp.payment.validate_card')\n        self.mock_post = self.patcher1.start()\n        self.mock_validate = self.patcher2.start()\n        self.addCleanup(mock.patch.stopall)\n```",
+    "options": [
+      "patch.stopall() removes all patches globally, including those in other test classes",
+      "patch.stopall() stops all patches started with patcher.start() in the current test; addCleanup ensures it runs even if setUp itself fails partway through — preventing patches from leaking into subsequent tests when tearDown is not reached",
+      "Each patcher.start() creates an independent patching context; stopall() is not needed",
+      "addCleanup runs after tearDown, so stopall is called too late to prevent leakage"
+    ],
+    "answer": 1,
+    "explanation": "Using patcher.start() without patcher.stop() in tearDown is a patch leak bug — real objects stay replaced across tests. patch.stopall() stops all active patches started via .start(). addCleanup() registers teardown that runs even if the test or tearDown raises, making it more reliable than explicit tearDown code. This is the canonical safe pattern for manually-started patches."
+  },
+  {
+    "id": "pyqa104",
+    "category": "python-for-qa",
+    "question": "What does `pytest-html` generate and how is it useful in a QA workflow?\n\n```bash\npytest --html=report.html --self-contained-html\n```",
+    "options": [
+      "pytest-html generates a Python file that re-runs all failed tests",
+      "--html generates a self-contained HTML test report with pass/fail/skip counts, test details, environment metadata, and captured output — shareable with stakeholders who don't have Python installed; --self-contained-html embeds CSS/JS so the file works without a web server",
+      "--self-contained-html requires an internet connection to embed CDN resources",
+      "pytest-html only works when tests use the unittest.TestCase style"
+    ],
+    "answer": 1,
+    "explanation": "pytest-html is the standard pytest HTML reporter. Self-contained reports are a single file that can be emailed, stored as a CI artifact, or shared with non-technical stakeholders. The report includes: environment info (Python version, platform), test results with timing, captured stdout/stderr per test, and failure tracebacks. For richer reports with test history and trends, Allure is the more powerful alternative."
+  },
+  {
+    "id": "pyqa105",
+    "category": "python-for-qa",
+    "question": "What does this `pytest` plugin hook `pytest_runtest_makereport` enable?\n\n```python\n# conftest.py\n@pytest.hookimpl(hookwrapper=True)\ndef pytest_runtest_makereport(item, call):\n    outcome = yield\n    report = outcome.get_result()\n    if report.when == 'call' and report.failed:\n        screenshot_path = take_screenshot(item)\n        allure.attach.file(screenshot_path, name='screenshot',\n                           attachment_type=allure.attachment_type.PNG)\n```",
+    "options": [
+      "This hook modifies test results — failed tests can be marked as passed here",
+      "The hook intercepts test execution at the 'call' phase; on failure, it captures a screenshot and attaches it to the Allure report — providing visual evidence of what the browser showed when the test failed, without any changes to individual test functions",
+      "hookwrapper=True causes the hook to run before all other hooks in the chain",
+      "pytest_runtest_makereport only fires for tests in the same file as conftest.py"
+    ],
+    "answer": 1,
+    "explanation": "pytest hooks let you inject behavior into the test lifecycle without modifying test code. pytest_runtest_makereport fires for setup, call, and teardown phases. This screenshot-on-failure pattern is the industry standard for Selenium/Playwright test suites — instead of adding screenshot logic to every test, one hook handles it globally. The screenshot is attached to the report automatically, visible next to the failure message."
+  }
+]

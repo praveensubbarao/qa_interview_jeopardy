@@ -1,0 +1,522 @@
+[
+  {
+    "id": "pw1",
+    "category": "playwright",
+    "question": "What is TypeScript's primary benefit for a Playwright test suite?",
+    "options": [
+      "It makes tests run faster than JavaScript",
+      "It catches errors at compile time before tests ever run",
+      "It automatically generates test cases",
+      "It eliminates the need for assertions"
+    ],
+    "answer": 1,
+    "explanation": "TypeScript is a statically typed superset of JavaScript that catches errors at compile time. In a Playwright suite, this means typos in locator strings, missing await keywords, and incorrect fixture shapes are caught before the test runs."
+  },
+  {
+    "id": "pw2",
+    "category": "playwright",
+    "question": "In TypeScript, when should you use 'interface' over 'type' in a Playwright test framework?",
+    "options": [
+      "When defining fixture compositions and utility shapes",
+      "When you expect consumers to extend the shape via declaration merging",
+      "When working with primitive types and unions",
+      "When defining tuple types"
+    ],
+    "answer": 1,
+    "explanation": "Use interface when you expect consumers to extend the shape (e.g., a BasePage contract) since interfaces support declaration merging. Use type for fixture composition, union shapes, and utility types."
+  },
+  {
+    "id": "pw3",
+    "category": "playwright",
+    "question": "What happens if you forget 'await' before a Playwright assertion like expect(page).toHaveURL('/home')?",
+    "options": [
+      "The test throws an immediate synchronous error",
+      "The assertion is queued but never awaited, so the test may pass by coincidence",
+      "Playwright automatically adds the await at runtime",
+      "The test hangs indefinitely waiting for resolution"
+    ],
+    "answer": 1,
+    "explanation": "Every Playwright action returns a Promise. Without await, the assertion fires but the test continues immediately without waiting for it to resolve. The test may pass by coincidence. Enabling strict mode and the no-floating-promises ESLint rule catches this."
+  },
+  {
+    "id": "pw4",
+    "category": "playwright",
+    "question": "What is a generic in TypeScript as used in Playwright's base.extend<T>()?",
+    "options": [
+      "A runtime type check that validates fixture properties",
+      "A type variable that makes functions work over multiple types without losing type safety",
+      "A special class that automatically generates test data",
+      "A decorator that adds metadata to test functions"
+    ],
+    "answer": 1,
+    "explanation": "A generic is a type variable that enables functions and classes to work with multiple types while maintaining type safety. In Playwright, base.extend<T>() uses generics so that fixture properties inside tests get proper autocomplete and type checking."
+  },
+  {
+    "id": "pw5",
+    "category": "playwright",
+    "question": "Why does a Page Object class in Playwright use 'private readonly page: Page' in its constructor?",
+    "options": [
+      "To allow tests to directly access the page object for flexibility",
+      "To prevent reassignment after construction and hide page from tests, enforcing the action layer",
+      "To enable multiple page instances within a single test",
+      "To automatically close the page when the test ends"
+    ],
+    "answer": 1,
+    "explanation": "The private modifier prevents tests from bypassing the action layer to call page.click() directly. The readonly modifier prevents reassignment after construction. Together they enforce clean encapsulation where tests must use defined action methods."
+  },
+  {
+    "id": "pw6",
+    "category": "playwright",
+    "question": "What does path aliasing (e.g., '@/*') in tsconfig.json accomplish in a Playwright project?",
+    "options": [
+      "It automatically resolves npm package names",
+      "It replaces deep relative import paths with short, stable aliases",
+      "It creates symbolic links in the file system",
+      "It configures Playwright's test file discovery pattern"
+    ],
+    "answer": 1,
+    "explanation": "Path aliases let you write clean imports like '@/actions/HomePageActions' instead of fragile relative paths like '../../../actions/HomePageActions'. Moving test files never breaks imports. Playwright handles the alias resolution via its built-in TypeScript transform."
+  },
+  {
+    "id": "pw7",
+    "category": "playwright",
+    "question": "Which check is NOT enabled by 'strict: true' in tsconfig.json?",
+    "options": [
+      "strictNullChecks",
+      "noImplicitAny",
+      "strictPropertyInitialization",
+      "noUnusedLocals"
+    ],
+    "answer": 3,
+    "explanation": "strict: true enables strictNullChecks, noImplicitAny, strictFunctionTypes, strictPropertyInitialization, and strictBindCallApply. noUnusedLocals is a separate compiler option not included in the strict bundle."
+  },
+  {
+    "id": "pw8",
+    "category": "playwright",
+    "question": "Why should you use 'for...of' instead of 'forEach' for async iterations in Playwright tests?",
+    "options": [
+      "forEach is deprecated in modern JavaScript",
+      "for...of is faster for large arrays",
+      "forEach does not await async callbacks, causing iterations to run in parallel",
+      "for...of automatically retries failed iterations"
+    ],
+    "answer": 2,
+    "explanation": "Array.forEach does not await async callbacks — they fire in parallel and errors can be swallowed. for...of respects await, ensuring sequential execution. This is critical in Playwright when each navigation must complete before testing the next element."
+  },
+  {
+    "id": "pw9",
+    "category": "playwright",
+    "question": "When is using 'as any' acceptable in a Playwright test framework?",
+    "options": [
+      "In test assertions to bypass strict type checking",
+      "In public action methods for convenience",
+      "At integration boundaries with untyped Playwright internals, isolated in a private method",
+      "Anywhere the developer finds type annotations inconvenient"
+    ],
+    "answer": 2,
+    "explanation": "The 'as any' assertion should only be used at boundaries with untyped internals (like accessing Playwright's private _options), isolated in a single private method, with an immediate re-assertion to a real type and a fallback value."
+  },
+  {
+    "id": "pw10",
+    "category": "playwright",
+    "question": "What is the correct hierarchy of Playwright's core objects?",
+    "options": [
+      "Page → BrowserContext → Browser",
+      "Browser → BrowserContext → Page",
+      "BrowserContext → Browser → Page",
+      "Browser → Page → BrowserContext"
+    ],
+    "answer": 1,
+    "explanation": "Browser is the top-level object (a single Chromium/Firefox/WebKit instance). BrowserContext is an isolated session within a browser (like an incognito window). Page is a single tab within a context. Each browser can have multiple contexts, each context can have multiple pages."
+  },
+  {
+    "id": "pw11",
+    "category": "playwright",
+    "question": "How does a Playwright Locator differ from an ElementHandle?",
+    "options": [
+      "Locator is synchronous while ElementHandle is asynchronous",
+      "Locator is a lazy query re-evaluated on each action; ElementHandle is a direct reference that can go stale",
+      "ElementHandle supports auto-waiting but Locator does not",
+      "There is no practical difference; they are interchangeable"
+    ],
+    "answer": 1,
+    "explanation": "A Locator is a lazy representation of an element query — it re-runs the selector on every action, so it never goes stale. An ElementHandle is a direct reference to a DOM node that can become stale if the DOM changes. Playwright recommends Locators for all modern tests."
+  },
+  {
+    "id": "pw12",
+    "category": "playwright",
+    "question": "What does Playwright's auto-waiting mechanism wait for before performing an action?",
+    "options": [
+      "A fixed 500ms delay after page load",
+      "The element to be attached, visible, stable, enabled, and receiving events",
+      "Only for the element to exist in the DOM",
+      "The network to become completely idle"
+    ],
+    "answer": 1,
+    "explanation": "Playwright's auto-waiting checks multiple conditions before acting: the element must be attached to the DOM, visible, stable (not animating), enabled, and able to receive events (not obscured). This eliminates the need for manual waits in most cases."
+  },
+  {
+    "id": "pw13",
+    "category": "playwright",
+    "question": "What is the difference between expect(locator).toBeVisible() and locator.isVisible()?",
+    "options": [
+      "They are functionally identical",
+      "toBeVisible() is an assertion that auto-retries and fails the test; isVisible() returns a boolean without failing",
+      "isVisible() auto-retries while toBeVisible() checks once",
+      "toBeVisible() checks CSS display property; isVisible() checks the viewport"
+    ],
+    "answer": 1,
+    "explanation": "expect(locator).toBeVisible() is a web-first assertion that auto-retries until the condition is met or times out, failing the test on timeout. locator.isVisible() is an instant boolean check with no retries — use it for conditional logic, not assertions."
+  },
+  {
+    "id": "pw14",
+    "category": "playwright",
+    "question": "What are Playwright 'projects' used for in playwright.config.ts?",
+    "options": [
+      "Organizing test files into separate Git repositories",
+      "Running the same tests across different browsers, devices, or configuration variants",
+      "Creating separate databases for each test run",
+      "Generating project documentation from test files"
+    ],
+    "answer": 1,
+    "explanation": "Projects let you run the same test suite across different configurations — different browsers (Chromium, Firefox, WebKit), device emulations (mobile, tablet), or custom settings. Each project can have its own viewport, user agent, and other options."
+  },
+  {
+    "id": "pw15",
+    "category": "playwright",
+    "question": "How does toHaveScreenshot() work for visual regression testing in Playwright?",
+    "options": [
+      "It compares the current screenshot against a human-approved baseline image",
+      "It uses AI to determine if the page looks correct",
+      "It only checks that the page rendered without errors",
+      "It compares the DOM structure against a saved snapshot"
+    ],
+    "answer": 0,
+    "explanation": "toHaveScreenshot() captures a screenshot and compares it pixel-by-pixel against a stored baseline image. On first run, it creates the baseline. On subsequent runs, it highlights differences. Failed comparisons produce a diff image showing what changed."
+  },
+  {
+    "id": "pw16",
+    "category": "playwright",
+    "question": "When should you use waitForLoadState('networkidle') vs 'domcontentloaded'?",
+    "options": [
+      "networkidle for static pages; domcontentloaded for dynamic SPAs",
+      "domcontentloaded when you need the HTML parsed; networkidle when you need all async data loaded",
+      "They are interchangeable in modern applications",
+      "Always use networkidle for maximum reliability"
+    ],
+    "answer": 1,
+    "explanation": "domcontentloaded fires when HTML is parsed but before images/subframes load — fast but may miss dynamic content. networkidle waits until no network requests for 500ms — slower but ensures async data is loaded. Use networkidle sparingly as it can cause flaky tests with long-polling."
+  },
+  {
+    "id": "pw17",
+    "category": "playwright",
+    "question": "What does 'fullyParallel: true' do in playwright.config.ts?",
+    "options": [
+      "Runs all tests in a single worker for maximum speed",
+      "Runs each test file in parallel but tests within a file are sequential",
+      "Runs every individual test in parallel across workers, even tests within the same file",
+      "Enables parallel execution only in CI environments"
+    ],
+    "answer": 2,
+    "explanation": "fullyParallel: true runs every individual test in its own worker, even tests within the same describe block. Without it, tests within a file run sequentially in one worker. The trade-off is higher parallelism vs. inability to share state between tests in the same file."
+  },
+  {
+    "id": "pw18",
+    "category": "playwright",
+    "question": "How does Playwright's retry mechanism work when a test fails?",
+    "options": [
+      "It re-runs the entire test suite",
+      "It retries only the failed test in a fresh browser context",
+      "It retries the specific failed assertion within the same test run",
+      "It only retries on timeout errors, not assertion failures"
+    ],
+    "answer": 1,
+    "explanation": "When a test fails, Playwright retries the entire test in a fresh browser context. The retry count is configurable separately for CI and local runs (e.g., retries: process.env.CI ? 2 : 0). Each retry is a completely fresh execution with new browser state."
+  },
+  {
+    "id": "pw19",
+    "category": "playwright",
+    "question": "What does 'forbidOnly: !!process.env.CI' do in Playwright configuration?",
+    "options": [
+      "Prevents running tests marked with .only in CI, catching accidentally committed focus tags",
+      "Disables all test filtering in CI environments",
+      "Forces all tests to run in sequential order in CI",
+      "Prevents test files from importing external modules in CI"
+    ],
+    "answer": 0,
+    "explanation": "forbidOnly causes the test run to fail if any test is marked with .only when running in CI. This catches the common mistake of accidentally committing a focused test (test.only) that would skip all other tests in the pipeline."
+  },
+  {
+    "id": "pw20",
+    "category": "playwright",
+    "question": "What is the difference between actionTimeout, navigationTimeout, and global timeout in Playwright?",
+    "options": [
+      "They are all the same timeout with different names",
+      "actionTimeout limits individual actions like click/fill; navigationTimeout limits goto/reload; global timeout limits the entire test",
+      "actionTimeout applies to assertions; navigationTimeout to page loads; global timeout to the test suite",
+      "Only global timeout is configurable; the others are fixed"
+    ],
+    "answer": 1,
+    "explanation": "actionTimeout sets the max time for individual actions (click, fill, etc.). navigationTimeout sets the max time for navigation actions (goto, reload). The global timeout sets the absolute max time for an entire test including retries. They can be configured independently."
+  },
+  {
+    "id": "pw21",
+    "category": "playwright",
+    "question": "What is the Page Object Model (POM) 'Actions' variant used in some Playwright frameworks?",
+    "options": [
+      "A pattern that maps each page to a class exposing raw element locators",
+      "A pattern that encapsulates locators as private and exposes only high-level user workflow methods",
+      "A pattern that generates page objects from API schema definitions",
+      "A pattern that requires inheritance from a single BasePage class"
+    ],
+    "answer": 1,
+    "explanation": "The Actions variant encapsulates locators as private and exposes only high-level user-facing methods (e.g., login(), addToCart()). Unlike traditional POM which exposes locators publicly, this hides implementation details and makes tests read like user stories."
+  },
+  {
+    "id": "pw22",
+    "category": "playwright",
+    "question": "How do Playwright fixtures differ from beforeEach/afterEach hooks?",
+    "options": [
+      "They are just a different syntax for the same lifecycle hooks",
+      "Fixtures provide scoped, composable, on-demand setup/teardown that only runs when a test requests the fixture",
+      "Fixtures run before the entire test suite; hooks run before each test",
+      "Hooks support async operations but fixtures do not"
+    ],
+    "answer": 1,
+    "explanation": "Playwright fixtures are lazy — they only set up when a test requests them via its parameter list. They compose naturally (fixtures can depend on other fixtures), and teardown happens automatically. Unlike hooks, fixtures provide type-safe dependency injection."
+  },
+  {
+    "id": "pw23",
+    "category": "playwright",
+    "question": "What does { auto: true } do on a Playwright fixture?",
+    "options": [
+      "It makes the fixture available globally without importing",
+      "It automatically runs the fixture for every test, even if the test doesn't request it",
+      "It auto-generates test data for the fixture",
+      "It enables automatic retry for fixture setup failures"
+    ],
+    "answer": 1,
+    "explanation": "A fixture with { auto: true } runs automatically for every test without the test needing to list it as a parameter. Common uses include auto-screenshot on failure, global logging, or authentication state setup."
+  },
+  {
+    "id": "pw24",
+    "category": "playwright",
+    "question": "What is fixture chaining in Playwright?",
+    "options": [
+      "Running fixtures in alphabetical order",
+      "Extending a base test with layered fixtures where each layer adds new capabilities on top of the previous",
+      "Linking fixture files via import statements without extension",
+      "Running the same fixture across multiple test files simultaneously"
+    ],
+    "answer": 1,
+    "explanation": "Fixture chaining means creating layers of test extensions. A base test might add authentication fixtures, then a homepage test extends that with page-specific action fixtures. Each layer can use fixtures from the previous layer, building up capabilities incrementally."
+  },
+  {
+    "id": "pw25",
+    "category": "playwright",
+    "question": "How do test.describe and test.use interact in Playwright?",
+    "options": [
+      "test.describe groups tests logically; test.use overrides configuration for that describe scope",
+      "test.describe runs tests in parallel; test.use runs them sequentially",
+      "test.describe is for unit tests; test.use is for integration tests",
+      "They cannot be used together"
+    ],
+    "answer": 0,
+    "explanation": "test.describe groups related tests together. test.use overrides project-level configuration (viewport, locale, permissions, etc.) for all tests within that describe block. The settings from test.use apply only to the enclosing describe scope."
+  },
+  {
+    "id": "pw26",
+    "category": "playwright",
+    "question": "Why should a Playwright project use environment variables for base URLs?",
+    "options": [
+      "Environment variables are faster to read than config files",
+      "It allows the same tests to run against dev, staging, and production without code changes",
+      "Hardcoded URLs cause TypeScript compilation errors",
+      "Playwright only supports URLs from environment variables"
+    ],
+    "answer": 1,
+    "explanation": "Using environment variables lets the same test suite target different environments by changing a single variable. This is essential for CI/CD pipelines that promote code through dev → staging → production without modifying test code."
+  },
+  {
+    "id": "pw27",
+    "category": "playwright",
+    "question": "What is a data-driven test in Playwright?",
+    "options": [
+      "A test that only runs when the database is available",
+      "A test that uses parameterized data to run the same logic with different inputs",
+      "A test that validates database state after each action",
+      "A test generated automatically from API schema definitions"
+    ],
+    "answer": 1,
+    "explanation": "Data-driven testing uses parameterized data (arrays, CSV files, JSON) to run the same test logic with different inputs. In Playwright, you can use for...of loops or test.describe with arrays to create multiple test instances from a single test template."
+  },
+  {
+    "id": "pw28",
+    "category": "playwright",
+    "question": "Why should you never call page.waitForTimeout() in Playwright tests?",
+    "options": [
+      "It was removed in Playwright v1.0",
+      "It introduces arbitrary delays that slow tests and mask real timing issues",
+      "It only works in headless mode",
+      "It causes memory leaks in the browser context"
+    ],
+    "answer": 1,
+    "explanation": "page.waitForTimeout() is a hard sleep that always waits the full duration even if the condition is met instantly, and may not wait long enough on slow systems. Use Playwright's built-in auto-waiting, web-first assertions, or explicit waitFor conditions instead."
+  },
+  {
+    "id": "pw29",
+    "category": "playwright",
+    "question": "How can a single Playwright test handle mobile vs. desktop layout differences?",
+    "options": [
+      "Write separate test files for each device",
+      "Use projects with different viewports and conditionally check layout elements based on viewport size",
+      "Playwright automatically adapts tests to any viewport",
+      "Use CSS media queries inside test assertions"
+    ],
+    "answer": 1,
+    "explanation": "Configure different Playwright projects for mobile and desktop viewports. Within tests, you can conditionally check layout-specific elements (hamburger menu on mobile vs. full nav bar on desktop) using the test's viewport size or project name."
+  },
+  {
+    "id": "pw30",
+    "category": "playwright",
+    "question": "What is the 'fallback click' pattern using dispatchEvent in Playwright?",
+    "options": [
+      "Clicking an element twice for reliability",
+      "Using JavaScript dispatchEvent when a normal click is intercepted by an overlay or animation",
+      "Clicking a parent element when the child is not found",
+      "Automatically clicking the next similar element if the first fails"
+    ],
+    "answer": 1,
+    "explanation": "Sometimes a regular Playwright click fails because an overlay, animation, or event handler intercepts it. The fallback click pattern uses page.evaluate to dispatch a click event directly via JavaScript, bypassing actionability checks as a last resort."
+  },
+  {
+    "id": "pw31",
+    "category": "playwright",
+    "question": "How do you tag and filter tests in Playwright (e.g., smoke vs. regression)?",
+    "options": [
+      "Put smoke tests in a separate repository",
+      "Use grep patterns in config or CLI (--grep @smoke) with tags in test titles",
+      "Smoke tests must be in files named *.smoke.spec.ts",
+      "There is no built-in way to tag tests in Playwright"
+    ],
+    "answer": 1,
+    "explanation": "Use grep patterns in Playwright's config or CLI to filter tests by tag. Tags are typically added to test titles (e.g., test('@smoke: homepage loads')). Projects can also be configured to run specific tag sets for different pipeline stages."
+  },
+  {
+    "id": "pw32",
+    "category": "playwright",
+    "question": "What is the best strategy for handling flaky tests in a Playwright CI pipeline?",
+    "options": [
+      "Delete flaky tests immediately",
+      "Set retries to 10 so flaky tests eventually pass",
+      "Enable 1-2 retries with trace-on-first-retry, then systematically fix root causes",
+      "Run flaky tests in a separate non-blocking pipeline"
+    ],
+    "answer": 2,
+    "explanation": "Enable a small number of retries (1-2) in CI to avoid blocking deployments. Use trace: 'on-first-retry' to capture detailed trace data when a test retries. Track flaky tests and fix root causes (timing issues, shared state) rather than ignoring them."
+  },
+  {
+    "id": "pw33",
+    "category": "playwright",
+    "question": "Why is .env.example committed to version control but .env is not?",
+    "options": [
+      ".env.example is a backup of .env",
+      ".env.example documents required variables without exposing real values; .env contains secrets and is gitignored",
+      ".env is only used in production",
+      "Playwright requires .env.example but ignores .env"
+    ],
+    "answer": 1,
+    "explanation": ".env.example documents which environment variables the project expects, with placeholder values. The actual .env file contains real secrets (API keys, credentials) and must be in .gitignore to prevent exposing sensitive data in version control."
+  },
+  {
+    "id": "pw34",
+    "category": "playwright",
+    "question": "How do you implement session reuse for authentication in Playwright?",
+    "options": [
+      "Log in on every test for complete isolation",
+      "Use a global setup project that logs in once and saves storageState, then load it in all other projects",
+      "Store credentials in playwright.config.ts",
+      "Use Playwright's built-in OAuth provider"
+    ],
+    "answer": 1,
+    "explanation": "Use a global setup project that runs first, logs in via UI or API, and saves the browser's storageState (cookies, localStorage) to a JSON file. Other projects load this storageState to start authenticated, avoiding repeated login overhead."
+  },
+  {
+    "id": "pw35",
+    "category": "playwright",
+    "question": "What is Playwright's Trace Viewer?",
+    "options": [
+      "A network traffic logger that runs in real-time",
+      "A GUI tool that replays test execution with screenshots, DOM snapshots, network logs, and console output",
+      "A JavaScript execution profiler",
+      "A code coverage report viewer"
+    ],
+    "answer": 1,
+    "explanation": "The Trace Viewer records every test action with screenshots, DOM snapshots, network requests, and console logs. You can step through the trace to see exactly what happened at each point, making it invaluable for debugging CI failures."
+  },
+  {
+    "id": "pw36",
+    "category": "playwright",
+    "question": "Which Playwright feature allows you to intercept and modify network requests during tests?",
+    "options": [
+      "page.on('request') listener",
+      "page.route() for request interception and mocking",
+      "page.setExtraHTTPHeaders() method",
+      "page.waitForResponse() helper"
+    ],
+    "answer": 1,
+    "explanation": "page.route() intercepts network requests matching a URL pattern and lets you fulfill, abort, or modify them. This is essential for mocking API responses, testing error scenarios, and isolating the frontend from backend dependencies."
+  },
+  {
+    "id": "pw37",
+    "category": "playwright",
+    "question": "What is Playwright's codegen tool used for?",
+    "options": [
+      "Generating code coverage reports",
+      "Recording browser interactions and generating test code automatically",
+      "Generating documentation from test files",
+      "Code review for Playwright tests"
+    ],
+    "answer": 1,
+    "explanation": "Playwright codegen opens a browser and records interactions (clicks, fills, navigations), generating corresponding test code in real-time. It's useful for quickly creating test skeletons, though the generated code typically needs refactoring for production use."
+  },
+  {
+    "id": "pw38",
+    "category": "playwright",
+    "question": "What is the default browser context isolation behavior in Playwright?",
+    "options": [
+      "All tests share a single browser context for speed",
+      "Each test gets a fresh BrowserContext with clean cookies, localStorage, and sessions",
+      "Contexts are shared within a describe block but isolated between blocks",
+      "Isolation only applies when running in parallel mode"
+    ],
+    "answer": 1,
+    "explanation": "By default, Playwright creates a fresh BrowserContext for each test. This ensures complete isolation — cookies, localStorage, sessionStorage, and cache are all clean, preventing test pollution where one test's state could affect another."
+  },
+  {
+    "id": "pw39",
+    "category": "playwright",
+    "question": "What are the correct steps to onboard a new page into a Playwright Actions framework?",
+    "options": [
+      "Write tests first, then create page objects afterward",
+      "Create Actions class → Create fixture → Extend base test → Write tests",
+      "Copy an existing test file and change the URLs",
+      "Generate page objects from API contracts"
+    ],
+    "answer": 1,
+    "explanation": "The standard onboarding flow is: 1) Create an Actions class encapsulating the page's locators and interactions, 2) Create a fixture that instantiates it, 3) Extend your base test to include the new fixture, 4) Write tests that use the fixture."
+  },
+  {
+    "id": "pw40",
+    "category": "playwright",
+    "question": "What are the key factors that make a Playwright test framework maintainable long-term?",
+    "options": [
+      "Maximum code coverage, detailed comments, and complex abstractions",
+      "Encapsulated page actions, fixture composition, strict TypeScript, consistent naming, and test isolation",
+      "Using the latest beta features with minimal test structure",
+      "Keeping all tests in a single file for easy management"
+    ],
+    "answer": 1,
+    "explanation": "Long-term maintainability requires: encapsulated action layers hiding locators, composable fixtures for DRY setup, strict TypeScript for compile-time safety, consistent naming conventions, and proper test isolation ensuring tests don't depend on each other."
+  }
+]

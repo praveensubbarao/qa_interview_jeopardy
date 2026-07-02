@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="AI QE hero glow">
+  <defs>
+    <radialGradient id="heroGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#4DCC82" stop-opacity="0.32"></stop>
+      <stop offset="45%" stop-color="#16945A" stop-opacity="0.14"></stop>
+      <stop offset="100%" stop-color="#014D36" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#heroGlow)"></rect>
+</svg>

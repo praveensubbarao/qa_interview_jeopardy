@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI QE — Product UI</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="Components.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const RUNS = [
+  { id: 'r-401', name: 'checkout-flow', commit: '3a91f0c', branch: 'main', status: 'running', statusTone: 'brand', pass: 312, fail: 0, duration: '02:14', when: '12s ago' },
+  { id: 'r-400', name: 'payments-suite', commit: '1bf2a9d', branch: 'main', status: 'passed', statusTone: 'success', pass: 184, fail: 0, duration: '04:22', when: '4m ago' },
+  { id: 'r-399', name: 'auth · regression', commit: 'e02c41a', branch: 'release/2.4', status: 'flaky', statusTone: 'warning', pass: 96, fail: 3, duration: '01:48', when: '11m ago' },
+  { id: 'r-398', name: 'orders · api', commit: '7d8c12e', branch: 'main', status: 'failed', statusTone: 'error', pass: 64, fail: 12, duration: '03:01', when: '18m ago' },
+  { id: 'r-397', name: 'observability · smoke', commit: '4e1f099', branch: 'main', status: 'passed', statusTone: 'success', pass: 28, fail: 0, duration: '00:42', when: '32m ago' },
+  { id: 'r-396', name: 'web · e2e', commit: '9aa118c', branch: 'feat/cart-v2', status: 'passed', statusTone: 'success', pass: 220, fail: 0, duration: '06:11', when: '1h ago' },
+];
+
+function App() {
+  const [active, setActive] = useState('overview');
+  const [selectedRun, setSelectedRun] = useState('r-401');
+
+  useEffect(() => {
+    if (window.lucide) lucide.createIcons();
+  });
+
+  return (
+    <div className="aiqe-app" data-screen-label="01 Overview">
+      <Sidebar active={active} onNavigate={setActive} />
+      <div className="aiqe-main">
+        <Topbar title="Overview" breadcrumbs={['Workspace', 'acme']} />
+        <div className="aiqe-page">
+
+          <div className="aiqe-hero-panel">
+            <div>
+              <div className="aiqe-hero-eb">QUALITY CLOUD · LIVE</div>
+              <div className="aiqe-hero-h">Adaptive testing intelligence, observed continuously.</div>
+              <div className="aiqe-hero-sub">14 runs in flight across 3 environments. Coverage drift detected on /api/orders — a remediation suite is ready for review.</div>
+              <div className="aiqe-hero-cta">
+                <Button variant="primary" icon="play">Review remediation</Button>
+                <Button variant="secondary" icon="bar-chart-3">Open analytics</Button>
+              </div>
+            </div>
+            <div className="aiqe-hero-stat">
+              <div className="aiqe-hero-stat-eb">LAST 7 DAYS</div>
+              <div style={{height:8}} />
+              <div className="aiqe-hero-stat-row"><div className="aiqe-hero-stat-l">Total runs</div><div className="aiqe-hero-stat-v">4,802</div></div>
+              <div className="aiqe-hero-stat-row"><div className="aiqe-hero-stat-l">Pass rate</div><div className="aiqe-hero-stat-v aiqe-hero-stat-up">98.2%</div></div>
+              <div className="aiqe-hero-stat-row"><div className="aiqe-hero-stat-l">Mean duration</div><div className="aiqe-hero-stat-v">3m 12s</div></div>
+              <div className="aiqe-hero-stat-row"><div className="aiqe-hero-stat-l">p95 latency</div><div className="aiqe-hero-stat-v">320ms</div></div>
+              <div className="aiqe-hero-stat-row"><div className="aiqe-hero-stat-l">Flaky tests</div><div className="aiqe-hero-stat-v">7 isolated</div></div>
+            </div>
+          </div>
+
+          <div className="aiqe-section-head">
+            <div>
+              <div className="aiqe-eyebrow-mono">Today · summary</div>
+              <h2 className="aiqe-h2">Run intelligence</h2>
+            </div>
+            <Button variant="ghost" icon="settings-2" size="sm">Customize</Button>
+          </div>
+
+          <div className="aiqe-metric-grid">
+            <MetricCard label="Pass rate · 7d" value="98.2" unit="%" delta="+1.4 pp" deltaTone="up" sparkPoints="0,22 25,18 50,20 75,12 100,14 125,8 150,10 175,5 200,4" />
+            <MetricCard label="Active runs" value="14" unit="in flight" delta="+3" deltaTone="up" sparkPoints="0,18 25,16 50,22 75,14 100,8 125,12 150,6 175,10 200,4" />
+            <MetricCard label="Mean duration" value="3:12" unit="m:s" delta="−12s" deltaTone="up" sparkPoints="0,8 25,12 50,10 75,16 100,14 125,20 150,18 175,22 200,24" />
+            <MetricCard label="Flaky isolated" value="7" unit="of 12" delta="+2" deltaTone="down" sparkPoints="0,20 25,16 50,18 75,14 100,12 125,10 150,8 175,8 200,6" />
+          </div>
+
+          <div className="aiqe-section-head">
+            <div>
+              <div className="aiqe-eyebrow-mono">Live · agents</div>
+              <h2 className="aiqe-h3">Agent activity</h2>
+            </div>
+            <Button variant="ghost" icon="brain-circuit" size="sm">Manage agents</Button>
+          </div>
+
+          <div className="aiqe-agents">
+            <AgentCard name="Triage" role="FLAKE.AGENT · v2" status="live" signal="Detected 3 flaky tests in checkout-flow. Auto-isolated and re-run in shadow mode." eta="32s" />
+            <AgentCard name="Coverage" role="DRIFT.AGENT · v1" status="live" signal="12 endpoints lost coverage. Suggested suite + 14 tests." eta="1m 18s" />
+            <AgentCard name="Healer" role="REPAIR.AGENT · v3" status="idle" signal="Standby. Last action: patched 2 selectors in payments-suite." eta="—" />
+          </div>
+
+          <div className="aiqe-section-head" style={{marginTop: 32}}>
+            <div>
+              <div className="aiqe-eyebrow-mono">Recent · runs</div>
+              <h2 className="aiqe-h3">Latest runs</h2>
+            </div>
+            <Button variant="ghost" size="sm">View all →</Button>
+          </div>
+
+          <div className="aiqe-runs">
+            <div className="aiqe-runs-head">
+              <div>Status</div>
+              <div>Run</div>
+              <div>Pass</div>
+              <div>Fail</div>
+              <div>Duration</div>
+              <div>When</div>
+            </div>
+            {RUNS.map(r => (
+              <RunRow key={r.id} run={r} selected={r.id === selectedRun} onClick={() => setSelectedRun(r.id)} />
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

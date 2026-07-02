@@ -1,0 +1,21 @@
+Saved:        5/19/2026, 12:30:42 PM
+Questions:    1
+Technologies: playwright, selenium, copilot, aws, azure, python, java, c#
+────────────────────────────────────────────────────────────
+Job Description:
+
+20+ years of experience in Quality Engineering and Testing, including manual, automation, non-functional, and digital testing.
+Proven track record in handling large QET programs and driving Quality engineering transformation across customers                       
+Expertise in various open source and automation tools(Selenium(Java/C#/Python) + AI), (Playwright  + MCP),  AI/ML validation skills and explainability, Synthetic data generation and continuous testing, GENAI and AI technologies
+Hands on with AI tools like GitHub Copilot and NLP-based test automation. Exposure to build Agentic AI solution 
+Expertise in test data management, test environments, and service virtualization.
+Strong understanding of cloud platforms (AWS, Azure), DevOps tools, and AI-led QA innovations.
+Experience in shaping opportunities(converting Staff-Aug/T&M to Managed Services/Innovation driven outcomes) and driving E2E solutioning for testing large deals (>50Mn USD annual revenue)
+Know-how of domains like Banking, Retail, Healthcare, Telecom
+Minimum 5 years of Presales/End-to-End Solution experience, testing specific 
+Certifications preferred: ISTQB Advanced, Certified Scrum Master, TOGAF, AWS/Azure Architect.
+Exposer to working with senior VP level stakeholders in customer organization and internally
+Excellent Oral communication and technical writing Skills
+Excellent understanding of market trends, technical solutions and automation tools
+Connects with analysts and tool vendors is an added advantage
+Should be self-motivated and work as an individual contributor and ready for travel

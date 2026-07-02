@@ -1,0 +1,35 @@
+Saved:        5/17/2026, 12:05:03 AM
+Questions:    1
+Technologies: jenkins, github actions, gitlab ci, aws, azure, gcp, go
+────────────────────────────────────────────────────────────
+What You’ll Be Doing
+
+ Lead a Core Quality COE/Infrastructure team, and Release Management team. 
+ Manage a high-performing, matrixed team of Software Development Engineers in Test. Ensure a consistent "Quality First" culture while allowing for the speed and autonomy of embedded Scrum teams. 
+ Establish a single source of truth for quality metrics (e.g., DORA metrics, escaped defect rates, code coverage) across all of our platforms. 
+ Lead the implementation of Agentic AI to move beyond static scripts. Drive the adoption of AI agents that can autonomously discover bugs, generate test cases, and self-heal broken tests. 
+ Utilize machine learning to predict release risks and automate "Go/No-Go" decisions based on historical performance and real-time telemetry. 
+ Design and maintain the release "trains" for multiple backend Platforms and Mobile, ensuring backend dependencies are synchronized with Mobile app store deployments. 
+ Own the strategy and uptime for all lower environments (Dev, QA, UAT). Drive the transition toward ephemeral, containerized environments that reduce "environment drift" bottlenecks. 
+ Act as the primary bridge between Product, Engineering, Security and DevOps. You must be able to influence leaders across different legacy stacks and any newly created teams. 
+ Own enterprise-wide quality reporting and deliver executive-level insights. 
+ Partner with Architecture to evolve tooling, test frameworks, and CI/CD integrations. 
+ Establish rigorous release governance, scheduling, coordination, documentation, and communications. 
+ Define and enforce release criteria, quality gates, and rollback processes. 
+ Drive improvements across release predictability, throughput, quality, and speed. 
+ Build and foster a culture of accountability, excellence, and continuous improvement. 
+ Mentor QA leaders and build strong career paths and technical ladders. 
+ Manage a global talent strategy balancing FTE, nearshore, and offshore resources. 
+ Partner closely with Engineering Teams, Compliance, Security, Audit, Architecture and PMO to meet SOX/SOC2 and regulatory expectations. 
+ Participate in strategic planning for platform modernization and architectural evolution. 
+
+What You Will Need To Be Successful
+
+ 12+ years in Software Engineering/Quality leadership, with at least 5 years at the Director or AVP level. 
+ Proven track record of managing quality for large-scale distributed systems and complex mobile ecosystems (iOS/Android). 
+ Experience navigating the technical and cultural integration of acquired platforms. 
+ Deep understanding of LLMs and AI Agents (e.g., AutoGPT, LangChain frameworks) applied to the SDLC. We are looking for a leader who treats AI as a core engineer, not just a tool. 
+ Proficiency in CI/CD orchestration (Jenkins, GitLab CI, or GitHub Actions), cloud-native infrastructure (AWS/Azure/GCP), and mobile testing frameworks. 
+ Ability to "speak the language" of both legacy monoliths and modern microservices. 
+ A bias for action. You don't just identify bottlenecks; you clear them. 
+ Ability to translate complex quality data into actionable insights for C-suite stakeholders.

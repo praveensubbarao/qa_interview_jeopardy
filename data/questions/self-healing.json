@@ -1,0 +1,158 @@
+[
+  {
+    "id": "sh1",
+    "category": "self-healing",
+    "question": "What problem does self-healing test automation actually solve — and why is the correct framing important in interviews?",
+    "options": [
+      "Test execution speed — reducing overall CI/CD pipeline duration by removing slow manual test steps",
+      "Code coverage gaps — automatically generating tests for uncovered paths when coverage drops below a threshold",
+      "Maintenance cost — 30–50% of engineering time spent fixing broken tests rather than writing new coverage",
+      "Flaky test detection — identifying tests with intermittent failures before they block the pipeline"
+    ],
+    "answer": 2,
+    "explanation": "Most candidates say \"self-healing fixes broken locators.\" The correct answer is \"self-healing solves the maintenance cost problem.\" Lead with the business problem, not the technical mechanism."
+  },
+  {
+    "id": "sh2",
+    "category": "self-healing",
+    "question": "What are the five categories of test failures and the correct healing strategy for assertion failures specifically?",
+    "options": [
+      "Assertion failures should be auto-fixed — the AI updates the expected value to match the actual output",
+      "Assertion failures should be retried with a longer timeout — the value may change after additional processing",
+      "Assertion failures should trigger a rollback — the deployment that caused the assertion mismatch is reverted automatically",
+      "Assertion failures should always be escalated to human review — they are potential real bugs and must never be auto-fixed"
+    ],
+    "answer": 3,
+    "explanation": "If expected value no longer matches actual, that is the definition of a potential real bug. Auto-fixing the assertion would suppress a genuine defect signal — this is the most important limit of self-healing."
+  },
+  {
+    "id": "sh3",
+    "category": "self-healing",
+    "question": "What happens after a self-healing fix is applied — and why is this step critical?",
+    "options": [
+      "The fix is immediately committed to the repository and the pipeline continues without re-running the test",
+      "A human engineer reviews the fix within 24 hours before the test is allowed to re-run",
+      "The healed test re-runs to validate the fix did not create a false positive — if it passes, the fix is committed; if not, it escalates to human review",
+      "The test is quarantined for 48 hours to monitor for recurrence before being readmitted to the suite"
+    ],
+    "answer": 2,
+    "explanation": "The re-run validation step is what most candidates miss. Without it, a self-healing system may create false positives — tests that pass after healing while the underlying issue remains."
+  },
+  {
+    "id": "sh4",
+    "category": "self-healing",
+    "question": "What is a self-healing learning loop and what quality signal tells you it is working?",
+    "options": [
+      "A developer feedback loop where engineers rate healing decisions — tracked by feedback response rate",
+      "A retraining pipeline that continuously fine-tunes the healing model — tracked by model accuracy score",
+      "A vector database storing successful healing decisions; future similar failures retrieve the known fix — tracked by decreasing LLM call rate over time",
+      "A monitoring loop that checks system health — tracked by uptime percentage of the healing infrastructure"
+    ],
+    "answer": 2,
+    "explanation": "As the loop matures, the LLM becomes the fallback for novel failures rather than the primary path. If LLM call rate stays high, the failures are not accumulating reusable patterns — a structural instability worth investigating."
+  },
+  {
+    "id": "sh5",
+    "category": "self-healing",
+    "question": "How does API self-healing fundamentally differ from UI self-healing?",
+    "options": [
+      "API healing uses machine learning; UI healing uses rule-based pattern matching for element discovery",
+      "API healing is about contract governance — detecting schema divergence; UI healing is about element discovery — finding alternative stable locators",
+      "API healing is manual; UI healing is automated because locator changes are more frequent and predictable",
+      "API healing requires a separate tool; UI healing is built into modern test frameworks like Playwright"
+    ],
+    "answer": 1,
+    "explanation": "API failures are typically schema changes, auth token expiry, or service unavailability — requiring contract validation rather than alternative selector discovery."
+  },
+  {
+    "id": "sh6",
+    "category": "self-healing",
+    "question": "What is the technical process of the self-healing diagnostic system from failure to fix?",
+    "options": [
+      "Retry three times with exponential backoff → if still failing, quarantine the test → alert the QA team",
+      "Check the test log → compare to previous successful run → apply the most recent passing test's locators",
+      "Capture DOM snapshot, network trace, logs, screenshot → LLM classifies root cause → suggested fix is applied → test re-runs to validate",
+      "Match the failure to a known error pattern → apply the pre-defined fix from the healing rule library → commit automatically"
+    ],
+    "answer": 2,
+    "explanation": "The LLM classifier returns both a category and a suggested fix — for selector failures, alternative locators using ARIA role and visible text; for timing, a polling wait condition."
+  },
+  {
+    "id": "sh7",
+    "category": "self-healing",
+    "question": "What is the most important evaluation criterion when assessing commercial self-healing tools?",
+    "options": [
+      "Price and vendor reputation — the total cost of ownership over a 3-year contract",
+      "Dashboard quality and real-time monitoring capabilities for executive reporting",
+      "Framework compatibility — the tool must integrate with your existing Playwright/Selenium setup without requiring a full migration",
+      "Cloud provider support — the tool must work on AWS, Azure, and GCP to avoid vendor lock-in"
+    ],
+    "answer": 2,
+    "explanation": "Framework compatibility is the first gate — before evaluating failure category coverage, false positive rates, or audit trails. A great tool that requires full framework migration has a hidden cost that often exceeds its benefit."
+  },
+  {
+    "id": "sh8",
+    "category": "self-healing",
+    "question": "What is the primary ROI metric for self-healing automation, and what secondary metric signals a negative ROI scenario?",
+    "options": [
+      "Primary: number of tests automatically healed per sprint; negative ROI signal: fewer healed tests than expected",
+      "Primary: reduction in CI/CD pipeline duration; negative ROI signal: pipeline times increase after implementation",
+      "Primary: engineering hours reclaimed from fixing broken tests; negative ROI signal: high false positive rate — real bugs being suppressed",
+      "Primary: decrease in production defects; negative ROI signal: defect escape rate increases after implementation"
+    ],
+    "answer": 2,
+    "explanation": "Multiply the reclaimed engineering hours by average hourly rate for a dollar figure. A high false positive rate — where real bugs are suppressed as healed tests — converts positive ROI to negative."
+  },
+  {
+    "id": "se1",
+    "category": "self-healing",
+    "question": "When using GitHub Copilot in a Playwright integration test, what should you use to specify the AI-driven code suggestions for your tests?",
+    "options": [
+      "Python decorators",
+      "Java annotations",
+      "TypeScript type hints",
+      "JavaScript comments"
+    ],
+    "answer": 0,
+    "explanation": "GitHub Copilot leverages natural language processing (NLP) to suggest code completions. In a Playwright integration test, you would use Python decorators for specifying AI-driven code suggestions."
+  },
+  {
+    "id": "se2",
+    "category": "self-healing",
+    "question": "What is the primary purpose of performing a rolling upgrade of a container orchestration platform during a self-healing automation process?",
+    "options": [
+      "ensures high availability",
+      "provides backwards compatibility",
+      "minimizes downtime risk",
+      "reduces operational complexity"
+    ],
+    "answer": 2,
+    "explanation": "The correct answer minimizes downtime risk, as rolling upgrades are designed to avoid single points of failure and ensure continuous service delivery during the upgrade process."
+  },
+  {
+    "id": "se3",
+    "category": "self-healing",
+    "question": "What approach would you use to drive the quality strategy for large-scale, mission-critical utility systems in this role?",
+    "options": [
+      "Test Pyramid",
+      "Shift-Left Testing",
+      "Behavior-Driven Development (BDD)",
+      "Technical Debt Reduction"
+    ],
+    "answer": 1,
+    "explanation": "As a Functional Test Lead, implementing 'Shift-Left Testing' would involve moving some of the testing efforts closer to the beginning of the software development process, enabling catch-and-fix early on and reducing overall rework."
+  },
+  {
+    "id": "se4",
+    "category": "self-healing",
+    "question": "In self-healing automation, what is the primary purpose of creating a quality signal that tells you when it's working?",
+    "options": [
+      "To measure team velocity",
+      "To monitor defect density",
+      "To indicate when the learning loop has converged",
+      "To track project burndown"
+    ],
+    "answer": 2,
+    "explanation": "The explanation is about the self-healing concept, where it highlights the importance of quality signals to monitor progress. A quality signal tells you that the learning loop has converged, implying that the self-healing fix is effective."
+  }
+]

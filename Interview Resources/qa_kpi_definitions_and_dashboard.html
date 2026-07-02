@@ -1,0 +1,422 @@
+
+<h2 class="sr-only">Interactive QA KPI reference — definitions, formulas, targets, and a sample executive dashboard</h2>
+
+<div style="padding:1rem 0">
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem" id="tabBar">
+  <button onclick="showTab('efficiency')" id="tab-efficiency" style="padding:5px 14px;font-size:12px;font-weight:500;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-text-primary);color:var(--color-background-primary);cursor:pointer">Efficiency</button>
+  <button onclick="showTab('quality')" id="tab-quality" style="padding:5px 14px;font-size:12px;font-weight:500;border-radius:20px;border:0.5px solid var(--color-border-tertiary);background:transparent;color:var(--color-text-secondary);cursor:pointer">Quality</button>
+  <button onclick="showTab('risk')" id="tab-risk" style="padding:5px 14px;font-size:12px;font-weight:500;border-radius:20px;border:0.5px solid var(--color-border-tertiary);background:transparent;color:var(--color-text-secondary);cursor:pointer">Risk</button>
+  <button onclick="showTab('board')" id="tab-board" style="padding:5px 14px;font-size:12px;font-weight:500;border-radius:20px;border:0.5px solid var(--color-border-tertiary);background:transparent;color:var(--color-text-secondary);cursor:pointer">Executive board</button>
+</div>
+
+<div id="pane-efficiency">
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Automation coverage %</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)">Efficiency</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: out of every 100 test cases your team owns, how many run automatically without a human clicking anything? Higher = less manual work every release.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Automated test cases ÷ Total test cases) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Example</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">800 automated ÷ 1000 total = 80%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Industry target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">70–85% mature org</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Cadence</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Monthly to leadership</p>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:10px 0 0;border-top:0.5px solid var(--color-border-tertiary);padding-top:8px">Praveen story: Care.com went from ~30% to 80%+ automation coverage during the Playwright migration — that's the number to cite.</p>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Test execution time</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)">Efficiency</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: how long does the full test suite take to run? A 4-hour suite means developers wait half a workday for feedback. A 20-minute suite means they get feedback before their coffee gets cold.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">Time from pipeline trigger → all tests complete (minutes)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Smoke suite target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Under 10 min</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Regression target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Under 45 min</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Praveen result</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">60% reduction</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Manual testing hours saved per release</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)">Efficiency</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: before automation, how many engineer-hours did it take to manually test a release? Subtract what it takes now. That number, multiplied by salary cost, is the ROI you present to leadership.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Baseline manual hours − Current manual hours) per release cycle</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Example</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">200 hrs → 40 hrs = 160 hrs saved</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">ROI formula</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Hours saved × avg hourly rate</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Cadence</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Per release, rolling quarterly</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">CI/CD pipeline pass rate</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)">Efficiency</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: every time code is pushed, the pipeline runs. What percentage of those runs pass on first attempt without a human restarting them? Low pass rate = flaky tests = developers stop trusting the pipeline and start ignoring failures.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Pipeline runs passing on first attempt ÷ Total pipeline runs) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Industry target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Above 95%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Praveen result</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">90% improvement</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Red flag</p>
+        <p style="font-size:13px;color:var(--color-text-danger);margin:0">Below 85% = trust problem</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="pane-quality" style="display:none">
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Defect escape rate</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-success);color:var(--color-text-success)">Quality</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: out of every 10 bugs that exist in your product, how many did your testing process miss and let through to customers? This is the single most important quality KPI. Zero tolerance at American Tower — a bug in financial systems has compliance consequences.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Bugs found in production ÷ (Bugs found in testing + Bugs found in production)) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Example</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">5 prod bugs ÷ (45 + 5) = 10%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Industry target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Below 10%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Lower is better</p>
+        <p style="font-size:13px;color:var(--color-text-danger);margin:0">Above 20% = urgent action</p>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:10px 0 0;border-top:0.5px solid var(--color-border-tertiary);padding-top:8px">American Tower context: for Oracle EBS and Salesforce financial workflows, target below 2%. Any escape in billing or lease data is a compliance risk, not just a bug.</p>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Defect detection rate</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-success);color:var(--color-text-success)">Quality</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: the flip side of escape rate. Out of all the bugs that existed, what percentage did your testing find before release? Think of it as your batting average — how often does the test suite catch what it's supposed to catch.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Bugs found in testing ÷ (Bugs in testing + Bugs in production)) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Relationship to escape rate</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Detection rate = 100% − Escape rate</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Industry target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Above 90%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Cadence</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Per release, trending monthly</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Test flakiness rate</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-success);color:var(--color-text-success)">Quality</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: a flaky test is one that sometimes passes and sometimes fails on the exact same code — like a fire alarm that goes off randomly. Flaky tests destroy trust. When engineers see enough false alarms they start ignoring the pipeline — and real bugs slip through.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Tests with inconsistent results on same codebase ÷ Total automated tests) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Below 2%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Action trigger</p>
+        <p style="font-size:13px;color:var(--color-text-warning);margin:0">Above 5% = quarantine + fix sprint</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Cadence</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Weekly automated report</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Cost of quality (CoQ)</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-success);color:var(--color-text-success)">Quality</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: fixing a bug in production costs 30x more than fixing it in development. CoQ compares what you spend on prevention (testing, automation, reviews) versus what you spend on failure (production incidents, rework, support costs). The goal is to shift spend left.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">Prevention cost + Appraisal cost + Internal failure cost + External failure cost</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Good ratio</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0">70% prevention, 30% failure</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Bad ratio</p>
+        <p style="font-size:13px;color:var(--color-text-danger);margin:0">Mostly failure cost = reactive org</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Use it for</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Annual budget justification</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="pane-risk" style="display:none">
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Critical path coverage %</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-warning);color:var(--color-text-warning)">Risk</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: not all workflows are equal. A bug in your company logo is annoying. A bug in lease billing at American Tower is a financial and compliance emergency. Critical path coverage asks — are your most important, highest-risk workflows automated? 100% total coverage means nothing if your critical paths have gaps.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Critical workflows with automated coverage ÷ Total critical workflows defined) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">100% of critical paths</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">AMT critical paths</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Lease billing, tenant workflow, Oracle EBS</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">First 30-day action</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Define and document what "critical" means</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Release gate pass rate</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-warning);color:var(--color-text-warning)">Risk</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: before any code goes to production, it has to pass a quality gate — a set of automated tests that must all pass. This KPI tracks how often releases pass that gate on the first attempt. If it's low, either your code quality is poor or your gate is poorly designed.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">(Releases passing quality gate on first submission ÷ Total release attempts) × 100</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Above 90%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Too high (above 99%)</p>
+        <p style="font-size:13px;color:var(--color-text-warning);margin:0">Gate may be too loose — not catching enough</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Too low (below 70%)</p>
+        <p style="font-size:13px;color:var(--color-text-danger);margin:0">Dev process or code quality issue</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Mean time to detect (MTTD)</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-warning);color:var(--color-text-warning)">Risk</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: when a bug is introduced into the codebase, how long before your testing finds it? A bug introduced Monday that's caught by the pipeline Monday afternoon is cheap. The same bug found by a customer Friday is expensive. MTTD measures how quickly your safety net responds.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">Average time from bug introduction → automated test failure (hours)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">World class</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Under 1 hour (CI on every commit)</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Acceptable</p>
+        <p style="font-size:13px;color:var(--color-text-warning);margin:0">Same business day</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Problematic</p>
+        <p style="font-size:13px;color:var(--color-text-danger);margin:0">More than 24 hours</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <p style="font-size:14px;font-weight:500;margin:0">Mean time to recover (MTTR)</p>
+      <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-warning);color:var(--color-text-warning)">Risk</span>
+    </div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 10px;line-height:1.65">Plain english: when something does break in production, how quickly does the team restore normal service? This is less about preventing failure and more about resilience. American Tower runs 24/7 infrastructure — MTTR is a direct measure of operational risk.</p>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:10px;font-family:var(--font-mono);font-size:12px;color:var(--color-text-primary)">Average time from incident detection → service restored to normal (hours)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Industry target</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0;font-weight:500">Under 1 hour for P1</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">QA's role</p>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0">Hotfix regression suites that run in minutes</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px">
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:0 0 3px">Care.com result</p>
+        <p style="font-size:13px;color:var(--color-text-success);margin:0">Zero downtime on major migrations</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="pane-board" style="display:none">
+
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:12px 14px;margin-bottom:14px">
+    <p style="font-size:12px;color:var(--color-text-secondary);margin:0">Sample executive QA dashboard — American Tower context. This is how you'd present to IT leadership monthly.</p>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px">
+    <p style="font-size:13px;font-weight:500;margin:0 0 12px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:1px;font-size:11px">Tier 1 — Efficiency</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Automation coverage</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">78%</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">+8% vs last quarter</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Avg execution time</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-primary)">34 min</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Was 85 min last year</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">CI/CD pass rate</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">96%</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Target: above 95%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Manual hrs saved</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-primary)">320 hrs</p>
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:4px 0 0">This quarter</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px">
+    <p style="font-size:11px;font-weight:500;margin:0 0 12px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:1px">Tier 2 — Quality</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Defect escape rate</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">7%</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Target: below 10%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Detection rate</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">93%</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Target: above 90%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Flakiness rate</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-warning)">4.2%</p>
+        <p style="font-size:11px;color:var(--color-text-warning);margin:4px 0 0">Action: above 2% threshold</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Bugs pre vs post release</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-primary)">12 : 1</p>
+        <p style="font-size:11px;color:var(--color-text-secondary);margin:4px 0 0">Caught in testing vs production</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px">
+    <p style="font-size:11px;font-weight:500;margin:0 0 12px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:1px">Tier 3 — Risk</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Critical path coverage</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">100%</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">All 14 critical flows automated</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Release gate pass rate</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">91%</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Target: above 90%</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">Avg MTTD</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">47 min</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Target: under 1 hour</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin:0 0 4px">P1 MTTR</p>
+        <p style="font-size:24px;font-weight:500;margin:0;color:var(--color-text-success)">52 min</p>
+        <p style="font-size:11px;color:var(--color-text-success);margin:4px 0 0">Target: under 1 hour</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem">
+    <p style="font-size:11px;font-weight:500;margin:0 0 10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:1px">Action items this period</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-danger);color:var(--color-text-danger);white-space:nowrap;flex-shrink:0">Action</span>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0;line-height:1.5">Flakiness rate at 4.2% — above 2% threshold. 12 tests quarantined for root cause analysis this sprint.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-success);color:var(--color-text-success);white-space:nowrap;flex-shrink:0">On track</span>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0;line-height:1.5">Salesforce regression suite milestone complete — 3 critical tenant workflows now automated ahead of Spring release.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <span style="font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info);white-space:nowrap;flex-shrink:0">Next quarter</span>
+        <p style="font-size:13px;color:var(--color-text-primary);margin:0;line-height:1.5">Oracle EBS integration test suite — target 60% coverage by end of Q3.</p>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="sendPrompt('How would I build this KPI dashboard in n8n and connect it to Jira and GitHub Actions automatically?')" style="margin-top:14px;width:100%;padding:10px;font-size:13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-primary);cursor:pointer;text-align:left">How would I automate this dashboard with n8n and connect to Jira + GitHub Actions? ↗</button>
+</div>
+
+</div>
+
+<script>
+function showTab(name) {
+  ['efficiency','quality','risk','board'].forEach(function(t) {
+    document.getElementById('pane-'+t).style.display = t===name ? 'block' : 'none';
+    var btn = document.getElementById('tab-'+t);
+    if(btn) {
+      btn.style.background = t===name ? 'var(--color-text-primary)' : 'transparent';
+      btn.style.color = t===name ? 'var(--color-background-primary)' : 'var(--color-text-secondary)';
+      btn.style.borderColor = t===name ? 'var(--color-border-secondary)' : 'var(--color-border-tertiary)';
+    }
+  });
+}
+</script>

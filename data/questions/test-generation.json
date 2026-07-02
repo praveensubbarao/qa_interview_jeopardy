@@ -1,0 +1,223 @@
+[
+  {
+    "id": "tg1",
+    "category": "test-generation",
+    "question": "What are the five stages of an autonomous test generation pipeline?",
+    "options": [
+      "Ingestion, scenario identification, script generation, static review, and execution with triage",
+      "Planning, design, implementation, execution, and reporting — the standard SDLC phases adapted for AI",
+      "Parsing, templating, compilation, running, and alerting — the technical stages of code generation",
+      "Discovery, analysis, synthesis, validation, and deployment — the AI research pipeline adapted for QE"
+    ],
+    "answer": 0,
+    "explanation": "At Care.com this pipeline reduced manual authoring time by 60% across 40 engineers — the key was making the output match team conventions, not generic AI boilerplate."
+  },
+  {
+    "id": "tg2",
+    "category": "test-generation",
+    "question": "What are the three main risks of autonomous test generation?",
+    "options": [
+      "High cost, slow execution, and framework incompatibility — the operational risks of AI integration",
+      "Hallucinated confidence (tests that pass but assert nothing), coverage illusion (high count, low real coverage), and maintenance debt (tests nobody understands)",
+      "False negatives, flaky tests, and network timeouts — the standard execution risks amplified at scale",
+      "Merge conflicts, version mismatch, and code duplication — the source control risks of AI-generated code"
+    ],
+    "answer": 1,
+    "explanation": "A smaller trusted suite beats a large doubted one — 200 tests the team believes in beats 2,000 they have stopped looking at."
+  },
+  {
+    "id": "tg3",
+    "category": "test-generation",
+    "question": "What is the most effective technique for ensuring AI-generated tests match a team's coding conventions?",
+    "options": [
+      "Run a linter after generation and auto-fix style issues — enforcing format without slowing the pipeline",
+      "Ask developers to manually rewrite generated tests to match conventions as part of code review",
+      "Use a code formatter to standardise all generated output to a neutral style",
+      "Provide few-shot examples — actual tests from the suite — in the generation prompt so the model learns style from examples, not instructions"
+    ],
+    "answer": 3,
+    "explanation": "Include three exemplar tests (happy path, negative, edge case) from the actual suite. The model learns naming convention, assertion style, and structure from examples rather than defaulting to generic boilerplate."
+  },
+  {
+    "id": "tg4",
+    "category": "test-generation",
+    "question": "What is the correct approach when a requirement is ambiguous or incomplete before test generation?",
+    "options": [
+      "Generate for the happy path only and skip edge cases until specifications are finalized",
+      "Add a spec quality gate that scores requirements for clarity and returns ambiguous specs to authors before generation begins",
+      "Proceed with generation and flag the output as low-confidence so reviewers know to scrutinize it",
+      "Require developers to write test cases manually for any ambiguous requirement before AI generation runs"
+    ],
+    "answer": 1,
+    "explanation": "A clarity gate prevents the most dangerous failure: tests confidently covering the wrong behavior because the spec was misinterpreted. It also improves upstream requirement quality over time."
+  },
+  {
+    "id": "tg5",
+    "category": "test-generation",
+    "question": "What is few-shot prompting and why does it dramatically improve first-generation test quality?",
+    "options": [
+      "Sending multiple prompts in rapid succession to improve output accuracy through iteration",
+      "Providing concrete examples of the desired output before asking the model to generate — the model learns style from examples rather than instructions",
+      "Limiting the LLM's context window to only the most relevant few sentences to improve focus",
+      "Prompting the model with only a few words for maximum processing speed and lowest token cost"
+    ],
+    "answer": 1,
+    "explanation": "Few-shot examples from the actual suite reduce human review burden because the output is already close to what the team expects — it is the difference between 95% acceptance and 60% rejection."
+  },
+  {
+    "id": "tg6",
+    "category": "test-generation",
+    "question": "On what four dimensions do you measure the quality of AI-generated test cases?",
+    "options": [
+      "Execution speed, pass rate, code coverage percentage, and line count — the standard QA metrics applied to generation",
+      "Token cost, generation time, format compliance, and file size — the efficiency metrics for AI test pipelines",
+      "Correctness, assertion depth, locator stability, and coverage additionality — each measured to catch a different failure mode",
+      "Number generated, categories covered, review turnaround time, and defect rate — the throughput and quality balance"
+    ],
+    "answer": 2,
+    "explanation": "A static analysis agent automates the first three dimensions before tests enter the review queue; human acceptance rate tracks overall quality and signals when prompts need tuning."
+  },
+  {
+    "id": "tg7",
+    "category": "test-generation",
+    "question": "What is the difference between test case generation and test script generation, and why does the two-stage approach matter?",
+    "options": [
+      "Test cases are written by testers; test scripts are written by developers — no technical difference in what they produce",
+      "Test cases cover UI; test scripts cover APIs — splitting by test layer rather than abstraction level",
+      "Test cases produce human-readable scenarios; test scripts produce executable code — validated with stakeholders before being converted to code",
+      "There is no meaningful difference — \"test case\" and \"test script\" are interchangeable terms in modern QA"
+    ],
+    "answer": 2,
+    "explanation": "Generating cases first and validating them with stakeholders before generating scripts avoids the most common AI QE mistake: going directly from spec to code and skipping the validation step."
+  },
+  {
+    "id": "tg8",
+    "category": "test-generation",
+    "question": "When test generation is integrated into a CI/CD workflow, should the gate be advisory or blocking at the PR stage?",
+    "options": [
+      "Always blocking — no merge should be allowed without complete test coverage for the changed code",
+      "Always advisory — tests should never be allowed to block development delivery",
+      "Advisory at the PR stage — tests flag gaps without blocking merges; follow-up tickets track the gap",
+      "Blocking for frontend changes; advisory for backend changes where tests are harder to generate"
+    ],
+    "answer": 2,
+    "explanation": "An advisory gate prevents delivery being held hostage to generation quality, while follow-up tickets ensure gaps are tracked and addressed rather than silently ignored."
+  },
+  {
+    "id": "tg9",
+    "category": "test-generation",
+    "question": "What is Chain-of-Thought prompting and when is it most useful for QE test generation?",
+    "options": [
+      "Chaining multiple prompts together in sequence to build up context for complex generation tasks",
+      "Asking the LLM to reason through failure modes step-by-step before generating test cases — best for complex, high-risk scenarios",
+      "Providing a chain of test steps for the model to convert into executable automation code",
+      "Connecting multiple AI agents in sequence so each reviews the previous agent's output"
+    ],
+    "answer": 1,
+    "explanation": "Chain-of-Thought produces more thorough edge case coverage at the cost of higher token usage — use it for complex scenarios and standard prompting for routine happy-path generation."
+  },
+  {
+    "id": "tg10",
+    "category": "test-generation",
+    "question": "How should ownership and maintenance of AI-generated tests be structured?",
+    "options": [
+      "Automatically maintained by the same AI system that generated them — no human involvement after generation",
+      "Owned by the QA lead who governs the entire test generation and maintenance process",
+      "Left unowned — anyone can modify AI-generated tests as needed when they break",
+      "Tagged as drafts; a named engineer formally adopts each test within one sprint, taking full ownership"
+    ],
+    "answer": 3,
+    "explanation": "If AI maintains everything and humans maintain nothing, engineers stop understanding the suite and cannot debug failures when the AI cannot self-heal them. Adoption rate is itself a monthly quality signal."
+  },
+  {
+    "id": "te1",
+    "category": "test-generation",
+    "question": "What is Playwright primarily used for?",
+    "options": [
+      "Unit testing",
+      "End-to-end browser testing",
+      "Load testing",
+      "API testing"
+    ],
+    "answer": 1,
+    "explanation": "Playwright is a browser automation framework for end-to-end testing."
+  },
+  {
+    "id": "te2",
+    "category": "test-generation",
+    "question": "What technology would you use to perform API testing if embedded on a sprint team as an individual contributor?",
+    "options": [
+      "Selenium",
+      "Playwright",
+      ".NET Core",
+      "Azure DevOps"
+    ],
+    "answer": 1,
+    "explanation": "The correct answer is option: 'Playwright'. This shows practical knowledge of using preferred technologies, such as Playwright or C#, in API testing."
+  },
+  {
+    "id": "te3",
+    "category": "test-generation",
+    "question": "What is an effective technique for enhancing automation efficiency, reliability, and maintainability in a test automation framework?",
+    "options": [
+      "Code refactoring",
+      "Automated testing of the automation scripts",
+      "Integrating code reviews with CI/CD pipelines",
+      "Analyzing and optimizing workflow processes"
+    ],
+    "answer": 3,
+    "explanation": "Analyzing and optimizing workflow processes helps identify potential bottlenecks, reduces manual intervention, and streamlines automation tasks. This is a key aspect of championing automated testing best practices across teams."
+  },
+  {
+    "id": "te4",
+    "category": "test-generation",
+    "question": "When integrating GitHub Copilot with a Playwright test, which option correctly sets the number of concurrent tasks?",
+    "options": [
+      "Task queue capacity",
+      "Worker pool size",
+      "Task timeout duration",
+      "Concurrency level"
+    ],
+    "answer": 1,
+    "explanation": "The 'worker pool size' configuration option in GitHub Copilot controls the number of concurrent tasks that can be executed simultaneously."
+  },
+  {
+    "id": "te5",
+    "category": "test-generation",
+    "question": "What is a key consideration when designing a cloud architecture discussion for a proof-of-concept that involves multiple PoCs?",
+    "options": [
+      "Interoperability between different cloud services",
+      "Security measures for data transfer and storage",
+      "Scalability to accommodate varying load scenarios",
+      "Ease of deployment for DevOps teams"
+    ],
+    "answer": 2,
+    "explanation": "When designing a cloud architecture discussion for a proof-of-concept, scalability is crucial as it ensures the PoC can handle varying loads and meet the customer's needs. This concept is relevant to Dynatrace's product offerings and is an important consideration when collaborating with sales representatives."
+  },
+  {
+    "id": "te6",
+    "category": "test-generation",
+    "question": "What is the primary purpose of the Functional Test Lead role at National Grid?",
+    "options": [
+      "Define test strategies for cloud architecture",
+      "Ensure 100% billing accuracy across residential and industrial customer classes",
+      "Lead end-to-end functional testing strategy for Front Office and Back Office systems",
+      "Develop comprehensive test scenarios and acceptance criteria for utility regulatory requirements"
+    ],
+    "answer": 2,
+    "explanation": "According to the job description, the Functional Test Lead role is responsible for leading the end-to-end functional testing strategy for Front Office (Customer Portals, CRM) and Back Office (Billing, Invoicing, Financials) systems."
+  },
+  {
+    "id": "te7",
+    "category": "test-generation",
+    "question": "To set up automated tests for a pact service, what is the correct way to specify the consumer contract?",
+    "options": [
+      "By using the `pact configure` command",
+      "By editing the `pact.json` file directly",
+      "By creating a custom Ruby script",
+      "By using a third-party tool like Codeception"
+    ],
+    "answer": 0,
+    "explanation": "The correct approach to setting up automated tests for a pact service is by using the `pact configure` command, which allows you to specify the consumer contract and generate the necessary files."
+  }
+]

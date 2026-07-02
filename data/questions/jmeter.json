@@ -1,0 +1,691 @@
+[
+  {
+    "id": "jm1",
+    "category": "jmeter",
+    "question": "What is the correct JMeter CLI command to run a test plan in non-GUI mode, save results, and generate an HTML dashboard report?",
+    "options": [
+      "jmeter --headless --plan TestPlan.jmx --out /output/report",
+      "jmeter -gui false -t TestPlan.jmx -report /output",
+      "jmeter -n -t TestPlan.jmx -l results.jtl -e -o /output/report",
+      "jmeter -run TestPlan.jmx --html /output/report --log results.jtl"
+    ],
+    "answer": 2,
+    "explanation": "The -n flag enables non-GUI mode, -t specifies the test plan, -l sets the results log file (.jtl), -e triggers report generation, and -o sets the output folder. This is the standard CI/CD invocation pattern."
+  },
+  {
+    "id": "jm2",
+    "category": "jmeter",
+    "question": "Which JMeter component correctly models 500 virtual users starting over 100 seconds and running for 10 minutes?",
+    "options": [
+      "HTTP Request Sampler with 500 connections and 600s timeout",
+      "Thread Group with Threads=500, Ramp-Up=100s, Duration=600s",
+      "Constant Throughput Timer set to 500 req/min for 600s",
+      "Transaction Controller wrapping 500 samplers with a 10-minute loop"
+    ],
+    "answer": 1,
+    "explanation": "The Thread Group is the container for virtual users. Threads=500 sets the user count, Ramp-Up=100s adds 5 users/second, and Duration=600s runs the test for 10 minutes. The Constant Throughput Timer controls TPS, not user count."
+  },
+  {
+    "id": "jm3",
+    "category": "jmeter",
+    "question": "What is correlation in JMeter and how is it typically implemented?",
+    "options": [
+      "Synchronizing multiple thread groups to fire simultaneously using a barrier",
+      "Calculating statistical correlation between response time and error rate",
+      "Sharing test data across threads using a common CSV file",
+      "Capturing a dynamic server response value (e.g., session token) with a Post-Processor extractor and injecting it into subsequent requests"
+    ],
+    "answer": 3,
+    "explanation": "Correlation uses a Regular Expression or JSON Extractor Post-Processor to capture dynamic values like session tokens or trade reference IDs from responses, then references them in later requests via ${variableName}. Without correlation, stateful workflows fail with 401/403 errors."
+  },
+  {
+    "id": "jm4",
+    "category": "jmeter",
+    "question": "What is the key difference between a Load Test, Stress Test, and Soak Test?",
+    "options": [
+      "Load tests use real users; stress tests use synthetic load; soak tests use recorded scripts",
+      "Load tests run under 1 minute; stress tests run 1-8 hours; soak tests run 24+ hours",
+      "Load tests validate at expected volume; stress tests push beyond capacity to find the breaking point; soak tests run sustained load to detect memory leaks and connection exhaustion",
+      "Load tests check throughput only; stress tests check error rate; soak tests check latency"
+    ],
+    "answer": 2,
+    "explanation": "Load tests verify SLA compliance at expected concurrency. Stress tests increase load until the system fails, identifying the breaking point and failure mode. Soak tests run at steady load for 8-12+ hours to expose memory leaks, connection pool exhaustion, and performance degradation over time."
+  },
+  {
+    "id": "jm5",
+    "category": "jmeter",
+    "question": "What is the difference between JMeter Variables (vars) and Properties (props)?",
+    "options": [
+      "Variables are stored in .properties files on disk; properties are stored in heap memory",
+      "Variables persist across test runs automatically; properties reset each run",
+      "Variables are local to a single thread; properties are shared globally across all threads and can be set from the command line with -J flags",
+      "Variables can only hold string values; properties support all Java data types"
+    ],
+    "answer": 2,
+    "explanation": "vars.put/get is thread-local — each virtual user has its own copy. props.put/get is JVM-global, visible to all threads. Properties set via jmeter -Jenv=uat enable a single test plan to target different environments without modification."
+  },
+  {
+    "id": "jm6",
+    "category": "jmeter",
+    "question": "When should you use a JSON Extractor instead of a Regular Expression Extractor?",
+    "options": [
+      "Always use JSON Extractor since it is faster for all response types",
+      "Use JSON Extractor for JSON API responses using JSONPath expressions; use RegEx Extractor for HTML, XML, plain-text, or binary responses",
+      "Use JSON Extractor only when the response is under 1 KB; use RegEx for larger payloads",
+      "JSON Extractor works only with GET requests; RegEx Extractor works with POST responses"
+    ],
+    "answer": 1,
+    "explanation": "JSON Extractor uses JSONPath (e.g., $.data.trade.status) and is purpose-built for JSON APIs. Regular Expression Extractor is more flexible and handles HTML forms, XML, FIX protocol messages, and any text-based format where JSONPath is not applicable."
+  },
+  {
+    "id": "jm7",
+    "category": "jmeter",
+    "question": "Why should JSR223 with Groovy always be preferred over the BeanShell sampler in load tests?",
+    "options": [
+      "Groovy has better IDE support than BeanShell so scripts are easier to write",
+      "BeanShell requires a separate license for commercial use while Groovy is free",
+      "JSR223/Groovy scripts are compiled and cached at runtime, making them significantly faster under concurrent load; BeanShell is interpreted on every invocation",
+      "BeanShell cannot access JMeter variables, while Groovy has full access to vars and props"
+    ],
+    "answer": 2,
+    "explanation": "JMeter compiles and caches Groovy scripts for reuse across thread iterations, providing near-Java performance. BeanShell interprets scripts on every call, introducing CPU overhead that skews latency results and limits maximum achievable TPS in large tests."
+  },
+  {
+    "id": "jm8",
+    "category": "jmeter",
+    "question": "How does the Constant Throughput Timer control test load, and how do you configure it for exactly 50 TPS?",
+    "options": [
+      "Set Thread Count to 50 and Ramp-Up to 1 second in the Thread Group",
+      "Set Target throughput to 50 in the timer — the unit is requests per second",
+      "Set Target throughput to 3000 in the timer — the unit is requests per minute (50 x 60 = 3000)",
+      "Set Loop Count to 50 and Duration to 60 seconds to achieve 50 TPS"
+    ],
+    "answer": 2,
+    "explanation": "The Constant Throughput Timer's Target throughput field is in requests-per-minute. To achieve 50 TPS: 50 x 60 = 3000. Setting 'Calculate Throughput Based On: All active threads' distributes this rate across all threads in the group."
+  },
+  {
+    "id": "jm9",
+    "category": "jmeter",
+    "question": "What does the Transaction Controller do, and why is it essential for SLA testing?",
+    "options": [
+      "It wraps JDBC samplers to ensure database operations are atomic",
+      "It groups multiple HTTP samplers into a single logical transaction, reporting combined end-to-end response time as one sample",
+      "It controls the order of HTTP requests to prevent race conditions",
+      "It rolls back test data if any sampler in the group fails"
+    ],
+    "answer": 1,
+    "explanation": "SLAs are typically defined at the business transaction level (e.g., 'end-to-end trade submission < 500ms'), not per individual HTTP request. The Transaction Controller aggregates login + submit + acknowledgement into one measurement, so Aggregate Report shows the correct end-to-end figure."
+  },
+  {
+    "id": "jm10",
+    "category": "jmeter",
+    "question": "In JMeter distributed testing, what are the roles of the Controller and Agent (remote) machines?",
+    "options": [
+      "The controller generates load; agents monitor server metrics on the target application hosts",
+      "Agents record the test scripts; the controller replays them across multiple machines",
+      "One controller orchestrates multiple remote agents (jmeter-server), each running a copy of the test plan and generating a portion of the total load",
+      "Each agent tests a different endpoint; the controller aggregates results from all agents into one report"
+    ],
+    "answer": 2,
+    "explanation": "The controller sends the test plan to all agents via RMI (port 1099). Each agent executes the full plan against the target. With 3 agents x 500 threads each = 1500 concurrent virtual users. The controller merges .jtl results at the end. Use jmeter -n -t plan.jmx -r to run on all agents in remote_hosts."
+  },
+  {
+    "id": "jm11",
+    "category": "jmeter",
+    "question": "Which JVM setting combination is recommended for JMeter running a 10,000-thread load test?",
+    "options": [
+      "-Xms512m -Xmx1g -XX:+UseSerialGC (minimize footprint for high thread counts)",
+      "-Xms4g -Xmx8g -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -server",
+      "-Xms2g -Xmx2g -XX:+UseParallelGC (fixed heap prevents GC overhead)",
+      "-Xms8g -Xmx8g -XX:+UseConcMarkSweepGC -XX:+DisableExplicitGC"
+    ],
+    "answer": 1,
+    "explanation": "Large heap (Xmx8g) prevents OutOfMemoryError with thousands of threads. G1GC provides predictable pause times under high concurrency. MaxGCPauseMillis=100 avoids GC pauses that artificially inflate response times. The -server flag enables JIT optimizations for long-running processes."
+  },
+  {
+    "id": "jm12",
+    "category": "jmeter",
+    "question": "Which listeners should be enabled during a production load test run and which should be disabled?",
+    "options": [
+      "Enable all listeners to capture maximum data; disable only View Results Tree",
+      "Enable View Results Tree and Aggregate Report; disable Backend Listener to reduce network overhead",
+      "Enable only Backend Listener (streaming to InfluxDB/Grafana) and Simple Data Writer; disable View Results Tree — it is a memory hog that stores every request/response",
+      "Enable Aggregate Report only; all other listeners add too much overhead for accurate results"
+    ],
+    "answer": 2,
+    "explanation": "View Results Tree stores request and response bodies in memory for every sample — at high TPS this causes OutOfMemoryError and skews results. Backend Listener streams metrics to InfluxDB/Grafana in real time without memory accumulation. Simple Data Writer writes to .jtl for post-test analysis."
+  },
+  {
+    "id": "jm13",
+    "category": "jmeter",
+    "question": "How do you integrate JMeter into a Jenkins CI/CD pipeline with a pass/fail performance gate?",
+    "options": [
+      "Install JMeter GUI on the Jenkins agent and record tests using the proxy recorder plugin",
+      "Use the Jenkins JMeter plugin to set thread counts and compare results to the previous build automatically",
+      "Run JMeter in non-GUI mode from a shell step, then use the Performance Plugin (perfReport) to fail the build if error rate > threshold or p95 > SLA",
+      "Push results to a shared S3 bucket and trigger a Lambda function to evaluate thresholds after the Jenkins job completes"
+    ],
+    "answer": 2,
+    "explanation": "The declarative pipeline runs 'jmeter -n -t ...' in a sh step, then 'perfReport errorUnstableThreshold: 2, errorFailedThreshold: 5, sourceDataFiles: results.jtl' evaluates the .jtl. The build fails or becomes unstable based on error rate and latency, creating a performance regression gate."
+  },
+  {
+    "id": "jm14",
+    "category": "jmeter",
+    "question": "What does the JDBC Sampler require before it can execute SQL queries in a JMeter test?",
+    "options": [
+      "A JSR223 Pre-Processor that establishes the connection before each request",
+      "A JDBC Connection Configuration element with the connection URL, driver class, credentials, and a Variable Name that the sampler references",
+      "An HTTP Header Manager with the database connection string in the Authorization header",
+      "A CSV file containing the JDBC URL and credentials so each thread uses a different database connection"
+    ],
+    "answer": 1,
+    "explanation": "JDBC Connection Configuration defines the pool (URL, driver, username, password, max connections) and binds it to a Variable Name (e.g., 'myDB'). The JDBC Sampler then references that name to borrow a connection from the pool. Without this config element, the sampler has no connection to use."
+  },
+  {
+    "id": "jm15",
+    "category": "jmeter",
+    "question": "What is the Apdex score and how is it calculated for a system with T=500ms, 8000 satisfied, 1500 tolerating, and 500 frustrated responses out of 10,000 total?",
+    "options": [
+      "Apdex = Satisfied / Total = 8000 / 10000 = 0.80",
+      "Apdex = (Satisfied + Tolerating) / Total = (8000 + 1500) / 10000 = 0.95",
+      "Apdex = (Satisfied + Tolerating/2) / Total = (8000 + 750) / 10000 = 0.875",
+      "Apdex = (Satisfied - Frustrated) / Total = (8000 - 500) / 10000 = 0.75"
+    ],
+    "answer": 2,
+    "explanation": "Apdex formula: (Satisfied + Tolerating/2) / Total. Satisfied = response <= T, Tolerating = T < response <= 4T, Frustrated = response > 4T. Result: (8000 + 1500/2) / 10000 = 8750/10000 = 0.875 — rated 'Good' (0.85-0.94 range). A score >= 0.85 is a common release gate."
+  },
+  {
+    "id": "jm16",
+    "category": "jmeter",
+    "question": "What are the key performance metrics in the Aggregate Report, and what SLA targets apply to financial trade APIs?",
+    "options": [
+      "Only Average and Max matter; percentiles are statistical noise that varies between runs",
+      "Throughput (TPS >= 500), Average (< 300ms), p90 (< 800ms), p95 (< 1200ms), p99 (< 2000ms), Error Rate (< 0.1%)",
+      "Total Samples and Error Count are the only metrics required to assess SLA compliance",
+      "p50 (median) is the primary SLA metric; high percentiles are only relevant for real-time trading systems"
+    ],
+    "answer": 1,
+    "explanation": "SLAs for financial APIs are typically defined at high percentiles: p95 < 1200ms (trade inquiry), p99 < 2000ms (trade submission), Error Rate < 0.1%. Average response time alone hides tail latency caused by GC pauses, lock contention, or slow DB queries."
+  },
+  {
+    "id": "jm17",
+    "category": "jmeter",
+    "question": "When analyzing JMeter results you see p99 >> p95 but p95 is within SLA. What does this pattern indicate?",
+    "options": [
+      "The system is healthy — p99 will always be higher than p95 by definition, this is expected",
+      "The network connection between JMeter and the server is unstable, causing occasional packet loss",
+      "Long-tail latency caused by JVM GC pauses, database lock contention, or a slow-path code branch affecting a small percentage of requests",
+      "The thread ramp-up is too aggressive, causing the first wave of users to queue behind the last wave"
+    ],
+    "answer": 2,
+    "explanation": "A wide gap between p95 and p99 signals long-tail latency: a small percentage of requests experience dramatically worse response times. Root causes include Stop-The-World GC pauses, database deadlocks, connection pool starvation, or a slow code path hit by edge-case inputs."
+  },
+  {
+    "id": "jm18",
+    "category": "jmeter",
+    "question": "How do you test REST API pagination in JMeter where each response contains a 'hasNextPage' flag?",
+    "options": [
+      "Set Loop Count in the Thread Group equal to the expected number of pages",
+      "Use a Random Controller to pick different page numbers and merge results",
+      "Use a While Controller with a Groovy condition checking hasNextPage, a JSON Extractor to capture the flag after each request, and a JSR223 Post-Processor to increment the page counter",
+      "Use a CSV Data Set Config listing all page numbers and set Stop Thread on EOF to true"
+    ],
+    "answer": 2,
+    "explanation": "Pagination requires dynamic loop control: initialize pageNum=1 and hasMore=true, then use a While Controller with condition ${__groovy(vars.get('hasMore') == 'true')}. Each iteration fetches the next page, the JSON Extractor captures hasNextPage, and a Post-Processor increments the page counter until exhausted."
+  },
+  {
+    "id": "jm19",
+    "category": "jmeter",
+    "question": "How do you run JMeter workers at scale using Kubernetes for a cloud load test?",
+    "options": [
+      "Deploy the JMeter GUI in a Kubernetes pod and record tests against the target service cluster",
+      "Use a Kubernetes CronJob that runs JMeter on a schedule using a shared PersistentVolume for test plans",
+      "Deploy multiple jmeter-server worker pods, dynamically gather their Pod IPs, and run the controller with jmeter -n -t plan.jmx -R <worker-IPs> to distribute load across all workers",
+      "Package the .jmx file as a ConfigMap and use a Kubernetes Job with initContainers to inject the test plan at runtime"
+    ],
+    "answer": 2,
+    "explanation": "The Kubernetes pattern uses a Deployment of jmeter-server worker pods (each exposing RMI port 1099). The master queries kubectl for worker Pod IPs, then executes: WORKERS=$(kubectl get pods -l app=jmeter-worker -o jsonpath='{.items[*].status.podIP}' | tr ' ' ',') && jmeter -n -t plan.jmx -R $WORKERS -l results.jtl"
+  },
+  {
+    "id": "jm20",
+    "category": "jmeter",
+    "question": "Which combination represents JMeter best practices for an enterprise financial performance test?",
+    "options": [
+      "Run in GUI mode for easy monitoring, enable all listeners, hard-code test data in the script, use BeanShell for complex logic",
+      "Run non-GUI (-n), parameterize environments via -J flags, store test data in CSV, use JSR223/Groovy, tune JVM heap, disable View Results Tree, stream metrics to Grafana, implement correlation for all dynamic tokens",
+      "Run performance tests only in a dedicated performance environment — never in CI/CD since load tests slow the pipeline",
+      "Use a single Thread Group for all user types and rely on Random Controller to simulate mixed workflows"
+    ],
+    "answer": 1,
+    "explanation": "Enterprise financial systems require: non-GUI mode, parameterized environments (SIT/UAT/PROD), CSV data (unique IDs per virtual user), Groovy (compiled scripts), proper JVM tuning, no View Results Tree (memory), real-time Grafana monitoring, and correlation for stateful APIs. These practices ensure accurate, reproducible, maintainable results."
+  },
+  {
+    "id": "jm21",
+    "category": "jmeter",
+    "question": "What are the core components of a JMeter Test Plan in their correct hierarchical order?",
+    "options": [
+      "Test Plan > Sampler > Thread Group > Config Element > Listener",
+      "Test Plan > Thread Group > Samplers, Logic Controllers, Config Elements, Pre/Post-Processors, Assertions, Listeners",
+      "Thread Group > Test Plan > Sampler > Assertion > Listener",
+      "Test Plan > Config Element > Thread Group > Sampler > Listener"
+    ],
+    "answer": 1,
+    "explanation": "The Test Plan is the root container. Thread Groups define virtual users and sit directly under it. Under each Thread Group: Samplers send requests, Logic Controllers direct flow, Config Elements set defaults, Pre/Post-Processors transform data, Assertions validate responses, and Listeners collect results. This hierarchy governs scope and execution order."
+  },
+  {
+    "id": "jm22",
+    "category": "jmeter",
+    "question": "How do you configure an HTTP Request Sampler for a POST request with a JSON body?",
+    "options": [
+      "Set Method=POST, add the JSON to the Path field, and add Content-Type header via the Sampler's Headers tab",
+      "Set Method=POST, enter the JSON body in the Body Data tab, and add an HTTP Header Manager with Content-Type: application/json",
+      "Use a JSR223 Pre-Processor to build the request body and pass it to the sampler via vars.put('body',...)",
+      "Set Method=POST and add the JSON fields as individual Parameters rows — JMeter auto-encodes them as JSON"
+    ],
+    "answer": 1,
+    "explanation": "In the HTTP Request Sampler: select Method=POST, click the 'Body Data' tab and paste or parameterize your JSON (e.g., {\"tradeId\": \"${tradeId}\"}). Add an HTTP Header Manager scoped to the sampler or Thread Group with Content-Type: application/json. Using the Parameters tab sends form-encoded data, not JSON."
+  },
+  {
+    "id": "jm23",
+    "category": "jmeter",
+    "question": "How does CSV Data Set Config enable data-driven testing, and what does 'Sharing Mode: All Threads' mean?",
+    "options": [
+      "CSV Data Set Config loads all rows into memory at startup; All Threads means every thread reads every row",
+      "CSV Data Set reads one row per thread per iteration; All Threads means all threads share a single file pointer — each thread gets the next unused row, preventing duplicate data across concurrent users",
+      "Sharing Mode: All Threads causes all virtual users to read the same row simultaneously — useful for simulating identical concurrent users",
+      "CSV Data Set Config only works with Get requests; POST requests require JSR223 to read CSV files"
+    ],
+    "answer": 1,
+    "explanation": "With Sharing Mode: All Threads, a single file pointer advances globally. Thread 1 reads row 1, Thread 2 reads row 2, etc. — each virtual user gets a unique data row. With 'Current Thread' mode, each thread gets its own pointer and re-reads from the start. Recycle on EOF=true loops the file; Stop Thread on EOF=true ends threads when data runs out."
+  },
+  {
+    "id": "jm24",
+    "category": "jmeter",
+    "question": "How do you parameterize the base URL and port so the same .jmx file targets SIT, UAT, or PROD without editing the plan?",
+    "options": [
+      "Create three separate .jmx files — one per environment — and select the correct one in Jenkins",
+      "Add an HTTP Request Defaults Config Element with Protocol=${protocol}, Server=${host}, Port=${port} and set defaults in User Defined Variables; override at runtime with -Jhost=api-uat.example.com",
+      "Hard-code the UAT URL as default and add If Controllers to switch URLs based on a thread number range",
+      "Use the JMeter Test Fragment element to swap environment configs at runtime"
+    ],
+    "answer": 1,
+    "explanation": "HTTP Request Defaults sets the base URL for all samplers in scope. User Defined Variables define protocol=https, host=api-sit.example.com, port=443 as defaults. CI/CD overrides them: jmeter -n -t plan.jmx -Jhost=api-uat.example.com -Jport=8443. Samplers use ${protocol}, ${host}, ${port} and never need editing between environments."
+  },
+  {
+    "id": "jm25",
+    "category": "jmeter",
+    "question": "What types of assertions does JMeter support, and when would you use a JSR223 Assertion over a Response Assertion?",
+    "options": [
+      "JMeter only supports Response Assertion and Duration Assertion — all other types require plugins",
+      "Response Assertion checks text/codes; Duration Assertion checks latency; Size Assertion checks bytes; JSON Assertion checks JSONPath values; JSR223 Assertion uses Groovy for complex multi-field validation logic that standard assertions cannot express",
+      "Response Assertion and JSON Assertion are identical — JSON Assertion just adds JSONPath syntax sugar",
+      "JSR223 Assertion is only used to set custom HTTP response codes; all content validation uses Response Assertion"
+    ],
+    "answer": 1,
+    "explanation": "Built-in assertions: Response (body/code/headers), Duration (SLA enforcement), Size (non-empty check), JSON (JSONPath field value). JSR223 Assertion with Groovy handles conditions like: 'fail if tradeId is missing AND status is not PENDING' — compound logic impossible with a single standard assertion. Use it sparingly as it adds CPU overhead per sample."
+  },
+  {
+    "id": "jm26",
+    "category": "jmeter",
+    "question": "How do you handle OAuth2 JWT authentication in JMeter, including token refresh for long soak tests?",
+    "options": [
+      "Hard-code the JWT token in an HTTP Header Manager — tokens for test environments typically never expire",
+      "Use a CSV file containing pre-generated tokens and rotate them per thread via CSV Data Set Config",
+      "POST to the /oauth/token endpoint, extract the access_token with JSON Extractor, inject it via HTTP Header Manager as 'Bearer ${access_token}', and use a JSR223 Pre-Processor to re-authenticate when token age exceeds the expiry window",
+      "Add the client credentials to the HTTP Authorization Manager — JMeter handles OAuth2 token negotiation automatically"
+    ],
+    "answer": 2,
+    "explanation": "Step 1: HTTP Request POST /oauth/token with client_id and client_secret. Step 2: JSON Extractor captures $.access_token. Step 3: HTTP Header Manager adds Authorization: Bearer ${access_token}. Step 4 (soak tests): JSR223 Pre-Processor checks (System.currentTimeMillis() - token_issued) > 3500000 and re-authenticates before the token expires, preventing 401 failures mid-test."
+  },
+  {
+    "id": "jm27",
+    "category": "jmeter",
+    "question": "What is the difference between Constant Timer, Uniform Random Timer, and Constant Throughput Timer?",
+    "options": [
+      "All three add delays between requests — the only difference is whether the delay is fixed, random, or based on thread count",
+      "Constant Timer adds a fixed pause between samplers; Uniform Random Timer adds a randomized pause (simulating realistic think time); Constant Throughput Timer controls target TPS globally regardless of the pause duration",
+      "Constant Throughput Timer replaces the Thread Group — you do not need threads when using it",
+      "Uniform Random Timer is deprecated; use Gaussian Random Timer instead for all load tests"
+    ],
+    "answer": 1,
+    "explanation": "Constant Timer: fixed delay (e.g., 1000ms). Uniform Random Timer: Constant Offset + random(0, Random Delay) — simulates human think-time variation. Constant Throughput Timer: throttles TPS to a target rate regardless of think time or thread count — the correct tool when you need to hit exactly 100 TPS. Gaussian Random Timer adds normally-distributed delays for more realistic modeling."
+  },
+  {
+    "id": "jm28",
+    "category": "jmeter",
+    "question": "How do Logic Controllers (If, While, Loop, Random, Throughput) direct sampler execution in JMeter?",
+    "options": [
+      "Logic Controllers only control the order of Thread Groups — samplers inside a group always execute sequentially",
+      "If Controller evaluates a condition; While Controller loops until a condition is false; Loop Controller repeats N times; Random Controller picks one child randomly; Throughput Controller runs children a percentage of the time",
+      "Logic Controllers are exclusively used for error handling — they execute only when a sampler fails",
+      "Random Controller and Interleave Controller are identical in behavior; only the naming differs"
+    ],
+    "answer": 1,
+    "explanation": "If Controller: executes children when condition is true (e.g., retryCount < 3). While Controller: loops until condition is false — ideal for polling async settlement status. Loop Controller: repeats N times. Random Controller: picks one child per iteration for A/B workflow simulation. Throughput Controller: executes children for N% of iterations — models realistic traffic mixes (e.g., 70% read, 30% write)."
+  },
+  {
+    "id": "jm29",
+    "category": "jmeter",
+    "question": "How do you chain requests so that a value from Response 1 feeds into Request 2, which feeds into Request 3?",
+    "options": [
+      "Use a Transaction Controller — it automatically passes response data between samplers in the group",
+      "Store the chain in a CSV file and use CSV Data Set Config to correlate values across requests",
+      "After Request 1 use a JSON Extractor to capture the referenceId into ${refId}; use ${refId} in Request 2's path; extract status into ${status}; use an If Controller to conditionally fire Request 3 based on ${status}",
+      "Use the JSR223 Timer between requests to pause while JMeter internally passes the previous response to the next sampler"
+    ],
+    "answer": 2,
+    "explanation": "Request chaining: POST /trades/submit -> JSON Extractor captures $.data.referenceId -> ${tradeRef} is used in GET /trades/${tradeRef}/status -> JSON Extractor captures $.status -> If Controller checks status == 'PENDING' before firing POST /trades/${tradeRef}/confirm. Each extractor runs as a Post-Processor attached to its parent sampler."
+  },
+  {
+    "id": "jm30",
+    "category": "jmeter",
+    "question": "How do you generate an HTML dashboard report from an existing .jtl results file without re-running the test?",
+    "options": [
+      "Open JMeter GUI, load the .jtl in View Results Tree, then export as HTML from the File menu",
+      "Run jmeter -g results.jtl -o /reports/run1 to generate the dashboard from the existing results file",
+      "Use the jmeter-report CLI tool which ships separately from the main JMeter distribution",
+      "HTML reports can only be generated during a live test run using the -e -o flags; post-test generation requires a third-party tool"
+    ],
+    "answer": 1,
+    "explanation": "jmeter -g results.jtl -o /reports/run1 generates the full HTML dashboard from any existing .jtl file without re-running the test. The report includes APDEX, Statistics table (avg/p90/p95/p99), Response Time Percentiles graph, Active Threads Over Time, and TPS trend. Customize thresholds in reportgenerator.properties (e.g., apdex_satisfied_threshold=500)."
+  },
+  {
+    "id": "jm31",
+    "category": "jmeter",
+    "question": "How do you configure the Backend Listener to stream JMeter metrics to InfluxDB for real-time Grafana monitoring?",
+    "options": [
+      "Add a Grafana Listener plugin and configure the Grafana server URL and dashboard ID",
+      "Use a JSR223 Listener that calls the InfluxDB REST API after each sample completes",
+      "Add Backend Listener with Implementation=InfluxdbBackendListenerClient; set influxdbUrl=http://influx:8086/write?db=jmeter; set percentiles=90;95;99 and summaryOnly=false",
+      "Configure InfluxDB as a JDBC data source in JMeter and write metrics using a JDBC Sampler after each request"
+    ],
+    "answer": 2,
+    "explanation": "Backend Listener with InfluxdbBackendListenerClient pushes per-sample metrics (count, avg, min, max, pct90/95/99, error_count) tagged by transaction name and application. Grafana queries InfluxDB with InfluxQL to render real-time dashboards. This enables ops teams to monitor latency and error spikes during live load tests without waiting for the .jtl post-analysis."
+  },
+  {
+    "id": "jm32",
+    "category": "jmeter",
+    "question": "How do you test WebSocket connections in JMeter?",
+    "options": [
+      "JMeter natively supports WebSocket through the HTTP Request Sampler by setting protocol=ws://",
+      "Use the WebSocket Samplers plugin (by Peter Doornbosch) with Open Connection, Text Frame (send), and Read Text Frame samplers to simulate subscribe/publish workflows",
+      "Use the TCP Sampler with port 80 — WebSocket is just HTTP on port 80 with an upgrade header",
+      "WebSocket testing requires a custom JSR223 Sampler; no plugin provides native WebSocket support"
+    ],
+    "answer": 1,
+    "explanation": "The WebSocket Samplers plugin provides: WebSocket Open Connection (handshake), WebSocket Text Frame (send message), and WebSocket Read Text Frame (receive with timeout). Chain them in a Thread Group: Open Connection -> Send subscribe message -> Read response frame -> Assert content. Ideal for testing market-data streaming or real-time notification APIs."
+  },
+  {
+    "id": "jm33",
+    "category": "jmeter",
+    "question": "How do you publish messages to a Kafka topic from a JMeter test?",
+    "options": [
+      "Use the HTTP Request Sampler to POST to the Kafka REST Proxy if it is available; otherwise use JSR223 with Kafka client libraries added to the JMeter lib/ext folder",
+      "Use the built-in Kafka Sampler that ships with JMeter — configure bootstrap.servers and topic name in the sampler UI",
+      "Use a JDBC Sampler connected to the Kafka metadata database to insert records directly into the topic tables",
+      "Kafka testing requires a separate Gatling test plan — JMeter does not support async messaging protocols"
+    ],
+    "answer": 0,
+    "explanation": "JMeter has no built-in Kafka Sampler. Options: (1) If a Kafka REST Proxy is deployed, use HTTP Request POST with JSON payload. (2) For direct broker access, add kafka-clients.jar to lib/ext and use JSR223 Sampler with Groovy: create KafkaProducer, call producer.send(new ProducerRecord<>('topic', key, value)), flush. This validates message throughput and producer latency under load."
+  },
+  {
+    "id": "jm34",
+    "category": "jmeter",
+    "question": "What is the Throughput Shaping Timer (plugin) and how does it differ from the Constant Throughput Timer?",
+    "options": [
+      "They are identical — Throughput Shaping Timer is just a renamed version in a newer JMeter release",
+      "Throughput Shaping Timer defines a step schedule (ramp up, hold, spike, ramp down) with different TPS per time window; Constant Throughput Timer holds a single fixed TPS for the entire test",
+      "Constant Throughput Timer is more accurate; Throughput Shaping Timer introduces up to 20% TPS variance",
+      "Throughput Shaping Timer requires a separate Thread Group per step; Constant Throughput Timer works with any Thread Group configuration"
+    ],
+    "answer": 1,
+    "explanation": "Throughput Shaping Timer lets you define rows: (Start TPS=0, End TPS=100, Duration=60s), (100, 100, 180s), (100, 500, 60s), (500, 0, 60s) — modeling pre-market ramp, steady state, peak burst, and cooldown. Constant Throughput Timer only holds one fixed rate. Combine with Concurrency Thread Group for dynamic thread management matching the TPS schedule."
+  },
+  {
+    "id": "jm35",
+    "category": "jmeter",
+    "question": "How do you test file upload (multipart/form-data) in JMeter with dynamically generated files?",
+    "options": [
+      "File uploads require the HTTP File Upload plugin; the standard HTTP Request Sampler does not support multipart",
+      "In HTTP Request Sampler go to the Files Upload tab; set File Path, Parameter Name, and MIME Type. Use a JSR223 Pre-Processor to generate the file content dynamically before the sampler executes",
+      "Set Content-Type: multipart/form-data in the Header Manager and paste the file bytes as base64 in the Body Data tab",
+      "Use a JDBC Sampler to write the file to a database BLOB column which the API then reads via a webhook"
+    ],
+    "answer": 1,
+    "explanation": "HTTP Request Sampler > Files Upload tab: set File Path (absolute path or ${generatedFile}), Parameter Name (matches API field name), MIME Type (text/csv, application/pdf, etc.). Pair with a JSR223 Pre-Processor that creates the file dynamically per thread: new File('/tmp/batch_'+vars.get('batchId')+'.csv').text = 'header\\nrow1'. Store the path in a variable and reference it in the Files Upload tab."
+  },
+  {
+    "id": "jm36",
+    "category": "jmeter",
+    "question": "How do you detect a memory leak on the target application server during a JMeter soak test?",
+    "options": [
+      "Enable the View Results Tree listener — it shows heap memory per request in its Response Data tab",
+      "Set JMeter thread count to 1 and run for 24 hours; any error after the first hour indicates a memory leak",
+      "Run a soak test (e.g., 200 users, 8 hours); collect JVM heap metrics via jstat, JMX, or PerfMon Agent on the target server; alert if heap usage grows linearly over time without GC recovery — a sign of objects not being collected",
+      "Memory leaks can only be detected by developers using heap dump analysis — JMeter provides no visibility into server memory"
+    ],
+    "answer": 2,
+    "explanation": "Memory leak signature: heap usage trends upward across the soak test duration instead of stabilizing after GC cycles. Collect server-side metrics via jstat -gcutil <PID> 30000 or JMX MBean (java.lang:type=Memory). JMeter's PerfMon plugin can graph server heap alongside TPS in real time. Confirm with a heap dump (jmap) and analyze with Eclipse MAT or VisualVM."
+  },
+  {
+    "id": "jm37",
+    "category": "jmeter",
+    "question": "How do you analyze a JMeter .jtl results file from the command line to calculate error rate and 95th percentile?",
+    "options": [
+      "Open the .jtl in Excel and use PERCENTILE() and COUNTIF() formulas on the elapsed column",
+      "Use awk to count errors: awk -F',' 'NR>1{total++; if($8==\"false\") err++} END{print err/total*100\"%\"}' results.jtl; and to get p95: awk -F',' 'NR>1{print $2}' results.jtl | sort -n | awk '{a[NR]=$0} END{print a[int(NR*0.95)+1]}'",
+      "JMeter .jtl files are binary format and cannot be parsed with standard text tools",
+      "Use grep to filter failed requests: grep 'false' results.jtl | wc -l, then divide by total line count"
+    ],
+    "answer": 1,
+    "explanation": "JTL files are CSV (by default) with columns: timeStamp, elapsed, label, responseCode, responseMessage, threadName, dataType, success, failureMessage. Column 2 = elapsed time (ms), column 8 = success flag. Python pandas is the most powerful option: df = pd.read_csv('results.jtl'); df['elapsed'].quantile(0.95) gives p95; (df['success']=='false').mean()*100 gives error rate."
+  },
+  {
+    "id": "jm38",
+    "category": "jmeter",
+    "question": "What is the difference between response time, latency, and throughput in JMeter measurements?",
+    "options": [
+      "Response time and latency are synonyms in JMeter — the Aggregate Report displays only one of them",
+      "Response time = time from request sent to last byte received (includes server processing + transfer); Latency = time to first byte (TTFB — connect + server processing only); Throughput = requests per second sustained over the test duration",
+      "Latency is measured at the network layer; response time is measured at the application layer — JMeter only measures response time",
+      "Throughput is the count of successful requests; latency is the count of failed requests divided by total"
+    ],
+    "answer": 1,
+    "explanation": "Latency (TTFB) = connect time + time waiting for first byte — indicates server processing speed. Response time = latency + data transfer time — the user-perceived total. Throughput = total samples / test duration in seconds. Little's Law relates them: N (concurrent users) = Throughput x Average Response Time. Use latency to diagnose server-side bottlenecks vs. large response bodies."
+  },
+  {
+    "id": "jm39",
+    "category": "jmeter",
+    "question": "How do you design a realistic mixed-workload load model for a financial trading API?",
+    "options": [
+      "Use a single Thread Group with all endpoints and set Loop Count to Infinite — JMeter will distribute requests naturally",
+      "Create separate Thread Groups per business function weighted by production traffic ratios (e.g., 40% trade submit, 35% inquiry, 15% settlement query, 10% cancel/amend) and use Constant Throughput Timer or Throughput Controller to enforce the mix",
+      "Use a Random Controller under one Thread Group — it automatically weights requests based on response time",
+      "Run separate test plans for each endpoint and combine the HTML reports after each run"
+    ],
+    "answer": 1,
+    "explanation": "Realistic load models derive weights from production traffic logs. Separate Thread Groups per workflow allow independent TPS targets, separate Aggregate Report rows, and granular pass/fail criteria. Throughput Controller (Percent Executions mode) can also enforce ratios within a single Thread Group. Avoid single-endpoint tests — they miss the contention effects of concurrent mixed workloads."
+  },
+  {
+    "id": "jm40",
+    "category": "jmeter",
+    "question": "How do you implement retry logic in JMeter for a polling scenario where you retry until status becomes SETTLED?",
+    "options": [
+      "Set the Thread Group Loop Count to a high number and use a Response Assertion to stop the thread when SETTLED is detected",
+      "Use a JSR223 Pre-Processor to initialize retryCount=0 and status=PENDING; add a While Controller with condition: ${__groovy(vars.get('status')!='SETTLED' && vars.get('retryCount').toInteger()<5)}; inside place a Constant Timer, the GET status sampler, JSON Extractor, and a JSR223 Post-Processor to increment retryCount",
+      "Set On Sample Error=Start Next Thread Loop — JMeter will automatically retry the failed request",
+      "Use a Loop Controller with Loop Count=5 and a Response Assertion that passes only when status=SETTLED"
+    ],
+    "answer": 1,
+    "explanation": "Pattern: init vars -> While Controller (status != 'SETTLED' && retryCount < 5) -> Constant Timer 2000ms -> GET /trades/${tradeRef}/status -> JSON Extractor captures $.status -> JSR223 Post-Processor: vars.put('retryCount', String.valueOf(Integer.parseInt(vars.get('retryCount'))+1)). This correctly polls with backoff and a maximum retry cap, matching asynchronous settlement workflows."
+  },
+  {
+    "id": "jm41",
+    "category": "jmeter",
+    "question": "How does JMeter ensure session isolation between virtual users in a concurrent test?",
+    "options": [
+      "JMeter shares one HTTP session across all threads by default — you must add a Thread Isolation plugin to separate them",
+      "Each thread maintains its own HTTP Cookie Manager, variable namespace (vars), and HTTP Cache Manager, providing natural session isolation. Configure HTTP Cookie Manager at Thread Group scope with 'Clear cookies each iteration' to create a fresh session per loop",
+      "Session isolation requires separate Thread Groups — threads within the same group always share cookies and session tokens",
+      "Add a unique User-Agent header per thread using ${__threadNum} to prevent the server from merging sessions"
+    ],
+    "answer": 1,
+    "explanation": "JMeter threads are isolated by design: each has its own vars namespace (thread-local), its own HTTP Cookie jar, and its own HTTP Cache. HTTP Cookie Manager at Thread Group scope with 'Clear cookies each iteration' resets session state. CSV Data Set Config with unique credentials per row ensures each thread authenticates independently, preventing test data collisions."
+  },
+  {
+    "id": "jm42",
+    "category": "jmeter",
+    "question": "How do you configure JMeter to handle mutual TLS (mTLS) for APIs that require client certificates?",
+    "options": [
+      "Add the client certificate as a Base64 string in the Authorization HTTP header",
+      "mTLS is not supported by JMeter — use curl scripts via a JSR223 Sampler instead",
+      "Set javax.net.ssl.keyStore, javax.net.ssl.keyStorePassword, and javax.net.ssl.keyStoreType=PKCS12 in jmeter.properties; or use the Keystore Configuration element with per-thread certificate alias assignment",
+      "Install the client certificate in the OS certificate store — JMeter inherits system TLS settings automatically"
+    ],
+    "answer": 2,
+    "explanation": "For mTLS: in jmeter.properties set javax.net.ssl.keyStore=/certs/client.p12 and javax.net.ssl.keyStorePassword=${__P(ks_pass)}. For per-thread certificates (different cert per virtual user), use the Keystore Configuration element with Start Index=0 to rotate through aliases in the keystore. Always use -Pks_pass= at runtime — never hard-code credentials in the .jmx file."
+  },
+  {
+    "id": "jm43",
+    "category": "jmeter",
+    "question": "What is the JMeter Debug Sampler, when should you use it, and what is its critical production risk?",
+    "options": [
+      "Debug Sampler is a performance optimization tool that reduces request overhead in production load tests",
+      "Debug Sampler outputs all current JMeter Variables, Properties, and System Properties to the View Results Tree — invaluable for verifying that extracted values (tokens, IDs) are correct during script development. Critical risk: it stores all variable state in memory per sample — never leave it enabled in load tests",
+      "Debug Sampler replaces the HTTP Request Sampler during dry-run mode to validate test plan structure without sending real requests",
+      "Debug Sampler captures network-level packet traces for each request — similar to Wireshark integration"
+    ],
+    "answer": 1,
+    "explanation": "Debug Sampler shows JMeterVariables (tradeId, sessionToken, retryCount), JMeterProperties (env, baseurl), and SystemProperties in View Results Tree. Essential for confirming extractions work before scaling to 500 threads. Production risk: every thread records all variable state into memory per iteration — at 500 TPS this causes rapid heap exhaustion. Disable or wrap in an If Controller that only fires when a debug flag is set."
+  },
+  {
+    "id": "jm44",
+    "category": "jmeter",
+    "question": "How do you record a test script using JMeter's HTTP(S) Test Script Recorder?",
+    "options": [
+      "JMeter installs as a browser extension that records clicks and form submissions directly into a .jmx file",
+      "Enable the Script Recorder from the Test Plan, point the browser proxy to localhost:8888, import JMeter's CA certificate into the browser, browse the application, then clean up the recording by removing static assets and adding correlation for dynamic values",
+      "Use the JMeter Proxy Recorder only for HTTP sites — HTTPS recording requires Fiddler or Charles Proxy",
+      "The Script Recorder automatically adds correlation and parameterization — no cleanup is needed after recording"
+    ],
+    "answer": 1,
+    "explanation": "Setup: WorkBench > HTTP(S) Test Script Recorder > Port 8888 > Target: Recording Controller. Browser: Manual Proxy localhost:8888. Import ApacheJMeterTemporaryRootCA.crt into browser trust store for HTTPS. After recording: filter static resources (EXCLUDE .*\\.(css|js|png|jpg|gif|ico)$), add JSON/RegEx Extractors for session tokens and dynamic IDs, parameterize hard-coded values with CSV variables."
+  },
+  {
+    "id": "jm45",
+    "category": "jmeter",
+    "question": "How do you test a gRPC service in JMeter?",
+    "options": [
+      "JMeter natively supports gRPC through the HTTP/2 Request Sampler — set Protocol=grpc in the sampler",
+      "Use the gRPC Request plugin (e.g., zalopay-oss) which requires the .proto file, service method, and JSON-formatted request; or use JSR223 Sampler with gRPC Java stub libraries added to lib/ext",
+      "Convert gRPC calls to REST using a grpc-gateway sidecar and test with standard HTTP Request Samplers",
+      "gRPC testing is not supported in JMeter — use k6 with the k6-grpc extension instead"
+    ],
+    "answer": 1,
+    "explanation": "Option 1: gRPC plugin — configure Host, Port, Proto File path, Full Method name (com.example.Service/Method), Metadata (authorization token), and Request (JSON). Option 2: JSR223 Sampler — add grpc-netty, protobuf-java jars to lib/ext; use ManagedChannelBuilder and generated stub to call the service. gRPC is used in high-performance internal microservice communication where REST overhead is unacceptable."
+  },
+  {
+    "id": "jm46",
+    "category": "jmeter",
+    "question": "How do you implement a custom Java Sampler in JMeter for a proprietary protocol?",
+    "options": [
+      "Edit the JMeter source code to add the new protocol — there is no plugin API for custom samplers",
+      "Extend AbstractJavaSamplerClient, override getDefaultParameters() to define inputs and runTest() to implement the protocol logic and return a SampleResult with timing, success flag, and response data; package as a JAR in lib/ext",
+      "Use a JSR223 Sampler — it provides equivalent capability to a custom Java Sampler with less development overhead",
+      "Custom samplers must be registered in jmeter.properties before JMeter will recognize them at runtime"
+    ],
+    "answer": 1,
+    "explanation": "Custom sampler skeleton: class MyProtocolSampler extends AbstractJavaSamplerClient { public Arguments getDefaultParameters() { /* define host, port, etc. */ } public SampleResult runTest(JavaSamplerContext ctx) { SampleResult r = new SampleResult(); r.sampleStart(); /* send protocol message */ r.sampleEnd(); r.setSuccessful(true); return r; } }. Package as JAR in lib/ext. Use for FIX, SWIFT, proprietary binary protocols where no plugin exists."
+  },
+  {
+    "id": "jm47",
+    "category": "jmeter",
+    "question": "How do you test API rate limiting in JMeter to verify that 429 responses are correctly returned above the quota?",
+    "options": [
+      "Set the Thread Group to a very high thread count — JMeter will naturally exceed any rate limit",
+      "Use a Constant Throughput Timer set above the rate limit (e.g., 7200 req/min if limit is 100 TPS), use a Response Assertion to expect 429 responses, and use a JSR223 Assertion to count 429 hits via props for cross-thread accumulation; verify Retry-After header is present via RegEx Extractor",
+      "Rate limit testing requires a dedicated commercial tool — JMeter cannot precisely control per-second request rates",
+      "Disable all timers in the test plan — the resulting maximum TPS from JMeter threads will exceed any practical rate limit"
+    ],
+    "answer": 1,
+    "explanation": "Design: Thread Group 50 users, ramp 0s, loop 20 = ~1000 simultaneous requests. Constant Throughput Timer: 7200 req/min (120 TPS) exceeds a 100 TPS limit. Response Assertion: Contains 429. JSR223 Assertion: props.put('rateLimitHits', String.valueOf(Integer.parseInt(props.get('rateLimitHits')?:'0')+1)). RegEx Post-Processor captures Retry-After header value. Verify: 429 rate matches expected quota enforcement behavior."
+  },
+  {
+    "id": "jm48",
+    "category": "jmeter",
+    "question": "How do you compare performance test results across two releases to detect regressions?",
+    "options": [
+      "Run both tests back-to-back on the same day and visually compare the HTML report charts",
+      "Use Python pandas to load both .jtl files, compute per-sampler p90/p95/p99 for each, calculate percentage change, and flag any sampler where p95 increased more than 10% as a regression",
+      "Store results in a spreadsheet and use a t-test to determine if differences are statistically significant",
+      "Compare only the Average response time columns in the two Aggregate Reports — percentile differences are not meaningful across runs"
+    ],
+    "answer": 1,
+    "explanation": "Python comparison: v1=pd.read_csv('v1.jtl'); v2=pd.read_csv('v2.jtl'); def summary(df): return df.groupby('label')['elapsed'].agg(p95=lambda x: x.quantile(0.95)); diff = summary(v2)/summary(v1)-1; regressions = diff[diff['p95']>0.1]. A >10% p95 increase triggers a performance investigation. Automate this in Jenkins post-test to create automatic regression gates between releases."
+  },
+  {
+    "id": "jm49",
+    "category": "jmeter",
+    "question": "What are the essential JMeter plugins from the JMeter Plugins Manager for enterprise performance testing?",
+    "options": [
+      "The only essential plugin is the HTML Reporter — all other JMeter functionality is built-in",
+      "jpgc-Standard Set (Throughput Shaping Timer, Response Times Over Time, TPS graphs), jpgc-PerfMon (server-side CPU/memory/IO monitoring via ServerAgent), WebSocket Samplers, and jpgc-CMD (CLI automation)",
+      "Only the JDBC plugin needs to be installed — all protocol and reporting plugins are included in the base JMeter download",
+      "The BlazeMeter plugin is the only community-supported plugin; avoid all others due to stability risks"
+    ],
+    "answer": 1,
+    "explanation": "Essential plugins: (1) jpgc-Standard Set: Throughput Shaping Timer for stepped load profiles, Response Times Over Time and TPS graphs for Grafana-style analysis in GUI. (2) jpgc-PerfMon: deploy ServerAgent (startAgent.sh --tcp-port 4444) on target servers to capture CPU%, memory, disk I/O, and network in sync with JMeter load data. (3) WebSocket Samplers: for WS protocol testing. (4) Concurrency Thread Group: dynamic thread scaling matched to TPS schedule."
+  },
+  {
+    "id": "jm50",
+    "category": "jmeter",
+    "question": "A JMeter test shows TPS is stable but average response time doubles after 30 minutes. What is the most likely cause and diagnostic approach?",
+    "options": [
+      "The JMeter Controller machine is running out of memory — restart JMeter with more heap and rerun",
+      "Network latency increased due to test environment contention — run at a lower thread count to reduce network load",
+      "The target application is experiencing resource exhaustion (connection pool saturation, heap growth, or thread pool starvation) — correlate JMeter latency trend with server-side metrics: heap usage, DB connection pool active count, thread dump, and GC log to identify the resource being exhausted",
+      "The .jtl file is growing too large and slowing down the Simple Data Writer listener, which blocks sampling threads"
+    ],
+    "answer": 2,
+    "explanation": "Stable TPS with rising latency = server-side degradation over time. Diagnostic steps: (1) Check server heap trend via jstat — if growing linearly, memory leak or object accumulation. (2) Check DB connection pool active count — if at max, connection starvation. (3) Check thread pool queue depth — if growing, CPU saturation. (4) Review GC log for increasing pause duration. This pattern distinguishes application degradation from load generator issues."
+  },
+  {
+    "id": "jm51",
+    "category": "jmeter",
+    "question": "What are the five 'On Sample Error' settings in a JMeter Thread Group, and when would you use 'Start Next Thread Loop' vs 'Stop Thread'?",
+    "options": [
+      "There are only two options: Continue or Stop Test — fine-grained error handling requires JSR223 scripting",
+      "Continue (log error, keep running), Start Next Thread Loop (skip remaining samplers in current iteration and begin the next loop), Stop Thread (terminate only this virtual user), Stop Test (graceful stop after in-flight samples), Stop Test Now (immediate forced halt) — use 'Start Next Thread Loop' when a failed login should skip the rest of that iteration but retry on the next loop; use 'Stop Thread' when a user's test data is exhausted",
+      "On Sample Error only applies to HTTP 5xx responses — 4xx responses are always treated as successes",
+      "Stop Test and Stop Test Now are identical — both immediately terminate all threads without waiting for in-flight samples"
+    ],
+    "answer": 1,
+    "explanation": "These five modes control fault tolerance per Thread Group. 'Continue' (default) logs the error and proceeds — standard for load tests measuring error rate. 'Start Next Thread Loop' skips the rest of the current iteration (e.g., if login fails, skip trade submit and go straight to the next loop's login) — ideal for stateful workflows where downstream requests depend on prior success. 'Stop Thread' kills one virtual user permanently — used when unique test data is consumed. 'Stop Test' waits for in-flight samples to complete, then stops all threads gracefully. 'Stop Test Now' force-kills immediately — use only for emergency abort."
+  },
+  {
+    "id": "jm52",
+    "category": "jmeter",
+    "question": "How do you test a FIX (Financial Information eXchange) protocol gateway using JMeter?",
+    "options": [
+      "Use the standard HTTP Request Sampler with Content-Type: application/fix — JMeter auto-encodes FIX messages",
+      "Use the TCP Sampler configured with the FIX gateway host and port, with the SOH (\\x01) delimiter as the End of Line marker, and construct FIX messages (e.g., 8=FIX.4.4|35=D|49=SENDER|56=TARGET|...) in the request body; or use a custom Java Sampler with the QuickFIX/J library for full session-level testing",
+      "FIX protocol testing requires a dedicated FIX testing tool like FIXimulator — JMeter cannot send raw TCP messages",
+      "Use the JMS Sampler to connect to the FIX message broker since FIX is a messaging protocol built on JMS"
+    ],
+    "answer": 1,
+    "explanation": "FIX is a binary/text protocol over raw TCP, not HTTP. JMeter's TCP Sampler connects to the FIX gateway on its port (e.g., 9878), sends FIX-formatted messages with the SOH character (\\x01) as the field delimiter. For simple connectivity and throughput testing, TCP Sampler suffices. For full session-level testing (logon, heartbeat, sequence numbers, resend requests), use a custom Java Sampler extending AbstractJavaSamplerClient with QuickFIX/J — a standard open-source FIX engine — added to JMeter's lib/ext directory."
+  },
+  {
+    "id": "jm53",
+    "category": "jmeter",
+    "question": "How do you systematically identify whether a performance bottleneck is in the application layer, database layer, or network layer using JMeter results?",
+    "options": [
+      "JMeter cannot distinguish between layers — you must use APM tools exclusively for bottleneck isolation",
+      "Compare only the Average response time in the Aggregate Report — if it exceeds the SLA, the bottleneck is always in the application layer",
+      "Correlate four patterns: (1) response time increases linearly with TPS while error rate stays low — CPU or thread pool saturation on the app server; (2) error rate spikes at a specific TPS threshold — resource exhaustion (DB connection pool, socket limits); (3) JDBC Sampler is slow but HTTP Sampler is fast — database layer bottleneck; (4) JMeter Connect Time is high but server-side processing is fast — network layer or load balancer issue",
+      "Run separate tests against each layer independently — the layer with the highest average latency is the bottleneck"
+    ],
+    "answer": 2,
+    "explanation": "Bottleneck isolation requires cross-referencing JMeter metrics with server-side monitoring. Pattern 1: linearly rising latency with increasing TPS suggests CPU saturation — verify with CPU% and thread dumps on the app server. Pattern 2: a sudden error spike at a TPS threshold (e.g., exactly at 200 TPS) points to a hard resource limit — check DB connection pool max, OS socket limits (ulimit -n), or thread pool size. Pattern 3: if the JDBC Sampler p95 is 800ms but the HTTP API Sampler wrapping it is 850ms, the database is the bottleneck — run EXPLAIN PLAN on slow queries. Pattern 4: high Connect Time in JMeter (visible in the .jtl) with low server-side processing indicates network latency or load balancer queueing."
+  }
+]

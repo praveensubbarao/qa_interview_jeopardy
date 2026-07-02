@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/agentic-ai.json'\\)\\); print\\(f'Valid JSON: {len\\(data\\)} questions'\\); print\\('IDs:', [q['id'] for q in data]\\)\")",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/technology.json'\\)\\); print\\(f'{len\\(data\\)} questions, IDs: {[q[\\\\\"id\\\\\"] for q in data]}'\\)\")",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/api-testing.json'\\)\\); print\\(f'{len\\(data\\)} questions, IDs: {[q[\\\\\"id\\\\\"] for q in data]}'\\)\")",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/others.json'\\)\\); print\\(f'{len\\(data\\)} questions, IDs: {[q[\\\\\"id\\\\\"] for q in data]}'\\)\")",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/leadership.json'\\)\\); print\\(f'{len\\(data\\)} questions, IDs: {[q[\\\\\"id\\\\\"] for q in data]}'\\)\")",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/compliance-governance.json'\\)\\); print\\(f'{len\\(data\\)} questions, IDs: {[q[\\\\\"id\\\\\"] for q in data]}'\\)\")",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/api-testing.json'\\)\\); print\\(f'{len\\(data\\)} questions'\\); print\\('IDs:', [q['id'] for q in data]\\)\")",
+      "Bash(python3 -m json.tool /Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/leadership.json)",
+      "Bash(python3 -m json.tool /Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/compliance-governance.json)",
+      "Bash(python3 -c \"import json; data = json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/data-defects.json'\\)\\); print\\(f'{len\\(data\\)} questions, IDs: {[q[\\\\\"id\\\\\"] for q in data]}'\\)\")",
+      "Bash(python3 -m json.tool /Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/others.json)",
+      "Bash(python3 -m json.tool /Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/data-defects.json)",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('technology.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('te1'\\) and q['id'] not in ['te1','te10']]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('others.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('ot1'\\) and q['id'] not in ['ot1','ot10']]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('api-testing.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'] in ['at34','at35','at36','at37','at38','at39']]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('leadership.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'] in ['le33','le34','le35','le36','le37','le38']]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('compliance-governance.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'] in ['cg20','cg21','cg22','cg23','cg24','cg25']]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/technology.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('te'\\) and int\\(q['id'][2:]\\) >= 21]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/leadership.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('le'\\) and int\\(q['id'][2:]\\) >= 17]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/compliance-governance.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('cg'\\) and int\\(q['id'][2:]\\) >= 7]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/data-defects.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('dd'\\) and int\\(q['id'][2:]\\) >= 16]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('/Users/praveensubbarao2026/work/qa_interview_jeopardy/data/questions/performance.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'].startswith\\('p'\\) and not q['id'].startswith\\('pe'\\) and int\\(q['id'][1:]\\) >= 31]\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('technology.json'\\)\\); [print\\(q['id']\\) for q in data if q['id']=='te20']\")",
+      "Bash(python3 -c \"import json; data=json.load\\(open\\('others.json'\\)\\); [print\\(q['id']\\) for q in data if q['id'] in ['ot20','ot21','ot22','ot23','ot24','ot25']]\")"
+    ]
+  }
+}

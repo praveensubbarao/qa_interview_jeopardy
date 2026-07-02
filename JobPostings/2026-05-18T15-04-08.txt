@@ -1,0 +1,85 @@
+Saved:        5/18/2026, 11:04:08 AM
+Questions:    9
+Technologies: pact, aws, go
+────────────────────────────────────────────────────────────
+About the job
+The Elevator Pitch 
+
+Evolv is seeking a Quality Engineer to play a critical role in scaling and maturing our Quality function. Reporting directly to the Director of Quality, this role combines Advanced Quality Data Analytics responsibility with traditional Quality Engineering KPIs and deliverables. You will be accountable for driving systemic quality improvements across suppliers, manufacturing and product design, resulting in exceptional product quality in the field. You will serve as a trusted quality partner to Engineering, Manufacturing, and Customer Service.
+This role is ideal for an experienced quality professional who thrives in dynamic environments, enjoys owning complex problems end‑to‑end, and wants to be a key contributor to a building a world‑class quality organization.
+
+Success in the Role: What performance outcomes will you work towards completing over the first 12 months? 
+
+Within the First 30 days: 
+
+Develop a deep understanding of Evolv's products, manufacturing processes, and supply chain quality requirements
+Become familiar with existing Quality data sources, and supplier quality processes
+Begin to build strong working relationships with contract manufacturing partners and internal stakeholders (Supply Chain, Engineering, NPI, Operations)
+Review current quality metrics, open issues, and historical nonconformances
+30 Days to Three Months: 
+
+Take ownership of Field Quality Data Analytics 
+Support day-to-day quality activities related to Contract Manufacturers and suppliers
+Drive root cause analysis, and corrective and preventive actions (CAPAs), related to Design, Manufacturing and Supplier Quality contributions to field quality incidents.
+Begin participating in process and product audits at the Contract Manufacturer
+Between 3 to 6 months: 
+
+Contribute to quality documentation, work instructions, and inspection criteria at the Contract Manufacturer
+Proactively monitor and drive improvement of Manufacturing KPIs as early indicator of Field Quality performance.
+Lead or co-lead root cause investigations for recurring defects and drive sustainable corrective actions
+Partner with Engineering and NPI teams to support new product introductions and design changes
+Identify opportunities to improve quality processes, efficiency, and risk mitigation
+Establish schedule and strategy for on-going process and product audits at the Contract Manufacturer
+Between 6 to 12 Months: 
+
+Partner with internal Engineering and Business partners to standardize and automate Quality Analytics including the following KPIs: Manufacturing Yields, and Field Quality (OOB failures, first year failures, product reliability and RMA trends).
+Serve as a trusted quality partner to Supply Chain and Operations, influencing decisions with data-driven insights
+Drive measurable improvements in key Quality KPIs (Manufacturing Yields and Filed Quality: OOB failures, first year failures, product reliability and RMA trends.
+Establish strategic partnerships with key stakeholders within the engineering, manufacturing key suppliers, and customer success organizations
+Support the implementation of a Quality Management System that can integrate end to end from Salesforce to our PLM system - Arena. 
+Implement a closed-loop problem resolution process to minimize the impact of quality issues on the field, including root cause identification and corrective action to prevent recurrences. 
+You will serve as an integral member of phase gate and design reviews to assess production readiness in terms of quality, reliability, and manufacturability
+The Work: What type of work will you be doing? What assignments, requirements, or skills will you be performing on a regular basis? 
+
+Product & Lifecycle Quality Leadership
+
+Lead quality planning activities for new product introductions and major design changes
+Serve as a core participant in design reviews, focusing on reliability, manufacturability, and test coverage
+Identify design or process risks early and drive mitigation plans with Engineering and Manufacturing
+Ensure smooth quality handoffs from development to production to field deployment
+ Root Cause & Corrective Action
+
+Lead high‑impact root cause investigations involving cross‑functional teams and external partners
+Define, implement, and verify corrective and preventive actions (CAPA) to prevent recurrence
+Drive closed‑loop problem resolution processes that minimize field impact and customer disruption
+Ensure quality learnings are documented and institutionalized
+Advanced Data‑Driven Quality & Analytics
+
+Analyze complex quality datasets across suppliers, manufacturing, installations, and deployed systems
+Partner with Quality Analytics resources to define advanced dashboards and leading indicators
+Translate data into clear executive‑level insights and prioritized improvement actions
+Use statistical and reliability methods to identify underlying drivers of product failures
+Supplier & Manufacturing Quality
+
+Drive Production Part Approval Process (PPAP) at Contract Manufacturer.
+Lead supplier quality issue resolution and ongoing performance improvement efforts
+Partner with contract manufacturers to strengthen process controls, testing strategies, and defect prevention
+Support audits, assessments, and continuous improvement initiatives across the supply base
+What is the leadership like for this role? What is the structure and culture of the team? 
+
+You will join the Supply Chain Team, reporting to the Director of Quality. In addition to the Quality team, the Supply Chain Team also includes the Procurement, Contract Manufacturing Operations, Fulfillment, and New Product Introduction & Sustaining Operations functions.
+ Where is the role located? Is travel required?
+
+The location of this role is based out of our HQ in Waltham, MA with some flexibility in being remote some days. In addition, this role will travel 20% of the time to our contract manufacturer in Chicago and Mexico, and critical suppliers worldwide.
+ Compensation and Transparency Statement: 
+
+The base salary range for this full-time position is $102,000 - $166,000. In addition to base salary, this role offers a competitive target bonus, equity, and a comprehensive benefits package. This range reflects our commitment to pay transparency and equity, in alignment with applicable state laws. Our compensation ranges are determined based on factors such as role, level, location, market benchmarks, and internal equity. The posted range represents the good-faith estimate of what we expect to pay for this role across U.S. locations. Actual compensation within the range will be based on the candidate's skills, experience, education, and geographic location. 
+
+In accordance with state and local pay transparency laws—including those in California, Colorado, Massachusetts, New York, New Jersey, and others—we disclose salary ranges in all job postings and provide additional information upon request. 
+
+During the hiring process, your recruiter will share: 
+
+The specific salary range for your preferred location 
+A general overview of our benefits and equity offerings 
+Insights into how compensation decisions are made, including factors that influence starting pay 
+We are committed to fair pay practices, and we regularly review our compensation programs to ensure they are competitive, equitable, and aligned with our values.

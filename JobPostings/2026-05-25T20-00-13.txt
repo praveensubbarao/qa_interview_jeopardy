@@ -1,0 +1,69 @@
+Saved:        5/25/2026, 4:00:13 PM
+Questions:    1
+Technologies: xray, go, snowflake
+────────────────────────────────────────────────────────────
+Let me help you start your Superpowered journey
+Apply Now
+Saved Jobs
+
+National Grid Careers
+Back to jobs
+Team
+Information Technology and Digital
+Business Unit
+IT and Digital
+Requisition No.
+8635
+City
+Waltham, US, 02451
+Date posted
+21 May 2026
+
+Apply Now
+
+Functional Test lead
+About us
+Every day we deliver safe and secure energy to homes, communities, and businesses. We are there when people need us the most. We connect people to the energy they need for the lives they live. To be successful, we’ll need to reduce the cost of energy delivery today and pioneer the clean energy solutions of tomorrow, keeping our customers at the core of everything we do.
+
+Digital teams at National Grid work in a harmonized partnership with our diverse group of energy businesses to deliver technology that revolutionizes the way we operate. As we lead the charge towards a carbon-free future, our digital teams are introducing best practices from across the tech industry to drive efficiency and bring new capabilities to our internal and external customers.
+
+Our work here is critical. National Grid moves energy to millions of homes and businesses in the US and UK and the technology we utilize to complete that task is down to us. You will be an integral contributor towards this goal, and we will support your professional development as part of our diverse, customer-centric, global team.
+
+National Grid is hiring a Functional Test Lead. This role is designated as hybrid, with an expectation of one or two days per month in our office in Waltham, MA. Requirements may vary based on business needs and company policy.
+
+Job Purpose
+We are seeking a Functional Test Lead with 8+ years of experience to drive the quality strategy for large-scale, mission-critical utility systems. In this role, you will lead the functional validation of complex "Meter-to-Cash" workflows, ensuring seamless integration between AMI (Advanced Metering Infrastructure), billing engines, and field service operations. You will be responsible for defining test strategies that bridge the gap between technical system behavior and real-world utility business processes for gas and electric services.
+
+Key Accountabilities
+• Test Strategy & Leadership: Lead the end-to-end functional testing strategy for Front Office (Customer Portals, CRM) and Back Office (Billing, Invoicing, Financials) systems.
+
+• AMI & Metering Validation: Act as the subject matter expert for AMI testing, validating the functional flow of interval data from gas and electric smart meters through the Head-End System (HES) to Meter Data Management (MDM).
+
+• Work Order Process Testing: Oversee the validation of work order lifecycles, ensuring correct orchestration of meter installations, maintenance, and emergency service orders across gas and electric divisions.
+
+• Billing & Rating Accuracy: Lead the functional verification of complex rating engines and tariff structures to ensure 100% billing accuracy across residential and industrial customer classes.
+
+• End-to-End Integration Testing: Manage the functional testing of touchpoints between the Customer Information System (CIS), GIS, and Mobile Workforce Management (MWM) tools to ensure data integrity.
+
+• Defect & Story Governance: Manage the full lifecycle of functional test stories and defects using JIRA and XRAY, coordinating with cross-functional product teams to resolve business-critical blockers.
+
+• Business Process Mapping: Translate complex utility regulatory requirements into comprehensive test scenarios and acceptance criteria.
+
+Qualifications
+Domain & Technical Expertise (7-10 Years Experience)
+
+• Utilities Sector Mastery: Deep knowledge of utility business processes, including billing cycles, credit/collections, and regulatory compliance for gas and electric utilities.
+
+• Core Utility Platforms: Proven experience testing Tier 1 Customer Information Systems (CIS) such as Oracle CC&B (Customer Care and Billing), Oracle CCS (Customer Cloud Service), or Salesforce Energy & Utilities Cloud.
+
+• Advanced Metering (AMI): Strong understanding of smart meter provisioning, remote disconnect/reconnect workflows, and "last gasp" notification testing.
+
+• Operational Workflows: Hands-on experience validating Field Activity logic, including technician dispatching and real-time status updates from mobile field tools.
+
+• Data-Driven Validation: Proficiency in using SQL or Snowflake to perform back-end data validation for billing extracts and meter read synchronization.
+
+• Testing Infrastructure: Expert-level user of JIRA and XRAY for test management, with experience in managing User Acceptance Testing (UAT) and regression suites.
+
+• Education: Bachelor’s degree in engineering, Computer Science, or a related field.
+
+• Experience Profile: 8+ years of total experience, with a proven track record of leading functional testing teams for large-scale utility transformation projects.

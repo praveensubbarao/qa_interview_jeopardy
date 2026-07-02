@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Logo</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.card { padding: 24px 32px; }
+.logos { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.tile { padding: 24px; display: flex; align-items: center; justify-content: center; min-height: 96px; }
+.tile.light { background: var(--white); }
+.tile.tint { background: var(--green-100); }
+.tile.dark  { background: var(--slate-950); position: relative; overflow: hidden; }
+.tile.dark::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--grad-glow); opacity: 0.6; pointer-events: none;
+}
+.tile img { max-width: 100%; height: 56px; position: relative; z-index: 1; }
+.row3 { display: flex; gap: 8px; align-items: center; }
+.mark { width: 56px; height: 56px; }
+</style></head>
+<body>
+<div class="card">
+  <div class="logos">
+    <div class="tile light"><img src="../assets/logo-aiqe.svg" alt=""></div>
+    <div class="tile dark"><img src="../assets/logo-aiqe-white.svg" alt=""></div>
+  </div>
+  <div class="row3">
+    <img class="mark" src="../assets/logo-aiqe-mark.svg" alt="">
+    <div class="col" style="gap:2px">
+      <div class="eyebrow">Symbol mark</div>
+      <div style="font-family:var(--font-display); font-size:14px; font-weight:600; color:var(--fg)">Use for favicons & app icons</div>
+      <div class="value">assets/logo-aiqe-mark.svg · 80×80 viewBox</div>
+    </div>
+  </div>
+</div>
+</body></html>

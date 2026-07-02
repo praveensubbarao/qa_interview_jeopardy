@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Spacing</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.row-s { display: grid; grid-template-columns: 64px 1fr 80px; gap: 12px; align-items: center; padding: 6px 0; border-top: 1px solid var(--border); }
+.row-s:first-of-type { border-top: 0; }
+.row-s .tok { font-family: var(--font-mono); font-size: 11px; color: var(--green-700); }
+.bar { height: 12px; background: var(--green-500); border-radius: 3px; }
+.bar.tint { background: var(--green-200); }
+.row-s .v { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); text-align: right; }
+</style></head>
+<body>
+<div class="card">
+  <div class="col"><div class="eyebrow">Spacing · 8pt grid</div></div>
+  <div class="row-s"><div class="tok">xs</div><div><div class="bar" style="width:4px"></div></div><div class="v">4px</div></div>
+  <div class="row-s"><div class="tok">sm</div><div><div class="bar" style="width:8px"></div></div><div class="v">8px</div></div>
+  <div class="row-s"><div class="tok">md</div><div><div class="bar" style="width:16px"></div></div><div class="v">16px</div></div>
+  <div class="row-s"><div class="tok">lg</div><div><div class="bar" style="width:24px"></div></div><div class="v">24px</div></div>
+  <div class="row-s"><div class="tok">xl</div><div><div class="bar" style="width:32px"></div></div><div class="v">32px</div></div>
+  <div class="row-s"><div class="tok">2xl</div><div><div class="bar" style="width:48px"></div></div><div class="v">48px</div></div>
+  <div class="row-s"><div class="tok">3xl</div><div><div class="bar" style="width:64px"></div></div><div class="v">64px</div></div>
+  <div class="row-s"><div class="tok">4xl</div><div><div class="bar tint" style="width:96px"></div></div><div class="v">96px</div></div>
+</div>
+</body></html>

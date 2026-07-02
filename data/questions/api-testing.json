@@ -1,0 +1,509 @@
+[
+  {
+    "id": "at1",
+    "category": "api-testing",
+    "question": "What is the difference between REST and GraphQL APIs from a testing perspective?",
+    "options": [
+      "REST returns XML while GraphQL returns JSON",
+      "REST has fixed endpoints per resource; GraphQL has a single endpoint where the client specifies the exact data shape needed",
+      "GraphQL is faster than REST in all scenarios",
+      "REST supports subscriptions while GraphQL does not"
+    ],
+    "answer": 1,
+    "explanation": "REST uses multiple fixed endpoints (e.g., /users, /orders) returning predefined data shapes. GraphQL uses a single endpoint where clients query exactly the fields they need. Testing GraphQL requires validating query depth limits, schema validation, and N+1 query prevention."
+  },
+  {
+    "id": "at2",
+    "category": "api-testing",
+    "question": "What is contract testing and when should you use it over integration testing?",
+    "options": [
+      "Contract testing verifies legal agreements between services",
+      "Contract testing validates that a service adheres to a shared API schema agreement between consumer and provider, without requiring both services to be running",
+      "Contract testing is only used for third-party APIs",
+      "Contract testing replaces all other forms of API testing"
+    ],
+    "answer": 1,
+    "explanation": "Contract testing (using tools like Pact) verifies that a service producer's API matches what consumers expect, without needing both services running simultaneously. It's ideal for microservices where integration testing is expensive and slow."
+  },
+  {
+    "id": "at3",
+    "category": "api-testing",
+    "question": "What HTTP status code range indicates a client error?",
+    "options": [
+      "1xx",
+      "2xx",
+      "3xx",
+      "4xx"
+    ],
+    "answer": 3,
+    "explanation": "4xx codes indicate client errors: 400 (Bad Request), 401 (Unauthorized), 403 (Forbidden), 404 (Not Found), 409 (Conflict), 422 (Unprocessable Entity), 429 (Too Many Requests). Testing should verify the correct error code for each invalid request scenario."
+  },
+  {
+    "id": "at4",
+    "category": "api-testing",
+    "question": "What is the purpose of an API schema validation tool like JSON Schema?",
+    "options": [
+      "To format JSON responses for human readability",
+      "To validate that API responses conform to a defined structure — correct data types, required fields, and value constraints",
+      "To compress JSON payloads for faster transmission",
+      "To convert XML responses to JSON format"
+    ],
+    "answer": 1,
+    "explanation": "JSON Schema validation ensures API responses have the correct structure, data types, required fields, and value constraints. This catches breaking changes early — a field changing from string to number, a required field becoming null, etc."
+  },
+  {
+    "id": "at5",
+    "category": "api-testing",
+    "question": "What is the difference between authentication and authorization in API testing?",
+    "options": [
+      "They are the same concept with different names",
+      "Authentication verifies identity (who you are); authorization determines access level (what you can do)",
+      "Authentication is for APIs; authorization is for web pages",
+      "Authorization happens before authentication"
+    ],
+    "answer": 1,
+    "explanation": "Authentication verifies identity (e.g., via API key, JWT, OAuth token). Authorization determines what the authenticated user can access. Testing must verify both: invalid credentials get 401, valid credentials with insufficient permissions get 403."
+  },
+  {
+    "id": "at6",
+    "category": "api-testing",
+    "question": "What is OAuth 2.0 and which flow is most common for API-to-API communication?",
+    "options": [
+      "Authorization Code flow — involves user browser redirects",
+      "Client Credentials flow — server-to-server without user involvement",
+      "Implicit flow — returns token directly in URL",
+      "Device Code flow — for devices without browsers"
+    ],
+    "answer": 1,
+    "explanation": "The Client Credentials flow is used for machine-to-machine API communication where no user interaction is needed. The client exchanges its ID and secret for an access token. Testing should cover token expiration, refresh, scope validation, and invalid credential handling."
+  },
+  {
+    "id": "at7",
+    "category": "api-testing",
+    "question": "What is API rate limiting and how should you test it?",
+    "options": [
+      "Rate limiting controls API response size; test with large payloads",
+      "Rate limiting restricts the number of requests per time window; test by sending requests at and above the limit to verify correct 429 responses and header information",
+      "Rate limiting is only relevant for public APIs",
+      "Rate limiting cannot be tested in lower environments"
+    ],
+    "answer": 1,
+    "explanation": "Rate limiting protects APIs from abuse by restricting request frequency. Test by: verifying requests within the limit succeed, requests exceeding the limit get 429 status, rate limit headers (X-RateLimit-Remaining) are correct, and limits reset after the window."
+  },
+  {
+    "id": "at8",
+    "category": "api-testing",
+    "question": "What is idempotency in APIs and which HTTP methods should be idempotent?",
+    "options": [
+      "Idempotency means APIs return the same response format; all methods should be idempotent",
+      "Idempotency means multiple identical requests produce the same result as a single request; GET, PUT, and DELETE should be idempotent",
+      "Idempotency means APIs never fail; only GET is idempotent",
+      "Idempotency means APIs process requests in order; POST and PATCH are idempotent"
+    ],
+    "answer": 1,
+    "explanation": "An idempotent operation produces the same result whether executed once or multiple times. GET, PUT, and DELETE should be idempotent by design. POST is typically not. Testing should verify that repeating PUT/DELETE calls doesn't cause unintended side effects."
+  },
+  {
+    "id": "at9",
+    "category": "api-testing",
+    "question": "What is Pact and how does it implement consumer-driven contract testing?",
+    "options": [
+      "Pact is an API documentation tool that generates Swagger specs",
+      "Pact lets consumers define expected interactions (pacts), which are then verified against the actual provider, ensuring compatibility without running both services together",
+      "Pact is a load testing tool for APIs",
+      "Pact generates mock servers from OpenAPI specifications"
+    ],
+    "answer": 1,
+    "explanation": "In Pact, the consumer defines expected request/response pairs (a pact file). The provider then verifies it can satisfy those expectations. This ensures API compatibility in microservices without expensive integration environments."
+  },
+  {
+    "id": "at10",
+    "category": "api-testing",
+    "question": "What is the purpose of API pagination and how do you test it?",
+    "options": [
+      "Pagination splits large datasets into pages; test only the first page",
+      "Pagination splits large result sets into manageable chunks; test boundary conditions, last page, empty results, invalid page numbers, and total count accuracy",
+      "Pagination is only for database queries, not APIs",
+      "Pagination always uses offset-based navigation"
+    ],
+    "answer": 1,
+    "explanation": "API pagination prevents returning massive datasets in a single response. Test: first/last/middle pages return correct data, page size limits work, out-of-range pages return empty or 404, cursor-based vs offset-based navigation, and total count headers are accurate."
+  },
+  {
+    "id": "at11",
+    "category": "api-testing",
+    "question": "What is ReadyAPI and how does it complement Postman for enterprise API testing?",
+    "options": [
+      "ReadyAPI and Postman are identical tools",
+      "ReadyAPI provides advanced features like SOAP testing, data-driven testing, security scanning, and load testing in addition to REST testing",
+      "ReadyAPI is only for SOAP APIs while Postman is only for REST",
+      "ReadyAPI replaced Postman in all enterprise environments"
+    ],
+    "answer": 1,
+    "explanation": "ReadyAPI (from SmartBear) adds enterprise features beyond basic API testing: SOAP/WSDL support, advanced data-driven testing with database connections, built-in security scanning (OWASP), and integrated load testing — making it a more complete API testing platform."
+  },
+  {
+    "id": "at12",
+    "category": "api-testing",
+    "question": "What is API versioning and what strategies exist for it?",
+    "options": [
+      "API versioning is only needed for internal APIs",
+      "API versioning manages backward compatibility through URI path (/v1/users), query parameters (?version=1), or header-based (Accept: application/vnd.api+json;version=1) strategies",
+      "APIs should never be versioned — always maintain backward compatibility",
+      "API versioning is handled automatically by API gateways"
+    ],
+    "answer": 1,
+    "explanation": "API versioning allows breaking changes without disrupting existing consumers. Common strategies: URI path versioning (/v1/, /v2/), query parameter versioning, and header versioning. Testing must verify that old versions still work and new versions don't break existing clients."
+  },
+  {
+    "id": "at13",
+    "category": "api-testing",
+    "question": "What is an API gateway and what should you test about it?",
+    "options": [
+      "An API gateway is just a load balancer for APIs",
+      "An API gateway is a single entry point that handles routing, authentication, rate limiting, and transformation; test routing rules, auth enforcement, rate limits, and failover behavior",
+      "API gateways only apply to GraphQL APIs",
+      "API gateways cannot be tested independently"
+    ],
+    "answer": 1,
+    "explanation": "An API gateway (e.g., Kong, AWS API Gateway) sits in front of microservices handling cross-cutting concerns. Test: request routing to correct services, authentication/authorization enforcement, rate limiting, request/response transformation, and behavior during backend failures."
+  },
+  {
+    "id": "at14",
+    "category": "api-testing",
+    "question": "What is the difference between SOAP and REST APIs?",
+    "options": [
+      "SOAP is newer than REST",
+      "SOAP is a protocol with strict XML messaging and WSDL contracts; REST is an architectural style using HTTP methods with flexible formats (JSON/XML)",
+      "REST requires XML while SOAP supports JSON",
+      "There is no practical difference; they are interchangeable"
+    ],
+    "answer": 1,
+    "explanation": "SOAP is a protocol with rigid rules: XML-only, WSDL contracts, and built-in error handling. REST is an architectural style using HTTP verbs (GET, POST, PUT, DELETE) with flexible formats. SOAP is common in enterprise/financial systems; REST dominates modern web APIs."
+  },
+  {
+    "id": "at15",
+    "category": "api-testing",
+    "question": "How do you test API error handling and what edge cases should you cover?",
+    "options": [
+      "Only test the documented error codes",
+      "Test missing required fields, invalid data types, boundary values, malformed JSON, oversized payloads, concurrent conflicting requests, and unexpected null values",
+      "Error handling is the developer's responsibility, not QA's",
+      "Only test 500 errors since those are the most critical"
+    ],
+    "answer": 1,
+    "explanation": "Comprehensive error testing covers: missing/null required fields, wrong data types, boundary values (min/max), malformed request bodies, oversized payloads, SQL injection attempts, XSS payloads, concurrent modifications (409 Conflict), and verifying error response bodies contain helpful messages."
+  },
+  {
+    "id": "at16",
+    "category": "api-testing",
+    "question": "What is OpenAPI (Swagger) specification and how does it support testing?",
+    "options": [
+      "OpenAPI is a testing framework for REST APIs",
+      "OpenAPI is a standard format for describing API endpoints, parameters, and responses — enabling auto-generation of tests, mocks, and documentation",
+      "OpenAPI only works with Java APIs",
+      "OpenAPI replaces the need for manual API testing"
+    ],
+    "answer": 1,
+    "explanation": "OpenAPI (formerly Swagger) is a machine-readable API description format. It enables auto-generating test stubs, request validation, mock servers, client SDKs, and interactive documentation. Testing tools can validate responses against the spec automatically."
+  },
+  {
+    "id": "at17",
+    "category": "api-testing",
+    "question": "What is JWT (JSON Web Token) and what should you test about it?",
+    "options": [
+      "JWT is a database format for storing user data",
+      "JWT is a compact token format containing encoded claims; test token expiration, signature validation, role-based claims, tamper detection, and refresh flow",
+      "JWT tokens never expire",
+      "JWT is only used for password storage"
+    ],
+    "answer": 1,
+    "explanation": "JWT consists of header, payload (claims), and signature. Test: expired tokens are rejected (401), tampered tokens fail signature validation, role-based claims enforce correct access levels, refresh tokens work correctly, and tokens from wrong issuers are rejected."
+  },
+  {
+    "id": "at18",
+    "category": "api-testing",
+    "question": "What is API mocking and when should you use it?",
+    "options": [
+      "API mocking replaces all testing — you never need real APIs",
+      "API mocking simulates API responses for testing when the real service is unavailable, unstable, or expensive to call",
+      "API mocking is only for frontend development",
+      "Mocked APIs always return static responses"
+    ],
+    "answer": 1,
+    "explanation": "API mocking creates simulated endpoints that return predefined responses. Use when: dependent services aren't built yet, third-party APIs have rate limits or costs, you need deterministic test data, or you're testing failure scenarios that are hard to reproduce with real services."
+  },
+  {
+    "id": "at19",
+    "category": "api-testing",
+    "question": "What is HATEOAS and why is it relevant to API testing?",
+    "options": [
+      "HATEOAS is a security protocol for APIs",
+      "HATEOAS (Hypermedia as the Engine of Application State) means API responses include links to related actions, enabling client navigation without hardcoded URLs",
+      "HATEOAS is an alternative to REST",
+      "HATEOAS is only used in SOAP services"
+    ],
+    "answer": 1,
+    "explanation": "HATEOAS enriches API responses with hypermedia links showing available actions. Testing must verify: links are present and correct, link relations follow the spec, linked resources are accessible, and clients can navigate the API using only the provided links."
+  },
+  {
+    "id": "at20",
+    "category": "api-testing",
+    "question": "How do you approach security testing for APIs?",
+    "options": [
+      "Security testing is only needed for public-facing APIs",
+      "Test for OWASP API Top 10 vulnerabilities: broken authentication, excessive data exposure, injection attacks, rate limiting bypass, and mass assignment",
+      "Running a single vulnerability scanner is sufficient",
+      "Security testing should only be done by dedicated security teams"
+    ],
+    "answer": 1,
+    "explanation": "API security testing covers the OWASP API Security Top 10: broken object-level authorization, broken authentication, excessive data exposure, lack of rate limiting, broken function-level authorization, mass assignment, security misconfiguration, injection, improper asset management, and insufficient logging."
+  },
+  {
+    "id": "at21",
+    "category": "api-testing",
+    "question": "What is the difference between SAST and DAST in API security testing?",
+    "options": [
+      "SAST tests the API at runtime; DAST tests the source code",
+      "SAST analyzes source code without running it (white-box); DAST tests the running API from the outside (black-box)",
+      "SAST is for frontend; DAST is for backend",
+      "There is no practical difference between SAST and DAST"
+    ],
+    "answer": 1,
+    "explanation": "SAST (Static Application Security Testing) analyzes source code for vulnerabilities without execution — catching SQL injection patterns, hardcoded secrets, etc. DAST (Dynamic Application Security Testing) tests the running application by sending malicious requests — finding runtime vulnerabilities."
+  },
+  {
+    "id": "at22",
+    "category": "api-testing",
+    "question": "What is API test automation best practice for CI/CD integration?",
+    "options": [
+      "Run all API tests manually before each release",
+      "Organize tests into smoke (fast, every build), regression (nightly), and performance (weekly) tiers that run at appropriate pipeline stages",
+      "Run every API test on every commit regardless of duration",
+      "Only test APIs that changed in the current commit"
+    ],
+    "answer": 1,
+    "explanation": "Tiered API testing in CI/CD: smoke tests (critical paths, < 5 min) run on every commit, regression tests (comprehensive) run nightly, and performance tests run weekly or pre-release. This balances fast feedback with thorough coverage without slowing the pipeline."
+  },
+  {
+    "id": "at23",
+    "category": "api-testing",
+    "question": "How do you test API backward compatibility when releasing a new version?",
+    "options": [
+      "Backward compatibility testing is unnecessary if you version your API",
+      "Run existing consumer test suites against the new version to verify no breaking changes in response structure, status codes, or behavior",
+      "Only check that the new endpoints work correctly",
+      "Ask consumers to update their code to match the new version"
+    ],
+    "answer": 1,
+    "explanation": "Backward compatibility testing runs existing consumer tests (or contract tests) against the new API version. Verify: existing fields aren't removed or renamed, response status codes haven't changed, default behaviors are preserved, and new required parameters aren't added to existing endpoints."
+  },
+  {
+    "id": "at24",
+    "category": "api-testing",
+    "question": "What is chaos engineering and how does it apply to API testing?",
+    "options": [
+      "Chaos engineering means randomly deleting test data",
+      "Chaos engineering deliberately introduces failures (network latency, service outages, resource exhaustion) to verify APIs handle degraded conditions gracefully",
+      "Chaos engineering is only for production systems",
+      "Chaos engineering replaces traditional testing"
+    ],
+    "answer": 1,
+    "explanation": "Chaos engineering tests API resilience by introducing controlled failures: injecting network latency, killing service instances, exhausting connections, corrupting responses from dependencies. It verifies circuit breakers, timeouts, retries, and fallback behaviors work correctly."
+  },
+  {
+    "id": "at25",
+    "category": "api-testing",
+    "question": "What is GraphQL query depth limiting and why should you test it?",
+    "options": [
+      "Query depth limiting restricts how many fields a query can request",
+      "Query depth limiting prevents deeply nested queries that could cause exponential database joins and server resource exhaustion",
+      "Query depth limiting only applies to mutations",
+      "GraphQL automatically prevents deep queries without configuration"
+    ],
+    "answer": 1,
+    "explanation": "Deeply nested GraphQL queries can cause exponential database joins (N+1 problem) and server exhaustion. Depth limiting restricts query nesting. Test that queries exceeding the limit are rejected with clear errors, and queries within the limit execute correctly."
+  },
+  {
+    "id": "at26",
+    "category": "api-testing",
+    "question": "In a microservices architecture with 15+ services, who should own which layer of API testing?",
+    "options": [
+      "A centralized QA team should own all API tests to ensure consistency",
+      "Each service team owns unit and component tests in their repo; QA Architect owns E2E and contract testing standards; Pact Broker centralizes contracts",
+      "Developers own all tests including E2E since they understand the code best",
+      "Only the integration team should test API interactions between services"
+    ],
+    "answer": 1,
+    "explanation": "In microservices, testing ownership should be distributed: service teams own unit and component tests within their repos, a Pact Broker centralizes contract management, and the QA team owns cross-service E2E tests for critical user journeys."
+  },
+  {
+    "id": "at27",
+    "category": "api-testing",
+    "question": "What is the critical security test often missed in GraphQL APIs that would be caught in REST APIs?",
+    "options": [
+      "SQL injection testing, which only affects REST endpoints",
+      "Rate limiting, which GraphQL does not support",
+      "Field-level authorization, since GraphQL allows clients to request any field including sensitive ones like SSN if not explicitly restricted",
+      "Input validation, which GraphQL schemas handle automatically"
+    ],
+    "answer": 2,
+    "explanation": "GraphQL allows clients to specify exactly which fields they want. Without field-level authorization, a regular user could query sensitive fields (e.g., SSN) that REST endpoint-level security would have blocked. Test by querying restricted fields with different role tokens."
+  },
+  {
+    "id": "at28",
+    "category": "api-testing",
+    "question": "What is the recommended approach for testing consumer idempotency in event-driven architectures using message queues?",
+    "options": [
+      "Test that messages are delivered in order since ordering guarantees idempotency",
+      "Only test the producer side since consumers should handle duplicates by default",
+      "Publish the same event twice and verify the consumer processes it only once, preventing duplicate side effects like double-charging",
+      "Test idempotency only in production since test environments do not replicate message queue behavior"
+    ],
+    "answer": 2,
+    "explanation": "Consumer idempotency means processing the same event multiple times produces the same result as processing it once. Test by publishing duplicate events and asserting no double side effects (e.g., double stock decrement). This often reveals missing deduplication stores."
+  },
+  {
+    "id": "at29",
+    "category": "api-testing",
+    "question": "When testing API versioning with URI paths (/v1/, /v2/), what must be tested on the version sunset date?",
+    "options": [
+      "That the old version redirects to the new version automatically",
+      "That the old version returns HTTP 410 Gone instead of a successful response, confirming the deprecation is enforced",
+      "That error messages in the old version are updated to reference the new version",
+      "Nothing special; versions should simply stop working on the sunset date"
+    ],
+    "answer": 1,
+    "explanation": "On the API sunset date, tests should assert that deprecated endpoints return HTTP 410 Gone (not 200 or 404), indicating the resource existed but has been intentionally retired. This prevents surprise breakage for consumers who missed the deprecation notice."
+  },
+  {
+    "id": "at30",
+    "category": "api-testing",
+    "question": "What is the Awaitility library pattern used for in event-driven architecture testing?",
+    "options": [
+      "It provides a way to add explicit sleeps between test steps for async operations",
+      "It generates synthetic events for load testing message queues",
+      "It provides polling-based assertions that wait until an async condition is met within a timeout, replacing arbitrary sleep calls",
+      "It monitors Kafka topic lag to determine when consumers have caught up"
+    ],
+    "answer": 2,
+    "explanation": "Awaitility provides a fluent API for polling async conditions: 'await().atMost(5, SECONDS).until(() -> inventoryCount == expected)'. This replaces unreliable sleep() calls with deterministic assertions that complete as soon as the condition is met."
+  },
+  {
+    "id": "at31",
+    "category": "api-testing",
+    "question": "What is the most thorough approach for testing API authentication and authorization across a multi-tenant SaaS platform?",
+    "options": [
+      "Test login with valid credentials and verify a 200 response for each role",
+      "Build an authorization matrix of roles x endpoints x HTTP methods and systematically assert expected HTTP status codes for every combination",
+      "Only test admin endpoints since regular user endpoints are public by design",
+      "Use a single test account and verify that authentication headers are required"
+    ],
+    "answer": 1,
+    "explanation": "An authorization matrix systematically tests every combination of roles, endpoints, and HTTP methods. For example, 5 roles x 20 endpoints x 3 methods = 300 combinations. Data-driven tests assert each combination returns the correct status (200, 403, or 404)."
+  },
+  {
+    "id": "at32",
+    "category": "api-testing",
+    "question": "What should a dead-letter queue (DLQ) test verify in an event-driven architecture?",
+    "options": [
+      "That all messages eventually reach the DLQ for archival purposes",
+      "That the DLQ is empty at all times in a healthy system",
+      "That malformed or poison messages are routed to the DLQ with metadata for investigation, rather than silently dropped or blocking the main queue",
+      "That the DLQ automatically retries failed messages indefinitely"
+    ],
+    "answer": 2,
+    "explanation": "DLQ tests should verify that poison messages (malformed schema, processing errors) are routed to the dead-letter queue with enough metadata for investigation, that the main queue is not blocked, and that alerting triggers when DLQ messages exceed a threshold."
+  },
+  {
+    "id": "at33",
+    "category": "api-testing",
+    "question": "In consumer-driven contract testing with Pact, what is the role of the Pact Broker?",
+    "options": [
+      "It runs the actual API tests between consumers and providers in a shared environment",
+      "It acts as a centralized repository for storing, versioning, and sharing contract (pact) files, enabling verification across CI pipelines",
+      "It generates mock servers automatically from OpenAPI specifications",
+      "It replaces the need for any other form of API testing"
+    ],
+    "answer": 1,
+    "explanation": "The Pact Broker is essential at scale for managing consumer-driven contracts. It stores versioned pact files from consumers, enables providers to fetch and verify them in their own CI pipelines, and tracks verification status across all consumer-provider pairs."
+  },
+  {
+    "id": "at34",
+    "category": "api-testing",
+    "question": "What is API integration in enterprise platforms, and what is the primary QA concern?",
+    "options": [
+      "A method for styling web applications using external CSS frameworks",
+      "The ability for systems to exchange data automatically through defined interfaces, requiring contract and payload validation",
+      "A database migration technique for transferring data between environments",
+      "A front-end rendering approach that loads data from multiple sources simultaneously"
+    ],
+    "answer": 1,
+    "explanation": "API integration allows different systems to exchange data automatically through defined interfaces. QA must validate request/response contracts, data transformation accuracy, error handling, authentication, rate limiting, and backward compatibility across API versions."
+  },
+  {
+    "id": "at35",
+    "category": "api-testing",
+    "question": "When testing straight-through processing (STP) via APIs, what is the most critical validation?",
+    "options": [
+      "Verifying that all transactions are processed in under one second regardless of complexity",
+      "Ensuring the rules engine correctly routes low-risk items for automatic processing and flags high-risk items for manual review",
+      "Confirming that the API returns HTTP 200 for all successful transactions",
+      "Validating that the database schema matches the API response format"
+    ],
+    "answer": 1,
+    "explanation": "STP routes low-risk transactions for automatic processing. The critical QA validation is ensuring the rules engine correctly classifies transactions: low-risk items proceed automatically while high-risk or ambiguous items are routed to manual review queues with proper audit trails."
+  },
+  {
+    "id": "at36",
+    "category": "api-testing",
+    "question": "What is the most effective approach to testing data validation rules in an API that accepts complex business documents?",
+    "options": [
+      "Test only with valid payloads and verify successful responses",
+      "Test boundary conditions, required field combinations, cross-field dependencies, and verify that error messages are actionable for each invalid scenario",
+      "Rely on the front-end validation to catch all invalid data before it reaches the API",
+      "Use only automated schema validation tools without manual test case design"
+    ],
+    "answer": 1,
+    "explanation": "Comprehensive API data validation testing must cover boundary conditions, required vs. optional field combinations, cross-field dependency rules, format validation, and ensure error responses are specific and actionable. Front-end validation alone is insufficient since APIs can be called directly."
+  },
+  {
+    "id": "at37",
+    "category": "api-testing",
+    "question": "What should QA validate when testing API-driven workflow orchestration across multiple services?",
+    "options": [
+      "Only the final output of the workflow, ignoring intermediate states",
+      "State transitions at each step, error handling and rollback at every failure point, timeout behavior, and audit trail completeness",
+      "That each API call completes in under 100 milliseconds",
+      "Only the happy path scenario from start to finish"
+    ],
+    "answer": 1,
+    "explanation": "API-driven workflow orchestration involves multiple services executing in sequence or parallel. QA must validate state transitions, error handling and compensation/rollback logic at each step, timeout behavior, retry policies, idempotency, and that the audit trail captures every action."
+  },
+  {
+    "id": "at38",
+    "category": "api-testing",
+    "question": "When testing an API that integrates with an external e-signature service, which test scenario is most commonly overlooked?",
+    "options": [
+      "Testing that signatures are applied to the correct document",
+      "Testing the callback/webhook handling when the external service completes, times out, or returns an error asynchronously",
+      "Testing that the API requires authentication",
+      "Testing that the signed document can be downloaded"
+    ],
+    "answer": 1,
+    "explanation": "External service integrations often rely on asynchronous callbacks or webhooks. QA must test how the system handles delayed callbacks, out-of-order notifications, duplicate webhooks, timeout scenarios, and error responses from the external service, not just the happy path of successful signing."
+  },
+  {
+    "id": "at39",
+    "category": "api-testing",
+    "question": "How should QA test a rules engine API that automatically applies configurable business logic and approval criteria?",
+    "options": [
+      "Test only the default rule configuration since custom rules are the client's responsibility",
+      "Test individual rules, rule interactions and priority conflicts, boundary conditions at threshold values, and the impact of rule changes on existing in-flight transactions",
+      "Run a single end-to-end test that covers the most common workflow",
+      "Validate only that the rules engine API returns HTTP 200 for valid rule configurations"
+    ],
+    "answer": 1,
+    "explanation": "Rules engine APIs require combinatorial testing: individual rule correctness, rule interaction when multiple rules apply simultaneously, priority conflict resolution, boundary conditions at rule thresholds, and backward compatibility when rules are updated while transactions are in progress."
+  }
+]

@@ -1,0 +1,457 @@
+[
+  {
+    "id": "bg1",
+    "category": "bdd-gherkin",
+    "question": "What is the primary difference between BDD and TDD?",
+    "options": [
+      "BDD focuses on behavior described in business language, while TDD focuses on unit-level code correctness",
+      "TDD uses Gherkin syntax while BDD uses plain code assertions",
+      "BDD can only be used for UI testing, while TDD is for API testing",
+      "TDD requires stakeholder collaboration, while BDD is developer-only"
+    ],
+    "answer": 0,
+    "explanation": "BDD extends TDD by shifting the focus from testing implementation details to describing expected behavior in a language that business stakeholders can understand. TDD centers on writing unit tests first to drive code design, while BDD uses natural-language scenarios to drive development from the outside in."
+  },
+  {
+    "id": "bg2",
+    "category": "bdd-gherkin",
+    "question": "What is the purpose of a 'Three Amigos' session in BDD?",
+    "options": [
+      "A code review meeting between three senior developers",
+      "A collaborative discussion between a developer, tester, and business analyst to define acceptance criteria",
+      "A sprint retrospective format with exactly three participants",
+      "A meeting to assign three test scenarios to each user story"
+    ],
+    "answer": 1,
+    "explanation": "The Three Amigos session brings together at least three perspectives — typically a developer, a tester, and a business analyst (or product owner) — to collaboratively discuss and refine acceptance criteria before development begins. This ensures shared understanding and uncovers edge cases early."
+  },
+  {
+    "id": "bg3",
+    "category": "bdd-gherkin",
+    "question": "Which Gherkin keyword is used to define a precondition or initial context for a scenario?",
+    "options": [
+      "When",
+      "Then",
+      "Given",
+      "And"
+    ],
+    "answer": 2,
+    "explanation": "The 'Given' keyword sets up the initial state or precondition of the system before the action under test takes place. It describes what is already true before the behavior being tested occurs."
+  },
+  {
+    "id": "bg4",
+    "category": "bdd-gherkin",
+    "question": "What is 'Living Documentation' in the context of BDD?",
+    "options": [
+      "A wiki page that developers manually update after each sprint",
+      "Executable specifications (Gherkin scenarios) that serve as always-up-to-date documentation because they are validated by automated tests",
+      "Auto-generated Javadoc from step definition classes",
+      "A shared Google Doc where the QA team logs test results"
+    ],
+    "answer": 1,
+    "explanation": "Living Documentation refers to Gherkin feature files that double as both automated test specifications and readable documentation. Because they are executed as tests, they stay in sync with the actual system behavior, unlike traditional docs that become stale."
+  },
+  {
+    "id": "bg5",
+    "category": "bdd-gherkin",
+    "question": "Which of the following is a common BDD anti-pattern?",
+    "options": [
+      "Writing scenarios in business-readable language",
+      "Using the Three Amigos process to refine scenarios",
+      "Writing scenarios that are tightly coupled to UI implementation details",
+      "Keeping scenarios focused on a single behavior"
+    ],
+    "answer": 2,
+    "explanation": "Coupling scenarios to UI implementation details (e.g., 'click button with id=submit') is a well-known BDD anti-pattern. Scenarios should describe business behavior at a higher level of abstraction, making them resilient to UI changes and readable by non-technical stakeholders."
+  },
+  {
+    "id": "bg6",
+    "category": "bdd-gherkin",
+    "question": "How is shared state typically managed between Cucumber step definitions in Java?",
+    "options": [
+      "By using static global variables in a utility class",
+      "By passing data through the system clipboard",
+      "By using dependency injection (e.g., PicoContainer or Spring) to share a context/world object across step classes",
+      "By writing state to a temporary database between steps"
+    ],
+    "answer": 2,
+    "explanation": "Cucumber supports dependency injection frameworks like PicoContainer, Spring, and Guice to share state between step definition classes. A shared context or 'world' object is injected into each step definition class, allowing them to exchange data cleanly without static variables."
+  },
+  {
+    "id": "bg7",
+    "category": "bdd-gherkin",
+    "question": "What is the recommended folder structure for a Cucumber Java project?",
+    "options": [
+      "All feature files and step definitions in the same flat directory",
+      "Feature files under src/test/resources organized by feature area, step definitions under src/test/java in matching packages",
+      "Feature files in src/main/java and step definitions in src/main/resources",
+      "One single feature file containing all scenarios and one step definition class"
+    ],
+    "answer": 1,
+    "explanation": "The convention is to place Gherkin feature files under src/test/resources (often mirroring the package structure) and Java step definitions under src/test/java in corresponding packages. This keeps features discoverable and step definitions organized by domain area."
+  },
+  {
+    "id": "bg8",
+    "category": "bdd-gherkin",
+    "question": "Which Cucumber hook annotation runs once before each scenario and is commonly used for test data setup?",
+    "options": [
+      "@BeforeStep",
+      "@After",
+      "@Before",
+      "@BeforeAll"
+    ],
+    "answer": 2,
+    "explanation": "The @Before hook runs before each scenario and is the standard place to set up test data, initialize browser sessions, or prepare the system under test. @BeforeAll runs once before the entire suite, while @BeforeStep runs before every individual step."
+  },
+  {
+    "id": "bg9",
+    "category": "bdd-gherkin",
+    "question": "How can you integrate Cucumber tests into a Jenkins CI/CD pipeline?",
+    "options": [
+      "Cucumber cannot be run in CI/CD; it requires manual execution",
+      "By running Cucumber via Maven/Gradle as part of the build lifecycle and publishing JSON/HTML reports using Jenkins plugins",
+      "By copying feature files to the Jenkins server and opening them in a browser",
+      "By using Jenkins to send feature files via email to manual testers"
+    ],
+    "answer": 1,
+    "explanation": "Cucumber tests integrate into Jenkins by executing them through Maven (mvn test) or Gradle as a standard build step. The Cucumber JSON report plugin for Jenkins can then parse the output to display rich, interactive test results within the Jenkins dashboard."
+  },
+  {
+    "id": "bg10",
+    "category": "bdd-gherkin",
+    "question": "What is the purpose of tags in Cucumber (e.g., @smoke, @regression)?",
+    "options": [
+      "To add CSS styling to the Cucumber HTML report",
+      "To categorize and selectively run subsets of scenarios based on criteria like test type, priority, or feature area",
+      "To mark scenarios as deprecated so they are permanently skipped",
+      "To assign scenarios to specific developers for code review"
+    ],
+    "answer": 1,
+    "explanation": "Tags in Cucumber allow you to annotate scenarios and features for selective execution. For example, you can run only @smoke-tagged scenarios in a quick CI check, or exclude @wip scenarios from the regression suite, using tag expressions in the runner configuration."
+  },
+  {
+    "id": "bg11",
+    "category": "bdd-gherkin",
+    "question": "Which approach best addresses flaky BDD scenarios?",
+    "options": [
+      "Delete flaky scenarios from the suite entirely",
+      "Add long Thread.sleep() calls before every assertion",
+      "Investigate root causes (timing issues, test data dependencies, environment instability) and fix with explicit waits, isolated data, and stable environments",
+      "Run the entire suite multiple times and only report the best result"
+    ],
+    "answer": 2,
+    "explanation": "Flaky tests should be investigated to find their root cause — common culprits include race conditions, shared mutable test data, and environment instability. Proper fixes include using explicit waits instead of Thread.sleep(), isolating test data per scenario, and ensuring environment reliability."
+  },
+  {
+    "id": "bg12",
+    "category": "bdd-gherkin",
+    "question": "What is Serenity BDD primarily used for?",
+    "options": [
+      "A JavaScript-only BDD framework for Node.js applications",
+      "A reporting and test automation framework that integrates with Cucumber to produce rich, narrative living documentation reports",
+      "A load testing tool for measuring API performance under BDD scenarios",
+      "A database migration tool that uses Gherkin syntax"
+    ],
+    "answer": 1,
+    "explanation": "Serenity BDD is a Java-based framework that layers on top of Cucumber (or JBehave) to provide detailed, narrative-style test reports with screenshots, REST API logs, and step-by-step breakdowns. It encourages the Screenplay pattern and generates comprehensive living documentation."
+  },
+  {
+    "id": "bg13",
+    "category": "bdd-gherkin",
+    "question": "Which types of testing are best suited for BDD with Gherkin scenarios?",
+    "options": [
+      "Unit testing of individual methods and functions",
+      "Acceptance testing and key business workflow validation",
+      "Low-level performance benchmarking and memory profiling",
+      "Static code analysis and linting"
+    ],
+    "answer": 1,
+    "explanation": "BDD is best suited for acceptance-level testing that validates business rules and user-facing workflows. Unit tests and low-level performance tests are better handled by dedicated frameworks (JUnit, JMeter), while BDD shines at verifying that the system behaves as stakeholders expect."
+  },
+  {
+    "id": "bg14",
+    "category": "bdd-gherkin",
+    "question": "What is a recommended first step when introducing BDD to a team that has never used it?",
+    "options": [
+      "Immediately rewrite all existing tests in Gherkin",
+      "Start with a small pilot: pick one feature, run a Three Amigos session, write a few scenarios, automate them, and demonstrate value before scaling",
+      "Purchase an enterprise BDD platform license before writing any scenarios",
+      "Have only the QA team write all Gherkin scenarios without involving developers or business analysts"
+    ],
+    "answer": 1,
+    "explanation": "The best approach is to start small with a pilot project, demonstrate concrete value (better collaboration, living documentation, clearer requirements), and then gradually expand adoption. Trying to convert everything at once or excluding key roles undermines BDD's collaborative nature."
+  },
+  {
+    "id": "bg15",
+    "category": "bdd-gherkin",
+    "question": "Which of the following is valid Gherkin syntax for a feature file?",
+    "options": [
+      "Feature: Login\n  Test Case: Valid login\n    Step 1: Enter username\n    Step 2: Enter password",
+      "Feature: Login\n  Scenario: Valid login\n    Given the user is on the login page\n    When the user enters valid credentials\n    Then the user should see the dashboard",
+      "Describe: Login\n  It: should allow valid login\n    Arrange: user on login page\n    Act: enter credentials\n    Assert: dashboard visible",
+      "TestSuite: Login\n  TestCase: Valid login\n    Setup: navigate to login\n    Execute: submit form\n    Verify: redirect to dashboard"
+    ],
+    "answer": 1,
+    "explanation": "Gherkin uses specific keywords: Feature, Scenario (or Scenario Outline), Given, When, Then, And, and But. The correct syntax structures scenarios under a Feature with Given-When-Then steps that describe preconditions, actions, and expected outcomes."
+  },
+  {
+    "id": "bg16",
+    "category": "bdd-gherkin",
+    "question": "In a Cucumber Java step definition, which annotation maps a step to the Gherkin line 'When the user clicks the submit button'?",
+    "options": [
+      "@Then(\"the user clicks the submit button\")",
+      "@Given(\"the user clicks the submit button\")",
+      "@When(\"the user clicks the submit button\")",
+      "@Step(\"the user clicks the submit button\")"
+    ],
+    "answer": 2,
+    "explanation": "The @When annotation in Cucumber Java maps to 'When' steps in the Gherkin feature file. The annotation string must match the step text (with optional parameter placeholders). Each Gherkin keyword (Given, When, Then) has its own corresponding Java annotation."
+  },
+  {
+    "id": "bg17",
+    "category": "bdd-gherkin",
+    "question": "When should you use a Scenario Outline instead of separate individual scenarios?",
+    "options": [
+      "When the scenario has no parameters at all",
+      "When you want to run the same scenario structure with multiple sets of input data, using an Examples table",
+      "When you need to run scenarios in a specific sequential order",
+      "When the scenario should only be executed once during the entire test suite"
+    ],
+    "answer": 1,
+    "explanation": "Scenario Outline (with an Examples table) is used when the same behavior needs to be tested with different data combinations. It avoids duplicating scenario text and makes it easy to add new test data rows without writing new scenarios."
+  },
+  {
+    "id": "bg18",
+    "category": "bdd-gherkin",
+    "question": "How can Gherkin scenarios handle asynchronous workflows, such as waiting for an email notification?",
+    "options": [
+      "Gherkin cannot express asynchronous workflows at all",
+      "By adding 'Async' keyword before the step",
+      "By writing steps that describe polling or waiting behavior in the step definition (e.g., 'Then the user should receive a confirmation email within 30 seconds') while implementing retry/polling logic in the automation code",
+      "By running each step in a separate thread automatically"
+    ],
+    "answer": 2,
+    "explanation": "Gherkin scenarios express the expected behavior declaratively (e.g., 'the email arrives within 30 seconds'), while the step definition implements the polling or waiting mechanism. This keeps the feature file readable while the automation layer handles the asynchronous complexity."
+  },
+  {
+    "id": "bg19",
+    "category": "bdd-gherkin",
+    "question": "What is the purpose of a Data Table in a Gherkin step?",
+    "options": [
+      "To define database schema migrations",
+      "To pass structured tabular data to a single step, such as a list of items or a set of field-value pairs",
+      "To create a visual chart in the test report",
+      "To define the execution order of scenarios"
+    ],
+    "answer": 1,
+    "explanation": "Data Tables in Gherkin allow you to pass structured, tabular data directly to a step. For example, you can pass a table of form fields and values, or a list of expected items. The step definition receives this as a DataTable object that can be converted to lists or maps."
+  },
+  {
+    "id": "bg20",
+    "category": "bdd-gherkin",
+    "question": "Which Maven dependency is required to use Cucumber with JUnit 5 (Jupiter) in a Java project?",
+    "options": [
+      "cucumber-spring",
+      "cucumber-picocontainer",
+      "cucumber-junit-platform-engine",
+      "cucumber-testng"
+    ],
+    "answer": 2,
+    "explanation": "The cucumber-junit-platform-engine dependency integrates Cucumber with JUnit 5's platform engine, allowing Cucumber scenarios to run as JUnit Platform tests. This is the modern approach, replacing the older cucumber-junit dependency used with JUnit 4."
+  },
+  {
+    "id": "bg21",
+    "category": "bdd-gherkin",
+    "question": "How can Cucumber scenarios be executed in parallel?",
+    "options": [
+      "Cucumber does not support any form of parallel execution",
+      "By configuring the cucumber.execution.parallel.enabled property and ensuring scenarios are independent with no shared mutable state",
+      "By duplicating the feature file into multiple copies with different names",
+      "By running each scenario on a different physical machine only"
+    ],
+    "answer": 1,
+    "explanation": "Cucumber supports parallel execution at the scenario or feature level through configuration properties (e.g., cucumber.execution.parallel.enabled=true with JUnit Platform). Scenarios must be independent and avoid shared mutable state to run safely in parallel."
+  },
+  {
+    "id": "bg22",
+    "category": "bdd-gherkin",
+    "question": "What is the purpose of the @BeforeStep hook in Cucumber?",
+    "options": [
+      "It runs once at the very beginning of the test suite before any feature file is loaded",
+      "It runs before each individual step within a scenario, useful for logging or implicit waits",
+      "It runs before each feature file is parsed",
+      "It runs before the Cucumber runner class is initialized"
+    ],
+    "answer": 1,
+    "explanation": "The @BeforeStep hook executes before every individual step in a scenario. It is commonly used for cross-cutting concerns like logging the current step, taking screenshots before each action, or applying implicit wait configurations."
+  },
+  {
+    "id": "bg23",
+    "category": "bdd-gherkin",
+    "question": "What does the 'Background' keyword do in a Gherkin feature file?",
+    "options": [
+      "It runs steps in the background thread while other scenarios execute",
+      "It defines steps that are executed before each scenario in the feature file, reducing duplication of common preconditions",
+      "It hides certain scenarios from the test report",
+      "It marks a scenario as a background job that runs asynchronously"
+    ],
+    "answer": 1,
+    "explanation": "The Background section defines Given steps that are common to all scenarios in a feature file. These steps run before each scenario, eliminating the need to repeat shared setup steps. It should be kept short and only contain universally needed preconditions."
+  },
+  {
+    "id": "bg24",
+    "category": "bdd-gherkin",
+    "question": "What is the role of the Cucumber Runner class in a JUnit 4-based project?",
+    "options": [
+      "It compiles the Gherkin feature files into Java bytecode",
+      "It is annotated with @RunWith(Cucumber.class) and @CucumberOptions to configure feature paths, glue code, plugins, and tags for execution",
+      "It generates Gherkin feature files from Java code",
+      "It serves as the main application entry point for production code"
+    ],
+    "answer": 1,
+    "explanation": "The Runner class uses @RunWith(Cucumber.class) to tell JUnit to use the Cucumber runner, and @CucumberOptions to specify the location of feature files, glue (step definitions), report plugins, and tag filters. It acts as the entry point for executing the Cucumber test suite."
+  },
+  {
+    "id": "bg25",
+    "category": "bdd-gherkin",
+    "question": "How does the Page Object Model (POM) complement BDD step definitions?",
+    "options": [
+      "POM replaces Gherkin entirely with XML-based test configuration",
+      "POM encapsulates page-specific locators and interactions in separate classes, keeping step definitions focused on behavior rather than UI mechanics",
+      "POM is only used for performance testing and cannot be combined with BDD",
+      "POM requires each page to have its own feature file"
+    ],
+    "answer": 1,
+    "explanation": "The Page Object Model separates UI interaction details (locators, clicks, waits) into dedicated page classes. Step definitions then call page object methods, staying clean and behavior-focused. This makes tests more maintainable because UI changes only require updating the page object, not the step definitions."
+  },
+  {
+    "id": "bg26",
+    "category": "bdd-gherkin",
+    "question": "What is the key advantage of Cucumber Expressions over Regular Expressions for step matching?",
+    "options": [
+      "Cucumber Expressions execute faster at runtime than Regular Expressions",
+      "Cucumber Expressions are more readable and provide built-in parameter types like {int}, {string}, and {float} without regex syntax",
+      "Cucumber Expressions support Unicode while Regular Expressions do not",
+      "Cucumber Expressions can match binary data in step definitions"
+    ],
+    "answer": 1,
+    "explanation": "Cucumber Expressions use a simpler, more readable syntax with built-in parameter types ({int}, {string}, {float}, {word}) instead of regex patterns like (\\d+) or \"([^\"]*)\". They are easier for non-technical team members to understand and maintain."
+  },
+  {
+    "id": "bg27",
+    "category": "bdd-gherkin",
+    "question": "Which Cucumber plugin configuration generates both HTML and JSON reports?",
+    "options": [
+      "plugin = {\"pretty\"}",
+      "plugin = {\"html:target/cucumber-reports.html\", \"json:target/cucumber.json\"}",
+      "plugin = {\"console\", \"xml:report.xml\"}",
+      "plugin = {\"csv:target/results.csv\"}"
+    ],
+    "answer": 1,
+    "explanation": "The plugin option in @CucumberOptions accepts an array of formatter strings. 'html:path' generates an HTML report and 'json:path' generates a JSON report. The JSON report is especially useful for CI/CD integration and tools like the Cucumber Jenkins plugin."
+  },
+  {
+    "id": "bg28",
+    "category": "bdd-gherkin",
+    "question": "How do you define a custom parameter type in Cucumber to match domain-specific values like 'active' or 'inactive' status?",
+    "options": [
+      "By creating a new Gherkin keyword using a plugin",
+      "By using the @ParameterType annotation on a method that returns the parsed type, with a regex defining the allowed values",
+      "By editing the Cucumber source code to add new built-in types",
+      "Custom parameter types are not supported in Cucumber"
+    ],
+    "answer": 1,
+    "explanation": "The @ParameterType annotation defines a custom parameter type by specifying a regex pattern and a transformer method. For example, @ParameterType(\"active|inactive\") on a method returning a Status enum allows you to use {status} in step definitions for type-safe matching."
+  },
+  {
+    "id": "bg29",
+    "category": "bdd-gherkin",
+    "question": "How can Cucumber be used with RestAssured for REST API testing?",
+    "options": [
+      "Cucumber cannot be used for API testing, only for UI testing",
+      "By writing Gherkin scenarios that describe API behavior (e.g., 'When I send a GET request to /users') and implementing step definitions that use RestAssured to make HTTP calls and validate responses",
+      "By replacing Gherkin with RestAssured's own DSL in feature files",
+      "By installing a special Cucumber-REST plugin that auto-generates API tests"
+    ],
+    "answer": 1,
+    "explanation": "Cucumber and RestAssured integrate naturally: Gherkin scenarios describe the API behavior in business terms, while step definitions use RestAssured's fluent API to send HTTP requests and validate status codes, headers, and response bodies. This brings BDD benefits to API-level testing."
+  },
+  {
+    "id": "bg30",
+    "category": "bdd-gherkin",
+    "question": "What is a best practice for managing test data in BDD scenarios?",
+    "options": [
+      "Always use production data directly for testing",
+      "Hardcode all test data in the step definition Java files",
+      "Each scenario should create its own test data in the Given steps and clean up in @After hooks to ensure isolation and repeatability",
+      "Share a single set of test data across all scenarios and never reset it"
+    ],
+    "answer": 2,
+    "explanation": "Each scenario should be self-contained by setting up the required test data in Given steps and tearing it down in @After hooks. This ensures scenarios are independent, repeatable, and can run in any order or in parallel without interfering with each other."
+  },
+  {
+    "id": "bg31",
+    "category": "bdd-gherkin",
+    "question": "What does the 'Then' keyword represent in the Given-When-Then structure?",
+    "options": [
+      "The precondition or initial context",
+      "The action or event that triggers the behavior",
+      "The expected outcome or observable result that should be verified",
+      "A cleanup step that runs after the scenario"
+    ],
+    "answer": 2,
+    "explanation": "'Then' defines the expected outcome or assertion in a BDD scenario. It describes what should be observable after the action (When) is performed in the given context (Given). Then steps should verify outcomes, not perform additional actions."
+  },
+  {
+    "id": "bg32",
+    "category": "bdd-gherkin",
+    "question": "What is the difference between acceptance criteria and Gherkin scenarios?",
+    "options": [
+      "They are exactly the same thing with different names",
+      "Acceptance criteria are high-level business conditions for story completion, while Gherkin scenarios are concrete, executable examples that illustrate those criteria",
+      "Gherkin scenarios are written first and acceptance criteria are derived from them",
+      "Acceptance criteria are only for manual testing while Gherkin is only for automation"
+    ],
+    "answer": 1,
+    "explanation": "Acceptance criteria define the high-level conditions that must be met for a user story to be considered complete (e.g., 'Users can log in with valid credentials'). Gherkin scenarios are specific, executable examples that illustrate and verify those criteria with concrete data and steps."
+  },
+  {
+    "id": "bg33",
+    "category": "bdd-gherkin",
+    "question": "In a GitHub Actions workflow, how do you typically run Cucumber tests and publish results?",
+    "options": [
+      "GitHub Actions cannot run Cucumber tests",
+      "By adding a workflow step that runs 'mvn test' (or equivalent) and then using an action to upload the Cucumber JSON/HTML report as a build artifact",
+      "By manually uploading feature files to the GitHub Actions UI",
+      "By converting all Gherkin scenarios to GitHub Issues before each run"
+    ],
+    "answer": 1,
+    "explanation": "In GitHub Actions, Cucumber tests run as part of the standard Maven or Gradle build step. The generated reports (JSON, HTML) can be uploaded as artifacts using actions/upload-artifact, or processed by third-party actions to post results as PR comments or check annotations."
+  },
+  {
+    "id": "bg34",
+    "category": "bdd-gherkin",
+    "question": "Which BDD anti-pattern involves writing Gherkin scenarios only after the code is complete?",
+    "options": [
+      "Test-first development",
+      "Automation-first BDD, where scenarios are written retroactively as test scripts rather than as a collaborative specification tool before development",
+      "Continuous integration",
+      "Shift-left testing"
+    ],
+    "answer": 1,
+    "explanation": "Writing Gherkin scenarios after the code is complete turns BDD into just another test automation framework, losing the collaborative specification benefit. True BDD means writing scenarios before development, using them to drive shared understanding and guide implementation."
+  },
+  {
+    "id": "bg35",
+    "category": "bdd-gherkin",
+    "question": "Which Cucumber hook is best suited for capturing a screenshot on scenario failure for debugging?",
+    "options": [
+      "@Before with a conditional check for previous failure",
+      "@BeforeStep to screenshot before every step",
+      "@After with a check on the Scenario status (scenario.isFailed()) to capture a screenshot only when the scenario fails",
+      "@AfterStep but only on the last step"
+    ],
+    "answer": 2,
+    "explanation": "The @After hook runs after each scenario and receives a Scenario object. By checking scenario.isFailed(), you can conditionally capture a screenshot and attach it to the report using scenario.attach(). This provides visual evidence for debugging failures without cluttering passing tests."
+  }
+]

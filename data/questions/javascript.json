@@ -1,0 +1,652 @@
+[
+  {
+    "id": "js1",
+    "category": "javascript",
+    "question": "What is the key behavioral difference between var, let, and const in JavaScript?",
+    "options": [
+      "var and let are identical; const prevents all mutations including object properties",
+      "var is function-scoped and hoisted with undefined; let and const are block-scoped and stay in the Temporal Dead Zone until initialized; const cannot be reassigned",
+      "let and const are only available in strict mode; var works everywhere regardless of mode",
+      "var is faster at runtime; let and const add type-checking overhead in the JavaScript engine"
+    ],
+    "answer": 1,
+    "explanation": "var leaks out of blocks (if/for) into the enclosing function scope and is hoisted as undefined. let and const are block-scoped and accessing them before declaration throws ReferenceError (TDZ). const prevents reassignment but does not freeze object contents — object properties can still be mutated."
+  },
+  {
+    "id": "js2",
+    "category": "javascript",
+    "question": "What does JavaScript hoisting do, and what is the Temporal Dead Zone (TDZ)?",
+    "options": [
+      "Hoisting moves function calls to the top of the file; TDZ is the delay before async functions resolve",
+      "Hoisting only applies to class declarations, not variables or functions",
+      "Hoisting moves declarations to the top of their scope during compilation. var is initialized to undefined immediately; let and const are hoisted but remain in the TDZ — inaccessible and throwing ReferenceError — until the declaration line executes",
+      "TDZ only applies to const declarations; let variables are accessible as undefined before initialization"
+    ],
+    "answer": 2,
+    "explanation": "JavaScript engines parse declarations before executing code. var declarations are hoisted AND initialized to undefined, so reading var before declaration gives undefined (not an error). let/const are hoisted but not initialized — the TDZ window means accessing them before their line throws ReferenceError, preventing subtle bugs."
+  },
+  {
+    "id": "js3",
+    "category": "javascript",
+    "question": "What is the difference between == (loose equality) and === (strict equality)?",
+    "options": [
+      "== compares memory addresses; === compares values — both for primitive types",
+      "== and === are identical for primitive types but differ for object comparisons",
+      "== performs type coercion before comparing (so 0 == false is true); === compares both value AND type without coercion (so 0 === false is false)",
+      "=== is slower than == because it performs additional type checks at runtime"
+    ],
+    "answer": 2,
+    "explanation": "Type coercion in == produces counterintuitive results: 0 == false → true, '' == false → true, null == undefined → true. Use === in all comparisons to avoid hidden bugs. Type coercion surprises are a common source of failures in test automation scripts that compare API response values."
+  },
+  {
+    "id": "js4",
+    "category": "javascript",
+    "question": "Explain the JavaScript event loop and why setTimeout(() => {}, 0) fires after synchronous code.",
+    "options": [
+      "setTimeout with 0ms fires immediately — it is just a way to avoid the call stack limit",
+      "The event loop processes the callback queue only when the call stack is empty. Synchronous code runs to completion first, then the event loop picks up setTimeout callbacks from the queue",
+      "setTimeout is processed by a separate thread, so it runs in parallel with synchronous code",
+      "The 0ms delay is rounded up to 4ms by the browser, which is why it appears to fire later"
+    ],
+    "answer": 1,
+    "explanation": "JavaScript is single-threaded. Synchronous code fills the call stack and runs until empty. Async operations (setTimeout, fetch, etc.) are handed to Web APIs; their callbacks enter the callback queue. The event loop only pushes callbacks onto the stack when the stack is empty — so console.log('End') always runs before setTimeout(() => {}, 0)."
+  },
+  {
+    "id": "js5",
+    "category": "javascript",
+    "question": "What is a closure, and what is a practical risk of closures in long-running automation scripts?",
+    "options": [
+      "A closure is a function that catches errors thrown inside it — a form of try/catch wrapping",
+      "A closure is when two functions share the same variable scope, causing naming conflicts",
+      "A closure is a function that retains access to variables from its outer scope after the outer function returns. The risk is unintended memory retention — closed-over references keep entire object graphs alive even after they are no longer needed",
+      "Closures only exist in arrow functions; regular function declarations do not create closures"
+    ],
+    "answer": 2,
+    "explanation": "Closures are fundamental to JavaScript (counters, callbacks, module patterns). The memory risk: if a closure captures a large object (DOM node, test fixture) the garbage collector cannot free it while any closure holding a reference is alive. In long-running Playwright or Node test suites this causes gradual memory growth."
+  },
+  {
+    "id": "js6",
+    "category": "javascript",
+    "question": "What are the three states of a JavaScript Promise, and what is the key difference between async/await and .then() chaining?",
+    "options": [
+      "Promises have two states: resolved and rejected. async/await is faster because it bypasses the microtask queue",
+      "Promises are pending, fulfilled, or rejected. async/await is syntactic sugar over Promises — it makes async code read like synchronous code, uses try/catch for errors, and is easier to debug with stack traces",
+      "async/await converts asynchronous code to synchronous execution by blocking the thread",
+      "Promises only work in Node.js; async/await is the browser-native async mechanism"
+    ],
+    "answer": 1,
+    "explanation": "A Promise starts pending, then settles to fulfilled (resolve called) or rejected (reject called). async/await wraps .then()/.catch() chains in sequential-looking code, making control flow easier to follow. Both compile to the same microtask-based mechanism — the choice is purely syntactic. async/await produces cleaner stack traces for debugging."
+  },
+  {
+    "id": "js7",
+    "category": "javascript",
+    "question": "What does Promise.all() do and what is the critical failure behavior to understand?",
+    "options": [
+      "Promise.all() runs promises sequentially and returns results in order of completion",
+      "Promise.all() waits for the slowest promise to resolve and skips rejected ones automatically",
+      "Promise.all() runs all promises in parallel and resolves when all succeed, returning an array of results. If any single promise rejects, the entire Promise.all() immediately rejects — even if other promises are still pending",
+      "Promise.all() is identical to Promise.race() but returns all results instead of just the first"
+    ],
+    "answer": 2,
+    "explanation": "Promise.all([api1(), api2(), api3()]) fires all three simultaneously and resolves with [result1, result2, result3] when all succeed. Critically, one failure fails all — use Promise.allSettled() if you need results from successful promises even when others fail. This matters in performance test scripts that parallelize setup API calls."
+  },
+  {
+    "id": "js8",
+    "category": "javascript",
+    "question": "What is the difference between debouncing and throttling, and when should each be used?",
+    "options": [
+      "Debouncing delays execution indefinitely; throttling cancels subsequent calls entirely",
+      "Debouncing delays execution until N milliseconds after the last trigger (fires once after user stops typing); throttling allows at most one execution per N milliseconds regardless of call frequency (fires at a fixed rate during scroll)",
+      "Throttling is a server-side concept; debouncing only applies to client-side JavaScript",
+      "Both debouncing and throttling are identical in behavior — they only differ in implementation complexity"
+    ],
+    "answer": 1,
+    "explanation": "Debounce: search box — only fire the API call 300ms after the user stops typing, not on every keystroke. Throttle: scroll event — fire handler at most every 100ms during continuous scrolling. Performance test leads care because both patterns affect request frequency and therefore observed TPS and API error rates during load tests."
+  },
+  {
+    "id": "js9",
+    "category": "javascript",
+    "question": "What is the difference between a shallow copy and a deep copy of an object?",
+    "options": [
+      "Shallow copy uses JSON.parse(JSON.stringify(obj)); deep copy uses the spread operator {...obj}",
+      "Shallow copy and deep copy are identical for objects with only primitive values",
+      "Shallow copy (spread or Object.assign) copies top-level properties — nested objects are still shared references, so mutating them affects the original. Deep copy creates fully independent clones of all nested structures",
+      "Deep copy is only necessary for arrays; objects are always deeply cloned by the spread operator"
+    ],
+    "answer": 2,
+    "explanation": "const shallow = {...obj} — if obj.nested is an object, shallow.nested and obj.nested point to the same reference. Changing shallow.nested.x also changes obj.nested.x. Deep copy strategies: JSON.parse(JSON.stringify(obj)) (loses functions/undefined), structuredClone() (modern standard), or lodash _.cloneDeep(). Critical in test automation when mutating fixture data between test cases."
+  },
+  {
+    "id": "js10",
+    "category": "javascript",
+    "question": "What is the difference between map(), filter(), and reduce() array methods?",
+    "options": [
+      "map() sorts elements; filter() removes duplicates; reduce() flattens nested arrays",
+      "All three iterate arrays — the only difference is whether they return a new array or a single value",
+      "map() transforms each element and returns a new array of the same length; filter() returns a new array of elements passing a test (may be shorter); reduce() accumulates elements into a single value using a callback and initial accumulator",
+      "map() and filter() are identical except map() is faster; reduce() is deprecated in modern JavaScript"
+    ],
+    "answer": 2,
+    "explanation": "map: [1,2,3].map(x => x*2) → [2,4,6]. filter: [1,2,3].filter(x => x>1) → [2,3]. reduce: [1,2,3].reduce((sum,x) => sum+x, 0) → 6. These are fundamental for transforming API response data in test scripts — grouping results, extracting fields, computing aggregates from JTL data."
+  },
+  {
+    "id": "js11",
+    "category": "javascript",
+    "question": "What does the 'this' keyword refer to in a regular function vs. an arrow function?",
+    "options": [
+      "this always refers to the global window object in both regular and arrow functions",
+      "In regular functions, this is determined by how the function is called (dynamic binding). Arrow functions do not have their own this — they inherit it lexically from the enclosing scope at definition time",
+      "Arrow functions bind this to the function itself; regular functions bind to the global object",
+      "this only exists in class methods; standalone functions and arrow functions always have this === undefined"
+    ],
+    "answer": 1,
+    "explanation": "Regular function: obj.method() → this is obj; but callback(() => fn()) loses context — this becomes undefined in strict mode. Arrow functions capture this from their lexical context at definition, making them reliable for callbacks, event handlers, and setTimeout inside class methods where you need to preserve the object's this."
+  },
+  {
+    "id": "js12",
+    "category": "javascript",
+    "question": "What is the difference between call(), apply(), and bind()?",
+    "options": [
+      "call() is synchronous; apply() is asynchronous; bind() returns a Promise",
+      "All three set the this context — call() and apply() invoke immediately (apply takes args as array); bind() returns a new function with this pre-bound, for later invocation",
+      "bind() permanently changes the function's prototype; call() and apply() only temporarily change this",
+      "call() works on regular functions; apply() works on arrow functions; bind() works on class methods only"
+    ],
+    "answer": 1,
+    "explanation": "fn.call(context, arg1, arg2) — invokes immediately, args listed. fn.apply(context, [arg1, arg2]) — invokes immediately, args as array. fn.bind(context) — returns a new function with this locked; useful for creating callbacks that maintain correct context. All three are used in test frameworks for sharing utilities across test classes."
+  },
+  {
+    "id": "js13",
+    "category": "javascript",
+    "question": "What are the most common sources of memory leaks in long-running JavaScript applications or test suites?",
+    "options": [
+      "Using const instead of let — const prevents garbage collection of the referenced value",
+      "Calling async functions without await — promises that are not awaited stay in memory forever",
+      "Unremoved event listeners retaining DOM node references, closures capturing large objects, global variables accumulating state, and setInterval timers that are never cleared",
+      "Using forEach instead of for loops — forEach callbacks create closure chains that prevent GC"
+    ],
+    "answer": 2,
+    "explanation": "Memory leaks in JS: (1) addEventListener without removeEventListener keeps DOM nodes alive; (2) closures referencing large test fixtures prevent GC; (3) global/module-level variables that accumulate data across tests; (4) setInterval without clearInterval runs forever. Long-running Playwright or Puppeteer test suites that open many pages without proper teardown are a classic pattern."
+  },
+  {
+    "id": "js14",
+    "category": "javascript",
+    "question": "What is event bubbling and how does event delegation leverage it for performance?",
+    "options": [
+      "Event bubbling causes events to fire multiple times on the same element; delegation prevents this by using stopPropagation()",
+      "Event bubbling propagates events from parent to child; delegation attaches handlers to the deepest child element",
+      "Events bubble upward from the target element through its ancestors to the document root. Event delegation attaches one listener to a parent instead of many listeners to individual children — reducing listener count and handling dynamically added elements automatically",
+      "Event bubbling only works for click events; delegation is required for keyboard and input events"
+    ],
+    "answer": 2,
+    "explanation": "Click on a button → event bubbles up through div → section → body → document. Delegation: attach one listener to the parent list (#list), check e.target.tagName === 'LI' to handle clicks on any list item — including items added dynamically after the listener was attached. This pattern reduces memory from N listeners to 1 and is critical for performance in large UI frameworks."
+  },
+  {
+    "id": "js15",
+    "category": "javascript",
+    "question": "What is the difference between localStorage and sessionStorage?",
+    "options": [
+      "localStorage stores objects; sessionStorage stores only strings",
+      "localStorage is accessible across tabs and origins; sessionStorage is limited to 5KB per key",
+      "localStorage persists until explicitly cleared (survives browser close and restart); sessionStorage is scoped to the browser tab session and cleared when the tab closes",
+      "sessionStorage is synchronous; localStorage is asynchronous and requires callbacks"
+    ],
+    "answer": 2,
+    "explanation": "Both APIs store key-value string pairs (use JSON.stringify/parse for objects), are synchronous, and share the same ~5MB limit per origin. The critical difference: sessionStorage is tab-scoped and ephemeral. Performance testers care because test data seeded in localStorage persists between test runs and can cause false passes or failures if not cleared in test teardown."
+  },
+  {
+    "id": "js16",
+    "category": "javascript",
+    "question": "How does the try-catch-finally block behave with async/await, and what happens if you omit catch?",
+    "options": [
+      "try-catch does not work with async/await — you must use .catch() on the returned Promise",
+      "finally only executes if an error is caught; it is skipped if try completes successfully",
+      "Wrapping await in try-catch catches rejected promise errors like synchronous errors. finally always executes regardless of success or failure. Omitting catch with async/await causes an unhandled promise rejection warning and swallows the error silently in older Node versions",
+      "catch in async functions only catches network errors — logic errors must be caught separately"
+    ],
+    "answer": 2,
+    "explanation": "async function run() { try { const data = await fetchData(); } catch (err) { /* handles rejection */ } finally { /* always runs — cleanup, close connections */ } }. Omitting catch with top-level async/await produces UnhandledPromiseRejection warnings (fatal in Node 15+). In Playwright tests, unhandled rejections in page.evaluate() can cause confusing test failures."
+  },
+  {
+    "id": "js17",
+    "category": "javascript",
+    "question": "What is NaN, how do you correctly check for it, and why does NaN === NaN return false?",
+    "options": [
+      "NaN is null with a numeric type — Number.isNaN(null) returns true",
+      "NaN === NaN returns true; the trick is that NaN is not equal to itself only in older browsers",
+      "NaN (Not-a-Number) is a numeric type for invalid arithmetic results. NaN === NaN is false by IEEE 754 specification — NaN is never equal to itself. Use Number.isNaN(value) (not the global isNaN()) to correctly detect NaN without type coercion",
+      "isNaN() and Number.isNaN() are identical — the global isNaN() was added for backward compatibility only"
+    ],
+    "answer": 2,
+    "explanation": "Number('abc') → NaN. NaN === NaN → false (IEEE 754). Global isNaN('') → true (coerces string to NaN first — wrong). Number.isNaN('') → false (correct — no coercion). NaN comparisons silently fail in assertion libraries when response values that should be numbers are actually strings — a common source of false-passing test scripts."
+  },
+  {
+    "id": "js18",
+    "category": "javascript",
+    "question": "What is memoization and when is it relevant to automation and performance testing?",
+    "options": [
+      "Memoization is browser caching of static assets — equivalent to Cache-Control max-age headers",
+      "Memoization means memorizing test steps so they can be replayed automatically",
+      "Memoization caches the return value of a pure function keyed by its input arguments — subsequent calls with the same inputs return the cached result instantly instead of recomputing",
+      "Memoization is only relevant for recursive algorithms; it has no practical use in test automation"
+    ],
+    "answer": 2,
+    "explanation": "function memoize(fn) { const cache = {}; return (arg) => cache[arg] ?? (cache[arg] = fn(arg)); }. In test automation: memoize expensive fixture builders (e.g., JWT token generation, test data templates) to avoid redundant API calls across test cases. In performance analysis scripts: memoize percentile calculations when analyzing large .jtl files with Node.js."
+  },
+  {
+    "id": "js19",
+    "category": "javascript",
+    "question": "How can JavaScript code quality directly impact the results of a performance test?",
+    "options": [
+      "JavaScript quality only affects front-end tests — JMeter and back-end load tests are immune to JavaScript issues",
+      "JavaScript errors cause test failures but do not affect measured performance metrics",
+      "Poor JavaScript (unoptimized render cycles, synchronous XHR, excessive DOM manipulation, memory leaks from event listeners) causes slow page rendering, UI thread blocking, and inflated client-side latency that can mask true server performance bottlenecks",
+      "JavaScript only impacts performance if the application uses a front-end framework like React or Angular"
+    ],
+    "answer": 2,
+    "explanation": "A performance test lead must distinguish client-side from server-side latency. If a page takes 3s to load, the server might respond in 200ms but JavaScript re-renders take 2.8s — the bottleneck is the browser, not the API. Tools: Chrome DevTools Performance tab, Lighthouse, WebPageTest. JMeter measures HTTP response time only — browser-side JS execution is not included without a browser-based driver."
+  },
+  {
+    "id": "js20",
+    "category": "javascript",
+    "question": "How do you effectively debug a JavaScript API integration issue using browser DevTools?",
+    "options": [
+      "Add console.log statements throughout the code and read the browser console for errors",
+      "Use the Network tab to inspect request payload, response body, headers, status code, and timing; use Sources tab with breakpoints to pause execution and inspect variable state; use the Application tab to inspect cookies, localStorage, and sessionStorage for stale auth tokens",
+      "The best approach is to disable JavaScript and test with plain HTTP requests to isolate server behavior",
+      "Use performance.now() timestamps around every function call to measure JavaScript execution time directly"
+    ],
+    "answer": 1,
+    "explanation": "Network tab: check if the request payload matches expectations, status codes (401/429/500), response body for error messages, and timing waterfall for TTFB vs download time. Sources: set breakpoints before API calls to inspect variable state. Application: check if expired JWT tokens in localStorage cause 401s. These DevTools skills are essential for a performance test lead diagnosing front-end bottlenecks."
+  },
+  {
+    "id": "js21",
+    "category": "javascript",
+    "question": "What values are falsy in JavaScript, and why does this matter in conditional logic?",
+    "options": [
+      "Only false and 0 are falsy; all other values including empty strings and null are truthy",
+      "Falsy values are: false, 0, '' (empty string), null, undefined, NaN, and 0n (BigInt zero). All other values, including empty arrays and empty objects, are truthy",
+      "null and undefined are falsy; 0 and '' are truthy because they have a defined type",
+      "Falsy only applies to Boolean() conversion — if statements use a separate truthiness algorithm"
+    ],
+    "answer": 1,
+    "explanation": "The complete falsy list: false, 0, -0, 0n, '' (empty string), null, undefined, NaN. Note: [] (empty array) and {} (empty object) are TRUTHY — a frequent bug. In test automation, checking if (response.data) fails when data is 0 or '' — use explicit checks (data !== null && data !== undefined) or nullish coalescing for precision."
+  },
+  {
+    "id": "js22",
+    "category": "javascript",
+    "question": "What is the difference between null and undefined in JavaScript?",
+    "options": [
+      "null and undefined are completely interchangeable — they represent the same absence-of-value concept",
+      "undefined means a variable was declared but never assigned a value; null is an explicit assignment indicating intentional absence of a value",
+      "null is a primitive; undefined is an object type — that is why typeof null === 'object'",
+      "undefined is only produced by the JavaScript engine; developers cannot assign undefined to a variable"
+    ],
+    "answer": 1,
+    "explanation": "undefined: variable declared but uninitialized, missing function parameter, missing object property — produced automatically by the engine. null: deliberately set by a developer to signal 'no value here.' typeof null === 'object' is a historical JavaScript bug. Use null === undefined → false, but null == undefined → true (loose equality). In API response validation, distinguish between a missing field (undefined) and an explicitly nulled field (null)."
+  },
+  {
+    "id": "js23",
+    "category": "javascript",
+    "question": "What is callback hell, and what modern JavaScript patterns eliminate it?",
+    "options": [
+      "Callback hell occurs when callbacks throw errors that propagate up multiple layers, causing crashes",
+      "Callback hell is when too many event listeners are registered on the same DOM element",
+      "Callback hell is deeply nested callback functions that become unreadable and hard to debug — often called the 'pyramid of doom'. It is eliminated by Promises (.then() chaining), async/await (flattens nesting completely), and named functions extracted from anonymous callbacks",
+      "Callback hell is specific to Node.js — browser JavaScript handles callbacks differently and avoids nesting"
+    ],
+    "answer": 2,
+    "explanation": "Callback hell: login(user, () => getProfile(id, () => getOrders(profileId, () => { /* deeply nested */ }))). Promise chain: login(user).then(getProfile).then(getOrders). async/await: const profile = await getProfile(await login(user)); const orders = await getOrders(profile.id). In automation frameworks, callback hell in test setup/teardown makes error tracing nearly impossible — async/await is the modern standard."
+  },
+  {
+    "id": "js24",
+    "category": "javascript",
+    "question": "What is the fundamental difference between synchronous and asynchronous JavaScript execution?",
+    "options": [
+      "Synchronous code runs on the server; asynchronous code runs in the browser — they use different JavaScript engines",
+      "Synchronous code executes line-by-line, blocking the thread until each operation completes. Asynchronous code initiates an operation (network call, timer, I/O) and registers a callback/Promise, allowing the thread to continue and process the result later when available",
+      "Asynchronous code uses multiple threads — one per operation — while synchronous JavaScript is single-threaded",
+      "The difference is only relevant for I/O operations; CPU-bound computations are always synchronous regardless of how they are written"
+    ],
+    "answer": 1,
+    "explanation": "JS is single-threaded. Synchronous: const data = fs.readFileSync('file.txt') — blocks until done. Async: fs.readFile('file.txt', callback) — registers callback and moves on. In the browser, synchronous operations block the UI thread — a synchronous fetch would freeze the page. Performance test scripts that process large .jtl files should use async streaming rather than synchronous reads to avoid memory exhaustion."
+  },
+  {
+    "id": "js25",
+    "category": "javascript",
+    "question": "What are the key differences between arrow functions and regular function declarations?",
+    "options": [
+      "Arrow functions are faster than regular functions because they skip prototype creation",
+      "Arrow functions and regular functions are identical — the => syntax is just shorthand",
+      "Arrow functions: no own this (lexical this from enclosing scope), no arguments object, cannot be used as constructors (no new), no prototype property. Regular functions: own this determined by call site, have arguments object, can be constructors",
+      "Arrow functions cannot be assigned to variables; they can only be passed as arguments"
+    ],
+    "answer": 2,
+    "explanation": "Arrow functions are not just shorthand — they have fundamental behavioral differences. No own this: ideal for callbacks inside class methods. No arguments: use rest parameters (...args) instead. Not a constructor: new (() => {}) throws TypeError. No prototype: arrow functions are lighter weight. In test automation, arrow functions in beforeEach/afterEach hooks reliably access the outer test context without .bind(this)."
+  },
+  {
+    "id": "js26",
+    "category": "javascript",
+    "question": "What is lexical scope in JavaScript and how does it relate to closures?",
+    "options": [
+      "Lexical scope means variables are resolved at runtime based on the call stack at the time of invocation",
+      "Lexical scope is only relevant in strict mode — sloppy mode uses dynamic scope instead",
+      "Lexical scope means a function's variable lookup is determined by where the function is defined in the source code, not where it is called. Closures exist because inner functions capture their enclosing lexical scope — retaining access to outer variables even after the outer function returns",
+      "Lexical scope applies only to let and const; var uses dynamic scope resolved at call time"
+    ],
+    "answer": 2,
+    "explanation": "function outer() { const x = 10; function inner() { console.log(x); } return inner; } const fn = outer(); fn(); // logs 10 — inner retains lexical scope. This is why closures work: inner was defined inside outer's scope, so it captures x even after outer's call frame is gone. Every JavaScript function closes over its defining scope, making lexical scope the foundation of all closure-based patterns in automation helpers and module systems."
+  },
+  {
+    "id": "js27",
+    "category": "javascript",
+    "question": "How does destructuring assignment work for both objects and arrays in JavaScript?",
+    "options": [
+      "Destructuring creates copies of values — mutations to destructured variables do not affect the original object",
+      "Object destructuring requires all properties to be extracted; you cannot pick a subset",
+      "Object destructuring extracts named properties by key: const { a, b } = obj. Array destructuring extracts by position: const [first, second] = arr. Both support default values, renaming (const { a: alias } = obj), and rest syntax (const { a, ...rest } = obj)",
+      "Destructuring is only syntactic sugar for Object.assign and cannot be used with nested objects"
+    ],
+    "answer": 2,
+    "explanation": "Object: const { status, data: { userId } } = apiResponse — nested destructuring extracts deeply. Array: const [, second, , fourth] = arr — skip positions with commas. Default: const { timeout = 5000 } = config. Renaming: const { response_time: responseTime } = metrics. In test automation, destructuring API responses makes assertions concise and readable: const { status, body } = await request.get('/api/health')."
+  },
+  {
+    "id": "js28",
+    "category": "javascript",
+    "question": "What is the spread operator (...) and what are its key use cases in JavaScript?",
+    "options": [
+      "The spread operator only works with arrays — objects must use Object.assign() for spreading",
+      "Spread creates a deep clone of the original structure, preventing all reference sharing",
+      "The spread operator expands an iterable (array, object, string) into individual elements. Use cases: clone arrays/objects (shallow), merge multiple arrays/objects, pass array elements as function arguments, and combine configurations",
+      "Spread and rest (...) are different operators — spread gathers values, rest expands them"
+    ],
+    "answer": 2,
+    "explanation": "Array spread: [...arr1, ...arr2] merges arrays. Object spread: {...defaults, ...overrides} merges with override winning. Function args: Math.max(...numbers). Clone: const copy = {...original} (shallow). In test automation, spread is used to merge test configurations: const config = {...baseConfig, ...envConfig, timeout: 30000}. Note: spread = rest are the same syntax in different contexts — spread expands, rest collects."
+  },
+  {
+    "id": "js29",
+    "category": "javascript",
+    "question": "What is the difference between optional chaining (?.) and how does it prevent runtime errors?",
+    "options": [
+      "Optional chaining (?.) is only available in TypeScript; standard JavaScript uses a separate guard syntax",
+      "Optional chaining throws a TypeError if the property is undefined — it just provides cleaner syntax",
+      "Optional chaining (?.) safely accesses nested properties — if any intermediate value is null or undefined, the expression short-circuits and returns undefined instead of throwing TypeError",
+      "Optional chaining only works for method calls (?.()) and cannot be used for property access"
+    ],
+    "answer": 2,
+    "explanation": "Without ?.: if (response && response.data && response.data.user && response.data.user.id). With ?.: response?.data?.user?.id — returns undefined if any step is null/undefined, never throws. Also works for method calls: arr?.find(x => x.id === id)?.name and bracket notation: obj?.['dynamic-key']. Critical in test scripts parsing API responses where optional fields may be absent in certain scenarios."
+  },
+  {
+    "id": "js30",
+    "category": "javascript",
+    "question": "What is the nullish coalescing operator (??) and how does it differ from the OR operator (||)?",
+    "options": [
+      "?? and || are identical — they both return the right side when the left side is falsy",
+      "?? returns the right side when the left is specifically null or undefined. || returns the right side for any falsy value (including 0, '', false) — making || wrong when 0 or empty string are valid values",
+      "?? is the strict version of || — it additionally checks types before falling back",
+      "?? only works with object properties; || must be used for variable assignments"
+    ],
+    "answer": 1,
+    "explanation": "const port = config.port || 3000 — if config.port is 0 (valid port), this incorrectly falls back to 3000 because 0 is falsy. const port = config.port ?? 3000 — only falls back when config.port is null or undefined, so 0 is preserved correctly. In test automation: const timeout = options.timeout ?? 5000 preserves explicitly passed 0 (immediate timeout) rather than overriding it. Use ?? for defaults; use || for 'any falsy triggers fallback.'"
+  },
+  {
+    "id": "js31",
+    "category": "javascript",
+    "question": "What is the difference between Array.slice() and Array.splice()?",
+    "options": [
+      "slice() modifies the original array and returns removed elements; splice() returns a new array without modifying the original",
+      "slice() and splice() are identical — both return a new subarray without mutating the original",
+      "slice(start, end) returns a shallow copy of array elements from start to end (non-inclusive) without mutating the original. splice(start, deleteCount, ...items) mutates the original array by removing and/or inserting elements in place, returning the removed elements",
+      "slice() works on strings and arrays; splice() only works on arrays with numeric indices"
+    ],
+    "answer": 2,
+    "explanation": "slice: const sub = arr.slice(1, 3) — arr unchanged, returns elements at index 1 and 2. splice: arr.splice(1, 2, 'new') — removes 2 elements at index 1, inserts 'new', mutates arr, returns removed elements. The mnemonic: splice = 'special' (mutates). In test automation, use slice to read subsets of test data without corrupting the fixture array; use splice only when intentional mutation is required."
+  },
+  {
+    "id": "js32",
+    "category": "javascript",
+    "question": "How do JSON.stringify() and JSON.parse() work, and what data types do they lose?",
+    "options": [
+      "JSON.stringify() and JSON.parse() handle all JavaScript data types including functions, Date objects, and undefined values",
+      "JSON.stringify() converts a JavaScript value to a JSON string; JSON.parse() converts a JSON string back to a JavaScript value. They lose: functions (omitted), undefined values (omitted), Date objects (converted to strings), Infinity/NaN (converted to null), and Symbol/BigInt (throws error)",
+      "JSON.stringify() and JSON.parse() only work with primitive types — objects must be serialized manually",
+      "JSON.parse() automatically converts date strings back to Date objects; no post-processing is needed"
+    ],
+    "answer": 1,
+    "explanation": "JSON.stringify({fn: () => {}, date: new Date(), val: undefined}) → '{\"date\":\"2024-...\"}' — fn and val are silently dropped. JSON.parse(JSON.stringify(obj)) is a quick deep-clone technique but loses functions and undefined. In test automation: always JSON.stringify request bodies before logging, and use JSON.parse on response text when the HTTP client returns strings. Awareness of Date serialization is critical for API contract testing."
+  },
+  {
+    "id": "js33",
+    "category": "javascript",
+    "question": "What is the hoisting difference between a function declaration and a function expression?",
+    "options": [
+      "Both function declarations and function expressions are fully hoisted and available before their line in the code",
+      "Neither function declarations nor function expressions are hoisted — both must be defined before use",
+      "Function declarations are fully hoisted — the entire function body is available anywhere in its scope before the declaration line. Function expressions (const fn = function() {}) follow variable hoisting rules — var version is hoisted as undefined (calling it throws TypeError); let/const version is in the TDZ (calling it throws ReferenceError)",
+      "The hoisting difference only applies in strict mode; in sloppy mode both behave identically"
+    ],
+    "answer": 2,
+    "explanation": "greet(); function greet() { return 'hello'; } // works — fully hoisted. greet2(); const greet2 = function() { return 'hi'; } // ReferenceError — TDZ. This is why some style guides require function declarations for utilities and const arrow functions for callbacks. In test files, calling a helper function defined later in the file is only safe if it is a function declaration."
+  },
+  {
+    "id": "js34",
+    "category": "javascript",
+    "question": "What are higher-order functions and why are they central to JavaScript?",
+    "options": [
+      "Higher-order functions are async functions that return Promises — the 'higher order' refers to the microtask priority queue",
+      "Higher-order functions are functions with more than three parameters — complex signatures for advanced APIs",
+      "A higher-order function either takes one or more functions as arguments, returns a function, or both. They enable functional programming patterns: map, filter, reduce, and every callback-based API rely on this concept",
+      "Higher-order functions only exist in ES6+ — older JavaScript had no concept of functions-as-arguments"
+    ],
+    "answer": 2,
+    "explanation": "map(fn), filter(fn), reduce(fn) are higher-order functions. setTimeout(fn, ms) takes a function. Array.prototype.sort((a,b) => a-b) takes a comparator function. Returning a function: function multiplier(x) { return (y) => x * y; } const double = multiplier(2). In test automation, higher-order functions are used for retry wrappers (retryOnFailure(testFn)), fixture factories, and custom assertion builders."
+  },
+  {
+    "id": "js35",
+    "category": "javascript",
+    "question": "What is currying in JavaScript and when is it practically useful?",
+    "options": [
+      "Currying is a technique that combines multiple functions into a single pipeline using the pipe operator (|>)",
+      "Currying converts a function that takes multiple arguments into a sequence of functions each taking one argument. Instead of fn(a, b, c), curried form is fn(a)(b)(c)",
+      "Currying is only a theoretical concept — JavaScript has no syntax to curry functions natively",
+      "Currying is the same as partial application — both permanently fix all arguments at once"
+    ],
+    "answer": 1,
+    "explanation": "const add = (a) => (b) => a + b; const add5 = add(5); add5(3) → 8. Practical uses: const log = (level) => (message) => console.log(`[${level}] ${message}`); const warn = log('WARN'); warn('Timeout exceeded'). In test automation: const assertStatus = (expected) => (response) => expect(response.status).toBe(expected); [200, 201].map(assertStatus) creates reusable status validators. Note: currying takes ONE argument at a time; partial application can fix multiple arguments at once."
+  },
+  {
+    "id": "js36",
+    "category": "javascript",
+    "question": "What is the prototype chain in JavaScript and how does inheritance work through it?",
+    "options": [
+      "The prototype chain only applies to ES6 classes; object literals use a separate inheritance mechanism",
+      "Every JavaScript object has an internal [[Prototype]] link to another object (or null). Property lookup walks this chain: if a property is not found on the object, JavaScript looks at its prototype, then the prototype's prototype, until null is reached — enabling inheritance without copying",
+      "Prototypes are a performance optimization — they have no effect on property lookup or inheritance",
+      "JavaScript uses classical inheritance like Java — classes copy their parent's properties to each instance at construction time"
+    ],
+    "answer": 1,
+    "explanation": "const arr = []; arr.__proto__ === Array.prototype → true. Array.prototype.__proto__ === Object.prototype → true. Object.prototype.__proto__ === null. When you call arr.map(), JS checks arr (not found) → Array.prototype (found! Returns the method). ES6 classes are syntactic sugar over prototype-based inheritance. Understanding prototypes is essential for debugging 'is not a function' errors and understanding how Object.create(), hasOwnProperty(), and instanceof work."
+  },
+  {
+    "id": "js37",
+    "category": "javascript",
+    "question": "What does 'use strict' do in JavaScript and why is it recommended?",
+    "options": [
+      "'use strict' enables TypeScript type checking in a regular JavaScript file",
+      "'use strict' makes JavaScript run in a separate process to prevent memory sharing between scripts",
+      "'use strict' enables a restricted mode that: throws errors for undeclared variable assignments, disallows duplicate parameter names, makes this undefined (instead of global) in standalone functions, disallows with statement, and prevents deleting variables — catching common bugs silently ignored in sloppy mode",
+      "'use strict' is automatically applied by all modern browsers; adding it manually has no effect after ES6"
+    ],
+    "answer": 2,
+    "explanation": "'use strict'; x = 5 → ReferenceError (without strict: creates global variable silently). Strict mode is enabled: file-level by placing 'use strict' at the top, function-level inside a function, or automatically in ES modules (import/export) and class bodies. In test automation, strict mode prevents global variable leakage between tests and catches this-binding bugs in helper functions."
+  },
+  {
+    "id": "js38",
+    "category": "javascript",
+    "question": "What is the difference between forEach() and map() for iterating arrays?",
+    "options": [
+      "forEach() is faster than map() because it does not create a new array",
+      "forEach() and map() are identical — both return a new array of the same length",
+      "forEach() executes a callback for each element but always returns undefined — use it for side effects only. map() executes a callback and returns a new array of the transformed values — use it when you need the results",
+      "map() modifies the original array; forEach() creates a copy before iterating"
+    ],
+    "answer": 2,
+    "explanation": "forEach: results.forEach(r => console.log(r)) — side effect, return value of callback is discarded. map: const ids = responses.map(r => r.id) — collect transformed values. A common bug: const ids = results.forEach(r => r.id) → ids is always undefined. forEach cannot be chained; map returns a new array that can be immediately filtered or reduced. In test automation: map is used to extract assertion values from response arrays."
+  },
+  {
+    "id": "js39",
+    "category": "javascript",
+    "question": "What are template literals and what advantages do they have over string concatenation?",
+    "options": [
+      "Template literals are a server-side feature for generating HTML templates — they are not part of the JavaScript language itself",
+      "Template literals use backtick syntax (``) and support: multi-line strings without \\n, embedded expressions with ${}, and tagged templates for custom processing. They replace string concatenation with readable interpolation",
+      "Template literals are identical to regular strings — the only difference is the backtick delimiter",
+      "Template literals automatically escape HTML entities, making them safe for DOM injection"
+    ],
+    "answer": 1,
+    "explanation": "const url = `${baseUrl}/api/v${version}/users/${userId}`; vs baseUrl + '/api/v' + version + '/users/' + userId. Multi-line: const query = `SELECT * FROM users WHERE id = ${id} AND active = true`. Tagged templates: html`<div>${userInput}</div>` — enables safe escaping libraries. In test automation: template literals make error messages, API URL construction, and SQL query building dramatically more readable and less error-prone."
+  },
+  {
+    "id": "js40",
+    "category": "javascript",
+    "question": "How does destructuring work in function parameters and what problems does it solve?",
+    "options": [
+      "Destructuring in function parameters is only supported for array arguments, not object arguments",
+      "Parameter destructuring requires all properties to be listed; you cannot use default values inside the pattern",
+      "Function parameter destructuring extracts properties directly in the signature: function process({ id, status, data = [] }) {} — the caller passes an object, the function accesses named properties with optional defaults, avoiding positional argument ordering issues",
+      "Destructuring in parameters creates copies of the values; mutations inside the function do not affect the caller's object"
+    ],
+    "answer": 2,
+    "explanation": "Without destructuring: function render(config) { const { theme, timeout, retry } = config; } — two steps. With parameter destructuring: function render({ theme = 'dark', timeout = 5000, retry = 3 } = {}) — single step with defaults. The = {} default handles the case where no argument is passed. In test frameworks, this pattern is used extensively for options objects: test('name', { tag: '@smoke', timeout: 30000 }, async () => {})."
+  },
+  {
+    "id": "js41",
+    "category": "javascript",
+    "question": "What is the difference between mutable and immutable data in JavaScript, and why does it matter for testing?",
+    "options": [
+      "All JavaScript primitive types are mutable; objects are immutable by default",
+      "Immutability requires TypeScript — standard JavaScript has no way to enforce it",
+      "Primitives (numbers, strings, booleans, null, undefined, Symbol, BigInt) are immutable — operations return new values. Objects and arrays are mutable — references are shared, so mutating them affects all holders of that reference. Object.freeze() enforces shallow immutability at runtime",
+      "const makes data immutable — reassignment and property mutation are both prevented by const"
+    ],
+    "answer": 2,
+    "explanation": "const str = 'hello'; str[0] = 'H' — string is unchanged, primitives are immutable. const obj = {x: 1}; obj.x = 2 — object IS mutated; const only prevents reassignment of the variable. In test automation: shared mutable test fixtures cause test pollution — test A mutates the fixture, test B fails unexpectedly. Solution: always create fresh copies of fixtures per test using structuredClone(), spread, or factory functions rather than sharing one mutable object."
+  },
+  {
+    "id": "js42",
+    "category": "javascript",
+    "question": "How does Promise chaining (.then()) work and what is the correct pattern for error handling in a chain?",
+    "options": [
+      "Each .then() in a chain runs in parallel — the chain is just a list of operations executed simultaneously",
+      "Errors in a Promise chain must be caught with individual .catch() after each .then()",
+      "Each .then() receives the resolved value from the previous step and returns a new Promise. A single .catch() at the end handles rejections from any step in the chain. Returning a value from .then() wraps it in a resolved Promise; throwing or returning a rejected Promise passes to .catch()",
+      ".then() chains are deprecated in favor of async/await and should not be used in new code"
+    ],
+    "answer": 2,
+    "explanation": "fetch('/api/login').then(r => r.json()).then(data => getProfile(data.userId)).then(profile => renderDashboard(profile)).catch(err => handleError(err)). The .catch() handles any error from fetch, .json(), getProfile, or renderDashboard. Returning from .then() transforms the value; throwing passes to .catch(). Chains are still used for concise pipelines; async/await is preferred for complex branching. Both are valid; understanding both is required for reading legacy code."
+  },
+  {
+    "id": "js43",
+    "category": "javascript",
+    "question": "What is the difference between setTimeout() and setInterval(), and how do you properly clean them up?",
+    "options": [
+      "setTimeout() repeats indefinitely; setInterval() fires exactly once after the delay",
+      "Both setTimeout() and setInterval() run in a separate thread; they do not affect the main event loop",
+      "setTimeout(fn, ms) fires fn once after at least ms milliseconds. setInterval(fn, ms) fires fn repeatedly every ms milliseconds. Both return a numeric ID; clearTimeout(id) and clearInterval(id) cancel them. Without cleanup, setInterval() runs forever and is a memory leak source",
+      "setTimeout() with 0ms delay is synchronous; setInterval() always waits the full interval before the first fire"
+    ],
+    "answer": 2,
+    "explanation": "Cleanup pattern: const id = setInterval(() => poll(), 1000); // later: clearInterval(id). Forgetting clearInterval in test teardown means the polling continues after the test ends, interfering with subsequent tests. setTimeout is used for delays and retries: await new Promise(resolve => setTimeout(resolve, 500)). setInterval is used for polling — prefer modern alternatives like AbortController + fetch or WebSockets when available."
+  },
+  {
+    "id": "js44",
+    "category": "javascript",
+    "question": "What are async stack traces and why are they harder to debug than synchronous ones?",
+    "options": [
+      "Async stack traces are identical to synchronous ones — the JavaScript engine always preserves the full call chain",
+      "Async stack traces are only visible in production environments with source maps enabled",
+      "Async stack traces lose the calling context across await boundaries because the call stack is cleared when a Promise suspends and resumes. Debuggers show the stack at the resume point, not the original call site — making it appear as if async errors originate from unrelated code",
+      "Async stack traces only affect code using callbacks; async/await always produces complete stack traces"
+    ],
+    "answer": 2,
+    "explanation": "Synchronous: the full call stack A → B → C is visible in the error. Async: after await, only the continuation is on the stack — the caller that triggered the chain may not appear. V8 (Node.js/Chrome) supports 'async stack traces' that reconstruct the logical chain, enabled by default in DevTools and Node.js --async-stack-traces flag. In test automation, wrap await calls in try/catch with descriptive error messages to compensate for truncated async traces when diagnosing failures."
+  },
+  {
+    "id": "js45",
+    "category": "javascript",
+    "question": "What is the difference between a synchronous exception and an unhandled async rejection?",
+    "options": [
+      "Both synchronous exceptions and async rejections crash the process immediately if not caught",
+      "Synchronous exceptions can be caught with try/catch; async rejections cannot be caught and must use .catch()",
+      "A synchronous exception (throw new Error()) propagates up the call stack immediately and can be caught with try/catch. An unhandled async rejection (a rejected Promise with no .catch() or try/catch around await) does not propagate synchronously — it triggers the unhandledRejection event, which is a warning in older Node and a fatal crash in Node 15+",
+      "Async rejections are always silent — they never crash the process or produce console output"
+    ],
+    "answer": 2,
+    "explanation": "process.on('unhandledRejection', (err) => { console.error(err); process.exit(1); }) — this global handler catches async rejections that were missed. In test automation, unhandled rejections in page.evaluate() or background API calls can cause tests to appear to pass while errors are silently swallowed. Always add unhandledRejection listeners in test setup and ensure all async operations in test code have proper await + try/catch."
+  },
+  {
+    "id": "js46",
+    "category": "javascript",
+    "question": "How does 'use strict' specifically help when debugging JavaScript code?",
+    "options": [
+      "'use strict' adds verbose error messages to all built-in JavaScript errors",
+      "'use strict' enables a step-debugger mode that pauses execution at every line",
+      "Strict mode converts silent failures into thrown errors: undeclared variable access (ReferenceError instead of global creation), duplicate parameter names (SyntaxError), this === undefined in standalone functions (instead of window), and read-only property assignments (TypeError) — making bugs surface immediately rather than causing subtle downstream failures",
+      "'use strict' is only useful in production; during debugging, sloppy mode is preferred for flexibility"
+    ],
+    "answer": 2,
+    "explanation": "Without strict: typo like resutl = value silently creates a global variable resutl — the original result variable is never assigned, causing a mysterious undefined bug later. With strict: ReferenceError: resutl is not defined — immediately points to the line. In automation frameworks and test helpers, strict mode is effectively mandatory because silent failures in test setup produce false passes — exactly what QA is designed to prevent."
+  },
+  {
+    "id": "js47",
+    "category": "javascript",
+    "question": "What is a JavaScript generator function and when would you use one in a test context?",
+    "options": [
+      "Generator functions are deprecated — they were replaced by async/await in ES2017",
+      "A generator function (function*) returns an iterator that can pause and resume execution at yield points. It produces values on demand rather than computing all at once, enabling lazy evaluation of large sequences",
+      "Generator functions are only useful for creating infinite loops — they have no practical application in testing",
+      "Generators execute all their code synchronously when called — the function* syntax is just for creating array-like objects"
+    ],
+    "answer": 1,
+    "explanation": "function* idGenerator() { let i = 1; while(true) { yield `test-user-${i++}`; } } const gen = idGenerator(); gen.next().value → 'test-user-1'. In test automation: generators produce unique test data IDs without pre-generating large arrays — useful for parameterized tests with large datasets. Also used in Redux Sagas (generator-based async middleware) and async iteration (for await...of). Key: yield pauses, .next() resumes."
+  },
+  {
+    "id": "js48",
+    "category": "javascript",
+    "question": "What are WeakMap and WeakSet, and why are they important for memory management in long-running code?",
+    "options": [
+      "WeakMap and WeakSet are deprecated versions of Map and Set — they exist only for backward compatibility",
+      "WeakMap keys and WeakSet values hold weak references — if the only remaining reference to a key object is the WeakMap entry, the object can be garbage collected. This prevents memory leaks when associating metadata with objects that may be discarded",
+      "WeakMap and WeakSet automatically compress their data after every 1000 entries to save memory",
+      "WeakMap and WeakSet are identical to Map and Set — the 'weak' prefix refers to weaker type checking"
+    ],
+    "answer": 1,
+    "explanation": "const cache = new WeakMap(); cache.set(domNode, metadata) — if domNode is removed from the DOM and no other reference holds it, both the node AND its cache entry are garbage collected. With regular Map, the map entry keeps the node alive even after removal. In test automation: WeakMap is used to associate test state with page objects or browser contexts without preventing their cleanup, avoiding memory growth in long-running test suites."
+  },
+  {
+    "id": "js49",
+    "category": "javascript",
+    "question": "What is Promise.allSettled() and when should it be used instead of Promise.all()?",
+    "options": [
+      "Promise.allSettled() is faster than Promise.all() because it does not wait for all promises to resolve",
+      "Promise.allSettled() and Promise.all() are identical — the difference is only in the returned object format",
+      "Promise.allSettled() waits for all promises to settle (either fulfill or reject) and returns an array of {status, value/reason} objects for each — it never rejects early. Use it when you need results from all operations regardless of individual failures",
+      "Promise.allSettled() automatically retries rejected promises — making it ideal for flaky network calls"
+    ],
+    "answer": 2,
+    "explanation": "Promise.all([a(), b(), c()]) — if b() rejects, the whole thing rejects immediately, losing results from a() and c(). Promise.allSettled([a(), b(), c()]) → [{status:'fulfilled', value:...}, {status:'rejected', reason:...}, {status:'fulfilled', value:...}]. In test automation: use allSettled when running parallel cleanup operations (delete test users, close sessions) where you want to attempt all cleanups even if some fail, then report all failures together."
+  },
+  {
+    "id": "js50",
+    "category": "javascript",
+    "question": "As a Performance Test Lead, which JavaScript concepts are most critical to master and why?",
+    "options": [
+      "Only async/await and Promises matter — all other JavaScript concepts are irrelevant to performance testing",
+      "JavaScript is a front-end technology — Performance Test Leads focused on back-end systems need no JavaScript knowledge",
+      "Prototype chains and generator functions are the most critical concepts for performance test scripts",
+      "Event loop and async model (to understand non-blocking behavior), Promises and async/await (for parallel load generation), closures and memory leaks (for stable long-running test scripts), debouncing/throttling (to understand client-side request patterns), DevTools profiling (to separate client vs server bottlenecks), and JSON serialization (for API request/response handling)"
+    ],
+    "answer": 3,
+    "explanation": "A Performance Test Lead needs JavaScript on multiple fronts: (1) writing k6 or Playwright-based load test scripts — async/await and Promise.all() for parallel requests; (2) analyzing front-end performance — DevTools, event loop, synchronous vs async render blocking; (3) maintaining stable test harnesses — memory leak prevention with closures and WeakMap; (4) interpreting application behavior under load — debounce/throttle patterns affecting observed TPS. JavaScript fluency separates leads who can debug full-stack bottlenecks from those who can only read JMeter dashboards."
+  }
+]

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praveen Subbarao – Gartner Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0f14;
+    --surface: #131720;
+    --surface2: #1a2030;
+    --border: #242d40;
+    --accent: #00c896;
+    --accent2: #3b82f6;
+    --accent3: #f59e0b;
+    --text: #e8edf5;
+    --muted: #7a8899;
+    --tag-bg: #1e2d3d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0c0f14 0%, #0d1a2e 50%, #0c1a18 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,200,150,0.08) 0%, transparent 70%);
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); font-style: italic; }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 560px;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 24px;
+  }
+  .badge {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent2);
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex; gap: 0;
+    overflow-x: auto;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .nav-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    background: none; border-top: none; border-left: none; border-right: none;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 18px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header:hover { background: var(--surface2); }
+  .q-number {
+    background: var(--accent);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    width: 24px; height: 24px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .q-text {
+    font-weight: 500;
+    font-size: 15px;
+    flex: 1;
+    line-height: 1.4;
+  }
+  .q-type {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .type-tech { background: rgba(59,130,246,0.15); color: var(--accent2); }
+  .type-lead { background: rgba(245,158,11,0.15); color: var(--accent3); }
+  .type-beh { background: rgba(0,200,150,0.15); color: var(--accent); }
+  .type-ai { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+  .chevron {
+    color: var(--muted); flex-shrink: 0; margin-top: 3px;
+    transition: transform 0.2s;
+    font-size: 16px;
+  }
+  .card.open .chevron { transform: rotate(180deg); }
+
+  .card-body {
+    display: none;
+    padding: 24px;
+  }
+  .card.open .card-body { display: block; }
+
+  .answer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .answer-text {
+    color: #c8d4e3;
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+  .highlight {
+    background: rgba(0,200,150,0.1);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .tip {
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #fcd34d;
+  }
+  .tip::before { content: "💡 Tip: "; font-weight: 600; }
+
+  /* STRENGTH SECTION */
+  .strength-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .strength-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .strength-icon { font-size: 24px; margin-bottom: 10px; }
+  .strength-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .strength-desc { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+  /* SALARY */
+  .salary-box {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .salary-range {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--accent);
+    margin: 8px 0;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  .section-desc { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+
+  ul.bullet { padding-left: 20px; margin: 10px 0; }
+  ul.bullet li { margin-bottom: 6px; color: #c8d4e3; font-size: 14px; }
+  ul.bullet li strong { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Interview Preparation Guide</div>
+  <h1>Gartner Lead Test Engineer<br><span>Your Personalized Prep</span></h1>
+  <p class="hero-sub">Tailored to Praveen Subbarao's 20-year background in QA leadership, AI integration, and enterprise automation.</p>
+  <div class="hero-badges">
+    <span class="badge">Selenium / Playwright</span>
+    <span class="badge">REST API Testing</span>
+    <span class="badge">AI Initiatives</span>
+    <span class="badge">Appium</span>
+    <span class="badge">Team Leadership</span>
+    <span class="badge">B2B / B2C SaaS</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nav-tab active" onclick="showSection('strengths')">Your Strengths</button>
+  <button class="nav-tab" onclick="showSection('technical')">Technical Qs</button>
+  <button class="nav-tab" onclick="showSection('leadership')">Leadership Qs</button>
+  <button class="nav-tab" onclick="showSection('ai')">AI Initiative Qs</button>
+  <button class="nav-tab" onclick="showSection('behavioral')">Behavioral Qs</button>
+  <button class="nav-tab" onclick="showSection('askthem')">Ask Them</button>
+  <button class="nav-tab" onclick="showSection('salary')">Salary Strategy</button>
+</nav>
+
+<!-- STRENGTHS -->
+<div class="container">
+<div id="strengths" class="section active">
+  <div class="section-title">Why You're a Strong Fit</div>
+  <p class="section-desc">You exceed most requirements. Here's how your experience maps directly to what Gartner needs.</p>
+  <div class="strength-grid">
+    <div class="strength-card">
+      <div class="strength-icon">🤖</div>
+      <div class="strength-title">AI Integration — Required & Rare</div>
+      <div class="strength-desc">You built LLM-assisted workflows that cut test authoring time by 60%. Most candidates won't have this. Lead with it.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">🌐</div>
+      <div class="strength-title">Selenium + Playwright Expert</div>
+      <div class="strength-desc">Led enterprise migration from Selenium to Playwright. You've done exactly what Gartner wants — built and optimized frameworks.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">📡</div>
+      <div class="strength-title">REST API Testing at Scale</div>
+      <div class="strength-desc">REST, GraphQL, RestAssured, contract testing across microservices — you cover all dimensions of API QA.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">☁️</div>
+      <div class="strength-title">Cloud SaaS Product Experience</div>
+      <div class="strength-desc">20+ years on B2B/B2C SaaS platforms across cloud-native, microservices, and containerized environments.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">👥</div>
+      <div class="strength-title">Led 40+ Engineer Teams</div>
+      <div class="strength-desc">Gartner wants a lead who coaches and mentors. You've built global teams, defined career ladders, and scaled from startup to IPO.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">📱</div>
+      <div class="strength-title">Appium & Mobile Testing</div>
+      <div class="strength-desc">Listed in your tech stack — make sure you're ready to speak to mobile automation specifics in the interview.</div>
+    </div>
+  </div>
+  <div class="card" style="border-color: rgba(245,158,11,0.3)">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-text">⚠️ One Gap to Address Proactively</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">The role targets a <strong>Lead/Individual Contributor</strong> role (not a Director). You've been leading 40+ person orgs. Interviewers may ask: <em>"Are you comfortable being hands-on again?"</em>
+      <div class="highlight">Frame it as intentional: "I've built and scaled organizations — now I want to stay close to the technical craft while still elevating the team around me. I'm energized by hands-on architecture and mentoring in a focused scope."</div>
+      This shows self-awareness and genuine motivation, not a step-down story.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECHNICAL -->
+<div id="technical" class="section">
+  <div class="section-title">Technical Interview Questions</div>
+  <p class="section-desc">Click each question to reveal a tailored answer using your actual experience.</p>
+
+  <!-- Q1 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">1</div>
+      <div class="q-text">Walk me through how you design a Selenium/WebDriver automation framework from scratch.</div>
+      <div class="q-type type-tech">Technical</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "I've done this multiple times, most recently leading an enterprise migration from Selenium to Playwright at Care.com. My approach starts with understanding the application stack — browser support, CI/CD pipeline, team language preference, and test types needed: E2E, integration, component.
+        <br><br>
+        For Selenium specifically: I architect using the Page Object Model for maintainability, TestNG or JUnit as the runner, Maven/Gradle for dependency management, and integrate directly into Jenkins or GitHub Actions. I build in parallel execution from day one — it's a mistake to retrofit it later.
+        <br><br>
+        I also layer in reporting (Allure or Extent) and connect test results to dashboards so leadership sees value without digging through logs. At Care.com, this approach improved CI/CD reliability by 90% and cut execution time by 60%."
+        <div class="tip">Mention the 90% CI/CD improvement metric — it's concrete and impressive.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">2</div>
+      <div class="q-text">How do you approach REST API test automation? What tools and patterns do you use?</div>
+      <div class="q-type type-tech">Technical</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "I test APIs across multiple layers: contract testing with Pact or Swagger validation, functional testing with RestAssured or Postman/Newman, and performance testing with JMeter or Gatling.
+        <br><br>
+        My approach: start with contract tests early in development — these catch breaking changes before they hit integration. Then layer functional tests for happy path and negative scenarios, including auth flows, pagination, error codes, and payload validation.
+        <br><br>
+        For GraphQL (which I've also covered), I test schema integrity, query depth limits, and mutation side effects. Everything feeds into the CI pipeline — I don't allow API tests to be a separate manual step. At Care.com we ran API suites on every PR, catching regressions before they merged."
+        <div class="tip">If asked about a specific tool like Postman vs RestAssured — say you choose based on team skill and integration needs; RestAssured for Java shops, Supertest or Playwright APIRequestContext for TypeScript shops.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">3</div>
+      <div class="q-text">How have you used Appium for mobile testing? What are the unique challenges vs. web?</div>
+      <div class="q-type type-tech">Technical</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "Appium extends the WebDriver protocol to native and hybrid mobile apps on iOS and Android. I've used it with both Java and Kotlin drivers, running on SauceLabs and LambdaTest device farms for cross-device coverage.
+        <br><br>
+        The unique challenges: device fragmentation (different OS versions, screen sizes, gestures), flakiness due to network latency and animation timing, and element locator strategies that differ from web — XPath on mobile can be expensive; I prefer accessibility IDs for stability.
+        <br><br>
+        I structure mobile suites with the same Page Object pattern as web, but I maintain separate locator configs per platform (iOS vs Android). I also integrate screenshot capture on failure, which is essential for debugging on real devices."
+        <div class="tip">If you have a specific Care.com mobile story, use it. If Appium was lighter in your recent role, acknowledge it and pivot to your transferable framework design experience.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">4</div>
+      <div class="q-text">How do you optimize an existing test automation framework that has become slow or flaky?</div>
+      <div class="q-type type-tech">Technical</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "I treat framework optimization like production performance — measure first, then act. I start by categorizing failures: infrastructure flakiness vs. genuine defects vs. test design issues. These need different solutions.
+        <br><br>
+        For speed: I enable parallel execution, eliminate unnecessary waits (replace Thread.sleep with explicit waits), and split long suites into smoke, regression, and full. For flakiness: I audit locator strategies — dynamic IDs are a common culprit — and add retry logic for known network-dependent steps.
+        <br><br>
+        I also look at test data management. Tests that share state or depend on database state in a specific order will always be unreliable. At Care.com, addressing these issues in our Playwright migration delivered a 60% reduction in execution time."
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">5</div>
+      <div class="q-text">How do you design a test plan for a complex B2B or B2C software project?</div>
+      <div class="q-type type-tech">Technical</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "A good test plan starts with risk — what are the highest-impact failures for this product and these users? For B2C, that's often UX flows, performance under load, and mobile compatibility. For B2B, it's data integrity, integration reliability, and role-based access.
+        <br><br>
+        I structure the plan around: scope and objectives, test types and coverage strategy, entry/exit criteria, environment and data requirements, schedule aligned to sprint cadence, and resource allocation.
+        <br><br>
+        At Care.com, I maintained this for 20+ international markets simultaneously — each with different compliance requirements (GDPR, CCPA). I built standardized templates that teams could adapt rather than creating from scratch each time."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERSHIP -->
+<div id="leadership" class="section">
+  <div class="section-title">Leadership Interview Questions</div>
+  <p class="section-desc">Your leadership background is your biggest differentiator. Use it.</p>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">1</div>
+      <div class="q-text">Tell me about a time you coached or mentored a junior QA engineer to grow significantly.</div>
+      <div class="q-type type-lead">Leadership</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer (STAR Format)</div>
+      <div class="answer-text">
+        <strong>Situation:</strong> "When I took over as Senior Director at Care.com, the QA team had no defined career ladder — engineers didn't know how to grow from mid-level to senior."
+        <br><br>
+        <strong>Task:</strong> "I needed to retain talent and build internal leadership capacity rather than always hiring externally."
+        <br><br>
+        <strong>Action:</strong> "I created technical career ladders with clear competency expectations at each level. I then identified high-potential engineers and assigned them ownership of specific domains — one engineer owned API automation, another owned CI/CD pipeline health. I met with them weekly, gave feedback on their technical decisions, and gradually gave them more visibility in sprint reviews."
+        <br><br>
+        <strong>Result:</strong> "Several engineers moved into senior and lead roles internally. This also reduced our hiring costs and retention risk significantly."
+        <div class="tip">Have one specific name or person in mind (you don't have to share it) so your story feels real and detailed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">2</div>
+      <div class="q-text">How do you manage stakeholder expectations when the release timeline is tight but quality isn't there?</div>
+      <div class="q-type type-lead">Leadership</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "This is one of the most important conversations a QA leader has. I never frame it as 'QA is blocking the release' — I frame it as a shared risk decision.
+        <br><br>
+        I bring data: here are the open defects, here's their severity, here's the customer impact risk based on historical data. Then I present options — release with known risks and a mitigation plan, delay to a specific date, or scope-cut the affected feature.
+        <br><br>
+        At Care.com I established release criteria and quality gates upfront in the sprint, so by the time we reached release, everyone already knew the standards. This shifted the conversation from 'QA says no' to 'we collectively agreed to these criteria.'"
+        <div class="highlight">Key phrase: "I make quality a shared accountability, not a late-stage checkpoint."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">3</div>
+      <div class="q-text">How do you handle competing priorities across multiple projects as a lead?</div>
+      <div class="q-type type-lead">Leadership</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "I use a risk-based prioritization model. Not everything is equally important, and I don't pretend it is. I ask: what is the customer impact if this fails? What is the probability of failure? What's the cost to fix it post-release?
+        <br><br>
+        I maintain a visible priority matrix that I review with product and engineering leads weekly. When something new comes in, we assess it against what's already in flight and make a deliberate tradeoff — I never just absorb scope silently.
+        <br><br>
+        At Care.com, managing 20+ markets with geographically distributed teams meant I had to delegate with trust. I built team leads in each region with clear ownership and escalation paths."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI -->
+<div id="ai" class="section">
+  <div class="section-title">AI Initiative Questions</div>
+  <p class="section-desc">This is your biggest differentiator. Gartner flagged it as required — most candidates won't have real examples.</p>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">1</div>
+      <div class="q-text">What AI initiatives have you led or participated in within a QA context?</div>
+      <div class="q-type type-ai">AI</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer — Lead With This</div>
+      <div class="answer-text">
+        "This is where I've spent most of my energy over the last 18 months. At Care.com, I built LLM-assisted workflows that automatically generate test scripts directly from design specifications — think Figma or Confluence specs going in, Playwright test stubs coming out.
+        <br><br>
+        I used Cursor IDE and Gemini as part of the authoring pipeline, and built reusable prompt libraries that allowed our 40+ QA engineers to adopt AI-assisted scripting without needing to become prompt engineers themselves.
+        <br><br>
+        The result: 60% reduction in manual test authoring time across the organization. I also integrated MCP (Model Context Protocol) connections to Jira, Confluence, and TestRail — so AI could pull context from tickets and specs automatically.
+        <br><br>
+        Beyond that, I used n8n workflows to automate quality reporting — AI-generated summaries of defect trends and automation ROI delivered directly to executive dashboards, eliminating manual status reporting entirely."
+        <div class="highlight">This answer alone puts you ahead of 95% of candidates. Deliver it with confidence.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">2</div>
+      <div class="q-text">How do you see AI changing QA over the next 3 years?</div>
+      <div class="q-type type-ai">AI</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "AI won't replace QA engineers — it will eliminate the repetitive authoring work so engineers can focus on exploratory testing, risk analysis, and system thinking.
+        <br><br>
+        In the near term: AI-assisted test generation becomes standard. Test maintenance — historically the biggest automation cost — gets dramatically reduced through self-healing locators and AI-suggested fixes.
+        <br><br>
+        In 3 years: I see AI embedded in the entire quality signal chain — from requirement analysis flagging ambiguous specs, to runtime anomaly detection replacing some traditional assertions, to intelligent test selection that runs only the tests most likely to catch regressions based on code change patterns.
+        <br><br>
+        Gartner is well-positioned to shape how enterprise organizations think about this transition — which is part of why this role excites me."
+        <div class="tip">End with a connection to Gartner's mission — they advise enterprise leaders. Show you understand their context.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BEHAVIORAL -->
+<div id="behavioral" class="section">
+  <div class="section-title">Behavioral Questions</div>
+  <p class="section-desc">Use the STAR method: Situation → Task → Action → Result.</p>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">1</div>
+      <div class="q-text">Tell me about a time you dealt with a major production defect. How did you handle it?</div>
+      <div class="q-type type-beh">Behavioral</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Framework Answer</div>
+      <div class="answer-text">
+        Draw from your Care.com incident management experience. Mention:
+        <ul class="bullet">
+          <li><strong>Immediate triage</strong> — how you coordinated across teams</li>
+          <li><strong>Root Cause Analysis</strong> — your structured RCA program</li>
+          <li><strong>Production SLAs</strong> — the remediation framework you established</li>
+          <li><strong>Prevention</strong> — what you added to the test suite / process afterward</li>
+        </ul>
+        <div class="highlight">"I led large-scale platform migrations with zero downtime" is a powerful line to weave in.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">2</div>
+      <div class="q-text">Describe a situation where you disagreed with a product or engineering decision on quality. What did you do?</div>
+      <div class="q-type type-beh">Behavioral</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Framework Answer</div>
+      <div class="answer-text">
+        "I focus on data, not opinion. When I disagreed, I came to the conversation with defect trends, historical failure rates, and customer impact projections — not just instinct.
+        <br><br>
+        The goal was never to 'win' the argument — it was to make sure the risk was visible and the decision was informed. Sometimes they still proceeded, and I documented the risk formally. That creates accountability without damaging relationships."
+        <div class="tip">Show you can advocate for quality without being the "gatekeeper" — Gartner values collaborative culture.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">3</div>
+      <div class="q-text">How do you stay current with new testing tools, frameworks, and industry trends?</div>
+      <div class="q-type type-beh">Behavioral</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-label">Your Answer</div>
+      <div class="answer-text">
+        "I'm genuinely curious — that's what's kept me relevant across 20 years of technology shifts. I hold AWS Certified Solutions Architect, Agile Scrum Master, and most recently Google Generative AI Leader and Claude AI Fluency certifications. I don't certify for the credential — I certify to force myself to learn deeply.
+        <br><br>
+        I also build things. The AI workflows at Care.com started as personal experiments during off-hours — I built a prototype, proved the value, and then scaled it org-wide. That pattern of prototype → prove → scale is how I've adopted every major technology shift in my career."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ASK THEM -->
+<div id="askthem" class="section">
+  <div class="section-title">Questions to Ask Gartner</div>
+  <p class="section-desc">Great questions signal strategic thinking and genuine interest. Ask 3-4 of these.</p>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">1</div>
+      <div class="q-text">What does the current automation coverage look like, and where are the biggest gaps?</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">Shows you're thinking about what you'd actually inherit and improve — not just performing for the interview.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">2</div>
+      <div class="q-text">How is the QA team currently involved in the product development lifecycle — and how early?</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">Lets you assess shift-left maturity and whether your "quality as shared accountability" philosophy will find a home here.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">3</div>
+      <div class="q-text">What AI or automation initiatives are on the roadmap that this role would contribute to?</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">Directly signals your AI expertise and shows you want to contribute strategically, not just execute tasks.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">4</div>
+      <div class="q-text">How do you define success for this role in the first 90 days?</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">Classic closer — but it works. You'll get concrete expectations and show you're already thinking about impact.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-number">5</div>
+      <div class="q-text">What does the team culture look like, especially around quality ownership across engineering?</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">Helps you assess fit — and signals that you care about culture, not just the technical environment.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SALARY -->
+<div id="salary" class="section">
+  <div class="section-title">Salary & Negotiation Strategy</div>
+  <p class="section-desc">You're interviewing for a Lead role, but you bring Director-level depth.</p>
+
+  <div class="salary-box">
+    <div style="color: var(--muted); font-size: 13px;">Gartner Posted Range</div>
+    <div class="salary-range">$86,000 – $118,000</div>
+    <div style="color: var(--muted); font-size: 13px;">+ Annual bonus + stock purchase + 401K match up to $7,200</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this.parentElement)">
+      <div class="q-text">🎯 Your Target & Negotiation Approach</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="card-body">
+      <div class="answer-text">
+        With 20 years and Director-level experience, <strong>target the top of the range or above: $110,000–$125,000+</strong>.
+        <br><br>
+        <ul class="bullet">
+          <li><strong>Don't anchor low.</strong> If asked for your number first, say: "I'm targeting the upper end of your posted range given my 20 years of experience and the AI capabilities I'd bring on day one."</li>
+          <li><strong>Total comp matters.</strong> Factor in the bonus plan, $7,200 401K match, ESPP, and 20+ PTO days. Ask about typical bonus percentages.</li>
+          <li><strong>Leverage your AI expertise.</strong> "Candidates who've actually built and deployed LLM-assisted QA workflows at scale are rare — I'd bring that immediately."</li>
+          <li><strong>Don't accept on the spot.</strong> Ask for 24-48 hours to review the full offer package.</li>
+        </ul>
+        <div class="highlight">You're not a typical Lead candidate. Price yourself accordingly.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>

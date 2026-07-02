@@ -1,0 +1,327 @@
+[
+  {
+    "id": "mb1",
+    "category": "mabl",
+    "question": "How does mabl describe its core platform philosophy with the term 'Active Coverage'?",
+    "options": [
+      "A metric tracking the percentage of code lines executed during test runs",
+      "Coverage that builds itself, runs itself, and fixes itself across the full testing lifecycle",
+      "A manual review process where QA actively monitors test coverage dashboards",
+      "A CI/CD gate that blocks deployments until a minimum coverage threshold is met"
+    ],
+    "answer": 1,
+    "explanation": "mabl's 'Active Coverage' means the platform handles the entire testing lifecycle autonomously — creating tests, executing them on continuous schedules, performing failure analysis, maintaining them as applications change, and reporting results — all without constant human intervention."
+  },
+  {
+    "id": "mb2",
+    "category": "mabl",
+    "question": "What is 'Deep Quality Context' in mabl's agentic testing platform?",
+    "options": [
+      "A detailed code coverage report generated after each test run",
+      "The platform carrying application behavior, user workflows, failure history, and team-defined quality standards across testing steps",
+      "A configuration file that stores quality thresholds for each test category",
+      "A dashboard that shows quality trends over the last 90 days"
+    ],
+    "answer": 1,
+    "explanation": "Deep Quality Context means mabl retains knowledge of the application across testing steps — including behavior patterns, historical failures, user workflows, and team-defined standards — enabling more intelligent and complete quality management than stateless test runners."
+  },
+  {
+    "id": "mb3",
+    "category": "mabl",
+    "question": "How does mabl's 'Adaptive Auto-Healing' differ from Playwright's self-healing approach?",
+    "options": [
+      "mabl's auto-healing uses machine learning; Playwright uses rule-based fixes — but both require human review",
+      "mabl uses element history and prior run data to preserve test intent and continue runs; Playwright's healer still requires human review of every repair",
+      "mabl heals only CSS selector changes; Playwright heals any DOM change",
+      "There is no difference — both platforms auto-heal without human involvement"
+    ],
+    "answer": 1,
+    "explanation": "mabl uses application history, prior runs, and understanding of test intent to adapt to UI changes automatically, continuing the run without stopping. Playwright's self-healing tooling still surfaces every repair for manual human review, making mabl's approach more autonomous for outer-loop testing."
+  },
+  {
+    "id": "mb4",
+    "category": "mabl",
+    "question": "What is the mabl MCP server and which AI coding agents is it compatible with?",
+    "options": [
+      "A message-passing bridge for communicating between mabl test workers; compatible only with Jenkins agents",
+      "An implementation of the Model Context Protocol that lets AI coding agents call mabl tools directly; compatible with Claude Code, Cursor, and VS Code with Copilot",
+      "A microservices configuration protocol for deploying mabl in Kubernetes; compatible with any container orchestrator",
+      "A model checkpointing protocol for saving AI model state; compatible only with Anthropic models"
+    ],
+    "answer": 1,
+    "explanation": "The mabl MCP server implements the open Model Context Protocol standard, giving AI coding agents direct access to your mabl test workspace. It is compatible with Claude Code, Cursor, VS Code with Copilot, and any other MCP-compatible AI coding assistant."
+  },
+  {
+    "id": "mb5",
+    "category": "mabl",
+    "question": "What are the four MCP server tools that mabl exposes to AI coding agents?",
+    "options": [
+      "create_test, run_test, delete_test, report_results",
+      "get_recent_deployments, get_mabl_deployment, analyze_failure, get_test_run_artifact",
+      "start_session, stop_session, get_logs, export_results",
+      "login, authenticate, fetch_coverage, push_results"
+    ],
+    "answer": 1,
+    "explanation": "mabl's MCP server exposes: get_recent_deployments (list recent deploys), get_mabl_deployment (natural language deploy lookup), analyze_failure (structured root cause + next steps), and get_test_run_artifact (retrieve screenshots, HAR files, and DOM snapshots from agent sessions)."
+  },
+  {
+    "id": "mb6",
+    "category": "mabl",
+    "question": "How does mabl position itself relative to Playwright and Claude Code in the testing workflow?",
+    "options": [
+      "mabl replaces both Playwright and Claude Code — it handles the entire testing workflow end to end",
+      "mabl provides outer-loop independent verification; Playwright handles inner-loop developer browser automation; Claude Code handles inner-loop AI code generation",
+      "mabl is a reporting layer on top of Playwright tests generated by Claude Code",
+      "mabl is only for mobile testing; Playwright is for web; Claude Code is for API testing"
+    ],
+    "answer": 1,
+    "explanation": "mabl occupies the outer loop — system-level, cross-team, release-workflow verification with independent quality context. Playwright stays in the inner loop as developer-owned, code-proximate browser automation. Claude Code handles inner-loop AI coding assistance. All three are complementary."
+  },
+  {
+    "id": "mb7",
+    "category": "mabl",
+    "question": "What does mabl mean by 'the author cannot be the verifier'?",
+    "options": [
+      "QA engineers cannot write tests for code they helped design",
+      "When the same AI coding agent that writes feature code also generates and runs tests, independent verification is needed to avoid blind spots",
+      "Test automation scripts should not be authored by the developers who write the application",
+      "AI models cannot verify their own outputs without human oversight"
+    ],
+    "answer": 1,
+    "explanation": "When AI coding agents like Claude Code generate both application code and test code, there is a risk of shared blind spots. mabl provides independent outer-loop verification that evaluates behavior outside the coding workflow that produced the change, ensuring genuine independent validation."
+  },
+  {
+    "id": "mb8",
+    "category": "mabl",
+    "question": "What three layers does mabl use to manage test flakiness?",
+    "options": [
+      "Retry, skip, and ignore — three escalating responses to unreliable tests",
+      "In-flight healing (heal mid-run for small UI drift), plan-level auto-retry (retry if first attempt fails), and quarantine plans (persistent failures run but don't block builds)",
+      "Unit-level, integration-level, and system-level flake detection with separate escalation paths",
+      "Red, amber, and green flakiness classifications that trigger different Slack notification levels"
+    ],
+    "answer": 1,
+    "explanation": "mabl's three flake-management layers escalate progressively: (1) in-flight healing handles small UI drift mid-run, (2) plan-level auto-retry retries the plan if the first attempt fails, (3) quarantine plans let persistent failures continue running for visibility without blocking the build."
+  },
+  {
+    "id": "mb9",
+    "category": "mabl",
+    "question": "What types of testing does mabl support within a single unified platform?",
+    "options": [
+      "Only web UI and REST API testing",
+      "Web, mobile (iOS & Android), API, AI application testing, email testing, PDF validation, MFA workflows, and database queries",
+      "Web, unit, and integration testing with optional mobile add-on",
+      "Only cloud-hosted web applications — not mobile or API"
+    ],
+    "answer": 1,
+    "explanation": "mabl unifies testing across web (browser), mobile (iOS and Android), APIs, AI applications, email workflows, PDF validation, MFA flows, and database queries — all within one platform, eliminating the tool sprawl that comes from using separate tools for each testing type."
+  },
+  {
+    "id": "mb10",
+    "category": "mabl",
+    "question": "What is 'Natural Language Deployment Lookup' in mabl's MCP server?",
+    "options": [
+      "A feature that generates test names from natural language descriptions of requirements",
+      "The ability for AI agents to query deployment status using conversational language like 'Check the deployment I just pushed to prod' instead of requiring commit hashes",
+      "A natural language interface for writing mabl test assertions",
+      "An NLP model that reads deployment logs and summarizes them in plain English"
+    ],
+    "answer": 1,
+    "explanation": "Natural Language Deployment Lookup lets AI coding agents query mabl deployment status using conversational requests rather than requiring exact commit hashes or deployment IDs. An agent can ask 'Check the deployment I just pushed to prod' and mabl resolves the correct deployment automatically."
+  },
+  {
+    "id": "mb11",
+    "category": "mabl",
+    "question": "What are 'Adaptive Assertions' in mabl?",
+    "options": [
+      "Assertions that automatically increase their timeout on slow networks",
+      "Assertions that adjust based on application changes, preserving test intent rather than failing on minor UI modifications",
+      "Statistical assertions that pass if the result is within a configurable tolerance range",
+      "AI-generated assertions added to existing tests during nightly runs"
+    ],
+    "answer": 1,
+    "explanation": "Adaptive Assertions in mabl adjust to application changes automatically, preserving what the test was meant to verify rather than failing on minor UI modifications. Combined with element history and run data, this reduces the maintenance burden caused by routine application updates."
+  },
+  {
+    "id": "mb12",
+    "category": "mabl",
+    "question": "How does mabl's 'Progressive Disclosure' feature work in failure analysis?",
+    "options": [
+      "Test results are gradually revealed to stakeholders in order of severity",
+      "AI agents surface only the information needed at each step — distinguishing flaky tests from genuine regressions and providing recovery paths — without overwhelming users with raw data",
+      "The UI hides test failures until the user explicitly requests to see them",
+      "Test reports are progressively generated over time as more data becomes available"
+    ],
+    "answer": 1,
+    "explanation": "Progressive disclosure means the mabl AI agent surfaces needed information contextually: it first distinguishes flaky tests from real regressions, then identifies whether a fix requires updating a test assertion (UI refactor) or escalating to developers (actual code regression), avoiding information overload."
+  },
+  {
+    "id": "mb13",
+    "category": "mabl",
+    "question": "What test artifacts can be retrieved via mabl's get_test_run_artifact MCP tool?",
+    "options": [
+      "Only text-based log files and JSON reports",
+      "DOM snapshots, HAR files (network traffic captures), and screenshots from agent sessions, returned as base64",
+      "Video recordings of test runs and performance flame graphs",
+      "Source code diffs and deployment manifests associated with a test run"
+    ],
+    "answer": 1,
+    "explanation": "The get_test_run_artifact MCP tool retrieves DOM snapshots (page structure at point of failure), HAR files (complete network traffic capture), and screenshots — all as base64-encoded data that AI coding agents can analyze directly for root cause investigation."
+  },
+  {
+    "id": "mb14",
+    "category": "mabl",
+    "question": "What does 'Real-Time Polling' mean in the context of the mabl MCP server?",
+    "options": [
+      "mabl polls the database every second to check for new test results",
+      "AI agents monitor active deployments during execution and receive live status updates automatically without needing repeated prompts",
+      "The mabl server polls external CI systems for new build artifacts",
+      "Test runs poll for UI changes every 100ms to detect element readiness"
+    ],
+    "answer": 1,
+    "explanation": "Real-Time Polling means AI coding agents connected via the mabl MCP server can monitor active deployments during execution and receive live status updates automatically. This eliminates the need for the developer to repeatedly ask 'is it done yet?' — the agent reports back when the deployment completes or fails."
+  },
+  {
+    "id": "mb15",
+    "category": "mabl",
+    "question": "What is mabl's 'outer-loop' vs 'inner-loop' testing philosophy?",
+    "options": [
+      "Outer-loop tests run nightly; inner-loop tests run on every commit",
+      "Outer-loop is system-level cross-team verification at release boundaries; inner-loop is developer-owned, code-proximate unit and integration testing",
+      "Outer-loop refers to browser testing; inner-loop refers to API testing",
+      "Outer-loop is QA-owned; inner-loop is developer-owned, but both use the same tools"
+    ],
+    "answer": 1,
+    "explanation": "Inner-loop testing is developer-owned, happens close to the code (unit tests, Playwright tests), and runs on every commit. Outer-loop testing — where mabl excels — is system-level verification at release boundaries, owned by QA and broader team, covering end-to-end journeys across multiple systems."
+  },
+  {
+    "id": "mb16",
+    "category": "mabl",
+    "question": "What is mabl's approach to enabling non-technical team members to contribute to testing?",
+    "options": [
+      "Non-technical users can only view test reports, not create tests",
+      "Low-code point-and-click workflows let QA, business users, and designers create and maintain tests without writing code",
+      "mabl requires Python scripting for all test creation regardless of user role",
+      "Non-technical users contribute via Gherkin feature files that mabl auto-executes"
+    ],
+    "answer": 1,
+    "explanation": "mabl's low-code authoring enables QA engineers, product managers, designers, and business users to create and maintain tests through point-and-click workflows — no code required. Developers can still extend tests with code when needed. This makes testing a team sport, not just a QA responsibility."
+  },
+  {
+    "id": "mb17",
+    "category": "mabl",
+    "question": "In mabl's internal testing setup, what naming convention do monitoring plans use to encode operational intent?",
+    "options": [
+      "Plans are named with ISO timestamps and severity levels (P0, P1, P2)",
+      "Plan suffixes encode cadence and paging: e.g., (P4H+D) = every 4 hours plus deployment trigger; 📟 24/7 = on-call paging; (P15M) = every 15 minutes",
+      "Plans use UUID-based names assigned automatically by the platform",
+      "Plan names follow the format TEAM-SURFACE-FREQUENCY with no special characters"
+    ],
+    "answer": 1,
+    "explanation": "mabl's internal plans encode operational meaning in their names: (P4H+D) means runs every four hours plus on deployment trigger; (P15M) means every 15 minutes; 📟 24/7 means it pages on-call engineers around the clock; 📟 wrk hrs means business-hours paging only."
+  },
+  {
+    "id": "mb18",
+    "category": "mabl",
+    "question": "What is 'Coverage Mapping' in mabl?",
+    "options": [
+      "A visual heat map showing which lines of code are executed during test runs",
+      "Linking team-defined quality goals and user journeys to specific tests, enabling governance and release risk visibility",
+      "A report that maps failed tests to the developers who authored the related code",
+      "A configuration that maps test files to CI/CD pipeline stages"
+    ],
+    "answer": 1,
+    "explanation": "Coverage Mapping in mabl connects quality goals and business user journeys to specific tests, providing traceability from business requirements to test coverage. This enables governance, audit trails, and release risk assessment — showing stakeholders exactly which journeys are tested and which are gaps."
+  },
+  {
+    "id": "mb19",
+    "category": "mabl",
+    "question": "What does the mabl get_test_recovery_session MCP tool provide?",
+    "options": [
+      "A session token for re-authenticating to the mabl platform after a timeout",
+      "mabl's auto-heal decisions for a specific test — showing what the platform changed and why, for transparency and audit",
+      "A replay of the failed test session in a sandboxed browser environment",
+      "Recovery instructions exported as a Jira ticket for the development team"
+    ],
+    "answer": 1,
+    "explanation": "get_test_recovery_session exposes mabl's auto-heal decisions for a specific test run — what the platform changed, what element it found instead, and why. This transparency is critical for auditing automated maintenance decisions and building team confidence in autonomous healing."
+  },
+  {
+    "id": "mb20",
+    "category": "mabl",
+    "question": "What is mabl's 'Reusable Flows' feature and why is it important for test maintenance?",
+    "options": [
+      "Flows that automatically re-run failed tests until they pass",
+      "Named, reusable test building blocks (e.g., login, navigation) defined once and inherited across all tests that need them, so changes propagate automatically",
+      "HTTP request templates shared across API test suites",
+      "CI/CD workflow templates that can be copied to new projects"
+    ],
+    "answer": 1,
+    "explanation": "Reusable Flows let teams define common interactions once (e.g., 'App - Login Flow') and reference them across many tests. When the login UI changes, updating the flow propagates the fix everywhere it's used — dramatically reducing maintenance compared to duplicating steps in every test script."
+  },
+  {
+    "id": "mb21",
+    "category": "mabl",
+    "question": "How does mabl describe the problem AI-generated code creates for QA teams?",
+    "options": [
+      "AI-generated code contains too many edge cases for existing test frameworks to handle",
+      "AI coding agents produce code faster than traditional verification can validate it — the verification layer must scale at the same rate or the org doesn't get faster delivery",
+      "AI-generated code is less reliable than human-written code and requires more test cases per feature",
+      "AI coding agents bypass code reviews, leaving QA as the only safety net"
+    ],
+    "answer": 1,
+    "explanation": "mabl's core argument: 'If the verification layer doesn't scale at the same rate as the generator, the org doesn't get faster delivery.' As AI coding agents dramatically increase code throughput, agentic testing platforms like mabl provide the autonomous verification capacity to match that pace."
+  },
+  {
+    "id": "mb22",
+    "category": "mabl",
+    "question": "What typed label categories does mabl use internally to organize test plans?",
+    "options": [
+      "smoke, regression, sanity, exploratory",
+      "cicd-* (CI triggers), feature-* (product surface), team-* (failure routing), monitoring, ops-alerts-paging",
+      "p0, p1, p2, p3 (priority levels)",
+      "unit, integration, e2e, performance"
+    ],
+    "answer": 1,
+    "explanation": "mabl uses typed labels by purpose: cicd-* labels trigger specific CI pipeline stages, feature-* labels group tests by product surface, team-* labels route failures to the correct team's Slack channel, and monitoring/ops-alerts-paging labels distinguish synthetic monitoring from alert-paging tiers."
+  },
+  {
+    "id": "mb23",
+    "category": "mabl",
+    "question": "What governance capabilities does mabl provide that code-based frameworks like Playwright lack?",
+    "options": [
+      "mabl generates compliance audit reports automatically from test results",
+      "Unified system of record with role-based access, traceability, audit controls, unified reporting, and coverage dashboards shared across QA and engineering teams",
+      "mabl integrates with SOC 2 audit tools to automatically generate security evidence",
+      "mabl enforces coding standards via built-in static analysis of test scripts"
+    ],
+    "answer": 1,
+    "explanation": "Unlike Playwright tests scattered across repositories, mabl provides a unified system of record: role-based access control, change traceability, audit controls, shared coverage dashboards, and CI/CD integrations visible to both QA and engineering teams — critical for regulated industries and enterprise governance."
+  },
+  {
+    "id": "mb24",
+    "category": "mabl",
+    "question": "What is the division-of-labor principle mabl uses internally for test ownership?",
+    "options": [
+      "QA engineers own all tests; developers are not responsible for any testing",
+      "'Builders own tests; QE does suite engineering' — software engineers, PMs, and designers maintain their own mabl tests while QE handles suite strategy, coverage analysis, and new testing approaches",
+      "Developers own unit tests; QA owns everything else",
+      "All tests are owned by a dedicated automation team separate from product teams"
+    ],
+    "answer": 1,
+    "explanation": "mabl's internal model is 'Builders own tests; QE does suite engineering.' Software engineers, PMs, and designers directly maintain the mabl tests for their own features. The QE team focuses on higher-level concerns: suite optimization, coverage analysis, and developing strategies for emerging challenges like agentic and non-deterministic systems."
+  },
+  {
+    "id": "mb25",
+    "category": "mabl",
+    "question": "How does the mabl agentic failure analysis distinguish between a flaky test and a genuine regression?",
+    "options": [
+      "By running the same test 10 times and checking the pass rate",
+      "By cross-referencing live failures against historical test suite data, identifying whether the failure pattern indicates intermittent flakiness or a consistent new regression introduced by recent code",
+      "By asking the developer whether they changed the relevant feature",
+      "By comparing the test's pass rate over the last 7 days to a threshold"
+    ],
+    "answer": 1,
+    "explanation": "mabl's agentic failure analysis runs a multi-step workflow (not a single LLM call) that cross-references current failures against historical test suite data. This reveals whether the failure is an intermittent flake, a test that needs updating due to a UI refactor, or a genuine code regression requiring escalation to developers."
+  }
+]

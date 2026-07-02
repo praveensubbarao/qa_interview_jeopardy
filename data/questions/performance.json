@@ -1,0 +1,535 @@
+[
+  {
+    "id": "p1",
+    "category": "performance",
+    "question": "How do you design a performance test strategy for a cloud-native microservices application?",
+    "options": [
+      "Start with end-to-end tests and add unit-level performance tests as bottlenecks are identified",
+      "Focus only on the slowest endpoint to maximize performance improvement per sprint",
+      "Run performance tests before major releases only — not in daily CI/CD to avoid slowing the pipeline",
+      "Define SLA baselines first; design load, stress, spike, and soak tests; test each service independently then integrate; gate everything in CI/CD"
+    ],
+    "answer": 3,
+    "explanation": "Testing each microservice against its own SLA before layering end-to-end integration load isolates bottlenecks and prevents one slow service from masking the performance of others."
+  },
+  {
+    "id": "p2",
+    "category": "performance",
+    "question": "What is the difference between stress testing and spike testing?",
+    "options": [
+      "Stress tests measure response time; spike tests measure error rate — complementary metrics for different failure modes",
+      "Stress tests run for 24+ hours; spike tests run for under 5 minutes — duration is the key differentiator",
+      "Stress tests use real user scripts; spike tests use synthetic load — fidelity is the key differentiator",
+      "Stress tests push beyond peak load to find the breaking point; spike tests simulate sudden massive bursts like a flash sale or news event"
+    ],
+    "answer": 3,
+    "explanation": "Soak/endurance tests catch memory leaks and connection pool exhaustion that only appear over hours. Spike tests validate graceful handling of flash sale traffic — a pattern common in hospitality and retail systems."
+  },
+  {
+    "id": "p3",
+    "category": "performance",
+    "question": "What is the correct diagnostic workflow for a performance bottleneck in a microservices system?",
+    "options": [
+      "Check infrastructure metrics first (CPU, memory, disk) since most bottlenecks are resource exhaustion",
+      "Start at the database layer since the majority of microservice bottlenecks trace back to slow SQL queries",
+      "Run all diagnostic tools simultaneously to gather the maximum data in the shortest time",
+      "Load generator shows symptom → APM traces show location → infrastructure metrics show cause → code profiler shows root — follow the trace, never guess"
+    ],
+    "answer": 3,
+    "explanation": "Dynatrace distributed traces show exactly which service and method is responsible before drilling into CPU, memory, or I/O. Guessing the cause leads to fixing the wrong thing and re-running unnecessarily expensive load tests."
+  },
+  {
+    "id": "p4",
+    "category": "performance",
+    "question": "Who should define performance SLAs, and what three inputs inform them?",
+    "options": [
+      "The QA team independently, based on industry benchmarks for similar application types",
+      "The cloud provider, based on the infrastructure SLAs they guarantee under contract",
+      "The engineering team alone, as they have the best understanding of what the system can technically achieve",
+      "Product, engineering, and business stakeholders together — informed by historical production data, business abandonment tolerance, and infrastructure cost"
+    ],
+    "answer": 3,
+    "explanation": "A QA-defined SLA nobody else owns is just a suggestion. Co-ownership is what makes SLAs enforceable — and once agreed, they are encoded as automated assertions in the pipeline that block deployments."
+  },
+  {
+    "id": "p5",
+    "category": "performance",
+    "question": "What is service virtualization in performance testing and when is it essential?",
+    "options": [
+      "Virtualizing physical servers to reduce infrastructure costs during high-volume load test runs",
+      "Creating virtual users that simulate realistic browser behavior for more accurate load test results",
+      "Abstracting the service layer to enable testing without a running application in any environment",
+      "Simulating dependent services that cannot handle load test traffic — used for third-party payment gateways, unready upstream services, or APIs where real load would cause harm"
+    ],
+    "answer": 3,
+    "explanation": "Service virtualization with realistic latency (e.g. 120ms average, 5% variance) isolates exactly what is being tested and prevents results being corrupted by a slow, unavailable, or load-sensitive dependency."
+  },
+  {
+    "id": "p6",
+    "category": "performance",
+    "question": "What is correlation in performance testing and what happens to test results without it?",
+    "options": [
+      "Correlation is matching test results to production monitoring data to validate real-world impact — without it, test results cannot be extrapolated to production behavior",
+      "Correlation is statistical analysis of concurrency versus response time — without it, you cannot identify the knee of the performance curve",
+      "Correlation is mapping API endpoints to test scenarios — without it, you risk testing the wrong endpoints under load",
+      "Correlation extracts dynamic values (session tokens, CSRF tokens) from server responses and injects them into subsequent requests — without it, every virtual user sends the same token and the server rejects all but the first"
+    ],
+    "answer": 3,
+    "explanation": "Without correlation, the load test measures error handling, not real performance. For a system with SSO and loyalty session management, correct correlation is the difference between a meaningful test and 10,000 401 errors."
+  },
+  {
+    "id": "p7",
+    "category": "performance",
+    "question": "What is the correct structure of a JMeter test plan for an API?",
+    "options": [
+      "Test Suite → Test Cases → Assertions → Reports → Cleanup — the logical sequence for any test plan",
+      "Ramp-up → Peak load → Ramp-down → Recovery → Baseline — the load profile phases for a complete test",
+      "Thread Group → HTTP Defaults → Config Elements (CSV, Cookie Manager) → Samplers per API call → Assertions → Backend Listeners → Post-Processors for correlation",
+      "Discovery → Design → Script → Execute → Analyse — the five-stage performance test lifecycle"
+    ],
+    "answer": 2,
+    "explanation": "Listeners are disabled during actual runs and replaced with backend listeners pushing to InfluxDB/Grafana. Post-Processors handle dynamic correlation — extracting session tokens from login responses for all subsequent requests."
+  },
+  {
+    "id": "p8",
+    "category": "performance",
+    "question": "How do you present performance test results to non-technical stakeholders?",
+    "options": [
+      "Share the raw JMeter HTML report with all response time charts and percentile distributions",
+      "Focus on technical improvements: reduced p99, lower error rate, and higher throughput over the baseline",
+      "Show infrastructure metrics (CPU, memory, network) to demonstrate the system is operating healthily",
+      "Translate metrics into business impact: \"1 in 20 bookings takes 2+ seconds at peak — abandonment spikes after 2 seconds\" rather than \"p95 latency was 2.3s\" — lead with SLA status, then trend, then recommendation"
+    ],
+    "answer": 3,
+    "explanation": "Three sections: what we found, what it means for the business, what we are doing about it. Decision-makers act on business outcomes, not percentile charts — the translation is your job as the QE leader."
+  },
+  {
+    "id": "pe1",
+    "category": "performance",
+    "question": "What metric do you use in Playwright to measure the duration of a page load?",
+    "options": [
+      "Console timing",
+      "Network timing",
+      "Performance tracing",
+      "All of the above"
+    ],
+    "answer": 2,
+    "explanation": "Playwright provides performance tracing as a built-in feature, allowing developers to measure the duration of specific actions or actions chains. This helps identify performance bottlenecks and optimize load times."
+  },
+  {
+    "id": "pe2",
+    "category": "performance",
+    "question": "What is the correct command to set the initial user load for a k6 test run?",
+    "options": [
+      "k6 run -u <number>",
+      "k6 run --users=<number>",
+      "k6 run -U <number>",
+      "k6 run --user=<number>"
+    ],
+    "answer": 1,
+    "explanation": "The correct command to set the initial user load for a k6 test run is k6 run --users=<number>. This option specifies the number of virtual users that should be simulated during the test."
+  },
+  {
+    "id": "pe3",
+    "category": "performance",
+    "question": "What is the recommended methodology for creating a comprehensive QA strategy in a system with multiple microservices, based on industry-leading practices?",
+    "options": [
+      "Test-Driven Development (TDD)",
+      "Behavior-Driven Development (BDD)",
+      "Scenario-Based Testing",
+      "Hybrid Approach"
+    ],
+    "answer": 3,
+    "explanation": "The Hybrid Approach combines different testing methodologies to provide a comprehensive QA strategy for complex systems like microservices. It considers the strengths of each method and applies them accordingly."
+  },
+  {
+    "id": "p9",
+    "category": "performance",
+    "question": "What is k6 and what makes it different from traditional performance testing tools like JMeter?",
+    "options": [
+      "k6 is a GUI-based tool that generates test scripts from recorded browser sessions",
+      "k6 is a developer-centric CLI tool where tests are written in JavaScript, designed for CI/CD integration",
+      "k6 is a cloud-only platform that requires a paid subscription for any usage",
+      "k6 focuses exclusively on browser-level performance testing"
+    ],
+    "answer": 1,
+    "explanation": "k6 is an open-source, developer-centric performance testing tool. Tests are written in JavaScript, run from the CLI, and are designed to integrate easily into CI/CD pipelines. Unlike JMeter's GUI-based approach, k6 treats tests as code."
+  },
+  {
+    "id": "p10",
+    "category": "performance",
+    "question": "What is a virtual user (VU) in k6?",
+    "options": [
+      "A real person interacting with the application through a proxy",
+      "A simulated user that runs the default function in a loop, generating concurrent load",
+      "A browser instance that renders and interacts with the UI",
+      "A mock server that responds to incoming requests"
+    ],
+    "answer": 1,
+    "explanation": "Each VU in k6 runs the default exported function in a loop. More VUs means more concurrent simulated users hitting the service. VUs share the same script but maintain their own execution state."
+  },
+  {
+    "id": "p11",
+    "category": "performance",
+    "question": "What are the four lifecycle functions in k6 and in what order do they execute?",
+    "options": [
+      "connect() → request() → validate() → disconnect()",
+      "init (global scope) → setup() → default function (per VU) → teardown()",
+      "before() → test() → after() → report()",
+      "configure() → warmup() → execute() → cleanup()"
+    ],
+    "answer": 1,
+    "explanation": "k6 has four lifecycle stages: init code runs once during script parsing, setup() runs once before all VUs start, the default function runs repeatedly for each VU, and teardown() runs once after all VUs finish."
+  },
+  {
+    "id": "p12",
+    "category": "performance",
+    "question": "What are 'checks' in k6 and how do they differ from thresholds?",
+    "options": [
+      "Checks and thresholds are identical concepts with different names",
+      "Checks validate individual responses (pass/fail assertions); thresholds are pass/fail criteria for the entire test run based on aggregate metrics",
+      "Checks run before the test; thresholds run after",
+      "Checks are optional but thresholds are mandatory"
+    ],
+    "answer": 1,
+    "explanation": "Checks are per-request assertions (e.g., status is 200, body contains expected data). Thresholds are aggregate criteria for the entire test (e.g., p95 < 500ms, error rate < 1%). A failed threshold causes k6 to exit with non-zero status, failing the CI pipeline."
+  },
+  {
+    "id": "p13",
+    "category": "performance",
+    "question": "What are the common load test types supported by k6 scenarios?",
+    "options": [
+      "Unit, integration, and end-to-end tests",
+      "Smoke, load, stress, spike, and soak tests",
+      "Functional, regression, and acceptance tests",
+      "Alpha, beta, and gamma tests"
+    ],
+    "answer": 1,
+    "explanation": "k6 supports smoke tests (minimal load to verify the script works), load tests (expected traffic), stress tests (beyond expected limits), spike tests (sudden traffic bursts), and soak/endurance tests (sustained load over hours to find memory leaks)."
+  },
+  {
+    "id": "p14",
+    "category": "performance",
+    "question": "What is a k6 'scenario' and what advantage does it provide over simple VU/duration options?",
+    "options": [
+      "A scenario is a test report format",
+      "Scenarios allow defining multiple independent workloads with different executors, VU counts, and timing in a single test",
+      "A scenario is a way to skip specific test functions",
+      "Scenarios are only available in the k6 cloud version"
+    ],
+    "answer": 1,
+    "explanation": "Scenarios let you define multiple independent workloads in a single test script. Each scenario can use a different executor (constant VUs, ramping VUs, per-second arrival rate, etc.), enabling complex traffic patterns like mixed API and browser users."
+  },
+  {
+    "id": "p15",
+    "category": "performance",
+    "question": "What is the purpose of the 'ramping-arrival-rate' executor in k6?",
+    "options": [
+      "It gradually increases the number of VUs over time",
+      "It controls the rate of new iterations per second, ramping up or down regardless of response times",
+      "It randomly varies the request rate to simulate chaotic traffic",
+      "It automatically adjusts VU count based on server response time"
+    ],
+    "answer": 1,
+    "explanation": "The ramping-arrival-rate executor controls iterations per second rather than concurrent VUs. This models real-world traffic more accurately — if the server slows down, k6 spawns more VUs to maintain the target request rate, exposing queuing effects."
+  },
+  {
+    "id": "p16",
+    "category": "performance",
+    "question": "What is SharedArray in k6 and why is it important for large test data sets?",
+    "options": [
+      "A distributed data structure shared between k6 instances in a cluster",
+      "A read-only array that is loaded once and shared across all VUs to minimize memory usage",
+      "A JavaScript array that automatically syncs between setup and default functions",
+      "A cloud storage mechanism for persisting test results"
+    ],
+    "answer": 1,
+    "explanation": "SharedArray loads data once during init and shares the same memory across all VUs (read-only). Without it, each VU would get its own copy of the data, causing memory usage to multiply by the VU count — critical for tests with large CSV files."
+  },
+  {
+    "id": "p17",
+    "category": "performance",
+    "question": "How do you parameterize k6 tests with external data files?",
+    "options": [
+      "Use environment variables for all test data",
+      "Use SharedArray with open() to load CSV/JSON files during init, then access rows per VU using VU index",
+      "Embed all test data directly in the script as constants",
+      "k6 does not support external data files"
+    ],
+    "answer": 1,
+    "explanation": "Use open() to read CSV/JSON files during the init phase, wrap them in SharedArray for memory efficiency, then access specific rows using __VU and __ITER built-in variables to ensure each VU uses different data."
+  },
+  {
+    "id": "p18",
+    "category": "performance",
+    "question": "How does k6 handle cookies and session management?",
+    "options": [
+      "Cookies must be managed manually using custom headers",
+      "k6 automatically manages cookies per VU with a built-in cookie jar, similar to a browser session",
+      "Cookies are shared across all VUs for consistency",
+      "k6 does not support cookies"
+    ],
+    "answer": 1,
+    "explanation": "k6 maintains a cookie jar per VU that automatically stores and sends cookies, simulating a real browser session. You can also manually set, get, and clear cookies for fine-grained control."
+  },
+  {
+    "id": "p19",
+    "category": "performance",
+    "question": "What is the purpose of 'groups' in k6?",
+    "options": [
+      "Grouping VUs into teams with different scripts",
+      "Organizing related requests under a named group for clearer reporting and timing metrics",
+      "Creating separate test suites within a single file",
+      "Grouping test data by category"
+    ],
+    "answer": 1,
+    "explanation": "Groups organize related HTTP requests (e.g., 'Login Flow', 'Search Products') under a named label. k6 reports timing metrics per group, making it easy to identify which user flow is the bottleneck."
+  },
+  {
+    "id": "p20",
+    "category": "performance",
+    "question": "How do you tag requests in k6 and why?",
+    "options": [
+      "Tags are decorative labels with no functional purpose",
+      "Tags add custom key-value metadata to requests, enabling filtering and grouping in metrics output and dashboards",
+      "Tags replace the URL in metrics output for privacy",
+      "Tags are only available in k6 cloud"
+    ],
+    "answer": 1,
+    "explanation": "Tags attach metadata (e.g., {type: 'api', endpoint: '/login'}) to requests. They enable filtering metrics in output (e.g., show p95 only for login requests) and creating targeted thresholds."
+  },
+  {
+    "id": "p21",
+    "category": "performance",
+    "question": "How do you test WebSocket endpoints with k6?",
+    "options": [
+      "k6 does not support WebSocket testing",
+      "Use the k6/ws module to open connections, send/receive messages, and assert on response content and timing",
+      "Convert WebSocket to HTTP polling before testing",
+      "Use a separate tool and import results into k6"
+    ],
+    "answer": 1,
+    "explanation": "k6 has a built-in k6/ws module for WebSocket testing. You can open connections, send messages, set up event handlers for incoming messages, and use checks to validate response content and timing."
+  },
+  {
+    "id": "p22",
+    "category": "performance",
+    "question": "How do you integrate k6 into a CI/CD pipeline?",
+    "options": [
+      "Run k6 manually after each deployment",
+      "Add a k6 run step with thresholds that fail the pipeline on performance regression",
+      "k6 requires a dedicated performance testing server and cannot run in CI",
+      "Use k6 only for pre-release performance validation"
+    ],
+    "answer": 1,
+    "explanation": "Add k6 as a pipeline step (e.g., GitHub Actions, Jenkins) that runs tests with defined thresholds. If any threshold fails (e.g., p95 > 500ms), k6 exits with a non-zero code, failing the pipeline and blocking the deployment."
+  },
+  {
+    "id": "p23",
+    "category": "performance",
+    "question": "How do you output k6 results to external monitoring systems?",
+    "options": [
+      "k6 only supports console output",
+      "Use output extensions to stream metrics to InfluxDB, Prometheus, Datadog, Grafana Cloud, or JSON files",
+      "Manually copy results from the terminal",
+      "Use k6 cloud as the only option for result storage"
+    ],
+    "answer": 1,
+    "explanation": "k6 supports multiple output backends via the --out flag. Common integrations include InfluxDB+Grafana for dashboards, Prometheus for alerting, Datadog for unified observability, and JSON files for custom analysis."
+  },
+  {
+    "id": "p24",
+    "category": "performance",
+    "question": "How does k6 handle distributed load testing?",
+    "options": [
+      "k6 runs distributed tests natively with built-in clustering",
+      "Use k6 operator for Kubernetes to distribute load across multiple pods, or k6 cloud for managed distribution",
+      "Distributed testing is not possible with k6",
+      "Each VU automatically runs on a separate machine"
+    ],
+    "answer": 1,
+    "explanation": "For distributed load, use the k6 operator to run across Kubernetes pods, or k6 cloud for managed global distribution. Each pod runs a portion of the total VUs, and results are aggregated centrally."
+  },
+  {
+    "id": "p25",
+    "category": "performance",
+    "question": "What is 'think time' in k6 and why is it important for realistic load tests?",
+    "options": [
+      "Think time is the server processing time for each request",
+      "Think time is a pause between VU iterations (using sleep()) that simulates real user behavior between actions",
+      "Think time is the timeout for failed requests",
+      "Think time is the warm-up period before the test starts"
+    ],
+    "answer": 1,
+    "explanation": "Think time (sleep()) simulates the delay between user actions — reading a page, filling a form, etc. Without think time, VUs hammer the server unrealistically fast, producing misleading results that don't reflect real-world usage patterns."
+  },
+  {
+    "id": "p26",
+    "category": "performance",
+    "question": "What are custom metrics in k6 and when would you create one?",
+    "options": [
+      "Custom metrics replace the built-in metrics for cleaner output",
+      "Custom metrics track application-specific measurements like business transaction duration or data processing latency beyond built-in HTTP metrics",
+      "Custom metrics are only available in the paid version",
+      "Custom metrics are for labeling tests, not for measurement"
+    ],
+    "answer": 1,
+    "explanation": "Custom metrics (Counter, Gauge, Rate, Trend) track measurements specific to your application. For example, tracking order processing time, items per search result, or payment gateway latency — metrics that k6's built-in HTTP metrics don't capture."
+  },
+  {
+    "id": "p27",
+    "category": "performance",
+    "question": "When comparing k6 vs JMeter vs Gatling, which tool is best suited for developer-driven CI/CD performance testing?",
+    "options": [
+      "JMeter, because it has the most plugins and community support",
+      "Gatling, because it uses Scala which is better for complex scenarios",
+      "k6, because tests are JavaScript code that lives alongside application code and integrates natively with CI pipelines",
+      "All three are equally suitable for CI/CD integration"
+    ],
+    "answer": 2,
+    "explanation": "k6 excels in CI/CD because tests are plain JavaScript files (version-controlled like code), run from CLI (no GUI needed), and exit with non-zero status on threshold failures. JMeter requires XML configs and a GUI, Gatling uses Scala."
+  },
+  {
+    "id": "p28",
+    "category": "performance",
+    "question": "How do you establish a performance baseline and detect regressions?",
+    "options": [
+      "Compare results to industry benchmarks published by testing organizations",
+      "Run the same test repeatedly and take the average as the baseline",
+      "Record baseline metrics during a known-good state, then set thresholds that flag deviations beyond an acceptable tolerance in CI",
+      "Use production monitoring data exclusively as the baseline"
+    ],
+    "answer": 2,
+    "explanation": "Establish baselines by running tests against a known-good build under controlled conditions. Store results, then use thresholds in CI (e.g., p95 must not exceed baseline + 10%) to automatically detect regressions before deployment."
+  },
+  {
+    "id": "p29",
+    "category": "performance",
+    "question": "How do you test the scalability of a cloud data pipeline under increased load?",
+    "options": [
+      "Double the hardware and re-run the same test",
+      "Gradually increase data volume and throughput while monitoring auto-scaling triggers, processing latency, and resource utilization at each tier",
+      "Test only the database layer since that is always the bottleneck",
+      "Scalability testing is only possible in production"
+    ],
+    "answer": 1,
+    "explanation": "Scalability testing involves gradually increasing load while monitoring how the system scales — auto-scaling triggers, queue depths, processing latency per tier, and resource utilization. Test at each component (ingestion, processing, storage, serving) to identify which tier becomes the bottleneck."
+  },
+  {
+    "id": "p30",
+    "category": "performance",
+    "question": "What is the purpose of k6 extensions (xk6)?",
+    "options": [
+      "Extensions add new themes to the k6 CLI output",
+      "Extensions allow building custom k6 binaries with additional protocol support (gRPC, SQL, Kafka, browser) via Go modules",
+      "Extensions are plugins that only work in k6 cloud",
+      "Extensions replace the JavaScript runtime with another language"
+    ],
+    "answer": 1,
+    "explanation": "xk6 is a build tool that creates custom k6 binaries with additional capabilities. Extensions add support for protocols like gRPC, SQL databases, Kafka, Redis, and even browser-level testing, extending k6 beyond HTTP."
+  },
+  {
+    "id": "p31",
+    "category": "performance",
+    "question": "What are the six types of performance tests, and which one specifically catches memory leaks?",
+    "options": [
+      "Smoke, regression, integration, acceptance, exploratory, and security; exploratory testing catches memory leaks",
+      "Load, stress, soak/endurance, spike, volume, and scalability; soak/endurance tests catch memory leaks by sustaining load over extended periods",
+      "Unit, component, contract, integration, E2E, and visual; E2E tests catch memory leaks through full journey simulation",
+      "Baseline, benchmark, capacity, configuration, failover, and recovery; capacity tests catch memory leaks"
+    ],
+    "answer": 1,
+    "explanation": "The six performance test types are load (expected traffic), stress (beyond expected), soak/endurance (sustained over hours), spike (sudden burst), volume (large data), and scalability (resource scaling). Soak tests specifically reveal memory leaks and connection pool exhaustion that only appear over time."
+  },
+  {
+    "id": "p32",
+    "category": "performance",
+    "question": "What is the correct approach for integrating performance testing into a CI/CD pipeline without slowing deployments?",
+    "options": [
+      "Run the full load test suite before every deployment, accepting slower deployments for better quality",
+      "Run a short performance smoke test (2-3 min, low load) on every merge to main, and run full load tests nightly or before releases",
+      "Skip performance testing in CI entirely and rely on production monitoring to catch regressions",
+      "Run performance tests only quarterly as part of the release planning cycle"
+    ],
+    "answer": 1,
+    "explanation": "A tiered approach works best: short performance smoke tests (30 seconds, 100 virtual users) run in CI on every merge to catch obvious regressions, while comprehensive load tests (15+ minutes, thousands of VUs) run nightly or before releases to validate SLOs thoroughly."
+  },
+  {
+    "id": "p33",
+    "category": "performance",
+    "question": "When diagnosing a performance bottleneck, what is the USE method?",
+    "options": [
+      "User Story Estimation: a method for estimating performance test development effort",
+      "Utilization, Saturation, and Errors measured per resource: a systematic approach to identifying which component (CPU, memory, I/O, network) is the bottleneck",
+      "Unified System Evaluation: a framework for comparing performance across different environments",
+      "Unit Stress Execution: running unit tests under simulated load conditions"
+    ],
+    "answer": 1,
+    "explanation": "The USE method examines Utilization (how busy the resource is), Saturation (queued work beyond capacity), and Errors (error events) for each system resource. This systematic approach identifies which resource saturates first, directing investigation before expensive guesswork."
+  },
+  {
+    "id": "p34",
+    "category": "performance",
+    "question": "What is chaos engineering, and how does it differ from traditional performance testing?",
+    "options": [
+      "Chaos engineering is just another name for stress testing with randomized parameters",
+      "Chaos engineering proactively injects failures to verify system resilience, while performance testing measures behavior under load; they are complementary approaches",
+      "Chaos engineering replaces performance testing in cloud-native environments",
+      "Chaos engineering is only applicable to Netflix-scale systems and is not relevant for typical applications"
+    ],
+    "answer": 1,
+    "explanation": "Traditional performance testing verifies expected behavior under load. Chaos engineering (using tools like Gremlin, LitmusChaos) injects failures like pod kills, network latency, and disk pressure to verify the system handles unexpected conditions gracefully. Both are essential for production readiness."
+  },
+  {
+    "id": "p35",
+    "category": "performance",
+    "question": "What is the Apdex score, and why is it preferred over average response time for reporting?",
+    "options": [
+      "Apdex is an internal application performance index measured by APM tools; it replaces all other performance metrics",
+      "Apdex combines satisfied, tolerating, and frustrated user counts into a 0-1 score representing overall user experience, while average response time hides tail latency",
+      "Apdex only measures frontend rendering time and ignores server-side performance",
+      "Apdex is a deprecated metric replaced by P95 latency in modern performance testing"
+    ],
+    "answer": 1,
+    "explanation": "Apdex = (Satisfied + 0.5 x Tolerating) / Total, producing a 0-1 score. It provides a single user-experience-centric metric that is more meaningful than average response time, which can hide the fact that 5% of users experience unacceptable latency."
+  },
+  {
+    "id": "p36",
+    "category": "performance",
+    "question": "Why is P99 latency more important than mean latency for SLA compliance?",
+    "options": [
+      "P99 is easier to calculate and requires less data processing than mean",
+      "P99 reveals the worst-case experience for 1% of real users, which mean hides by averaging fast and slow requests together",
+      "P99 is only important for financial applications; mean is sufficient for most other domains",
+      "P99 and mean always move together so there is no practical difference"
+    ],
+    "answer": 1,
+    "explanation": "Mean latency can look acceptable (200ms) while P99 is 8 seconds, meaning 1 in 100 users has a terrible experience. For SLAs, P99 (or P95) matters because it represents what real users in the tail actually experience, and at scale, even 1% of users is a large number."
+  },
+  {
+    "id": "p37",
+    "category": "performance",
+    "question": "What is the key difference between testing horizontal scaling and auto-scaling in cloud environments?",
+    "options": [
+      "They are the same thing; horizontal scaling and auto-scaling are interchangeable terms",
+      "Horizontal scaling tests whether adding instances improves throughput linearly; auto-scaling tests whether the system scales up fast enough to avoid degradation during sudden demand",
+      "Horizontal scaling applies to databases; auto-scaling applies to application servers",
+      "Horizontal scaling is manual; auto-scaling cannot be tested because it is managed by the cloud provider"
+    ],
+    "answer": 1,
+    "explanation": "Horizontal scaling tests verify that adding instances produces proportional throughput gains (linear scaling). Auto-scaling tests verify that the system detects load increases and provisions new instances quickly enough (scale-out latency) to prevent user-facing degradation during traffic spikes."
+  },
+  {
+    "id": "p38",
+    "category": "performance",
+    "question": "What performance metric combination provides the most complete picture of system health under load?",
+    "options": [
+      "Response time mean and total request count",
+      "Response time percentiles (P90, P95, P99), throughput (requests per second), error rate, and resource utilization (CPU/memory/connection pool)",
+      "CPU utilization and memory consumption only",
+      "Pass/fail rate of functional tests executed during load"
+    ],
+    "answer": 1,
+    "explanation": "A complete performance picture requires response time percentiles (not just mean), throughput, error rate, and resource utilization measured together. Each metric tells a different story: high throughput with high P99 indicates queuing, low error rate with high CPU indicates approaching capacity."
+  }
+]

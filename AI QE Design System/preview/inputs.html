@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Inputs</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--fg-2); }
+.input { height: 48px; border-radius: 14px; border: 1px solid var(--border); background: #fff; padding: 0 16px; font-family: var(--font-body); font-size: 14px; color: var(--fg); outline: none; transition: all 180ms; }
+.input::placeholder { color: var(--fg-3); }
+.input:focus { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(38,179,106,0.14); }
+.input.focused { border-color: var(--green-500); box-shadow: 0 0 0 4px rgba(38,179,106,0.14); }
+.search { position: relative; }
+.search .icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--fg-3); }
+.search .input { padding-left: 38px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.help { font-size: 11px; color: var(--fg-3); font-family: var(--font-mono); }
+</style></head>
+<body>
+<div class="card">
+  <div class="col"><div class="eyebrow">Inputs · 14px radius · 48px height</div></div>
+  <div class="cols">
+    <div class="field">
+      <label>Repository URL</label>
+      <input class="input" placeholder="github.com/org/repo">
+    </div>
+    <div class="field">
+      <label>Run name</label>
+      <input class="input focused" value="checkout-flow · main">
+      <div class="help">focus · 4px green ring</div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Search</label>
+    <div class="search">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input class="input" placeholder="Search runs, suites, agents…">
+    </div>
+  </div>
+</div>
+</body></html>

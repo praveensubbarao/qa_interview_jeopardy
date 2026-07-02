@@ -1,0 +1,1668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI QE — Interview Prep Quiz</title>
+<link rel="stylesheet" href="AI QE Design System/fonts/local.css">
+<link rel="stylesheet" href="AI QE Design System/colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="quiz-questions.js"></script>
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--font-body); cursor: pointer; border: none; }
+[hidden] { display: none !important; }
+
+/* ── Nav ──────────────────────────────────────────────────────────────────── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(243,245,243,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-logo { height: 28px; width: auto; }
+.nav-name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.nav-name span { color: var(--green-600); }
+.nav-score {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 5px 14px;
+  display: none;
+}
+.nav-score.visible { display: block; }
+
+/* ── Shared Buttons ───────────────────────────────────────────────────────── */
+.btn {
+  font-weight: 600; font-size: 14px;
+  padding: 10px 20px; border-radius: 12px;
+  border: 1px solid transparent;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all 180ms var(--ease-organic);
+  white-space: nowrap;
+}
+.btn svg { width: 15px; height: 15px; stroke-width: 2; flex-shrink: 0; }
+.btn-primary {
+  background: var(--green-600); color: #fff;
+  box-shadow: 0 4px 12px rgba(1,77,54,0.18);
+}
+.btn-primary:hover { background: var(--green-700); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(1,77,54,0.22); }
+.btn-secondary {
+  background: var(--surface); color: var(--fg);
+  border-color: var(--border);
+}
+.btn-secondary:hover { background: var(--surface-2); border-color: var(--green-400); color: var(--green-700); }
+.btn-ghost {
+  background: transparent; color: var(--fg-2);
+  border-color: transparent; padding: 8px 14px;
+}
+.btn-ghost:hover { background: var(--surface-2); color: var(--fg); }
+.btn-lg { padding: 14px 28px; font-size: 15px; border-radius: 14px; }
+
+/* ── HOME SCREEN ──────────────────────────────────────────────────────────── */
+#screen-home { display: block; }
+
+.home-hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 72px 32px 56px;
+  position: relative; overflow: hidden;
+}
+.home-hero::before {
+  content: '';
+  position: absolute; left: 50%; top: 40px;
+  transform: translateX(-50%);
+  width: 860px; height: 500px;
+  background: radial-gradient(ellipse, rgba(77,204,130,0.18) 0%, rgba(22,148,90,0.06) 35%, transparent 68%);
+  pointer-events: none; z-index: 0;
+}
+.home-hero > * { position: relative; }
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green-700); margin-bottom: 18px;
+}
+.hero-h {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.025em;
+  max-width: 20ch;
+}
+.hero-h em {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 500;
+  color: var(--green-700);
+}
+.hero-sub {
+  font-size: 18px; line-height: 1.65;
+  color: var(--fg-2); max-width: 52ch;
+  margin-top: 18px;
+}
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap;
+}
+.stat {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.stat-v {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--green-700);
+  letter-spacing: -0.02em;
+}
+.stat-l {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--fg-3);
+}
+.hero-cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+
+/* Category Grid */
+.category-section {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 32px 80px;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green-700); margin-bottom: 20px;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+}
+.cat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: all 180ms var(--ease-organic);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: relative; overflow: hidden;
+}
+.cat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0; transition: opacity 200ms;
+}
+.cat-card:hover { border-color: var(--green-300); box-shadow: 0 8px 20px rgba(1,77,54,0.08); transform: translateY(-2px); }
+.cat-card:hover::before { opacity: 1; }
+
+/* Category accent colors */
+.cat-green::before   { background: var(--green-500); }
+.cat-blue::before    { background: #3b82f6; }
+.cat-violet::before  { background: #8b5cf6; }
+.cat-amber::before   { background: #f59e0b; }
+.cat-orange::before  { background: #f97316; }
+.cat-teal::before    { background: #14b8a6; }
+.cat-rose::before    { background: #f43f5e; }
+.cat-indigo::before  { background: #6366f1; }
+.cat-cyan::before    { background: #06b6d4; }
+.cat-sky::before     { background: #0ea5e9; }
+.cat-yellow::before  { background: #eab308; }
+.cat-emerald::before { background: #10b981; }
+.cat-pink::before    { background: #ec4899; }
+.cat-fuchsia::before { background: #d946ef; }
+.cat-lime::before    { background: #84cc16; }
+.cat-purple::before  { background: #a855f7; }
+.cat-slate::before   { background: #64748b; }
+.cat-red::before     { background: #ef4444; }
+
+.cat-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--green-100);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cat-icon svg { width: 20px; height: 20px; stroke-width: 2; color: var(--green-700); }
+
+.cat-blue .cat-icon     { background: #eff6ff; }
+.cat-blue .cat-icon svg   { color: #2563eb; }
+.cat-violet .cat-icon   { background: #f5f3ff; }
+.cat-violet .cat-icon svg { color: #7c3aed; }
+.cat-amber .cat-icon    { background: #fffbeb; }
+.cat-amber .cat-icon svg  { color: #d97706; }
+.cat-orange .cat-icon   { background: #fff7ed; }
+.cat-orange .cat-icon svg { color: #ea580c; }
+.cat-teal .cat-icon     { background: #f0fdfa; }
+.cat-teal .cat-icon svg   { color: #0f766e; }
+.cat-rose .cat-icon     { background: #fff1f2; }
+.cat-rose .cat-icon svg   { color: #e11d48; }
+.cat-indigo .cat-icon   { background: #eef2ff; }
+.cat-indigo .cat-icon svg { color: #4f46e5; }
+.cat-cyan .cat-icon     { background: #ecfeff; }
+.cat-cyan .cat-icon svg   { color: #0891b2; }
+.cat-sky .cat-icon      { background: #f0f9ff; }
+.cat-sky .cat-icon svg    { color: #0284c7; }
+.cat-yellow .cat-icon   { background: #fefce8; }
+.cat-yellow .cat-icon svg { color: #ca8a04; }
+.cat-emerald .cat-icon  { background: #ecfdf5; }
+.cat-emerald .cat-icon svg { color: #059669; }
+.cat-pink .cat-icon     { background: #fdf2f8; }
+.cat-pink .cat-icon svg   { color: #db2777; }
+.cat-fuchsia .cat-icon  { background: #fdf4ff; }
+.cat-fuchsia .cat-icon svg { color: #c026d3; }
+.cat-lime .cat-icon     { background: #f7fee7; }
+.cat-lime .cat-icon svg   { color: #65a30d; }
+.cat-purple .cat-icon   { background: #faf5ff; }
+.cat-purple .cat-icon svg { color: #9333ea; }
+.cat-slate .cat-icon    { background: #f8fafc; }
+.cat-slate .cat-icon svg  { color: #475569; }
+.cat-red .cat-icon      { background: #fef2f2; }
+.cat-red .cat-icon svg    { color: #dc2626; }
+
+.cat-header { display: flex; align-items: center; gap: 12px; }
+.cat-info { flex: 1; }
+.cat-name {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--fg);
+}
+.cat-count {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--fg-3);
+  margin-top: 2px;
+}
+.cat-footer { display: flex; justify-content: flex-end; }
+.cat-btn {
+  background: transparent; color: var(--green-700);
+  border: 1px solid var(--green-300);
+  padding: 7px 16px; border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+  transition: all 150ms;
+}
+.cat-btn:hover { background: var(--green-600); color: #fff; border-color: var(--green-600); }
+
+.all-cats-btn { margin-top: 24px; display: flex; justify-content: center; }
+
+/* ── QUIZ SCREEN ──────────────────────────────────────────────────────────── */
+#screen-quiz { display: none; }
+
+.quiz-wrap {
+  max-width: 780px; margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+
+/* Progress header */
+.quiz-topbar {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+}
+.quiz-cat-badge {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--green-100); color: var(--green-800);
+  padding: 4px 10px; border-radius: var(--radius-pill);
+  white-space: nowrap; flex-shrink: 0;
+}
+.quiz-progress-bar {
+  flex: 1; height: 5px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--green-600);
+  border-radius: var(--radius-pill);
+  transition: width 300ms var(--ease-organic);
+}
+.quiz-counter {
+  font-family: var(--font-mono);
+  font-size: 12px; color: var(--fg-3);
+  white-space: nowrap; flex-shrink: 0;
+}
+
+/* Question card */
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  margin-bottom: 16px;
+}
+.question-number {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--fg-3); margin-bottom: 14px;
+}
+.question-text {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2.2vw, 21px);
+  font-weight: 600; line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+/* Answer options */
+.options-grid {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 20px;
+}
+.option-btn {
+  width: 100%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex; align-items: flex-start; gap: 14px;
+  text-align: left;
+  transition: all 160ms var(--ease-organic);
+  cursor: pointer;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--green-400);
+  background: var(--green-50, #f0fdf4);
+  transform: translateX(3px);
+}
+.option-letter {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 600;
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--fg-3);
+  transition: all 160ms;
+}
+.option-text {
+  font-size: 14px; line-height: 1.55;
+  color: var(--fg); flex: 1;
+}
+.option-result-icon {
+  width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;
+  display: none;
+}
+.option-result-icon svg { width: 20px; height: 20px; stroke-width: 2.5; }
+
+/* Option states after answering */
+.option-btn.correct {
+  background: #f0fdf4;
+  border-color: var(--green-500);
+  cursor: default;
+}
+.option-btn.correct .option-letter {
+  background: var(--green-600); color: #fff; border-color: var(--green-600);
+}
+.option-btn.correct .option-result-icon { display: block; color: var(--green-600); }
+.option-btn.correct .option-text { color: var(--green-800); font-weight: 500; }
+
+.option-btn.wrong {
+  background: #fef2f2;
+  border-color: #f87171;
+  cursor: default;
+}
+.option-btn.wrong .option-letter {
+  background: #ef4444; color: #fff; border-color: #ef4444;
+}
+.option-btn.wrong .option-result-icon { display: block; color: #ef4444; }
+.option-btn.wrong .option-text { color: #991b1b; }
+
+.option-btn.dimmed {
+  opacity: 0.45; cursor: default;
+}
+.option-btn:disabled { cursor: default; }
+
+/* Explanation panel */
+.explanation-panel {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green-500);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  display: none;
+}
+.explanation-panel.visible { display: block; }
+.explanation-label {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--green-700); margin-bottom: 8px;
+}
+.explanation-text {
+  font-size: 14px; color: var(--fg-2);
+  line-height: 1.65;
+}
+
+/* Next / results button */
+.quiz-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.quiz-score-inline {
+  font-family: var(--font-mono);
+  font-size: 13px; color: var(--fg-3);
+}
+.quiz-score-inline span { color: var(--green-700); font-weight: 600; }
+.next-btn { display: none; }
+.next-btn.visible { display: inline-flex; }
+
+/* Quit link */
+.quit-link {
+  display: flex; justify-content: center; margin-top: 32px;
+}
+
+/* ── RESULTS SCREEN ───────────────────────────────────────────────────────── */
+#screen-results { display: none; }
+
+.results-wrap {
+  max-width: 780px; margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.results-hero {
+  text-align: center;
+  margin-bottom: 48px;
+  position: relative;
+}
+.score-ring-wrap {
+  display: inline-flex; flex-direction: column;
+  align-items: center; gap: 12px; margin-bottom: 24px;
+}
+.score-ring {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(var(--green-600) var(--pct, 0%), var(--slate-200) 0%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.score-ring::before {
+  content: '';
+  position: absolute; inset: 12px;
+  background: var(--surface); border-radius: 50%;
+}
+.score-number {
+  position: relative; z-index: 1;
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  display: flex; flex-direction: column; align-items: center; line-height: 1;
+}
+.score-number small {
+  font-size: 13px; font-weight: 500; color: var(--fg-3);
+  margin-top: 2px;
+}
+.grade-label {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.results-h {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.results-sub { font-size: 16px; color: var(--fg-2); max-width: 50ch; margin: 0 auto; }
+
+/* Category breakdown */
+.breakdown-section { margin-bottom: 40px; }
+.breakdown-label {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green-700); margin-bottom: 16px;
+}
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.breakdown-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+}
+.breakdown-cat-name {
+  font-size: 13px; font-weight: 600;
+  color: var(--fg); margin-bottom: 8px;
+}
+.breakdown-bar-wrap {
+  height: 6px; background: var(--border);
+  border-radius: var(--radius-pill); overflow: hidden; margin-bottom: 6px;
+}
+.breakdown-bar {
+  height: 100%;
+  background: var(--green-600);
+  border-radius: var(--radius-pill);
+  transition: width 600ms var(--ease-organic);
+}
+.breakdown-stat {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--fg-3);
+}
+.breakdown-stat span { color: var(--green-700); font-weight: 600; }
+
+/* Results CTAs */
+.results-actions {
+  display: flex; gap: 12px; justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Confetti */
+.confetti-wrap {
+  position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; top: -16px;
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── ADMIN SCREEN ─────────────────────────────────────────────────────────── */
+#screen-admin { display: none; }
+
+.server-badge {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--green-100); color: var(--green-700);
+  border: 1px solid var(--green-300);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+}
+.admin-btn-nav {
+  background: transparent; color: var(--fg-3);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 6px 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 150ms;
+}
+.admin-btn-nav:hover, .admin-btn-nav.active {
+  background: var(--surface-2); border-color: var(--green-400);
+  color: var(--green-700);
+}
+.admin-btn-nav svg { width: 15px; height: 15px; stroke-width: 2; }
+
+.admin-wrap {
+  max-width: 1100px; margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+.admin-header {
+  margin-bottom: 32px;
+}
+.admin-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green-700); margin-bottom: 10px;
+}
+.admin-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700; letter-spacing: -0.02em;
+}
+.admin-sub { font-size: 15px; color: var(--fg-2); margin-top: 6px; }
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+@media (max-width: 780px) { .admin-layout { grid-template-columns: 1fr; } }
+
+.admin-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+.admin-panel-label {
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--fg-3); margin-bottom: 14px;
+}
+.admin-form-group { margin-bottom: 18px; }
+.admin-label {
+  display: block;
+  font-size: 13px; font-weight: 600; color: var(--fg);
+  margin-bottom: 6px;
+}
+.admin-textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: border-color 150ms;
+}
+.admin-textarea:focus {
+  outline: none;
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px rgba(22,148,90,0.08);
+}
+.admin-row { display: flex; gap: 12px; align-items: flex-end; }
+.admin-select, .admin-input-num {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 150ms;
+}
+.admin-select:focus, .admin-input-num:focus {
+  outline: none; border-color: var(--green-500);
+}
+.admin-input-num { width: 80px; }
+.admin-select { flex: 1; }
+.admin-generate-btn {
+  width: 100%; margin-top: 4px;
+}
+
+/* Server disabled state */
+.admin-disabled-notice {
+  background: var(--surface-2);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 13px; color: var(--fg-3);
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 8px;
+}
+.admin-disabled-notice svg { width: 16px; height: 16px; stroke-width: 2; flex-shrink: 0; color: var(--fg-3); }
+
+/* Preview panel */
+.preview-empty {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 48px 24px;
+  color: var(--fg-3);
+  gap: 12px;
+}
+.preview-empty svg { width: 32px; height: 32px; stroke-width: 1.5; opacity: 0.4; }
+.preview-empty p { font-size: 14px; max-width: 28ch; }
+
+.preview-list { display: flex; flex-direction: column; gap: 14px; }
+
+.preview-q-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.preview-q-head {
+  padding: 14px 16px;
+  background: var(--surface-2);
+  display: flex; align-items: flex-start; gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.preview-q-num {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--green-700); flex-shrink: 0; margin-top: 2px;
+}
+.preview-q-text {
+  font-size: 14px; font-weight: 600; color: var(--fg); flex: 1;
+  line-height: 1.4;
+}
+.preview-q-chevron { flex-shrink: 0; margin-top: 2px; color: var(--fg-3); }
+.preview-q-chevron svg { width: 16px; height: 16px; stroke-width: 2; transition: transform 200ms; }
+.preview-q-card.open .preview-q-chevron svg { transform: rotate(180deg); }
+
+.preview-q-body {
+  display: none;
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+}
+.preview-q-card.open .preview-q-body { display: block; }
+
+.preview-opt {
+  display: flex; gap: 10px; margin-bottom: 8px;
+  font-size: 13px; line-height: 1.5;
+}
+.preview-opt-letter {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  width: 20px; height: 20px; flex-shrink: 0;
+  border-radius: 5px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--fg-3);
+  margin-top: 1px;
+}
+.preview-opt.correct-opt .preview-opt-letter {
+  background: var(--green-600); color: #fff; border-color: var(--green-600);
+}
+.preview-opt.correct-opt .preview-opt-text { color: var(--green-800); font-weight: 500; }
+.preview-expl {
+  font-size: 13px; color: var(--fg-2); line-height: 1.6;
+  background: var(--surface-2); border-radius: var(--radius-sm);
+  padding: 10px 12px; margin-top: 10px;
+  border-left: 3px solid var(--green-400);
+}
+.preview-cat-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 12px; flex-wrap: wrap;
+}
+.preview-cat-label { font-size: 12px; color: var(--fg-3); }
+.preview-cat-select {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body);
+}
+.preview-remove-btn {
+  margin-left: auto;
+  background: transparent; color: #ef4444;
+  border: 1px solid #fecaca;
+  border-radius: 6px; padding: 3px 8px;
+  font-size: 12px; cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 150ms;
+}
+.preview-remove-btn:hover { background: #fef2f2; }
+
+/* Admin actions bar */
+.admin-actions {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+.admin-save-count {
+  font-family: var(--font-mono);
+  font-size: 12px; color: var(--fg-3);
+}
+
+/* Loading spinner inline */
+.spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast notification */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: var(--fg); color: var(--bg);
+  font-family: var(--font-mono); font-size: 13px;
+  padding: 12px 24px; border-radius: var(--radius-pill);
+  z-index: 200;
+  opacity: 0; pointer-events: none;
+  transition: opacity 300ms, transform 300ms;
+  transform: translateX(-50%) translateY(10px);
+  white-space: nowrap;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .home-hero { padding: 48px 20px 36px; }
+  .category-section { padding: 0 20px 60px; }
+  .quiz-wrap, .results-wrap { padding: 24px 16px 60px; }
+  .question-card { padding: 24px 20px; }
+  .nav-inner { padding: 12px 20px; }
+  .hero-stats { gap: 20px; }
+  .admin-wrap { padding: 28px 20px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ────────────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <img class="nav-logo" src="AI QE Design System/assets/logo-aiqe-mark.svg" alt="AI QE">
+      <span class="nav-name">AI QE <span>Interview Prep</span></span>
+      <span class="server-badge" id="server-badge" hidden>Live</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="nav-score" id="nav-score">Score: <span id="nav-score-val">0 / 0</span></div>
+      <button class="admin-btn-nav" id="admin-nav-btn" onclick="toggleAdmin()" title="Add questions from job description">
+        <i data-lucide="plus-circle"></i>
+        Add Questions
+      </button>
+    </div>
+  </div>
+</nav>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════ HOME SCREEN ════════════════════════════════════ -->
+<div id="screen-home">
+
+  <div class="home-hero">
+    <div class="hero-eyebrow">AI Quality Engineering · Interview Preparation</div>
+    <h1 class="hero-h">Sharpen your <em>AI QE</em> interview edge</h1>
+    <p class="hero-sub" id="hero-sub"></p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-v" id="stat-questions">—</div><div class="stat-l">Questions</div></div>
+      <div class="stat"><div class="stat-v" id="stat-categories">—</div><div class="stat-l">Categories</div></div>
+      <div class="stat"><div class="stat-v">Senior</div><div class="stat-l">Level focus</div></div>
+    </div>
+    <div class="hero-cta">
+      <button class="btn btn-primary btn-lg" onclick="startQuiz(null)">
+        <i data-lucide="play"></i>
+        Start Full Quiz
+      </button>
+      <button class="btn btn-secondary btn-lg" onclick="scrollToCategories()">
+        <i data-lucide="grid-2x2"></i>
+        Browse Categories
+      </button>
+    </div>
+  </div>
+
+  <div class="category-section" id="categories">
+    <div class="section-label">Choose a category to focus your prep</div>
+    <div class="category-grid" id="category-grid">
+      <!-- rendered by JS -->
+    </div>
+    <div class="all-cats-btn">
+      <button class="btn btn-secondary" id="shuffle-all-btn" onclick="startQuiz(null)">
+        <i data-lucide="shuffle"></i>
+        Randomise all questions
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════ QUIZ SCREEN ════════════════════════════════════ -->
+<div id="screen-quiz">
+  <div class="quiz-wrap">
+
+    <div class="quiz-topbar">
+      <div class="quiz-cat-badge" id="quiz-cat-badge">All Categories</div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+      <div class="quiz-counter" id="quiz-counter"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-number" id="question-number">Question 1</div>
+      <div class="question-text" id="question-text"></div>
+    </div>
+
+    <div class="options-grid" id="options-grid"></div>
+
+    <div class="explanation-panel" id="explanation-panel">
+      <div class="explanation-label">Why this answer</div>
+      <div class="explanation-text" id="explanation-text"></div>
+    </div>
+
+    <div class="quiz-footer">
+      <div class="quiz-score-inline">
+        Score: <span id="score-display">0</span> / <span id="answered-display">0</span>
+      </div>
+      <button class="btn btn-primary next-btn" id="next-btn" onclick="nextQuestion()">
+        Next Question <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="quit-link">
+      <button class="btn btn-ghost" onclick="goHome()">
+        <i data-lucide="home"></i>
+        Back to Home
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════ RESULTS SCREEN ════════════════════════════════ -->
+<div id="screen-results">
+  <div class="results-wrap">
+
+    <div class="results-hero">
+      <div class="score-ring-wrap">
+        <div class="score-ring" id="score-ring">
+          <div class="score-number" id="score-number">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+        <div class="grade-label" id="grade-label"></div>
+      </div>
+      <h2 class="results-h" id="results-h"></h2>
+      <p class="results-sub" id="results-sub"></p>
+    </div>
+
+    <div class="breakdown-section">
+      <div class="breakdown-label">Breakdown by category</div>
+      <div class="breakdown-grid" id="breakdown-grid"></div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn btn-primary btn-lg" id="retake-btn" onclick="retakeQuiz()">
+        <i data-lucide="refresh-cw"></i>
+        Retake Quiz
+      </button>
+      <button class="btn btn-secondary btn-lg" onclick="goHome()">
+        <i data-lucide="grid-2x2"></i>
+        Try Another Category
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Confetti container -->
+<div class="confetti-wrap" id="confetti-wrap"></div>
+
+<!-- ═══════════════════════ ADMIN SCREEN ════════════════════════════════════ -->
+<div id="screen-admin">
+  <div class="admin-wrap">
+
+    <div class="admin-header">
+      <div class="admin-eyebrow">Question Bank Management</div>
+      <h2 class="admin-title">Generate Questions from Job Description</h2>
+      <p class="admin-sub">Paste a job description — technologies are auto-detected, questions are categorized intelligently, and duplicates are filtered against the existing question bank.</p>
+    </div>
+
+    <div class="admin-layout">
+
+      <!-- Left: JD input -->
+      <div class="admin-panel">
+        <div class="admin-panel-label">Job Description</div>
+
+        <div class="admin-form-group">
+          <label class="admin-label" for="jd-input">Paste job description</label>
+          <textarea class="admin-textarea" id="jd-input" placeholder="Paste the full job description here — focus areas, technologies, and requirements will be used to generate relevant interview questions…"></textarea>
+        </div>
+
+        <div class="admin-form-group">
+          <label class="admin-label" for="gen-category">Generate for category</label>
+          <select class="admin-select" id="gen-category"
+                  onchange="document.getElementById('tech-badge-row').hidden=true">
+            <option value="technology">Technology &amp; Tools (default)</option>
+            <option value="all">All Categories (1 question each)</option>
+          </select>
+          <div style="margin-top:6px;font-size:12px;color:var(--fg-3);">
+            Generates 1 new unique question per selected category and adds it to the library automatically.
+          </div>
+        </div>
+        <div id="tech-badge-row" hidden style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+          <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-3);">Detected:</span>
+        </div>
+
+        <button class="btn btn-primary btn-lg admin-generate-btn" id="generate-btn" onclick="generateQuestions()">
+          <i data-lucide="sparkles"></i>
+          Generate Questions
+        </button>
+
+        <div class="admin-disabled-notice" id="server-notice" hidden>
+          <i data-lucide="server-off"></i>
+          <span>AI generation requires the Node.js server. Run <code style="font-family:var(--font-mono);background:var(--surface);padding:1px 5px;border-radius:4px">npm start</code> and reload.</span>
+        </div>
+      </div>
+
+      <!-- Right: Preview -->
+      <div class="admin-panel">
+        <div class="admin-panel-label">Added to Library</div>
+        <div id="preview-area">
+          <div class="preview-empty">
+            <i data-lucide="file-question"></i>
+            <p>Generated questions will appear here for review before saving.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Actions bar -->
+    <div class="admin-actions">
+      <button class="btn btn-secondary" onclick="toggleAdmin()">
+        <i data-lucide="arrow-left"></i>
+        Back to Quiz
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let isServerMode = false;
+
+const state = {
+  screen: 'home',       // 'home' | 'quiz' | 'results' | 'admin'
+  category: null,       // null = all
+  questions: [],        // shuffled subset
+  currentIndex: 0,
+  score: 0,
+  answered: 0,
+  selectedAnswer: null, // index or null
+};
+
+// ── Screen management ──────────────────────────────────────────────────────
+function showScreen(name) {
+  ['home', 'quiz', 'results', 'admin'].forEach(s => {
+    document.getElementById('screen-' + s).style.display = s === name ? 'block' : 'none';
+  });
+  state.screen = name;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Sync admin button active state
+  const adminBtn = document.getElementById('admin-nav-btn');
+  if (adminBtn) adminBtn.classList.toggle('active', name === 'admin');
+}
+
+// ── Category card rendering ────────────────────────────────────────────────
+function renderCategoryGrid() {
+  const grid = document.getElementById('category-grid');
+  grid.innerHTML = CATEGORIES.map(cat => `
+    <div class="cat-card cat-${cat.color}">
+      <div class="cat-header">
+        <div class="cat-icon cat-${cat.color}">
+          <i data-lucide="${cat.icon}"></i>
+        </div>
+        <div class="cat-info">
+          <div class="cat-name">${cat.label}</div>
+          <div class="cat-count">${cat.count} questions</div>
+        </div>
+      </div>
+      <div class="cat-footer">
+        <button class="cat-btn" onclick="startQuiz('${cat.id}')">Start →</button>
+      </div>
+    </div>
+  `).join('');
+
+  const totalQ   = QUESTIONS.length;
+  const totalCats = CATEGORIES.length;
+
+  // Stats
+  const statQ = document.getElementById('stat-questions');
+  if (statQ) statQ.textContent = totalQ;
+  const statC = document.getElementById('stat-categories');
+  if (statC) statC.textContent = totalCats;
+
+  // Hero subtitle — built from live data so it never goes stale
+  const heroSub = document.getElementById('hero-sub');
+  if (heroSub) {
+    const featured = CATEGORIES.slice(0, 3).map(c => c.label);
+    const remaining = totalCats - featured.length;
+    const tail = remaining > 0 ? `, and ${remaining} more` : '';
+    heroSub.textContent =
+      `${totalQ} multiple-choice questions across ${totalCats} categories — covering ${featured.join(', ')}${tail}.`;
+  }
+
+  // Shuffle button — targeted by ID to avoid querySelector ambiguity
+  const shuffleBtn = document.getElementById('shuffle-all-btn');
+  if (shuffleBtn) {
+    shuffleBtn.innerHTML = `<i data-lucide="shuffle"></i> Randomise all ${totalQ} questions`;
+  }
+
+  lucide.createIcons();
+}
+
+// ── Quiz logic ─────────────────────────────────────────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz(categoryId) {
+  state.category = categoryId;
+  state.currentIndex = 0;
+  state.score = 0;
+  state.answered = 0;
+  state.selectedAnswer = null;
+
+  const pool = categoryId
+    ? QUESTIONS.filter(q => q.category === categoryId)
+    : QUESTIONS;
+  state.questions = shuffle(pool);
+
+  showScreen('quiz');
+  document.getElementById('nav-score').classList.add('visible');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = state.questions[state.currentIndex];
+  const total = state.questions.length;
+  const idx = state.currentIndex;
+  const pct = Math.round((idx / total) * 100);
+
+  // Topbar
+  const cat = CATEGORIES.find(c => c.id === q.category);
+  document.getElementById('quiz-cat-badge').textContent = cat ? cat.label : 'All Categories';
+  document.getElementById('quiz-progress-fill').style.width = pct + '%';
+  document.getElementById('quiz-counter').textContent = (idx + 1) + ' / ' + total;
+
+  // Question
+  document.getElementById('question-number').textContent = 'Question ' + (idx + 1);
+  document.getElementById('question-text').textContent = q.question;
+
+  // Options
+  const letters = ['A', 'B', 'C', 'D'];
+  const optionsHtml = q.options.map((opt, i) => `
+    <button class="option-btn" data-idx="${i}" onclick="selectAnswer(${i})">
+      <span class="option-letter">${letters[i]}</span>
+      <span class="option-text">${opt}</span>
+      <span class="option-result-icon" id="icon-${i}">
+        ${i === q.answer
+          ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>'
+          : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+        }
+      </span>
+    </button>
+  `).join('');
+  document.getElementById('options-grid').innerHTML = optionsHtml;
+
+  // Explanation + next
+  document.getElementById('explanation-panel').classList.remove('visible');
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.classList.remove('visible');
+  nextBtn.textContent = '';
+  nextBtn.innerHTML = idx < total - 1
+    ? 'Next Question <i data-lucide="arrow-right"></i>'
+    : 'See Results <i data-lucide="bar-chart-2"></i>';
+
+  // Score display
+  updateScoreDisplay();
+
+  state.selectedAnswer = null;
+  lucide.createIcons();
+}
+
+function selectAnswer(selectedIdx) {
+  if (state.selectedAnswer !== null) return; // already answered
+  state.selectedAnswer = selectedIdx;
+  state.answered++;
+
+  const q = state.questions[state.currentIndex];
+  const correct = selectedIdx === q.answer;
+  if (correct) state.score++;
+
+  updateScoreDisplay();
+
+  // Style options
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.answer) {
+      btn.classList.add('correct');
+    } else if (i === selectedIdx && !correct) {
+      btn.classList.add('wrong');
+    } else {
+      btn.classList.add('dimmed');
+    }
+  });
+
+  // Show explanation
+  document.getElementById('explanation-text').textContent = q.explanation;
+  document.getElementById('explanation-panel').classList.add('visible');
+
+  // Show next button
+  document.getElementById('next-btn').classList.add('visible');
+  lucide.createIcons();
+}
+
+function updateScoreDisplay() {
+  document.getElementById('score-display').textContent = state.score;
+  document.getElementById('answered-display').textContent = state.answered;
+  document.getElementById('nav-score-val').textContent = state.score + ' / ' + state.answered;
+}
+
+function nextQuestion() {
+  state.currentIndex++;
+  if (state.currentIndex >= state.questions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ── Results ────────────────────────────────────────────────────────────────
+function showResults() {
+  const total = state.questions.length;
+  const pct = Math.round((state.score / total) * 100);
+
+  // Ring
+  const ring = document.getElementById('score-ring');
+  ring.style.setProperty('--pct', pct + '%');
+
+  // Ring color by performance
+  let ringColor = 'var(--green-600)';
+  if (pct < 50) ringColor = '#ef4444';
+  else if (pct < 70) ringColor = '#f97316';
+  else if (pct < 85) ringColor = '#eab308';
+  ring.style.background = `conic-gradient(${ringColor} ${pct}%, var(--slate-200, #e2e8f0) 0%)`;
+
+  document.getElementById('score-number').innerHTML =
+    `${state.score}<small>/ ${total}</small>`;
+
+  // Grade
+  let grade, gradeColor, headline, sub;
+  if (pct >= 90) {
+    grade = 'Outstanding'; gradeColor = 'color: var(--green-700)';
+    headline = 'You\'re interview-ready.';
+    sub = 'You demonstrated strong command of AI QE concepts. Walk into that interview with confidence.';
+  } else if (pct >= 75) {
+    grade = 'Strong'; gradeColor = 'color: var(--green-600)';
+    headline = 'Solid performance — a few areas to sharpen.';
+    sub = 'You know your core AI QE principles. Review the questions you missed and focus your next session there.';
+  } else if (pct >= 55) {
+    grade = 'Developing'; gradeColor = 'color: #d97706';
+    headline = 'Good foundation — keep building.';
+    sub = 'You have the fundamentals. Focus your prep on the weaker categories below and retake the quiz in each.';
+  } else {
+    grade = 'Keep Practicing'; gradeColor = 'color: #ef4444';
+    headline = 'Time to go deeper.';
+    sub = 'Use the flashcard resources in Interview Resources/ to review the concepts, then test yourself again.';
+  }
+
+  document.getElementById('grade-label').style.cssText = gradeColor;
+  document.getElementById('grade-label').textContent = grade;
+  document.getElementById('results-h').textContent = headline;
+  document.getElementById('results-sub').textContent = sub;
+
+  // Breakdown by category
+  const catScores = {};
+  state.questions.forEach(q => {
+    if (!catScores[q.category]) catScores[q.category] = { correct: 0, total: 0 };
+    catScores[q.category].total++;
+  });
+  state.answerLog.forEach((entry) => {
+    if (!catScores[entry.category]) catScores[entry.category] = { correct: 0, total: 0 };
+    if (entry.correct) catScores[entry.category].correct++;
+  });
+
+  const catIds = [...new Set(state.questions.map(q => q.category))];
+  const breakdownHtml = catIds.map(catId => {
+    const cat = CATEGORIES.find(c => c.id === catId);
+    const s = catScores[catId] || { correct: 0, total: 0 };
+    const barPct = s.total > 0 ? Math.round((s.correct / s.total) * 100) : 0;
+    return `
+      <div class="breakdown-card">
+        <div class="breakdown-cat-name">${cat ? cat.label : catId}</div>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar" style="width:${barPct}%"></div>
+        </div>
+        <div class="breakdown-stat"><span>${s.correct}</span> / ${s.total} correct</div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('breakdown-grid').innerHTML = breakdownHtml;
+
+  // Retake button label
+  const retakeBtn = document.getElementById('retake-btn');
+  retakeBtn.innerHTML = state.category
+    ? '<i data-lucide="refresh-cw"></i> Retake This Category'
+    : '<i data-lucide="refresh-cw"></i> Retake Full Quiz';
+
+  showScreen('results');
+  lucide.createIcons();
+
+  // Confetti for high score
+  if (pct >= 80) launchConfetti();
+}
+
+function retakeQuiz() {
+  startQuiz(state.category);
+}
+
+function goHome() {
+  document.getElementById('nav-score').classList.remove('visible');
+  showScreen('home');
+}
+
+function scrollToCategories() {
+  document.getElementById('categories').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Confetti ───────────────────────────────────────────────────────────────
+function launchConfetti() {
+  const container = document.getElementById('confetti-wrap');
+  container.innerHTML = '';
+  const colors = ['#16945A','#4DCC82','#D9B548','#38bdf8','#a78bfa','#fb923c'];
+  for (let i = 0; i < 80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = `
+      left: ${Math.random() * 100}%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      width: ${6 + Math.random() * 8}px;
+      height: ${6 + Math.random() * 8}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      animation-duration: ${1.8 + Math.random() * 1.6}s;
+      animation-delay: ${Math.random() * 0.8}s;
+    `;
+    container.appendChild(piece);
+  }
+  setTimeout(() => { container.innerHTML = ''; }, 4000);
+}
+
+// ── Answer log (tracks per-question correctness for breakdown) ────────────
+state.answerLog = [];
+
+const _origSelectAnswer = selectAnswer;
+window.selectAnswer = function(selectedIdx) {
+  const q = state.questions[state.currentIndex];
+  const correct = selectedIdx === q.answer;
+  state.answerLog.push({ category: q.category, correct });
+  _origSelectAnswer(selectedIdx);
+};
+
+const _origStartQuiz = startQuiz;
+window.startQuiz = function(categoryId) {
+  state.answerLog = [];
+  _origStartQuiz(categoryId);
+};
+
+// ── Admin panel ────────────────────────────────────────────────────────────
+let generatedQuestions = []; // preview buffer
+
+function toggleAdmin() {
+  if (state.screen === 'admin') {
+    showScreen('home');
+  } else {
+    // Populate category dropdown from live CATEGORIES
+    const sel = document.getElementById('gen-category');
+    const prev = sel.value || 'technology';
+    sel.innerHTML =
+      CATEGORIES.map(c =>
+        `<option value="${c.id}" ${c.id === prev ? 'selected' : ''}>${c.label}</option>`
+      ).join('') +
+      '<option value="all">All Categories (1 question each)</option>';
+    showScreen('admin');
+    lucide.createIcons();
+    const notice = document.getElementById('server-notice');
+    const genBtn  = document.getElementById('generate-btn');
+    if (!isServerMode) {
+      notice.hidden = false;
+      genBtn.disabled = true;
+      genBtn.style.opacity = '0.5';
+    } else {
+      notice.hidden = true;
+      genBtn.disabled = false;
+      genBtn.style.opacity = '';
+    }
+  }
+}
+
+async function generateQuestions() {
+  if (!isServerMode) return;
+  const jd       = document.getElementById('jd-input').value.trim();
+  const category = document.getElementById('gen-category').value;
+
+  if (!jd) { showToast('Paste a job description first'); return; }
+
+  const techRow = document.getElementById('tech-badge-row');
+  techRow.hidden = true;
+
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+
+  if (category === 'all') {
+    // One request per category — a failure in one doesn't lose the rest
+    const cats = CATEGORIES;
+    const allSaved = [];
+    let provider = '';
+    const failedCats = [];
+
+    for (let i = 0; i < cats.length; i++) {
+      const cat = cats[i];
+      btn.innerHTML = `<span class="spinner"></span> ${i + 1}/${cats.length}: ${cat.label}&hellip;`;
+      try {
+        const res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jd, category: cat.id }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Generation failed');
+        allSaved.push(...(data.questions ?? []));
+        if (!provider && data.provider) provider = data.provider;
+      } catch (err) {
+        console.warn(`[generate] ${cat.id} failed:`, err.message);
+        failedCats.push(cat.label);
+      }
+    }
+
+    generatedQuestions = allSaved;
+    renderSavedResults(allSaved, provider);
+    await refreshFromServer();
+    renderCategoryGrid();
+
+    const savedMsg = `Added ${allSaved.length} question${allSaved.length !== 1 ? 's' : ''} via ${provider || 'AI'}`;
+    showToast(failedCats.length
+      ? `${savedMsg} (${failedCats.length} failed: ${failedCats.join(', ')})`
+      : savedMsg);
+  } else {
+    btn.innerHTML = '<span class="spinner"></span> Generating &amp; saving&hellip;';
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jd, category }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Generation failed');
+
+      // Questions are already saved — show read-only results
+      generatedQuestions = data.questions ?? [];
+      renderSavedResults(generatedQuestions, data.provider);
+
+      // Show detected technologies
+      if (data.detectedTechs?.length) {
+        techRow.innerHTML =
+          '<span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--fg-3);">Detected:</span>' +
+          data.detectedTechs.map(t =>
+            `<span style="font-family:var(--font-mono);font-size:11px;background:var(--green-100);color:var(--green-800);border:1px solid var(--green-300);border-radius:var(--radius-pill);padding:2px 10px;">${t}</span>`
+          ).join('');
+        techRow.hidden = false;
+      }
+
+      // Refresh category counts in home screen
+      await refreshFromServer();
+      renderCategoryGrid();
+
+      showToast(`Added ${data.saved} question${data.saved !== 1 ? 's' : ''} via ${data.provider}`);
+    } catch (err) {
+      showToast('Error: ' + err.message);
+    }
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i data-lucide="sparkles"></i> Generate &amp; Add';
+  lucide.createIcons();
+}
+
+function renderSavedResults(questions, provider) {
+  const area = document.getElementById('preview-area');
+  if (!questions.length) {
+    area.innerHTML = '<div class="preview-empty"><i data-lucide="check-circle"></i><p>No new questions were added (all generated questions were duplicates or invalid).</p></div>';
+    lucide.createIcons();
+    return;
+  }
+  const letters = ['A','B','C','D'];
+  const providerBadge = provider
+    ? `<div style="font-family:var(--font-mono);font-size:10px;color:var(--fg-3);margin-bottom:14px;letter-spacing:0.1em;text-transform:uppercase;">Added via ${provider}</div>`
+    : '';
+  area.innerHTML = providerBadge + '<div class="preview-list">' + questions.map((q, qi) => {
+    const optsHtml = (q.options || []).map((opt, oi) => `
+      <div class="preview-opt ${oi === q.answer ? 'correct-opt' : ''}">
+        <div class="preview-opt-letter">${letters[oi]}</div>
+        <div class="preview-opt-text">${opt}</div>
+      </div>`).join('');
+    return `
+      <div class="preview-q-card" id="pq-${qi}">
+        <div class="preview-q-head" onclick="togglePreviewCard(${qi})">
+          <div class="preview-q-num">${q.category}</div>
+          <div class="preview-q-text">${q.question}</div>
+          <div class="preview-q-chevron"><i data-lucide="chevron-down"></i></div>
+        </div>
+        <div class="preview-q-body">
+          ${optsHtml}
+          <div class="preview-expl">${q.explanation}</div>
+        </div>
+      </div>`;
+  }).join('') + '</div>';
+  lucide.createIcons();
+}
+
+function renderPreview(questions) {
+  const area = document.getElementById('preview-area');
+  if (!questions.length) {
+    area.innerHTML = '<div class="preview-empty"><i data-lucide="file-question"></i><p>No questions generated. Try a different job description.</p></div>';
+    lucide.createIcons();
+    return;
+  }
+  const letters = ['A','B','C','D'];
+  area.innerHTML = '<div class="preview-list">' + questions.map((q, qi) => {
+    const optsHtml = (q.options || []).map((opt, oi) => `
+      <div class="preview-opt ${oi === q.answer ? 'correct-opt' : ''}">
+        <div class="preview-opt-letter">${letters[oi]}</div>
+        <div class="preview-opt-text">${opt}</div>
+      </div>`).join('');
+    const catOpts = CATEGORIES.map(c =>
+      `<option value="${c.id}" ${c.id === (q.suggestedCategory || q.category) ? 'selected' : ''}>${c.label}</option>`
+    ).join('');
+    return `
+      <div class="preview-q-card" id="pq-${qi}">
+        <div class="preview-q-head" onclick="togglePreviewCard(${qi})">
+          <div class="preview-q-num">Q${qi+1}</div>
+          <div class="preview-q-text">${q.question}</div>
+          <div class="preview-q-chevron"><i data-lucide="chevron-down"></i></div>
+        </div>
+        <div class="preview-q-body">
+          ${optsHtml}
+          <div class="preview-expl">${q.explanation}</div>
+          <div class="preview-cat-row">
+            <span class="preview-cat-label">Category:</span>
+            <select class="preview-cat-select" data-qi="${qi}" onchange="updateGenCategory(${qi}, this.value)">${catOpts}</select>
+            <button class="preview-remove-btn" onclick="removeGenQuestion(${qi})">Remove</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('') + '</div>';
+  lucide.createIcons();
+}
+
+function togglePreviewCard(qi) {
+  document.getElementById('pq-' + qi)?.classList.toggle('open');
+}
+
+function updateGenCategory(qi, value) {
+  if (generatedQuestions[qi]) {
+    generatedQuestions[qi].suggestedCategory = value;
+    generatedQuestions[qi].category = value;
+  }
+}
+
+function removeGenQuestion(qi) {
+  generatedQuestions.splice(qi, 1);
+  renderPreview(generatedQuestions);
+  updateSaveCount();
+  if (!generatedQuestions.length) {
+    document.getElementById('save-btn').hidden = true;
+    document.getElementById('discard-btn').hidden = true;
+  }
+}
+
+function updateSaveCount() {
+  const el = document.getElementById('save-count');
+  el.textContent = generatedQuestions.length
+    ? `${generatedQuestions.length} question${generatedQuestions.length !== 1 ? 's' : ''} ready to save`
+    : '';
+  const saveBtn = document.getElementById('save-btn');
+  if (saveBtn) saveBtn.innerHTML = `<i data-lucide="save"></i> Save ${generatedQuestions.length} to Library`;
+  lucide.createIcons();
+}
+
+function discardPreview() {
+  generatedQuestions = [];
+  renderPreview([]);
+  document.getElementById('save-btn').hidden = true;
+  document.getElementById('discard-btn').hidden = true;
+  document.getElementById('save-count').textContent = '';
+}
+
+async function saveQuestions() {
+  if (!generatedQuestions.length) return;
+  const toSave = generatedQuestions.map(q => ({
+    question:    q.question,
+    options:     q.options,
+    answer:      q.answer,
+    explanation: q.explanation,
+    category:    q.category || q.suggestedCategory || 'ai-foundations',
+  }));
+
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+
+  try {
+    const res = await fetch('/api/questions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ questions: toSave }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Save failed');
+    showToast(`Saved ${data.saved} question${data.saved !== 1 ? 's' : ''} to library`);
+    discardPreview();
+    // Refresh live question data
+    await refreshFromServer();
+    renderCategoryGrid();
+  } catch (err) {
+    showToast('Error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    lucide.createIcons();
+  }
+}
+
+async function refreshFromServer() {
+  try {
+    const [qRes, cRes] = await Promise.all([
+      fetch('/api/questions'), fetch('/api/categories')
+    ]);
+    if (qRes.ok && cRes.ok) {
+      window.QUESTIONS  = await qRes.json();
+      window.CATEGORIES = await cRes.json();
+    }
+  } catch { /* ignore */ }
+}
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  // Try server mode — fall back to static QUESTIONS/CATEGORIES from quiz-questions.js
+  try {
+    const [qRes, cRes] = await Promise.all([
+      fetch('/api/questions', { signal: AbortSignal.timeout(1500) }),
+      fetch('/api/categories', { signal: AbortSignal.timeout(1500) }),
+    ]);
+    if (qRes.ok && cRes.ok) {
+      window.QUESTIONS  = await qRes.json();
+      window.CATEGORIES = await cRes.json();
+      isServerMode = true;
+      document.getElementById('server-badge').hidden = false;
+    }
+  } catch { /* static mode — globals already set from quiz-questions.js */ }
+
+  renderCategoryGrid();
+  showScreen('home');
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>

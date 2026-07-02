@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyland – Principal QA Architect Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Syne+Mono&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f7f5f0;--ink:#0f0e0b;--surface:#fff;--rule:#ddd9cf;--accent:#1a4d8f;--accent2:#c84b11;--accent3:#1a6b3c;--muted:#7a7266;--shadow:0 2px 12px rgba(0,0,0,0.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:14px;line-height:1.7}
+  .hero{padding:44px 40px 32px;border-bottom:1.5px solid var(--ink);background:var(--ink);color:#f5f2ec;position:relative;overflow:hidden}
+  .hero::after{content:'HYL';position:absolute;right:-10px;bottom:-20px;font-family:'Syne',sans-serif;font-size:160px;font-weight:800;color:rgba(255,255,255,0.03);pointer-events:none}
+  .eyebrow{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#6b9fd4;margin-bottom:10px}
+  .hero h1{font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:800;line-height:1.1;margin-bottom:10px}
+  .hero h1 em{color:#d4824a;font-style:italic}
+  .hero-sub{color:#9a9088;font-size:13px;max-width:600px;margin-bottom:20px}
+  .tag-row{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-family:'Syne Mono',monospace;font-size:10px;padding:3px 10px;border-radius:3px;border:1px solid rgba(255,255,255,0.12);color:#c8bfb4;background:rgba(255,255,255,0.05)}
+  .tag.hot{border-color:rgba(212,130,74,0.5);color:#d4824a;background:rgba(212,130,74,0.08)}
+  .timer-bar{background:var(--accent);color:#fff;padding:10px 40px;font-size:12px;font-family:'Syne Mono',monospace;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+  .nav{background:var(--surface);border-bottom:1.5px solid var(--ink);padding:0 40px;display:flex;gap:0;overflow-x:auto;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
+  .tab{padding:13px 18px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:transparent;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s;margin-bottom:-1.5px}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .container{max-width:860px;margin:0 auto;padding:32px 40px}
+  .pane{display:none}.pane.active{display:block}
+  .sec-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:4px}
+  .sec-desc{color:var(--muted);font-size:13px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+  .card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow)}
+  .card-hdr{padding:15px 20px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:background .15s}
+  .card-hdr:hover{background:#faf8f4}
+  .card.open{border-color:var(--ink);border-width:1.5px}
+  .q-num{font-family:'Syne Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0;min-width:24px;padding-top:1px}
+  .q-text{font-weight:500;font-size:14px;flex:1;line-height:1.4}
+  .badge{font-size:10px;padding:2px 8px;border-radius:2px;font-weight:500;white-space:nowrap;flex-shrink:0}
+  .b1{background:#e8f0f8;color:#1a4d8f}
+  .b2{background:#fde8e0;color:#c84b11}
+  .b3{background:#d1fae5;color:#065f46}
+  .b4{background:#fef3c7;color:#92400e}
+  .b5{background:#ede9fe;color:#5b21b6}
+  .chev{color:var(--muted);flex-shrink:0;margin-top:3px;transition:transform .2s;font-size:12px}
+  .card.open .chev{transform:rotate(180deg)}
+  .card-body{display:none;padding:18px 20px;border-top:1px solid var(--rule);background:#fdfcfa}
+  .card.open .card-body{display:block}
+  .a-lbl{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent3);margin-bottom:8px}
+  .a-main{font-size:13.5px;color:#3a3028;line-height:1.78;margin-bottom:10px}
+  .anchor{font-family:'Syne Mono',monospace;font-size:11px;color:var(--muted);padding-top:8px;border-top:1px dashed var(--rule);line-height:1.6}
+  .anchor::before{content:"Resume anchor → ";color:var(--accent2)}
+  .callout{background:#eef4fb;border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0;margin:10px 0;font-size:13px;color:#0f2a4d;line-height:1.6}
+  .callout-r{background:#fef3ee;border-left:3px solid var(--accent2);padding:10px 14px;border-radius:0 4px 4px 0;margin:10px 0;font-size:13px;color:#5a2a10;line-height:1.6}
+  .say{background:var(--surface);border:1px solid #c5d8ef;border-radius:4px;padding:12px 14px;margin:10px 0}
+  .say-lbl{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .say-txt{font-size:13px;color:var(--ink);line-height:1.75;font-style:italic}
+  ul.bl{padding-left:16px;margin:8px 0}
+  ul.bl li{margin-bottom:6px;font-size:13px;color:#3a3028;line-height:1.6}
+  ul.bl li strong{color:var(--ink)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+  .mini{background:#faf8f4;border:1px solid var(--rule);border-radius:4px;padding:10px 12px}
+  .mini-t{font-size:12px;font-weight:500;margin-bottom:4px}
+  .mini-b{font-size:12px;color:var(--muted);line-height:1.55}
+  .timer-grid{display:grid;grid-template-columns:70px 1fr;gap:0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-bottom:14px}
+  .timer-time{background:var(--accent);color:#fff;padding:10px 12px;font-family:'Syne Mono',monospace;font-size:11px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4}
+  .timer-task{padding:10px 14px;font-size:13px;line-height:1.6;background:var(--surface)}
+  .timer-task strong{color:var(--ink)}
+  .hyland-box{background:#0f1f3d;color:#c8d8f0;border-radius:6px;padding:14px 18px;margin-bottom:14px;font-size:13px;line-height:1.7}
+  .hyland-box-title{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6b9fd4;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">1-Hour Technical Interview Prep · Praveen Subbarao</div>
+  <h1>Hyland Principal<br><em>Quality Architect</em></h1>
+  <p class="hero-sub">AVP + Test Lead Architect panel. Hyland builds the Content Innovation Cloud — an AI-native enterprise content platform. Your AI QE background is a direct match. Here's how to win the hour.</p>
+  <div class="tag-row">
+    <span class="tag hot">Enterprise Agent Mesh</span>
+    <span class="tag hot">Content Innovation Cloud</span>
+    <span class="tag">Playwright + GitHub Actions</span>
+    <span class="tag">IaC Quality Gates</span>
+    <span class="tag">AI-assisted QE</span>
+    <span class="tag">Cross-domain Quality Council</span>
+  </div>
+</div>
+
+<div class="timer-bar">⏱ YOUR HOUR — 5 sections · Click tabs in order · Say answers out loud not just read them</div>
+
+<nav class="nav">
+  <button class="tab active" onclick="show('plan',this)">60-min plan</button>
+  <button class="tab" onclick="show('hyland',this)">Know Hyland</button>
+  <button class="tab" onclick="show('strategy',this)">Strategy Qs</button>
+  <button class="tab" onclick="show('technical',this)">Technical Qs</button>
+  <button class="tab" onclick="show('ai',this)">AI QE Qs</button>
+  <button class="tab" onclick="show('opening',this)">Your opening</button>
+</nav>
+
+<div class="container">
+
+<!-- 60 MIN PLAN -->
+<div id="plan" class="pane active">
+  <div class="sec-title">Your 60-minute game plan</div>
+  <p class="sec-desc">Follow this sequence exactly. The hardest questions are in Technical and AI tabs — spend most time there.</p>
+
+  <div class="timer-grid"><div class="timer-time">0–8 min</div><div class="timer-task"><strong>Read Know Hyland tab completely.</strong> The AVP will expect you to reference their platform — Content Innovation Cloud, Enterprise Agent Mesh, Enterprise Context Engine. Drop these terms naturally and you signal you did the work.</div></div>
+  <div class="timer-grid"><div class="timer-time">8–20 min</div><div class="timer-task"><strong>Read Strategy Qs and say answers out loud.</strong> The AVP will open with enterprise strategy questions. Your cross-domain quality council answer and your "quality as architecture" framing are the two that matter most here.</div></div>
+  <div class="timer-grid"><div class="timer-time">20–38 min</div><div class="timer-task"><strong>Read Technical Qs — deepest prep needed here.</strong> The Test Lead Architect will go deep on Playwright, GitHub Actions, IaC quality gates, and testability patterns. These are the questions that will separate you. Spend the most time here.</div></div>
+  <div class="timer-grid"><div class="timer-time">38–52 min</div><div class="timer-task"><strong>Read AI QE Qs and practice out loud.</strong> Hyland's product IS AI — they ship Enterprise Agent Mesh and agentic automation. Your AI QE work at Care.com is not just a bonus here, it's table stakes. Connect your LLM experience to their product specifically.</div></div>
+  <div class="timer-grid"><div class="timer-time">52–60 min</div><div class="timer-task"><strong>Read Your Opening tab and practice your 90-second intro.</strong> This sets the tone for the entire interview. Nail this and you walk in with momentum.</div></div>
+
+  <div class="callout"><strong>The single most important thing to know about this interview:</strong> Hyland's product is an AI-native content platform. They are actively building agentic automation into their core product. A QA Architect who doesn't understand agentic AI is a mismatch here. Your Care.com AI work — LLM-assisted test generation, MCP integrations, prompt libraries — is exactly the signal they need to see.</div>
+</div>
+
+<!-- KNOW HYLAND -->
+<div id="hyland" class="pane">
+  <div class="sec-title">Know Hyland before you walk in</div>
+  <p class="sec-desc">Three things to reference naturally in your answers — signals you did genuine research.</p>
+
+  <div class="hyland-box">
+    <div class="hyland-box-title">What Hyland actually is</div>
+    Hyland is a 4,000-person enterprise content management company — think document management, intelligent process automation, and AI-powered content services for Fortune 100 companies across healthcare, banking, insurance, and government. Their flagship platform is the Content Innovation Cloud, which they're transforming into an AI-native, agentic enterprise platform. Customer adoption of their agentic capabilities surged 220% in Q4 2025 alone. This is a company in active, fast-moving AI transformation — not one exploring it.
+  </div>
+
+  <div class="grid2">
+    <div class="mini">
+      <div class="mini-t">Enterprise Context Engine</div>
+      <div class="mini-b">Unifies structured and unstructured enterprise content into a governed knowledge graph — the data layer that makes AI agents trustworthy. QA implication: testing knowledge graph integrity and AI output accuracy is a new QE frontier here.</div>
+    </div>
+    <div class="mini">
+      <div class="mini-t">Enterprise Agent Mesh</div>
+      <div class="mini-b">A network of semi-autonomous AI agents that automate complex business decisions across Salesforce, Workday, and other enterprise systems. QA implication: testing non-deterministic agent behavior is the hardest QE problem in their stack right now.</div>
+    </div>
+    <div class="mini">
+      <div class="mini-t">OnBase / Alfresco / Nuxeo / Perceptive</div>
+      <div class="mini-b">Four legacy ECM platforms Hyland owns — called "PANO." Each has its own codebase and QA history. The Principal QA Architect must govern quality across all four plus the new cloud platform simultaneously.</div>
+    </div>
+    <div class="mini">
+      <div class="mini-t">Content Federation Service</div>
+      <div class="mini-b">Allows the Content Innovation Cloud to connect to any content repository without data migration. Integration testing across federated content sources is a key QE challenge — your microservices and API testing experience maps directly here.</div>
+    </div>
+  </div>
+
+  <div class="callout-r"><strong>The unique QE challenge at Hyland:</strong> They have four legacy on-premise platforms (PANO) plus a new cloud-native AI platform — all shipping simultaneously. The Principal QA Architect must govern quality across a fractured, multi-platform landscape while also building AI QE capabilities. This is exactly the cross-domain governance challenge you solved at Care.com across 20+ markets. Frame it that way.</div>
+
+  <div class="say">
+    <div class="say-lbl">Drop this naturally in the interview</div>
+    <div class="say-txt">"What interests me specifically about Hyland is the multi-platform governance challenge — governing quality across PANO while simultaneously building the QE architecture for the Content Innovation Cloud's agentic capabilities. That's a genuinely complex cross-domain problem, and it maps well to the work I did at Care.com across B2B, B2C, and international platforms simultaneously."</div>
+  </div>
+</div>
+
+<!-- STRATEGY QS -->
+<div id="strategy" class="pane">
+  <div class="sec-title">Strategy questions — AVP level</div>
+  <p class="sec-desc">The AVP will open with these. They are assessing whether you think at enterprise architecture level, not team level.</p>
+
+  <div class="card" id="s1">
+    <div class="card-hdr" onclick="tog('s1')">
+      <span class="q-num">S1</span>
+      <span class="q-text">How would you define and evolve an enterprise quality strategy across multiple engineering domains at Hyland?</span>
+      <span class="badge b1">Strategy</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">I'd start by mapping the current quality maturity across each domain — OnBase, Alfresco, Nuxeo, Perceptive, and the new Content Innovation Cloud — because each will be at a different level. You can't apply one framework uniformly to a 30-year-old on-prem codebase and a cloud-native AI platform simultaneously.<br><br>
+      Then I'd define the non-negotiables — the standards every domain must meet regardless of their platform: test traceability, CI/CD gate integration, defect escape rate targets, and coverage of critical user journeys. Within those constraints, each domain gets flexibility on implementation.<br><br>
+      The evolution happens through a quality council — cross-domain leads who meet monthly, share what's working, and collectively raise the standard. That's how you move an enterprise without mandates.</div>
+      <div class="callout">Hyland-specific angle: the PANO platforms have different tech stacks, different test tooling, and different release cadences. The strategy must accommodate that reality, not ignore it.</div>
+      <div class="anchor">Care.com: B2B, B2C, 20+ countries simultaneously · standardized frameworks · acquisition integrations · quality council model</div>
+    </div>
+  </div>
+
+  <div class="card" id="s2">
+    <div class="card-hdr" onclick="tog('s2')">
+      <span class="q-num">S2</span>
+      <span class="q-text">How do you embed quality into architecture — not just the test phase?</span>
+      <span class="badge b1">Strategy</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">Quality as architecture means three things: testability by design, observability built in, and quality gates that are part of the delivery workflow — not added afterward.<br><br>
+      Testability: I join architecture reviews and ask — can this service be tested in isolation? Does the API contract exist before implementation? Can we inject test data without affecting other services?<br><br>
+      Observability: every service ships with structured logging, health endpoints, and distributed tracing from day one. At Care.com I partnered with SRE to ensure synthetic monitoring was part of the IaC templates — not a manual add-on.<br><br>
+      Quality gates: automated — not process documents. The gate is enforced by the pipeline. No human can bypass it under deadline pressure.</div>
+      <div class="anchor">IaC, microservices, SRE partnership, synthetic monitoring, shift-left practices</div>
+    </div>
+  </div>
+
+  <div class="card" id="s3">
+    <div class="card-hdr" onclick="tog('s3')">
+      <span class="q-num">S3</span>
+      <span class="q-text">How do you lead a cross-domain quality council effectively?</span>
+      <span class="badge b1">Strategy</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">The council fails if it becomes a status meeting. It succeeds when it becomes the place where standards are born and problems get solved.<br><br>
+      My model: monthly cadence, each domain brings one quality win and one unsolved problem. The council collectively solves the problem — because someone else has already faced it. Wins get shared across domains. Patterns become standards.<br><br>
+      I also make the KPI dashboard visible to all council members — not just their own domain data. When a lead sees their defect escape rate is 15% and another domain's is 4%, they ask why. That peer pressure drives improvement faster than any mandate I could issue.</div>
+      <div class="anchor">40+ engineers, global teams, standardized frameworks, community of practice model</div>
+    </div>
+  </div>
+
+  <div class="card" id="s4">
+    <div class="card-hdr" onclick="tog('s4')">
+      <span class="q-num">S4</span>
+      <span class="q-text">How do you influence engineering architecture decisions without direct authority?</span>
+      <span class="badge b1">Strategy</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">Data first, relationship second, proposal third — never the other way around.<br><br>
+      I show the metric that creates urgency — defect escape rate from untestable services, incident frequency from systems with no observability. Then I build the relationship with the architect — I'm not the QA person telling them their design is wrong, I'm a peer helping them ship reliably. Then I bring a specific, low-friction proposal: add a contract test here, expose a health endpoint there.<br><br>
+      At Care.com I saved $150K through strategic tool consolidation — that happened through influence across five different engineering teams, not authority. Results over time build the credibility that makes the next conversation easier.</div>
+      <div class="anchor">$150K vendor reduction, cross-functional collaboration, DevOps/SRE partnership</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECHNICAL QS -->
+<div id="technical" class="pane">
+  <div class="sec-title">Technical questions — Test Lead Architect level</div>
+  <p class="sec-desc">The Test Lead Architect will go deep here. Expect specifics on Playwright, GitHub Actions, IaC, and quality gate architecture.</p>
+
+  <div class="card" id="t1">
+    <div class="card-hdr" onclick="tog('t1')">
+      <span class="q-num">T1</span>
+      <span class="q-text">Walk me through how you'd architect a Playwright-based enterprise automation framework from scratch.</span>
+      <span class="badge b2">Technical</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">Start with the principles: Page Object Model for UI layer, API request context for service layer, shared data factories for test data, environment configs in YAML so the same suite runs in dev, stage, and prod without code changes.<br><br>
+      Structure: monorepo with modules per product — for Hyland that'd mean separate modules for OnBase, Alfresco, Content Innovation Cloud — sharing a common utilities layer: auth helpers, reporting, custom matchers, and CI/CD hooks.<br><br>
+      Parallel execution from day one — never retrofit it. Each worker gets its own isolated data set. Playwright's built-in parallelism with `--workers` aligned to your CI runner capacity.<br><br>
+      Reporting: Allure or Playwright's built-in HTML reporter, connected to the pipeline so results are visible without anyone navigating to a separate tool. At Care.com this migration delivered 90% CI/CD reliability improvement and 60% faster execution.</div>
+      <div class="anchor">Playwright TypeScript, Selenium migration, Jenkins/GitHub Actions, 90% reliability, 60% execution time</div>
+    </div>
+  </div>
+
+  <div class="card" id="t2">
+    <div class="card-hdr" onclick="tog('t2')">
+      <span class="q-num">T2</span>
+      <span class="q-text">How do you design quality gates in a GitHub Actions CI/CD pipeline?</span>
+      <span class="badge b2">Technical</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">Three gate tiers, each with a different scope and timing:<br><br>
+      <strong>PR gate</strong> — smoke tests only, must complete under 10 minutes. Blocks merge if any smoke test fails. Fast feedback to the developer while they're still in context.<br><br>
+      <strong>Build gate</strong> — regression suite runs on every merge to main. Covers critical user journeys, API contract tests, and integration flows. Blocks deployment to staging if it fails.<br><br>
+      <strong>Release gate</strong> — full suite including performance assertions and security scans. Blocks production deployment. Results auto-attach to the change record for audit trail.<br><br>
+      In GitHub Actions YAML, each gate is a separate job with `needs:` dependency chaining — if the PR gate fails, the build gate never runs. Environment secrets managed via GitHub Secrets, never in code.</div>
+      <div class="callout">Hyland-specific: with four PANO platforms plus the cloud platform each having their own pipelines, I'd build shared reusable GitHub Actions workflows — called composite actions — that each platform's pipeline imports. One place to update quality gate logic, not five.</div>
+      <div class="anchor">Jenkins, GitHub Actions, Harness, DevSecOps, CI/CD reliability 90%</div>
+    </div>
+  </div>
+
+  <div class="card" id="t3">
+    <div class="card-hdr" onclick="tog('t3')">
+      <span class="q-num">T3</span>
+      <span class="q-text">What's your experience with Infrastructure as Code and how does it relate to quality engineering?</span>
+      <span class="badge b2">Technical</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">IaC and QE intersect in three places:<br><br>
+      <strong>Test environment provisioning:</strong> test environments should be spun up from the same Terraform or CloudFormation templates as production — not manually configured. At Care.com I worked with SRE on IaC deployments for test environment design, ensuring parity between test and prod.<br><br>
+      <strong>Quality gates on infrastructure changes:</strong> when IaC templates change, automated tests validate that the resulting infrastructure matches expected configuration — security groups, network policies, resource sizing. This is policy-as-code testing using tools like Terratest or Checkov.<br><br>
+      <strong>Synthetic monitoring as IaC:</strong> monitoring definitions — dashboards, alerts, synthetic tests — are version-controlled and deployed via IaC. At Care.com I embedded synthetic monitoring into our IaC so it deployed automatically with every environment.</div>
+      <div class="anchor">Terraform, containerized environments, AWS, IaC test environment design, SRE partnership</div>
+    </div>
+  </div>
+
+  <div class="card" id="t4">
+    <div class="card-hdr" onclick="tog('t4')">
+      <span class="q-num">T4</span>
+      <span class="q-text">How do you test a system designed for testability vs one that isn't? What signals do you look for?</span>
+      <span class="badge b2">Technical</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">Testable systems share five characteristics: clear API contracts, injectable dependencies (no hardcoded external calls), observable state (structured logs, health endpoints), isolated deployment capability, and deterministic behavior given the same inputs.<br><br>
+      Warning signals of untestable systems: global state that tests can't reset, direct database calls from the UI layer, no API — only UI interaction possible, no way to inject test data without affecting production data, and services that can only be tested end-to-end rather than in isolation.<br><br>
+      When I identify an untestable system I don't just report the problem — I bring a specific architectural recommendation: extract the dependency behind an interface, add a REST API endpoint that the UI uses, implement a test mode flag. Quality architects propose solutions, not just problems.</div>
+      <div class="anchor">Shift-left, architecture reviews, SRE collaboration, microservices, API-first testing approach</div>
+    </div>
+  </div>
+
+  <div class="card" id="t5">
+    <div class="card-hdr" onclick="tog('t5')">
+      <span class="q-num">T5</span>
+      <span class="q-text">How do you approach API and integration testing for a federated content platform like Hyland's?</span>
+      <span class="badge b2">Technical</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">Federated systems have unique integration risks — the contract between services is the highest-failure point, not the services themselves.<br><br>
+      My layered approach: contract tests first using Pact — each service team owns and publishes their consumer-driven contracts, integration failures are caught at the contract level before end-to-end tests run. This means a breaking API change is detected in seconds, not after a 2-hour E2E suite.<br><br>
+      Then functional REST/GraphQL tests for each integration flow — auth, content federation queries, agent mesh interactions. Finally, end-to-end flows that span multiple services — a document ingested via Hyland IDP flowing through the Enterprise Context Engine into an agent workflow.<br><br>
+      For Hyland specifically: the Content Federation Service connecting OnBase, Alfresco, Nuxeo, and SharePoint simultaneously is the highest-risk integration surface. That's where I'd invest the deepest contract test coverage first.</div>
+      <div class="anchor">REST, GraphQL, RestAssured, contract testing, microservices, API security, Care.com multi-platform</div>
+    </div>
+  </div>
+</div>
+
+<!-- AI QE QS -->
+<div id="ai" class="pane">
+  <div class="sec-title">AI QE questions — where you truly stand out</div>
+  <p class="sec-desc">Hyland's product IS AI. The AVP and Test Lead Architect will want to know if you can test what they're building — not just traditional software.</p>
+
+  <div class="card" id="a1">
+    <div class="card-hdr" onclick="tog('a1')">
+      <span class="q-num">A1</span>
+      <span class="q-text">How do you test non-deterministic AI agent behavior — where the same input doesn't always produce the same output?</span>
+      <span class="badge b5">AI QE</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer — this is the most important question in this interview</div>
+      <div class="a-main">Traditional deterministic testing — assert that input X always produces output Y — breaks completely for AI agents. You need a different testing philosophy.<br><br>
+      <strong>Property-based testing instead of exact assertions:</strong> instead of asserting the exact output, assert that the output satisfies a set of properties. For Hyland's Enterprise Agent Mesh: does the agent's response contain required fields? Is it within the expected content domain? Does it cite traceable sources from the Enterprise Context Engine? Does it complete within the SLA window?<br><br>
+      <strong>Golden set evaluation:</strong> maintain a curated set of representative inputs with human-evaluated expected outputs. Run the agent against these regularly and score outputs using a secondary LLM as judge — flagging degradation below an acceptable quality threshold.<br><br>
+      <strong>Boundary and adversarial testing:</strong> test with malformed inputs, ambiguous queries, content from edge-case document types. An agent that works on standard invoices must also handle handwritten forms, mixed-language documents, and corrupted PDFs — all relevant to Hyland's document processing use cases.<br><br>
+      <strong>Audit trail validation:</strong> for Hyland's regulated industries — healthcare, banking, insurance — every agent decision must be traceable. Test that the audit log is complete, accurate, and tamper-proof — not just that the output looked right.</div>
+      <div class="callout">This answer shows you understand that Hyland's Enterprise Agent Mesh is fundamentally untestable with traditional QE approaches — and that you have a framework for addressing it. Almost no candidate will have this answer ready.</div>
+      <div class="anchor">LLM-assisted workflows, MCP integrations, Claude AI Fluency certification, agentic QE architecture</div>
+    </div>
+  </div>
+
+  <div class="card" id="a2">
+    <div class="card-hdr" onclick="tog('a2')">
+      <span class="q-num">A2</span>
+      <span class="q-text">How have you used AI to improve the QE process itself — not just the product being tested?</span>
+      <span class="badge b5">AI QE</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer — lead with your Care.com work</div>
+      <div class="a-main">At Care.com I built LLM-assisted workflows that auto-generate Playwright test scripts directly from design specs — reducing manual authoring time by 60% across 40 engineers. I used Cursor IDE with Claude as the underlying model for agentic test authoring, and built reusable prompt libraries so engineers without deep AI knowledge could contribute immediately.<br><br>
+      I also integrated MCP connections to Jira, Confluence, and TestRail — so the AI agent had live context from tickets and specs, not just static prompts. The agent could read a Jira ticket, fetch the linked spec from Confluence, check existing coverage in TestRail, and generate only the missing tests.<br><br>
+      For reporting: n8n workflows connected production telemetry, defect trends, and automation ROI to executive dashboards automatically — no manual status updates, no weekly reports. Leadership pulled real-time quality signals on demand.<br><br>
+      At Hyland I'd extend this to test the AI agents themselves — using one LLM to evaluate the outputs of another, which is the most scalable approach for testing the Enterprise Agent Mesh at volume.</div>
+      <div class="anchor">LLM-assisted test generation, Cursor IDE, MCP integrations, n8n dashboards, 60% authoring reduction</div>
+    </div>
+  </div>
+
+  <div class="card" id="a3">
+    <div class="card-hdr" onclick="tog('a3')">
+      <span class="q-num">A3</span>
+      <span class="q-text">How do you test knowledge graph integrity in a system like Hyland's Enterprise Context Engine?</span>
+      <span class="badge b5">AI QE</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer</div>
+      <div class="a-main">A knowledge graph has unique integrity requirements beyond standard data validation — it's not just "are the records correct" but "are the relationships correct and are they being reasoned over correctly."<br><br>
+      Three testing layers: <strong>Entity integrity</strong> — does a document ingested via IDP appear correctly in the knowledge graph with the right metadata, classification, and source traceability? <strong>Relationship integrity</strong> — when two related documents are ingested, does the graph correctly represent their relationship? Breaking relationship links is the highest-risk failure mode for an AI agent that reasons over the graph. <strong>Query accuracy</strong> — given a natural language query to the Enterprise Context Engine, does the retrieved context match what a human expert would consider relevant? This is evaluated using a golden set approach with human-scored relevance ratings.<br><br>
+      I'd also test drift — does knowledge graph accuracy degrade over time as new content is ingested? Scheduled automated evaluations against the golden set catch drift before customers do.</div>
+      <div class="anchor">Data validation, IceDQ, Snowflake, DynamoDB — data quality testing experience at scale</div>
+    </div>
+  </div>
+
+  <div class="card" id="a4">
+    <div class="card-hdr" onclick="tog('a4')">
+      <span class="q-num">A4</span>
+      <span class="q-text">What guardrails would you build around AI-assisted test generation at enterprise scale?</span>
+      <span class="badge b5">AI QE</span>
+      <span class="chev">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="a-lbl">Your answer — show you're not naively enthusiastic</div>
+      <div class="a-main">Three guardrails I'd build from day one:<br><br>
+      <strong>Assertion quality gate:</strong> every AI-generated test must have a meaningful assertion — not just "page loaded" or "no error thrown." An automated validator checks assertion depth before any generated test enters the suite. Tests that only check UI presence without verifying data values are rejected automatically.<br><br>
+      <strong>Human review sprint cycle:</strong> AI-generated tests are tagged and treated as drafts. A human engineer reviews and formally adopts each test within one sprint. This keeps the team engaged with the suite — if AI maintains everything, engineers stop understanding what's there and can't debug failures intelligently.<br><br>
+      <strong>Coverage delta check:</strong> before generating, the system queries existing coverage so it only fills genuine gaps — not duplicate tests that add volume without value. More tests does not mean better coverage. A leaner, trusted suite beats a bloated, doubted one every time.</div>
+      <div class="anchor">Quality-first mindset, LLM-assisted workflows, prompt libraries, team adoption at Care.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- OPENING -->
+<div id="opening" class="pane">
+  <div class="sec-title">Your 90-second opening</div>
+  <p class="sec-desc">Practice this out loud three times before the interview starts. The AVP will ask "tell us about yourself" — this is the answer.</p>
+
+  <div class="say">
+    <div class="say-lbl">Say this — then stop</div>
+    <div class="say-txt">"I'm a QA leader with 20 years of experience, most recently as Quality Architect at Care.com where I led the transformation from a manual-first to an AI-first quality organization.<br><br>
+    Concretely — I built LLM-assisted workflows that auto-generate test scripts from design specs, cutting authoring time by 60% across 40 engineers. I integrated MCP connections so AI agents had live context from Jira, Confluence, and TestRail. And I connected quality metrics to real-time executive dashboards so leadership saw automation ROI without anyone writing a status report.<br><br>
+    I hold the Claude AI Fluency certification and the Google Generative AI Leader certification — I certify to learn deeply, not for the badge.<br><br>
+    What draws me to Hyland specifically is the multi-platform governance challenge combined with the agentic AI product context. Testing non-deterministic agent behavior is genuinely new QE territory — and I've been building toward that capability for two years. This role sits exactly at that intersection."</div>
+  </div>
+
+  <div class="callout">Three things this opening does for you: the AI angle is immediately relevant to Hyland's product. The Care.com metrics are concrete and impressive. The "non-deterministic agent behavior" line tells the Test Lead Architect you understand their hardest QE problem before they even ask about it.</div>
+
+  <div style="margin-top:1.25rem">
+    <p style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Three questions to ask them</p>
+    <div class="card" id="ask1">
+      <div class="card-hdr" onclick="tog('ask1')">
+        <span class="q-num">Q1</span>
+        <span class="q-text">How is QA currently involved in testing the Enterprise Agent Mesh — and what's the hardest quality challenge you're facing there?</span>
+        <span class="badge b3">Ask them</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="a-main">This signals you understand their hardest problem and you're already thinking about it. The answer they give will tell you exactly what your first 90 days would focus on.</div>
+      </div>
+    </div>
+    <div class="card" id="ask2">
+      <div class="card-hdr" onclick="tog('ask2')">
+        <span class="q-num">Q2</span>
+        <span class="q-text">How does quality governance work across the PANO platforms today — and where are the biggest consistency gaps?</span>
+        <span class="badge b3">Ask them</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="a-main">Naming PANO shows you did the research. This question surfaces the real cross-domain problem — which is the core of the Principal QA Architect role.</div>
+      </div>
+    </div>
+    <div class="card" id="ask3">
+      <div class="card-hdr" onclick="tog('ask3')">
+        <span class="q-num">Q3</span>
+        <span class="q-text">What would success look like for this role in the first 6 months from your perspective?</span>
+        <span class="badge b3">Ask them</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="a-main">Classic closer — but essential. Aligns expectations and gives you concrete targets to reference in your follow-up thank-you note.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function tog(id){document.getElementById(id).classList.toggle('open')}
+</script>
+</body>
+</html>

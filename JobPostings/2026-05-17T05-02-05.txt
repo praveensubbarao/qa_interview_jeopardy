@@ -1,0 +1,5 @@
+Saved:        5/17/2026, 1:02:05 AM
+Questions:    1
+Technologies: soc2, ccpa, hipaa
+────────────────────────────────────────────────────────────
+QA Engineer for a healthcare SaaS platform. Must understand HIPAA compliance, SOC2 Type II audit requirements, and CCPA data subject rights. Experience testing audit logging, encryption at rest, and access controls.

@@ -1,0 +1,5 @@
+Saved:        5/17/2026, 12:01:19 AM
+Questions:    1
+Technologies: playwright, k6, github actions, typescript
+────────────────────────────────────────────────────────────
+QA Engineer role requiring Playwright for E2E, k6 for load testing, GitHub Actions for CI. TypeScript codebase.

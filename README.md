@@ -23,7 +23,7 @@ A browser-based interview preparation quiz for QA engineers and AI quality pract
 
 ## Features
 
-- **683+ curated questions** across 17 categories covering the full modern QE stack
+- **708+ curated questions** across 18 categories covering the full modern QE stack
 - **Timed quiz mode** — per-category or full-bank practice with configurable question counts
 - **Score tracking** — category-level breakdown at the end of each session
 - **AI-powered question generator** — paste a job description, pick a category, and generate a unique question tailored to that role; auto-detects the relevant tech stack and filters duplicates
@@ -184,7 +184,7 @@ qa_interview_jeopardy/
 ├── package.json
 │
 ├── data/
-│   ├── categories.json     # 17 category definitions (id, label, icon, color, keywords)
+│   ├── categories.json     # 18 category definitions (id, label, icon, color, keywords)
 │   └── questions/          # Per-category question banks
 │       ├── ai-foundations.json
 │       ├── playwright.json
@@ -245,6 +245,7 @@ npm run build
 | `aws-cloud` | `ac` | `ac46` |
 | `bdd-gherkin` | `bg` | `bg36` |
 | `api-testing` | `at` | `at40` |
+| `mabl` | `mb` | `mb26` |
 | `others` | `ot` | `ot52` |
 
 ---

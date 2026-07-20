@@ -20,7 +20,7 @@ const CATEGORIES = [
       "snowflake",
       "go"
     ],
-    "count": 19
+    "count": 20
   },
   {
     "id": "test-generation",
@@ -746,6 +746,19 @@ const QUESTIONS = [
     ],
     "answer": 0,
     "explanation": "Snowflake's file format statement needs to specify the header row behavior. This command allows for the use of CSV files with header rows."
+  },
+  {
+    "id": "ai10",
+    "category": "ai-foundations",
+    "question": "What is the term for the subset of reinforcement learning research that focuses on developing efficient algorithms for training AI agents to perform specific tasks, as applied in CrewAI?",
+    "options": [
+      "Exploration-Exploitation Trade-off",
+      "Asynchronous Advantage Actor-Critic",
+      "Value Function Approximation",
+      "Behavioral Cloning with TD-Lambda"
+    ],
+    "answer": 1,
+    "explanation": "This term refers to the research focus on efficient algorithms for reinforcement learning, such as Asynchronous Advantage Actor-Critic."
   },
   {
     "id": "tg1",
